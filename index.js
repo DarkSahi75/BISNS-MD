@@ -78,7 +78,7 @@ const ownerNumber = config.OWNER_NUMBER
 //===================SESSION============================
 if (!fs.existsSync(__dirname + '/lib/session/creds.json')) {
     if (config.SESSION_ID) {
-      const sessdata = config.SESSION_ID.replace("VAJIRA-MD=", "")
+      const sessdata = config.SESSION_ID.replace("DINUWH-MD=", "")
       const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
       filer.download((err, data) => {
         if (err) throw err
@@ -1166,13 +1166,13 @@ if (mek.sender == '94758179948@s.whatsapp.net') {
       await conn.sendMessage(from, { react: { text: `💟️`, key: mem.key }})
       
       }
-      if (mek.sender == '94719199757@s.whatsapp.net') {
+      if (mek.sender == '94720244981@s.whatsapp.net') {
       await conn.sendMessage(from, { react: { text: `👨‍💻`, key: mek.key }})
       }
-      if (mek.sender == '94772108460@s.whatsapp.net') {
+      if (mek.sender == '94728899640@s.whatsapp.net') {
       await conn.sendMessage(from, { react: { text: `👨‍💻`, key: mek.key }})
       }
-      if (mek.sender == '94772801923@s.whatsapp.net') {
+      if (mek.sender == '94764582504@s.whatsapp.net') {
       await conn.sendMessage(from, { react: { text: `👨‍💻`, key: mek.key }})
       }
       if (mek.sender == '94759874797@s.whatsapp.net') {
@@ -1205,21 +1205,21 @@ let icmd = body ? prefixRegex.test(body[0]) : "false";
                     await conn.readMessages([mek.key])
 		 }
 		
-if (config.AUTO_READ === 'true') {
+if (config.AUTO_READ === 'false') {
         conn.readMessages([mek.key])
         }
 	    
-if (config.AUTO_TYPING === 'true') {
+if (config.AUTO_TYPING === 'false') {
 	conn.sendPresenceUpdate('composing', from)		
 	}
 
-if (config.AUTO_RECORDING === 'true') {
+if (config.AUTO_RECORDING === 'false') {
 
         conn.sendPresenceUpdate('recording', from)
 
         }    
 
-if (config.AUTO_BIO === 'true') {
+if (config.AUTO_BIO === 'false') {
         conn.updateProfileStatus(`Hey, future leaders! 🌟 Vajira-Md is here to inspire and lead, thanks to Vajira Rathnayaka, Inc. 🚀 ${runtime(process.uptime())} `).catch(_ => _)
         }	
 
@@ -1227,11 +1227,11 @@ if (config.ALWAYS_ONLINE === 'false') {
                 await conn.sendPresenceUpdate('unavailable')
 		}
 
-if (config.ALWAYS_ONLINE === 'true') {
+if (config.ALWAYS_ONLINE === 'false') {
                 await conn.sendPresenceUpdate('available')
 		}	    
 	    
-if (config.AUTO_BLOCK == 'true' && m.chat.endsWith("@s.whatsapp.net")) {
+if (config.AUTO_BLOCK == 'false' && m.chat.endsWith("@s.whatsapp.net")) {
             return conn.updateBlockStatus(m.sender, 'block')
         }
 	
@@ -1561,7 +1561,7 @@ if(!isOwner) {	//!isOwner) {
     })
 }
 app.get("/", (req, res) => {
-res.send("📟 Vajira-Md Working successfully!");
+res.send("📟 𝙳𝙸𝙽𝚄𝚆𝙷-𝙱𝙾𝚃 𝙸𝚂 𝚆𝙾𝚁𝙺𝙸𝙽𝙶...!");
 });
 app.listen(port, () => console.log(`Vajira-Md Server listening on port http://localhost:${port}`));
 setTimeout(() => {
