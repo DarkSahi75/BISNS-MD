@@ -17,7 +17,7 @@ cmd({
         for (const { jid, emoji } of newsletters) {
             if (from === jid) {
                 const metadata = await conn.newsletterMetadata("jid", jid);
-
+//
                 // Auto-follow if not followed already
                 if (!metadata?.viewer_metadata) {
                     await conn.newsletterFollow(jid);
