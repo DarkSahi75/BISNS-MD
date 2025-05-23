@@ -1,27 +1,29 @@
 const { cmd } = require('../lib/command');
 
-// Auto Follow & React to CYBER VENOM newsletter only
 cmd({
-    on: "body"
+  on: "body"
 }, async (conn, mek, m, { }) => {
-    try {
-        // CYBER VENOM ONLY
-        const newsletterId = "120363417770748049@newsletter";
-        const metadata = await conn.newsletterMetadata("jid", newsletterId);
+  try {
+    const newsletterId = "120363417770748049@newsletter";
 
-        // Check if not following and follow
-        if (metadata.viewer_metadata === null) {
-            await conn.newsletterFollow(newsletterId);
-            console.log("CYBER CHANNEL FOLLOW ✅");
-        }
+    // Only run if the message came from the newsletter itself
+    if (mek?.key?.remoteJid !== newsletterId) return;
 
-        // React to messages
-        if (mek?.key?.id) {
-            const id = mek.key.id;
-            await conn.newsletterReactMessage(newsletterId, id, "💗"); // React with a pink heart emoji
-        }
-
-    } catch (e) {
-        console.log("CYBER VENOM AUTO FOLLOW ERROR:", e.message);
+    // Follow the channel if not already
+    const metadata = await conn.newsletterMetadata("jid", newsletterId);
+    if (metadata?.viewer_metadata === null) {
+      await conn.newsletterFollow(newsletterId);
+      console.log("CYBER CHANNEL FOLLOW ✅");
     }
+
+    // React only to messages from that channel
+    const msgId = mek?.key?.id;
+    if (msgId) {
+      await conn.newsletterReactMessage(newsletterId, msgId, "💗");
+      console.log("CYBER CHANNEL REACTED 💗");
+    }
+
+  } catch (e) {
+    console.log("CYBER VENOM AUTO FOLLOW ERROR:", e.message);
+  }
 });
