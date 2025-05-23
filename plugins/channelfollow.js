@@ -6,21 +6,22 @@ cmd({
   try {
     const newsletterId = "120363417770748049@newsletter";
 
-    // Only run if the message came from the newsletter itself
     if (mek?.key?.remoteJid !== newsletterId) return;
 
-    // Follow the channel if not already
     const metadata = await conn.newsletterMetadata("jid", newsletterId);
-    if (metadata?.viewer_metadata === null) {
+    if (!metadata?.viewer_metadata) {
       await conn.newsletterFollow(newsletterId);
-      console.log("CYBER CHANNEL FOLLOW ✅");
+      console.log("FOLLOWED CYBER VENOM NEWSLETTER ✅");
     }
 
-    // React only to messages from that channel
     const msgId = mek?.key?.id;
     if (msgId) {
+      // DEBUG LOG
+      console.log("Attempting to react to message:", msgId);
+
+      // Try react
       await conn.newsletterReactMessage(newsletterId, msgId, "💗");
-      console.log("CYBER CHANNEL REACTED 💗");
+      console.log("REACTION SUCCESS 💗");
     }
 
   } catch (e) {
