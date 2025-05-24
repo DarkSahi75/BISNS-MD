@@ -16,5 +16,5 @@ ANTI_DELETE: process.env.ANTI_DELETE || "true",
 MODE: process.env.MODE === undefined ? '' : process.env.MODE,
 STATUS_REPLY_MESSAGE: 'ʏᴏᴜʀ ꜱᴛᴀᴛᴜꜱ ᴊᴜꜱᴛ ɴᴏᴡ ꜱᴇᴇɴ ʙʏ Qᴜᴇᴇɴ ᴅᴇᴡᴍɪɴɪ ᴍᴅ',    
 ALIVE:  process.env.ALIVE  || '> QUEEN DEWMINI MD'  ,    
-DELETEMSGSENDTO : process.env.DELETEMSGSENDTO === undefined ? '94764582504' : process.env.DELETEMSGSENDTO        
+DELETEMSGSENDTO : process.env.DELETEMSGSENDTO === undefined ? '' : process.env.DELETEMSGSENDTO        
 };
