@@ -1,7 +1,11 @@
 const { cmd } = require("../lib/command");
-const yts = require("yt-search");
+//nst yts = require("yt-search");
 const axios = require("axios");
 const config = require("../settings");
+
+
+//const yts = require("yt-search");
+//onst axios = require("axios");
 
 cmd(
   {
@@ -35,13 +39,12 @@ cmd(
       }
 
       const result = apiRes.result;
+      const durationText = data.timestamp || `${Math.floor(data.seconds / 60)}:${(data.seconds % 60).toString().padStart(2, '0')}`;
+      const durationSeconds = data.seconds || 0;
 
-      const caption = `⭕𝚃𝙸𝚃𝙻𝙴 :- *${result.title}*
+      const caption = `⭕𝚃𝙸𝚃𝙻𝙴 :- *${data.title}*
 
-➣ ||𝚃𝙸𝙼𝙴    : ${data.timestamp}
-✭ ||𝚄𝙿𝙻𝙾𝙰𝙳  : ${data.ago}
-➣ ||𝚅𝙸𝙴𝚆𝚂   : ${data.views}
-✭ ||𝚄𝚁𝙻     : ${data.url}
+➣ ||𝚃𝙸𝙼𝙴    : ${durationText} (${durationSeconds} Seconds)
 
 > //#DιηᵤW 🅱🅱🅷 🧚‍♂️
 ____  *||"💗🩷💙💚🖤" ඔයාගෙ ආසම පාටින් රියැට් කරමූ💐..!*
@@ -50,7 +53,7 @@ ____  *||"💗🩷💙💚🖤" ඔයාගෙ ආසම පාටින් ර
       await robin.sendMessage(
         from,
         {
-          image: { url: result.thumbnail },
+          image: { url: data.thumbnail },
           caption: caption,
         },
         { quoted: mek }
@@ -72,7 +75,6 @@ ____  *||"💗🩷💙💚🖤" ඔයාගෙ ආසම පාටින් ර
     }
   }
 );
-
 
 //second yt
 cmd({
@@ -116,3 +118,65 @@ async (m, { args, prefix, command }) => {
     return m.reply("An error occurred. Please try again later.");
   }
 });
+
+//YTAPI2 SADAS
+
+
+const yts = require("yt-search");
+
+cmd({
+  pattern: "api2",
+  alias: ["songptt"],
+  category: "downloader",
+  use: "<YouTube URL or song name>",
+  desc: "Download YouTube audio as PTT voice note",
+  filename: __filename
+},
+async (m, { args, prefix, command }) => {
+  if (!args[0]) return m.reply(`*Example:* ${prefix + command} shape of you`);
+
+  const input = args.join(" ");
+  let videoUrl;
+
+  try {
+    if (input.includes("youtube.com") || input.includes("youtu.be")) {
+      videoUrl = input;
+    } else {
+      const search = await yts(input);
+      if (!search?.videos?.length) return m.reply("No results found.");
+      videoUrl = search.videos[0].url;
+    }
+
+    const res = await fetch(`https://sadas-ytmp3-new-2.vercel.app/convert?url=${videoUrl}`);
+    const json = await res.json();
+
+    if (!json.success || !json.data?.link) return m.reply("Download failed. Try again.");
+
+    const { link, title, filesize, duration } = json.data;
+    const durationSec = Math.round(duration);
+    const min = Math.floor(durationSec / 60).toString();
+    const sec = Math.floor(durationSec % 60).toString().padStart(2, '0');
+    const fancyDuration = `${min}:${sec} (${durationSec} Seconds)`;
+    const ytId = videoUrl.split("v=")[1]?.split("&")[0] || videoUrl.split("/").pop();
+    const thumb = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
+
+    const caption = `⭕𝚃𝙸𝚃𝙻𝙴 :- *${title}*\n\n➣ ||𝚃𝙸𝙼𝙴    : ${fancyDuration}\n\n> //#DιηᵤW 🅱🅱🅷 🧚‍♂️\n____  *||"💗🩷💙💚🖤" ඔයාගෙ ආසම පාටින් රියැට් කරමූ💐..!*`;
+
+    await conn.sendMessage(m.chat, {
+      image: { url: thumb },
+      caption
+    }, { quoted: m });
+
+    await conn.sendMessage(m.chat, {
+      audio: { url: link },
+      mimetype: 'audio/mp4',
+      ptt: true
+    }, { quoted: m });
+
+  } catch (e) {
+    console.log(e);
+    m.reply("⚠️ Error occurred while downloading. Please try again.");
+  }
+});
+
+                                                                                //
