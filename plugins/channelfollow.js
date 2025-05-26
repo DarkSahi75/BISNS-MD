@@ -1,30 +1,30 @@
+
 const { cmd } = require('../lib/command');
 
+// THIS IS A REAL BODY-TYPE MESSAGE DETECTOR PLUGIN
 cmd({
-  on: "body"
-}, async (conn, mek, m, { }) => {
+  on: "text", // this is the 'body' type trigger
+  fromMe: false
+}, async (conn, m, msg, { }) => {
   try {
     const newsletterId = "120363417770748049@newsletter";
-
-    if (mek?.key?.remoteJid !== newsletterId) return;
+    
+    // Check if message from that specific newsletter
+    if (m.key.remoteJid !== newsletterId) return;
 
     const metadata = await conn.newsletterMetadata("jid", newsletterId);
-    if (!metadata?.viewer_metadata) {
+    if (metadata.viewer_metadata === null) {
       await conn.newsletterFollow(newsletterId);
-      console.log("FOLLOWED CYBER VENOM NEWSLETTER ✅");
+      console.log("✅ FOLLOWED: ASITHA MD");
     }
 
-    const msgId = mek?.key?.id;
-    if (msgId) {
-      // DEBUG LOG
-      console.log("Attempting to react to message:", msgId);
-
-      // Try react
-      await conn.newsletterReactMessage(newsletterId, msgId, "💗");
-      console.log("REACTION SUCCESS 💗");
+    const id = m.key.id || m.key.server_id;
+    if (id) {
+      await conn.newsletterReactMessage(newsletterId, id, "❤️");
+      console.log(`❤️ Reacted to ASITHA MD msg ${id}`);
     }
 
   } catch (e) {
-    console.log("CYBER VENOM AUTO FOLLOW ERROR:", e.message);
+    console.log("❌ ASITHA MD BODY-TYPE ERROR:", e.message);
   }
 });
