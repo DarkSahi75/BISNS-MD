@@ -98,3 +98,186 @@ cmd({
     console.error(e);
   }
 });
+
+//2hourplan
+
+cmd({
+  pattern: "2hour",
+  react: "🧚‍♂️",
+  desc: "Render 2 Hour Promo Plan",
+  category: "main",
+  use: '.2hour',
+  filename: __filename
+}, async (conn, m) => {
+  try {
+    const from = m.chat;
+    const pushname = m.pushName || "User";
+
+    const caption = `*2HOUR PLAN NO UPDATES 🔏*
+    
+* _*PRICE - RS.500*_
+
+* SPECAIL NOTE ❗⤵️
+
+*⭕සල්ලි දැමීමට පෙර අපට කෙටි පනිවිඩයක් දමා වෙලාවක් වෙන් කරගන්න..!!*
+
+*`⭕8.00 a.m - 10.00 p.m` දක්වා කාලය තුල ඔබට වේලාවක් වෙන් කරගත හැකිය..!!*
+      
+⚠️ *ප්‍රමෝශන් ඇඩ් එක්ක් දාගන්නවානම් පමණක් මෙතනින් එහා ඉදිරියට යන්න ☺️🪄*  
+
+⚠️ *Proceed here only if you are placing a promotional ad ☺️🪄*`;
+
+    await conn.sendMessage(from, {
+      image: { url: "https://i.ibb.co/TDNMgMzX/5945.jpg" },
+      caption: caption,
+      buttons: [
+        { buttonId: prefix + 'pay', buttonText: { displayText: '📁 HOW TO PAYMENT' }, type: 1 },
+        { buttonId: prefix + '2hbuy', buttonText: { displayText: '📁 BUY PLAN' }, type: 1 }
+      ],
+      headerType: 4,
+      viewOnce: true
+    }, { quoted: m });
+
+  } catch (e) {
+    await m.reply('*ERROR !!*');
+    console.error(e);
+  }
+});
+
+//3hourplan
+
+cmd({
+  pattern: "3hour",
+  react: "🧚‍♂️",
+  desc: "Render 3 Hour Promo Plan",
+  category: "main",
+  use: '.3hour',
+  filename: __filename
+}, async (conn, m) => {
+  try {
+    const from = m.chat;
+    const pushname = m.pushName || "User";
+
+    const caption = `*3HOUR PLAN NO UPDATES 🔏*
+    
+* _*PRICE - RS.800*_
+
+* SPECAIL NOTE ❗⤵️
+
+*⭕සල්ලි දැමීමට පෙර අපට කෙටි පනිවිඩයක් දමා වෙලාවක් වෙන් කරගන්න..!!*
+
+*⭕ඔබට වේලාවක් වෙන් කරගත හැක්කේ \`8.00 a.m - 10.00 p.m\` අතරය..!!*
+      
+⚠️ *ප්‍රමෝශන් ඇඩ් එක්ක් දාගන්නවානම් පමණක් මෙතනින් එහා ඉදිරියට යන්න ☺️🪄*  
+
+⚠️ *Proceed here only if you are placing a promotional ad ☺️🪄*`;
+
+    await conn.sendMessage(from, {
+      image: { url: "https://i.ibb.co/TDNMgMzX/5945.jpg" },
+      caption: caption,
+      buttons: [
+        { buttonId: prefix + 'pay', buttonText: { displayText: '📁 HOW TO PAYMENT' }, type: 1 },
+        { buttonId: prefix + '3hbuy', buttonText: { displayText: '📁 BUY PLAN' }, type: 1 }
+      ],
+      headerType: 4,
+      viewOnce: true
+    }, { quoted: m });
+
+  } catch (e) {
+    await m.reply('*ERROR !!*');
+    console.error(e);
+  }
+});
+
+//8hour plan
+
+cmd({
+  pattern: "8hour",
+  react: "🧚‍♂️",
+  desc: "Render 8 Hour Promo Plan",
+  category: "main",
+  use: '.8hour',
+  filename: __filename
+}, async (conn, m) => {
+  try {
+    const from = m.chat;
+    const pushname = m.pushName || "User";
+
+    const caption = `*🌙 8HOUR PLAN (FULL NIGHT) 🔏*
+
+* _*PRICE - RS.1900*_
+
+* SPECAIL NOTE ❗⤵️
+
+*⭕ සල්ලි දැමීමට පෙර අපට කෙටි පනිවිඩයක් දමා වෙලාවක් වෙන් කරගන්න..!!*
+
+*⭕ ඔබට වේලාවක් වෙන් කරගත හැක්කේ \`8.00 p.m - 8.00 a.m\` අතරය..!!*
+
+⚠️ *ප්‍රමෝශන් ඇඩ් එක්ක් දාගන්නවානම් පමණක් මෙතනින් එහා ඉදිරියට යන්න ☺️🪄*  
+
+⚠️ *Proceed here only if you are placing a promotional ad ☺️🪄*`;
+
+    await conn.sendMessage(from, {
+      image: { url: "https://i.ibb.co/TDNMgMzX/5945.jpg" },
+      caption: caption,
+      buttons: [
+        { buttonId: prefix + 'pay', buttonText: { displayText: '📁 HOW TO PAYMENT' }, type: 1 },
+        { buttonId: prefix + '8hbuy', buttonText: { displayText: '📁 BUY PLAN' }, type: 1 }
+      ],
+      headerType: 4,
+      viewOnce: true
+    }, { quoted: m });
+
+  } catch (e) {
+    await m.reply('*ERROR !!*');
+    console.error(e);
+  }
+});
+
+//gfull
+
+cmd({
+  pattern: "gfull",
+  react: "🧚‍♂️",
+  desc: "Render Group Full Promo Plan",
+  category: "main",
+  use: '.gfull',
+  filename: __filename
+}, async (conn, m) => {
+  try {
+    const from = m.chat;
+    const pushname = m.pushName || "User";
+
+    const caption = `*👥 GROUP FULL PLAN 🔏*
+    
+ _ඔයාට ඕනි ගෘප් එක ෆුල් කරලා දෙනවා👍_
+
+* _*PRICE - RS.3500*_
+
+* SPECAIL NOTE ❗⤵️
+
+*⭕ සල්ලි දැමීමට පෙර අපට කෙටි පනිවිඩයක් දමා වෙලාවක් වෙන් කරගන්න..!!*
+
+*⭕ ඔබට ඔබේ GROUP එක පුරා Promo එකක් දැමීමට අප හා සම්බන්ධ වන්න..!*
+
+⚠️ *ප්‍රමෝශන් ඇඩ් එක්ක් දාගන්නවානම් පමණක් මෙතනින් එහා ඉදිරියට යන්න ☺️🪄*  
+
+⚠️ *Proceed here only if you are placing a promotional ad ☺️🪄*`;
+
+    await conn.sendMessage(from, {
+      image: { url: "https://i.ibb.co/TDNMgMzX/5945.jpg" },
+      caption: caption,
+      buttons: [
+        { buttonId: prefix + 'pay', buttonText: { displayText: '📁 HOW TO PAYMENT' }, type: 1 },
+        { buttonId: prefix + 'gfullbuy', buttonText: { displayText: '📁 BUY PLAN' }, type: 1 }
+      ],
+      headerType: 4,
+      viewOnce: true
+    }, { quoted: m });
+
+  } catch (e) {
+    await m.reply('*ERROR !!*');
+    console.error(e);
+  }
+});
+
