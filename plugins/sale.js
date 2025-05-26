@@ -329,14 +329,13 @@ cmd({
 
 cmd({
   pattern: "reloadpay",
-  react: "📲",
-  desc: "Show reload payment details",
+  react: "🏦",
+  desc: "Show bank payment details",
   category: "main",
-  use: '.reloadpay',
+  use: '.bankpay',
   filename: __filename
 }, async (conn, m) => {
   try {
-    const prefix = global.prefix || '.';
     const from = m.chat;
     const pushname = m.pushName || "User";
 
@@ -371,26 +370,23 @@ wa.me/769805724?text=8hour+plan+want+pay+reload
 
 BUY GRUP FULL PLAN
 
-wa.me/769805724?text=GRUPFULL+plan+want+buy+pay+reload
-`;
+wa.me/769805724?text=GRUPFULL+plan+want+buy+pay+reload`;
 
     await conn.sendMessage(from, {
-      image: { url: "https://i.ibb.co/fx8c3Ch/payment.jpg" },
+      image: { url: "https://i.ibb.co/67BFx97p/2284.jpg"},
       caption: caption,
       buttons: [
-        { buttonId: prefix + 'bankpay', buttonText: { displayText: '💸 Want Bank to Payment' }, type: 1 }
-      ],
+        { buttonId: prefix + 'bankpay', buttonText: { displayText: '💸 Back to Bank Pay' }, type: 1 }
+        ],
       headerType: 4,
       viewOnce: true
     }, { quoted: m });
-
   } catch (e) {
-    await m.reply('ERROR !!');
+    await m.reply('*ERROR !!*');
     console.error(e);
   }
 });
 
-//ROR එන්නෙ රිප්ලය් එකට ඇය් ඒ🤭
 
 
 
