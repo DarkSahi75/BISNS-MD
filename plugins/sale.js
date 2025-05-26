@@ -325,7 +325,7 @@ cmd({
   }
 });
 
-/reloadpay
+//reloadpay
 
 cmd({
   pattern: "reloadpay",
