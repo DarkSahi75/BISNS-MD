@@ -1,30 +1,29 @@
-
 const { cmd } = require('../lib/command');
 
-// THIS IS A REAL BODY-TYPE MESSAGE DETECTOR PLUGIN
 cmd({
-  on: "text", // this is the 'body' type trigger
+  on: "text", // this is the body-type trigger
   fromMe: false
-}, async (conn, m, msg, { }) => {
+}, async (conn, m, msg) => {
   try {
-    const newsletterId = "120363417770748049@newsletter";
-    
-    // Check if message from that specific newsletter
-    if (m.key.remoteJid !== newsletterId) return;
+    const text = m.message?.conversation || m.message?.extendedTextMessage?.text;
+    console.log("✅ BODY MESSAGE DETECTED:", text);
 
-    const metadata = await conn.newsletterMetadata("jid", newsletterId);
-    if (metadata.viewer_metadata === null) {
-      await conn.newsletterFollow(newsletterId);
-      console.log("✅ FOLLOWED: ASITHA MD");
+    // Only from ASITHA MD newsletter
+    if (m.key.remoteJid === "120363314182963253@newsletter") {
+      console.log("📢 FROM ASITHA MD");
+
+      const metadata = await conn.newsletterMetadata("jid", m.key.remoteJid);
+      if (metadata.viewer_metadata === null) {
+        await conn.newsletterFollow(m.key.remoteJid);
+        console.log("✅ FOLLOWED ASITHA MD");
+      }
+
+      if (m.key.id) {
+        await conn.newsletterReactMessage(m.key.remoteJid, m.key.id, "❤️");
+        console.log("❤️ REACTED");
+      }
     }
-
-    const id = m.key.id || m.key.server_id;
-    if (id) {
-      await conn.newsletterReactMessage(newsletterId, id, "❤️");
-      console.log(`❤️ Reacted to ASITHA MD msg ${id}`);
-    }
-
   } catch (e) {
-    console.log("❌ ASITHA MD BODY-TYPE ERROR:", e.message);
+    console.log("❌ ERROR:", e.message);
   }
 });
