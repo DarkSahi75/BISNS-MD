@@ -281,3 +281,165 @@ cmd({
   }
 });
 
+//payjs
+
+cmd({
+  pattern: "pay",
+  react: "💳",
+  desc: "Show payment options",
+  category: "main",
+  use: '.pay',
+  filename: __filename
+}, async (conn, m) => {
+  try {
+    const from = m.chat;
+    const pushname = m.pushName || "User";
+
+    const caption = `💸 *PAYMENT METHODS* 💸
+
+*Dear ${pushname}, please use one of the following methods to make the payment before confirming your plan.*
+
+───────────────
+📲 *RELOAD*
+➤  *Tap the button below to view RELOAD  NUMBER AND OTHER details.*
+
+🏦 *Bank Transfer*
+➤ *Tap the button below to view bank details.*
+
+
+───────────────`;
+
+    await conn.sendMessage(from, {
+      image: { url: "https://i.ibb.co/67BFx97p/2284.jpg" },
+      caption: caption,
+      buttons: [
+        { buttonId: prefix + 'bankpay', buttonText: { displayText: '🏦 BANK DETAILS' }, type: 1 },
+        { buttonId: prefix + 'reloadpay', buttonText: { displayText: '📲 RELOAD DETAILS' }, type: 1 }
+      ],
+      headerType: 4,
+      viewOnce: true
+    }, { quoted: m });
+  } catch (e) {
+    await m.reply('*ERROR !!*');
+    console.error(e);
+  }
+});
+
+/reloadpay
+
+cmd({
+  pattern: "reloadpay",
+  react: "📲",
+  desc: "Show reload payment details",
+  category: "main",
+  use: '.reloadpay',
+  filename: __filename
+}, async (conn, m) => {
+  try {
+    const from = m.chat;
+    const pushname = m.pushName || "User";
+
+    const caption = `📲 *RELOAD PAYMENT METHOD*
+
+*Hey ${pushname},*
+ඔබට පහසුවෙන් පහත සඳහන් නම්බර් එකට රිලෝඩ් කරගෙවීම් කළ හැකිය.
+
+───────────────
+➤ 0767441211
+───────────────
+*⭕සල්ලි දැමීමට පෙර අපට කෙටි පනිවිඩයක් දමා වෙලාවක් වෙන් කරගන්න..!!*
+
+*`⭕8.00 a.m - 10.00 p.m` දක්වා කාලය තුල ඔබට වේලාවක් වෙන් කරගත හැකිය..!!*
+
+> *අවසාන වතාවට මෙතන අවශ්‍ය පැකේජ් එක තෝරාගෙන මැසේජ් එකක් දාලා තියන්න-සල්ලි දැමූ පසු රිසිට් පතක ෆොටෝ එකක් දාන්න☺️🤝*
+
+* BUY 1 HR PLAN 
+* _wa.me/769805724?text=1hour+plan+want+buy+pay+bank_
+
+* BUY 2 HR PLAN 
+* _wa.me/769805724?text=2hour+plan+want+buy+pay+bank_
+
+* BUY 3 HR PLAN 
+* _wa.me/769805724?text=3hour+plan+want+buy+pay+bank_
+
+* BUY 8 HR PLAN 
+* _wa.me/769805724?text=8hour+plan+want+pay+bank_
+
+* BUY GRUP FULL PLAN 
+* _wa.me/769805724?text=GRUPFULL+plan+want+buy+pay+bank_
+`;
+
+    await conn.sendMessage(from, {
+      image: { url: "https://i.ibb.co/fx8c3Ch/payment.jpg" },
+      caption: caption,
+      buttons: [
+        { buttonId: prefix + 'bankpay', buttonText: { displayText: '💸 Want Bank to Payment' }, type: 1 }
+      ],
+      headerType: 4,
+      viewOnce: true
+    }, { quoted: m });
+  } catch (e) {
+    await m.reply('*ERROR !!*');
+    console.error(e);
+  }
+});
+
+//bank pay
+
+cmd({
+  pattern: "bankpay",
+  react: "🏦",
+  desc: "Show bank payment details",
+  category: "main",
+  use: '.bankpay',
+  filename: __filename
+}, async (conn, m) => {
+  try {
+    const from = m.chat;
+    const pushname = m.pushName || "User";
+
+    const caption = `🏦 *BANK PAYMENT METHOD*
+
+━━━━━━━━━━━━━━━
+🏛️ *Bank:* BOC  
+🔢 *Acc No:* 78023501  
+👤 *Name:* J.K.P. Nishara  
+🏬 *Branch:* Udawalawa  
+━━━━━━━━━━━━━━━
+
+*⭕සල්ලි දැමීමට පෙර අපට කෙටි පනිවිඩයක් දමා වෙලාවක් වෙන් කරගන්න..!!*
+
+*`⭕8.00 a.m - 10.00 p.m` දක්වා කාලය තුල ඔබට වේලාවක් වෙන් කරගත හැකිය..!!*
+
+> *අවසාන වතාවට මෙතන අවශ්‍ය පැකේජ් එක තෝරාගෙන මැසේජ් එකක් දාලා තියන්න-සල්ලි දැමූ පසු රිසිට් පතක ෆොටෝ එකක් දාන්න☺️🤝*
+
+* BUY 1 HR PLAN 
+* _wa.me/769805724?text=1hour+plan+want+buy+pay+bank_
+
+* BUY 2 HR PLAN 
+* _wa.me/769805724?text=2hour+plan+want+buy+pay+bank_
+
+* BUY 3 HR PLAN 
+* _wa.me/769805724?text=3hour+plan+want+buy+pay+bank_
+
+* BUY 8 HR PLAN 
+* _wa.me/769805724?text=8hour+plan+want+pay+bank_
+
+* BUY GRUP FULL PLAN 
+* _wa.me/769805724?text=GRUPFULL+plan+want+buy+pay+bank_
+`;
+
+    await conn.sendMessage(from, {
+      image: { url: "https://i.ibb.co/67BFx97p/2284.jpg"" },
+      caption: caption,
+      buttons: [
+        { buttonId: prefix + 'reloadpay', buttonText: { displayText: '💸 Back to Reload Pay' }, type: 1 }
+        ],
+      headerType: 4,
+      viewOnce: true
+    }, { quoted: m });
+  } catch (e) {
+    await m.reply('*ERROR !!*');
+    console.error(e);
+  }
+});
