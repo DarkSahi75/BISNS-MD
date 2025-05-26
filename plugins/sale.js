@@ -328,20 +328,20 @@ cmd({
 //reloadpay
 
 cmd({
-pattern: "reloadpay",
-react: "📲",
-desc: "Show reload payment details",
-category: "main",
-use: '.reloadpay',
-filename: __filename
+  pattern: "reloadpay",
+  react: "📲",
+  desc: "Show reload payment details",
+  category: "main",
+  use: '.reloadpay',
+  filename: __filename
 }, async (conn, m) => {
-try {
-const from = m.chat;
-const pushname = m.pushName || "User";
+  try {
+    const prefix = global.prefix || '.';
+    const from = m.chat;
+    const pushname = m.pushName || "User";
 
-const caption = `📲 *RELOAD PAYMENT METHOD*
+    const caption = `📲 *RELOAD PAYMENT METHOD*
 
-Hey ${pushname},
 ඔබට පහසුවෙන් පහත සඳහන් නම්බර් එකට රිලෝඩ් කරගෙවීම් කළ හැකිය.
 
 ───────────────
@@ -352,8 +352,6 @@ Hey ${pushname},
 \`⭕8.00 a.m - 10.00 p.m\` දක්වා කාලය තුල ඔබට වේලාවක් වෙන් කරගත හැකිය..!!
 
 > අවසාන වතාවට මෙතන අවශ්‍ය පැකේජ් එක තෝරාගෙන මැසේජ් එකක් දාලා තියන්න-සල්ලි දැමූ පසු රිසිට් පතක ෆොටෝ එකක් දාන්න☺️🤝
-
-
 
 BUY 1 HR PLAN
 
@@ -376,21 +374,21 @@ BUY GRUP FULL PLAN
 wa.me/769805724?text=GRUPFULL+plan+want+buy+pay+reload
 `;
 
-await conn.sendMessage(from, {
-image: { url: "https://i.ibb.co/fx8c3Ch/payment.jpg"},
-caption: caption,
-buttons: [
-{ buttonId: prefix + 'bankpay', buttonText: { displayText: '💸 Want Bank to Payment' }, type: 1 }
-],
-headerType: 4,
-viewOnce: true
-}, { quoted: m });
-} catch (e) {
-await m.reply('ERROR !!');
-console.error(e);
-}
-});
+    await conn.sendMessage(from, {
+      image: { url: "https://i.ibb.co/fx8c3Ch/payment.jpg" },
+      caption: caption,
+      buttons: [
+        { buttonId: prefix + 'bankpay', buttonText: { displayText: '💸 Want Bank to Payment' }, type: 1 }
+      ],
+      headerType: 4,
+      viewOnce: true
+    }, { quoted: m });
 
+  } catch (e) {
+    await m.reply('ERROR !!');
+    console.error(e);
+  }
+});
 
 //ROR එන්නෙ රිප්ලය් එකට ඇය් ඒ🤭
 
