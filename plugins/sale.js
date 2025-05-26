@@ -430,7 +430,7 @@ cmd({
 `;
 
     await conn.sendMessage(from, {
-      image: { url: "https://i.ibb.co/67BFx97p/2284.jpg"" },
+      image: { url: "https://i.ibb.co/67BFx97p/2284.jpg"},
       caption: caption,
       buttons: [
         { buttonId: prefix + 'reloadpay', buttonText: { displayText: '💸 Back to Reload Pay' }, type: 1 }
