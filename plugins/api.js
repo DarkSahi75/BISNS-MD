@@ -6,7 +6,40 @@ const config = require("../settings");
 
 //const yts = require("yt-search");
 //onst axios = require("axios");
+cmd({
+  pattern: "temp",
+  react: "🧚‍♂️",
+  desc: "Render 1 Hour Promotion Plan",
+  category: "main",
+  use: '.render',
+  filename: __filename
+}, async (conn, m) => {
+  try {
+    const from = m.chat;
+    const pushname = m.pushName || "User";
 
+    const caption = `🕐 *1HOUR PLAN - NO UPDATES* 🔏
+
+💸 _*PRICE:*_ *RS.300/=*
+
+📌 *SPECIAL NOTE ❗* ⤵️
+
+⭕ *සල්ලි දැමීමට පෙර අපට කෙටි පනිවිඩයක් දමා වෙලාවක් වෙන් කරගන්න..!!*  
+⏰ *අදාල වේලාවන්:* _8.00 AM - 10.00 PM_
+
+⚠️ *ප්‍රමෝශන් ඇඩ් එක්ක් දාගන්නවානම් පමණක් මෙතනින් එහා ඉදිරියට යන්න ☺️🪄*  
+⚠️ *Proceed here only if you are placing a promotional ad ☺️🪄*`;
+
+    await conn.sendMessage(from, {
+      image: { url: "https://i.ibb.co/TDNMgMzX/5945.jpg" },
+      caption: caption
+    }, { quoted: m });
+
+  } catch (e) {
+    await m.reply('*ERROR !!*');
+    console.error(e);
+  }
+});
 cmd(
   {
     pattern: "api",
