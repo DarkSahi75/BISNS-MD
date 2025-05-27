@@ -187,7 +187,7 @@ cmd({
       caption: caption,
       buttons: [
         { buttonId: prefix + 'pay', buttonText: { displayText: '💳 HOW TO PAYMENT' }, type: 1 },
-        { buttonId: prefix + '1hbuy', buttonText: { displayText: '👩‍💻 අප නියෝජිතයෙක් හා සම්බන්ධ වීමට' }, type: 1 }
+        { buttonId: prefix + '1hbuy', buttonText: { displayText: '👩‍💻අප.නියෝජිතයෙක්හා.සම්බන්ධ.වීමට' }, type: 1 }
       ],
       headerType: 4,
       viewOnce: true
