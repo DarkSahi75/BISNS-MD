@@ -204,7 +204,7 @@ cmd({
     const from = m.chat;
     const pushname = m.pushName || "User";
 
-    const caption = `🔥 `2 + Free Delivery Sale` 🔥
+    const caption = `🔥 \`2 + Free Delivery Sale\` 🔥
 
 *🟣 තනිව භාණ්ඩයක් Order කිරීමේදි ,*
 
