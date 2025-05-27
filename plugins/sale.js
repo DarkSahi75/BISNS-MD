@@ -186,8 +186,10 @@ cmd({
       image: { url: "https://i.ibb.co/TDNMgMzX/5945.jpg" },
       caption: caption,
       buttons: [
-        { buttonId: prefix + 'pay', buttonText: { displayText: '💳 HOW TO PAYMENT' }, type: 1 },
-        { buttonId: prefix + '1hbuy', buttonText: { displayText: '👩‍💻අප.නියෝජිතයෙක්හා.සම්බන්ධ.වීමට' }, type: 1 }
+        { buttonId: prefix + 'payy', buttonText: { displayText: '❓ Daraz  ගැටලු සදහා' }, type: 1 },
+        { buttonId: prefix + 'payy', buttonText: { displayText: '🛍 Daraz Orders සදහා' }, type: 1 },
+        { buttonId: prefix + 'payy', buttonText: { displayText: '🚚 Orders Tracking' }, type: 1 },
+        { buttonId: prefix + '1hbuy', buttonText: { displayText: '👩‍💻 පාරිබෝගික සහය සදහා' }, type: 1 }
       ],
       headerType: 4,
       viewOnce: true
