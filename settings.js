@@ -14,7 +14,7 @@ POSTGRESQL_URL: process.env.POSTGRESQL_URL === undefined ? 'postgres://vajiratec
 MAX_SIZE: 500,
 JIDBEZ: process.env.JIDBEZ || "120363378149186656@newsletter",
 ANTI_DELETE: process.env.ANTI_DELETE || "true",
-MODE: process.env.MODE === undefined ? '' : process.env.MODE,
+MODE: process.env.MODE === undefined ? 'button' : process.env.MODE,
 STATUS_REPLY_MESSAGE: 'ʏᴏᴜʀ ꜱᴛᴀᴛᴜꜱ ᴊᴜꜱᴛ ɴᴏᴡ ꜱᴇᴇɴ ʙʏ Qᴜᴇᴇɴ ᴅᴇᴡᴍɪɴɪ ᴍᴅ',    
 ALIVE:  process.env.ALIVE  || '> QUEEN DEWMINI MD'  ,    
 DELETEMSGSENDTO : process.env.DELETEMSGSENDTO === undefined ? '' : process.env.DELETEMSGSENDTO        
