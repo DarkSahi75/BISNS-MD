@@ -283,3 +283,21 @@ cmd({
 });
 
 
+
+  //Sadiya
+cmd({
+    pattern: "ytmp4-240",
+    dontAddCommandList: true,
+    filename: __filename
+  },
+async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+try{
+const ytdl = await fetchJson(`https://sadiya-tech-apis.vercel.app/download/ytdl?url=${q}&apikey=${sadiya_apikey}&format=240`);
+const dllink = ytdl.result.download
+await conn.sendMessage( from,{ video: {url: dllink },mimetype:"video/mp4",caption :sadiya_md_footer },{quoted: mek })
+}catch(e){
+console.log(e)
+reply(e)
+})
+
+
