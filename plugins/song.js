@@ -3,8 +3,11 @@ const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
 const config = require("../settings");
 
+// Get prefix dynamically from settings or fallback
+const prefix = config.PREFIX || ".";
+
 cmd({
-  pattern: "song",
+  pattern: "vre",
   alias: "ytmp3",
   react: "🎵",
   desc: "Download Song",
@@ -38,8 +41,9 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
       const sections = [{
         title: "",
         rows: [
-          { title: "1. Audio 🎧", rowId: `.ytmp3 ${data.url}|${data.title}`, description: "Normal type song" },
-          { title: "2. Document 📂", rowId: `.ytdocs ${data.url}|${data.title}`, description: "Document type song" }
+          { title: "1. Voice🎧", rowId: `${prefix}ytptt ${data.url}|${data.title}`, description: "Voice Note type song" },
+          { title: "1. Audio 🎧", rowId: `${prefix}ytaud ${data.url}|${data.title}`, description: "Normal type song" },
+          { title: "2. Document 📂", rowId: `${prefix}ytdoc ${data.url}|${data.title}`, description: "Document type song" }
         ]
       }];
       const listMessage = {
@@ -57,8 +61,9 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
         sections: [{
           title: "DINUWH MD",
           rows: [
-            { title: "Audio 🎧", description: "Download as audio", id: `.ytmp3 ${data.url}|${data.title}` },
-            { title: "Document 📁", description: "Download as document", id: `.ytdocs ${data.url}|${data.title}` }
+            { title: "Voice 💡", description: "Download as Voice Note", id: `${prefix}ytptt ${data.url}` },
+            { title: "Audio 🎧", description: "Download as audio", id: `${prefix}ytaud ${data.url}` },
+            { title: "Document 📁", description: "Download as document", id: `${prefix}ytdoc ${data.url}` }
           ]
         }]
       };
@@ -69,11 +74,15 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
         footer: config.FOOTER || "Powered by DINUWH MD",
         buttons: [
           {
-            buttonId: `.ytmp3 ${data.url}|${data.title}`,
+            buttonId: `${prefix}ytptt ${data.url}`,
+            buttonText: { displayText: "Voice Note 🎧" },
+          },
+          {
+            buttonId: `${prefix}ytaud ${data.url}`,
             buttonText: { displayText: "Audio 🎧" },
           },
           {
-            buttonId: `.ytdocs ${data.url}|${data.title}`,
+            buttonId: `${prefix}ytdoc ${data.url}`,
             buttonText: { displayText: "Document 📁" },
           },
           {
@@ -96,3 +105,120 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
     reply(`❌ Error: ${e.message}`);
   }
 });
+
+//Ptt only send
+
+
+
+cmd({
+  pattern: "ytptt",
+  //alias: "ytmp3",
+  desc: "Download song as PTT only (no duration limit)",
+  category: "download",
+  react: "📂",
+  filename: __filename,
+}, async (robin, mek, m, { q, reply }) => {
+  try {
+    if (!q) return reply("SONG NAME😒?");
+
+    const search = await yts(q);
+    if (!search.videos.length) return reply("Yt search Failed 🥲!");
+
+    const data = search.videos[0];
+
+    // Directly fetch MP3 link using Manul API
+    const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
+    const dataa = await fetchJson(api);
+    const dl_link = dataa.data.url;
+
+    // Send audio as PTT
+    await robin.sendMessage(
+      m.chat,
+      {
+        audio: { url: dl_link },
+        mimetype: "audio/mpeg",
+        ptt: true,
+      },
+      { quoted: mek }
+    );
+  } catch (e) {
+    console.error(e);
+    return reply("❌ Error !");
+  }
+});
+
+//Audio File Send
+
+
+
+
+cmd({
+  pattern: "ytaud",
+  //alias: ["ytmp3"],
+  desc: "Download YouTube song (no caption, audio only)",
+  category: "download",
+  react: "📂",
+  filename: __filename,
+}, async (robin, mek, m, { q, reply }) => {
+  try {
+    if (!q) return reply("SONG NAME 😒?");
+
+    const search = await yts(q);
+    if (!search.videos.length) return reply("Yt search Fail🤧!");
+
+    const data = search.videos[0];
+    const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
+    const result = await fetchJson(api);
+
+    const dl_url = result.data.url;
+
+    await robin.sendMessage(m.chat, {
+      audio: { url: dl_url },
+      mimetype: 'audio/mpeg',
+      ptt: false,
+      fileName: `${data.title}.mp3`
+    }, { quoted: m });
+
+  } catch (e) {
+    reply("*🛑 ERROR! Something went wrong*");
+    console.log(e);
+  }
+});
+
+
+
+//ytdoc=====
+
+
+cmd({
+  pattern: "ytdoc",
+ // alias: ["ytmp3"],
+  desc: "Download YouTube song as document only",
+  category: "download",
+  react: "📁",
+  filename: __filename,
+}, async (robin, mek, m, { q, reply }) => {
+  try {
+    if (!q) return reply("📁 Song name Error");
+
+    const search = await yts(q);
+    if (!search.videos.length) return reply("Yt search Fail🤧!");
+
+    const data = search.videos[0];
+    const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
+    const result = await fetchJson(api);
+
+    const dl_url = result.data.url;
+
+    await robin.sendMessage(m.chat, {
+      document: { url: dl_url },
+      mimetype: 'audio/mpeg',
+      fileName: `${data.title}.mp3`
+    }, { quoted: m });
+
+  } catch (e) {
+    reply("❌ *ERROR! Something went wrong*");
+    console.log(e);
+  }
+});
+
