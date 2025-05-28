@@ -55,64 +55,56 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
       return await robin.sendMessage(from, listMessage, { quoted: mek });
     }
 
-    if (config.MODE === "button") {
-      const listData = {
-        title: "Click Here⎙",
-        sections: [{
-          title: "DINUWH MD",
-          rows: [
-            { title: "Voice 💡", description: "Download as Voice Note", id: `${prefix}ytptt ${data.url}` },
-            { title: "Audio 🎧", description: "Download as audio", id: `${prefix}ytaud ${data.url}` },
-            { title: "Document 📁", description: "Download as document", id: `${prefix}ytdoc ${data.url}` }
-          ]
-        }]
-      };
+    if (config.MODE === "button") { const listData = { title: "Click Here⎙", sections: [{ title: "DINUWH MD", rows: [ { title: "Voice 💡", description: "Download as Voice Note", id: ${prefix}ytptt ${data.url} }, { title: "Audio 🎧", description: "Download as audio", id: ${prefix}ytaud ${data.url} }, { title: "Document 📁", description: "Download as document", id: ${prefix}ytdoc ${data.url} } ] }] };
 
-      return await robin.sendMessage(from, {
-        image: { url: data.thumbnail },
-        caption: cap,
-        footer: config.FOOTER || "Powered by DINUWH MD",
-        buttons: [
-          {
-            buttonId: `${prefix}ytptt ${data.url}`,
-            buttonText: { displayText: "Voice Note 🎧" },
-          },
-          {
-            buttonId: `${prefix}ytaud ${data.url}`,
-            buttonText: { displayText: "Audio 🎧" },
-          },
-          {
-            buttonId: `${prefix}ytdoc ${data.url}`,
-            buttonText: { displayText: "Document 📁" },
-          },
-          {
-            buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify(listData),
-            },
-          },
-        ],
-        headerType: 1,
-        viewOnce: true,
-      }, { quoted: mek });
-    }
+return await robin.sendMessage(from, {
+    image: { url: data.thumbnail },
+    caption: cap,
+    footer: config.FOOTER || "Powered by DINUWH MD",
+    buttons: [
+      {
+        buttonId: `${prefix}ytptt ${data.url}`,
+        buttonText: { displayText: "Voice Note 🎧" },
+      },
+      {
+        buttonId: `${prefix}ytaud ${data.url}`,
+        buttonText: { displayText: "Audio 🎧" },
+      },
+      {
+        buttonId: `${prefix}ytdoc ${data.url}`,
+        buttonText: { displayText: "Document 📁" },
+      },
+      {
+        buttonId: "action",
+        buttonText: { displayText: "🔘 Choose Song Type" },
+        type: 4,
+        nativeFlowInfo: {
+          name: "single_select",
+          paramsJson: JSON.stringify(listData),
+        },
+      },
+    ],
+    headerType: 1,
+    viewOnce: true,
+  }, { quoted: mek });
+}
 
-  } catch (e) {
-    console.error(e);
-    reply(`❌ Error: ${e.message}`);
-  }
-});
+} catch (e) { console.error(e); reply(❌ Error: ${e.message}); } });
+
+//මේ ටිකේ සිලෙක්ශන් බාර් එක බටන් තුනට යටින් ගන්න බැරිද එ කිව්වෙ බටන් තුන ඉස්සෙල්ලා ඊට යටින් සිලෙක්ශන් බාර් එක
+
+
 
 //Ptt only send
 
 
 
+//const { fetchJson } = require('../lib/functions');
+//nst { cmd } = require("../command");
+//nst yts = require("yt-search");
+
 cmd({
   pattern: "ytptt",
-  //alias: "ytmp3",
   desc: "Download song as PTT only (no duration limit)",
   category: "download",
   react: "📂",
@@ -125,13 +117,16 @@ cmd({
     if (!search.videos.length) return reply("Yt search Failed 🥲!");
 
     const data = search.videos[0];
-
-    // Directly fetch MP3 link using Manul API
     const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
     const dataa = await fetchJson(api);
-    const dl_link = dataa.data.url;
 
-    // Send audio as PTT
+    if (!dataa || !dataa.data || !dataa.data.url) {
+      return reply("❌ Failed to fetch MP3 link from API!");
+    }
+
+    const dl_link = dataa.data.url;
+    console.log("MP3 Link:", dl_link); // Debug log
+
     await robin.sendMessage(
       m.chat,
       {
@@ -142,8 +137,8 @@ cmd({
       { quoted: mek }
     );
   } catch (e) {
-    console.error(e);
-    return reply("❌ Error !");
+    console.error("YTPTT Error:", e);
+    return reply("❌ Error: " + e.message);
   }
 });
 
