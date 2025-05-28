@@ -43,7 +43,7 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
       const sections = [{
         title: "",
         rows: [
-          { title: "1. Voice🎧", rowId: `${prefix}ytptt ${data.url}|${data.title}`, description: "Voice Note type song" },
+          { title: "1. Voice🎧", rowId: `${prefix}ytvoice ${data.url}|${data.title}`, description: "Voice Note type song" },
           { title: "2. Audio 🎧", rowId: `${prefix}ytaud ${data.url}|${data.title}`, description: "Normal type song" },
           { title: "3. Document 📂", rowId: `${prefix}ytdoc ${data.url}|${data.title}`, description: "Document type song" }
         ]
@@ -67,7 +67,7 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
             {
               title: "Voice 💡",
               description: "Download as Voice Note",
-              id: `${prefix}ytptt ${data.url}`
+              id: `${prefix}ytvoice ${data.url}`
             },
             {
               title: "Audio 🎧",
@@ -89,7 +89,7 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
         footer: config.FOOTER || "Powered by DINUWH MD",
         buttons: [
           {
-            buttonId: `${prefix}ytptt ${data.url}`,
+            buttonId: `${prefix}ytvoice ${data.url}`,
             buttonText: { displayText: "Voice Note 🎧" },
           },
           {
