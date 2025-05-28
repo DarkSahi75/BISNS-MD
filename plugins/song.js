@@ -130,35 +130,39 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
 
 cmd({
   pattern: "ytptt",
-  //ias: [],
-  desc: "Download song as Voice Note",
+  //alias: ["ytmp3"],
+  desc: "Download YouTube song (no caption, audio only)",
   category: "download",
-  filename: __filename
-}, async (robin, mek, m, { q, args, reply }) => {
+  react: "📂",
+  filename: __filename,
+}, async (robin, mek, m, { q, reply }) => {
   try {
-    if (!args[0]) return reply("🧩 Please provide YouTube link!");
+    if (!q) return reply("SONG NAME 😒?");
 
-    const [yturl, title] = args.join(" ").split("|");
-    if (!yturl || !yturl.includes("youtube.com") && !yturl.includes("youtu.be"))
-      return reply("❌ Valid YouTube URL not found!");
+    const search = await yts(q);
+    if (!search.videos.length) return reply("Yt search Fail🤧!");
 
-    const api = await fetchJson(`https://cdn301.savetube.su/api/button/mp3/${yturl.trim()}`);
-    if (!api || !api.data || !api.data[0]) return reply("❌ Audio not found!");
+    const data = search.videos[0];
+    const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
+    const result = await fetchJson(api);
 
-    const audio = api.data[0]?.url;
-    if (!audio) return reply("⚠️ Audio download link missing.");
+    const dl_url = result.data.url;
 
     await robin.sendMessage(m.chat, {
-      audio: { url: audio },
-      mimetype: 'audio/mp4',
-      ptt: true
-    }, { quoted: mek });
+      audio: { url: dl_url },
+      mimetype: 'audio/mpeg',
+      ptt: true,
+      fileName: `${data.title}.mp3`
+    }, { quoted: m });
 
   } catch (e) {
-    console.error(e);
-    reply("🚫 Error in ytptt plugin:\n" + e.message);
+    reply("*🛑 ERROR! Something went wrong*");
+    console.log(e);
   }
 });
+
+
+
 //Audio File Send
 
 
