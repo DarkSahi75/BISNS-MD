@@ -42,7 +42,7 @@ cmd({
 });
 cmd(
   {
-    pattern: "api",
+    pattern: "dinu",
     alias: ["vre", "yta"],
     react: "🎧",
     desc: "Download YouTube MP3",
