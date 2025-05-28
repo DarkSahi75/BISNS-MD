@@ -125,7 +125,7 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
 
 
 cmd({
-  pattern: "ytptt",
+  pattern: "ytvoice",
   //alias: ["ytmp3"],
   desc: "Download YouTube song (no caption, audio only)",
   category: "download",
