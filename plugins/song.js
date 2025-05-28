@@ -125,11 +125,11 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
 
 
 cmd({
-  pattern: "ytaud",
+  pattern: "ytptt",
   //alias: ["ytmp3"],
   desc: "Download YouTube song (no caption, audio only)",
   category: "download",
-  react: "📂",
+  react: "🎤",
   filename: __filename,
 }, async (robin, mek, m, { q, reply }) => {
   try {
@@ -167,7 +167,7 @@ cmd({
  // alias: ["ytmp3"],
   desc: "Download YouTube song as document only",
   category: "download",
-  react: "📁",
+  react: "📄",
   filename: __filename,
 }, async (robin, mek, m, { q, reply }) => {
   try {
@@ -190,6 +190,41 @@ cmd({
 
   } catch (e) {
     reply("❌ *ERROR! Something went wrong*");
+    console.log(e);
+  }
+});
+
+//=======
+
+cmd({
+  pattern: "ytaud",
+  //alias: ["ytmp3"],
+  desc: "Download YouTube song (no caption, audio only)",
+  category: "download",
+  react: "🎶",
+  filename: __filename,
+}, async (robin, mek, m, { q, reply }) => {
+  try {
+    if (!q) return reply("SONG NAME 😒?");
+
+    const search = await yts(q);
+    if (!search.videos.length) return reply("Yt search Fail🤧!");
+
+    const data = search.videos[0];
+    const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
+    const result = await fetchJson(api);
+
+    const dl_url = result.data.url;
+
+    await robin.sendMessage(m.chat, {
+      audio: { url: dl_url },
+      mimetype: 'audio/mpeg',
+      ptt: false,
+      fileName: `${data.title}.mp3`
+    }, { quoted: m });
+
+  } catch (e) {
+    reply("*🛑 ERROR! Something went wrong*");
     console.log(e);
   }
 });
