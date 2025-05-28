@@ -120,51 +120,7 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
     reply(`❌ Error: ${e.message}`);
   }
 });
-//Ptt only send
-
-
-
-//const { fetchJson } = require('../lib/functions');
-//nst { cmd } = require("../command");
-//nst yts = require("yt-search");
-
-cmd({
-  pattern: "ytptt",
-  //alias: ["ytmp3"],
-  desc: "Download YouTube song (no caption, audio only)",
-  category: "download",
-  react: "📂",
-  filename: __filename,
-}, async (robin, mek, m, { q, reply }) => {
-  try {
-    if (!q) return reply("SONG NAME 😒?");
-
-    const search = await yts(q);
-    if (!search.videos.length) return reply("Yt search Fail🤧!");
-
-    const data = search.videos[0];
-    const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
-    const result = await fetchJson(api);
-
-    const dl_url = result.data.url;
-
-    await robin.sendMessage(m.chat, {
-      audio: { url: dl_url },
-      mimetype: 'audio/mpeg',
-      ptt: true,
-      fileName: `${data.title}.mp3`
-    }, { quoted: m });
-
-  } catch (e) {
-    reply("*🛑 ERROR! Something went wrong*");
-    console.log(e);
-  }
-});
-
-
-
-//Audio File Send
-
+//Ptt
 
 
 
@@ -191,7 +147,7 @@ cmd({
     await robin.sendMessage(m.chat, {
       audio: { url: dl_url },
       mimetype: 'audio/mpeg',
-      ptt: false,
+      ptt: true,
       fileName: `${data.title}.mp3`
     }, { quoted: m });
 
