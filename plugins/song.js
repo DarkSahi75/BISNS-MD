@@ -1,4 +1,4 @@
-
+const sadiya_md_footer = "🌀 Powered by DINUWH MD";
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson } = require('../lib/functions')
 const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
