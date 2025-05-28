@@ -8,16 +8,11 @@ cmd(
     pattern: "mymp4",
     alias: ["vre", "yta"],
     react: "🎧",
-    desc: "Download YouTube MP3",
+    desc: "Download YouTube MP4 Video",
     category: "download",
     filename: __filename,
   },
-  async (
-    robin,
-    mek,
-    m,
-    { from, q, reply }
-  ) => {
+  async (robin, mek, m, { from, q, reply }) => {
     try {
       if (!q) return reply("ඔයාලා YouTube නමක් හෝ ලින්ක් එකක් දෙන්න!");
 
@@ -31,7 +26,7 @@ cmd(
       const { data: apiRes } = await axios.get(api);
 
       if (!apiRes?.status || !apiRes.result?.download) {
-        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+        return reply("❌ වීඩියෝව බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
       }
 
       const result = apiRes.result;
@@ -59,9 +54,9 @@ ____  *||"💗🩷💙💚🖤" ඔයාගෙ ආසම පාටින් ර
       await robin.sendMessage(
         from,
         {
-          audio: { url: result.download },
+          video: { url: result.download },
           mimetype: "video/mp4",
-          ptt: true,
+          caption: `🎬 *${result.title}*`,
         },
         { quoted: mek }
       );
