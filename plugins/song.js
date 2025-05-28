@@ -229,3 +229,31 @@ cmd({
   }
 });
 
+//video
+
+
+cmd({
+  pattern: "v144",
+  alias: ["yt144"],
+  react: "📹",
+  desc: "Download 144p video",
+  category: "download",
+  filename: __filename,
+}, async (robin, mek, m, { q, reply }) => {
+  try {
+    if (!q) return reply("🔗 YouTube ලින්ක් එකක් හරි නමක් හරි දෙන්න");
+    const search = await require("yt-search")(q);
+    if (!search.videos.length) return reply("❌ Video not found!");
+
+    const url = search.videos[0].url;
+    const data = await fetchJson(`https://manul-official-new-api-site.vercel.app/convert?mp4=${encodeURIComponent(url)}&quality=144p&apikey=Manul-Official`);
+
+    await robin.sendMessage(m.chat, {
+      video: { url: data.data.url },
+      caption: "",
+    }, { quoted: mek });
+  } catch (e) {
+    reply(`❌ Error: ${e.message}`);
+  }
+});
+
