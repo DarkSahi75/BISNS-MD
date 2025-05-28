@@ -1,3 +1,4 @@
+
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson } = require('../lib/functions')
 const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
@@ -7,7 +8,7 @@ const config = require("../settings");
 const prefix = config.PREFIX || ".";
 
 cmd({
-  pattern: "vre",
+  pattern: "song",
   alias: "ytmp3",
   react: "🎵",
   desc: "Download Song",
@@ -37,13 +38,14 @@ cmd({
 🖇️ALL MUSIC PLAY LIST 👇
 https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
 
+    // nonbutton mode - list message
     if (config.MODE === "nonbutton") {
       const sections = [{
         title: "",
         rows: [
           { title: "1. Voice🎧", rowId: `${prefix}ytptt ${data.url}|${data.title}`, description: "Voice Note type song" },
-          { title: "1. Audio 🎧", rowId: `${prefix}ytaud ${data.url}|${data.title}`, description: "Normal type song" },
-          { title: "2. Document 📂", rowId: `${prefix}ytdoc ${data.url}|${data.title}`, description: "Document type song" }
+          { title: "2. Audio 🎧", rowId: `${prefix}ytaud ${data.url}|${data.title}`, description: "Normal type song" },
+          { title: "3. Document 📂", rowId: `${prefix}ytdoc ${data.url}|${data.title}`, description: "Document type song" }
         ]
       }];
       const listMessage = {
@@ -55,46 +57,69 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
       return await robin.sendMessage(from, listMessage, { quoted: mek });
     }
 
-    if (config.MODE === "button") { const listData = { title: "Click Here⎙", sections: [{ title: "DINUWH MD", rows: [ { title: "Voice 💡", description: "Download as Voice Note", id: ${prefix}ytptt ${data.url} }, { title: "Audio 🎧", description: "Download as audio", id: ${prefix}ytaud ${data.url} }, { title: "Document 📁", description: "Download as document", id: ${prefix}ytdoc ${data.url} } ] }] };
+    // button mode - with single_select (nativeFlowInfo)
+    if (config.MODE === "button") {
+      const listData = {
+        title: "Click Here⎙",
+        sections: [{
+          title: "DINUWH MD",
+          rows: [
+            {
+              title: "Voice 💡",
+              description: "Download as Voice Note",
+              id: `${prefix}ytptt ${data.url}`
+            },
+            {
+              title: "Audio 🎧",
+              description: "Download as audio",
+              id: `${prefix}ytaud ${data.url}`
+            },
+            {
+              title: "Document 📁",
+              description: "Download as document",
+              id: `${prefix}ytdoc ${data.url}`
+            }
+          ]
+        }]
+      };
 
-return await robin.sendMessage(from, {
-    image: { url: data.thumbnail },
-    caption: cap,
-    footer: config.FOOTER || "Powered by DINUWH MD",
-    buttons: [
-      {
-        buttonId: `${prefix}ytptt ${data.url}`,
-        buttonText: { displayText: "Voice Note 🎧" },
-      },
-      {
-        buttonId: `${prefix}ytaud ${data.url}`,
-        buttonText: { displayText: "Audio 🎧" },
-      },
-      {
-        buttonId: `${prefix}ytdoc ${data.url}`,
-        buttonText: { displayText: "Document 📁" },
-      },
-      {
-        buttonId: "action",
-        buttonText: { displayText: "🔘 Choose Song Type" },
-        type: 4,
-        nativeFlowInfo: {
-          name: "single_select",
-          paramsJson: JSON.stringify(listData),
-        },
-      },
-    ],
-    headerType: 1,
-    viewOnce: true,
-  }, { quoted: mek });
-}
+      return await robin.sendMessage(from, {
+        image: { url: data.thumbnail },
+        caption: cap,
+        footer: config.FOOTER || "Powered by DINUWH MD",
+        buttons: [
+          {
+            buttonId: `${prefix}ytptt ${data.url}`,
+            buttonText: { displayText: "Voice Note 🎧" },
+          },
+          {
+            buttonId: `${prefix}ytaud ${data.url}`,
+            buttonText: { displayText: "Audio 🎧" },
+          },
+          {
+            buttonId: `${prefix}ytdoc ${data.url}`,
+            buttonText: { displayText: "Document 📁" },
+          },
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
+          },
+        ],
+        headerType: 1,
+        viewOnce: true,
+      }, { quoted: mek });
+    }
 
-} catch (e) { console.error(e); reply(❌ Error: ${e.message}); } });
-
-//මේ ටිකේ සිලෙක්ශන් බාර් එක බටන් තුනට යටින් ගන්න බැරිද එ කිව්වෙ බටන් තුන ඉස්සෙල්ලා ඊට යටින් සිලෙක්ශන් බාර් එක
-
-
-
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
 //Ptt only send
 
 
