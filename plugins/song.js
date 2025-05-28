@@ -234,7 +234,7 @@ cmd({
 
 cmd({
   pattern: "v144",
-  alias: ["yt144"],
+  //lias: ["yt144"],
   react: "📹",
   desc: "Download 144p video",
   category: "download",
@@ -264,6 +264,7 @@ const axios = require("axios");
 
 cmd({
   pattern: "yt144",
+  react: "💗",
   category: "download",
   desc: "Download YouTube video 144p",
   filename: __filename,
