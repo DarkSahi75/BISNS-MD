@@ -257,3 +257,28 @@ cmd({
   }
 });
 
+//ytv
+
+//const { cmd } = require("../command");
+const axios = require("axios");
+
+cmd({
+  pattern: "yt144",
+  category: "download",
+  desc: "Download YouTube video 144p",
+  filename: __filename,
+}, async (robin, mek, m, { q, from, reply }) => {
+  if (!q) return reply("🔗 YouTube ලින්ක් එකක් දෙන්න!");
+  try {
+    const res = await axios.get(`https://yt-five-tau.vercel.app/download?q=${q}&format=144`);
+    if (!res.data?.result?.download) return reply("❌ Link එක හොයාගන්න බැරිවුණා!");
+    await robin.sendMessage(from, {
+      video: { url: res.data.result.download },
+      caption: "🎥 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝙳 - 144p",
+    }, { quoted: mek });
+  } catch (e) {
+    reply("❌ Error: " + e.message);
+  }
+});
+
+
