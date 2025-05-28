@@ -298,4 +298,4 @@ await conn.sendMessage( from,{ video: {url: dllink },mimetype:"video/mp4",captio
 }catch(e){
 console.log(e)
 reply(e)
-})
+});
