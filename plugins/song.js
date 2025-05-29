@@ -230,9 +230,9 @@ cmd({
 
 cmd({
   pattern: "devilv",
-  alias: "song",
-  react: "🎵",
-  desc: "Download Song",
+  alias: ["devilvideo", "ytdlvideo"],
+  react: "📽️",
+  desc: "Download YouTube Video",
   category: "download",
   filename: __filename,
 }, async (robin, mek, m, { from, q, prefix, reply }) => {
@@ -245,28 +245,29 @@ cmd({
 
     const cap = `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
 ╭────────✦✧✦────────╯
+*🎬 Title:* ${data.title}
+*⏱ Duration:* ${data.timestamp}
+*📊 Views:* ${data.views}
+*🔗 URL:* ${data.url}
+╰────────✦✧✦────────╯`;
 
- *Choos You Want Video File Type*`;
-
-    // ✳️ If nonbutton mode
     if (config.MODE === "nonbutton") {
       const sections = [{
-        title: "",
+        title: "VIDEO TYPE",
         rows: [
-          { title: "1. Normal Video File 📽️", rowId: `${prefix}devilnewv ${data.url}|${data.title}`, description: "Normal type Video" },
-          { title: "2. Document Video File 📂", rowId: `${prefix}devilnewd ${data.url}|${data.title}`, description: "Document type Video" }
+          { title: "1. Normal 🎥", rowId: `${prefix}devilnewv ${data.url}`, description: "Send as Video File" },
+          { title: "2. Document 📂", rowId: `${prefix}devilnewd ${data.url}`, description: "Send as Document" }
         ]
       }];
       const listMessage = {
-        text: "*Normal Video File Or Document Video file Avaible*",
-        footer: "> *〽️ade By Dinuwh Bbh*",
-        buttonText: "```🔢 Reply below number you need song type```",
+        text: "*SELECT VIDEO TYPE*",
+        footer: sadiya_md_footer,
+        buttonText: "🔘 Choose Format",
         sections
       };
       return await robin.sendMessage(from, listMessage, { quoted: mek });
     }
 
-    // ✳️ If button mode
     if (config.MODE === "button") {
       const listData = {
         title: "Choose Format ⎙",
@@ -274,13 +275,13 @@ cmd({
           title: "DINUWH MD OPTIONS",
           rows: [
             {
-              title: "\`[Normle Video 📽️]\`",
-              description: "Download as Norml Video\n〽️ade By Dinuwh Bbh",
+              title: "[Video 🎥]",
+              description: "Download as normal video file",
               id: `${prefix}devilnewv ${data.url}`
             },
             {
-              title: "\`[Document File 📄]\`",
-              description: "Download as Documrnt Video\n〽️ade By Dinuwh Bbh",
+              title: "[Document 📂]",
+              description: "Download as document video file",
               id: `${prefix}devilnewd ${data.url}`
             }
           ]
@@ -290,22 +291,21 @@ cmd({
       return await robin.sendMessage(from, {
         image: { url: data.thumbnail },
         caption: cap,
-        footer: "> 〽️ade By Dinuwh Bbh",
+        footer: sadiya_md_footer,
         buttons: [
-          
           {
             buttonId: `${prefix}devilnewv ${data.url}`,
-            buttonText: { displayText: "\`[Document 📁]\`" },
+            buttonText: { displayText: "📥 Video" },
             type: 1
           },
           {
             buttonId: `${prefix}devilnewd ${data.url}`,
-            buttonText: { displayText: "\`[Video 📽️]\`" },
+            buttonText: { displayText: "📁 Document" },
             type: 1
-
+          },
           {
             buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
+            buttonText: { displayText: "🔘 Choose Format" },
             type: 4,
             nativeFlowInfo: {
               name: "single_select",
@@ -317,9 +317,10 @@ cmd({
         viewOnce: true,
       }, { quoted: mek });
     }
+
   } catch (e) {
     console.error(e);
-    reply(`❌ Error: ${e.message}`);
+    reply("❌ Error while processing the video. Try again later.");
   }
 });
 //Ptt
