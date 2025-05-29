@@ -83,7 +83,7 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J`;
       return await robin.sendMessage(from, {
         image: { url: data.thumbnail },
         caption: cap,
-        footer: config.FOOTER || "Powered by DINUWH MD",
+        footer:  "Powered by DINUWH MD",
         buttons: [
           {
             buttonId: `${prefix}ytvoice ${data.url}`,
