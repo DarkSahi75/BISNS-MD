@@ -7,9 +7,8 @@ const config = require("../settings");
 // Get prefix dynamically from settings or fallback
 const prefix = config.PREFIX || ".";
 
-const { cmd } = require('../command')
-const yts = require("yt-search");
-const config = require('../settings');
+
+
 
 cmd({
   pattern: "dsong",
