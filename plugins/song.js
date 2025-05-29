@@ -55,23 +55,23 @@ cmd({
     // button mode - with single_select (nativeFlowInfo)
     if (config.MODE === "button") {
       const listData = {
-        title: "Click Here⎙",
+        title: "Choos Format⎙",
         sections: [{
           title: "DINUWH MD",
           rows: [
             {
               title: "Voice 💡",
-              description: "Download as Voice Note",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
               id: `${prefix}ytvoice ${data.url}`
             },
             {
               title: "Audio 🎧",
-              description: "Download as audio",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
               id: `${prefix}ytaud ${data.url}`
             },
             {
               title: "Document 📁",
-              description: "Download as document",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
               id: `${prefix}ytdoc ${data.url}`
             }
           ]
