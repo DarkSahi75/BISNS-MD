@@ -304,3 +304,52 @@ async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender
     reply("🚫 Error: " + e.message);
   }
 });
+
+const axios = require("axios");
+//const { cmd } = require("../lib/command");
+//onst config = require("../settings");
+
+cmd({
+  pattern: "giftmp3",
+  alias: ["ytaudio", "giftedaudio"],
+  react: "🎶",
+  desc: "Download YouTube MP3 via GiftedTech API",
+  category: "download",
+  filename: __filename,
+}, async (conn, mek, m, { from, q, reply }) => {
+  try {
+    if (!q) return reply("🔎 කරුණාකර YouTube ලින්ක් එකක් හෝ නමක් දෙන්න!");
+
+    const url = encodeURIComponent(q.trim());
+    const api = `https://api.giftedtech.my.id/api/download/ytmp3?apikey=gifted&url=${url}`;
+    const res = await axios.get(api);
+
+    if (!res.data.status || !res.data.result?.url) {
+      return reply("❌ MP3 බාගත කළ නොහැක!");
+    }
+
+    const result = res.data.result;
+
+    const caption = `🎵 *${result.title}*\n🕒 Duration: ${result.duration}\n👤 Channel: ${result.channel}\n\n🔗 ${result.url}`;
+
+    // ✅ Send thumbnail + caption
+    await conn.sendMessage(from, {
+      image: { url: result.thumb },
+      caption: caption,
+    }, { quoted: mek });
+
+    // ✅ Send MP3 audio
+    await conn.sendMessage(from, {
+      audio: { url: result.url },
+      mimetype: 'audio/mpeg',
+      fileName: `${result.title}.mp3`,
+      ptt: false
+    }, { quoted: mek });
+
+    await conn.sendMessage(from, { react: { text: "✅", key: mek.key } });
+
+  } catch (err) {
+    console.error("YTMP3 Plugin Error:", err);
+    reply("❌ දෝෂයක් ඇතිවුණා. තවත් උත්සහ කරන්න!");
+  }
+});
