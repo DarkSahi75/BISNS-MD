@@ -8,8 +8,8 @@ const config = require("../settings");
 const prefix = config.PREFIX || ".";
 
 cmd({
-  pattern: "song",
-  alias: "ytmp3",
+  pattern: "dsong",
+  alias: "song",
   react: "🎵",
   desc: "Download Song",
   category: "download",
@@ -25,12 +25,11 @@ cmd({
     const cap = `〲 Dinu-x Beta YT Song Downloader
 
 \`✗ Title\`    : ${data.title}
-✗ Url      : ${data.url}
-✗ Time     : ${data.timestamp}      
-✗ Upload   : ${data.ago}
-✗ Views    : ${data.views}
-
-> 〽️ade By Dinuwh Bbh 
+\`✗ Url\`      : ${data.url}
+\`✗ Time\`     : ${data.timestamp} (${data.seconds} sec)    
+\`✗ Upload\`   : ${data.ago}
+\`✗ Views\`    : ${data.views}
+ 
 
 \`\`\`ƒσℓℓσω υѕ мυѕι¢ ¢нαηηєℓ🧚‍♂️\`\`\`
 https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J`;
@@ -83,7 +82,7 @@ https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J`;
       return await robin.sendMessage(from, {
         image: { url: data.thumbnail },
         caption: cap,
-        footer:  "Powered by DINUWH MD",
+        footer:  "> 〽️ade By Dinuwh Bbh",
         buttons: [
           {
             buttonId: `${prefix}ytvoice ${data.url}`,
