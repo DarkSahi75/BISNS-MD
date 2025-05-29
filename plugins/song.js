@@ -32,7 +32,7 @@ cmd({
 
 > 〽️ade By Dinuwh Bbh 
 
-\`\`\`ƒσℓℓσω υѕ мυѕι¢ ¢нαηηєℓ🧚‍♂️`\`\`\
+\`\`\`ƒσℓℓσω υѕ мυѕι¢ ¢нαηηєℓ🧚‍♂️\`\`\`
 https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J`;
 
     // nonbutton mode - list message
