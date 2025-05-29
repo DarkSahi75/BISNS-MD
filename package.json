@@ -90,6 +90,7 @@
         "caliph-api":"^1.0.0",
         "yt-search" : "^2.11.1",
         "ytsearch-venom": "^1.0.0",
-        "denethdev-ytmp3":"1.0.2"
+        "denethdev-ytmp3":"1.0.2",
+        "google-tts-api": "2.0.2"
     }
 }
