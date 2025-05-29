@@ -72,7 +72,7 @@ cmd({
     // ✳️ If button mode
     if (config.MODE === "button") {
       const listData = {
-        title: "Choose Format ⎙",
+        title: "◎ Choose Format ◎",
         sections: [{
           title: "DINUWH MD OPTIONS",
           rows: [
