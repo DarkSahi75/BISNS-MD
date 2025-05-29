@@ -7,6 +7,10 @@ const config = require("../settings");
 // Get prefix dynamically from settings or fallback
 const prefix = config.PREFIX || ".";
 
+const { cmd } = require('../command')
+const yts = require("yt-search");
+const config = require('../settings');
+
 cmd({
   pattern: "dsong",
   alias: "song",
@@ -14,12 +18,14 @@ cmd({
   desc: "Download Song",
   category: "download",
   filename: __filename,
-}, async (robin, mek, m, { from, q, reply }) => {
+}, async (robin, mek, m, { from, q, prefix, reply }) => {
   try {
     if (!q) return reply("නමක් හරි ලින්ක් එකක් හරි දෙන්න 🌚❤️");
+
     const search = await yts(q);
     if (!search.videos.length) return reply("❌ Video not found!");
     const data = search.videos[0];
+
     const cap = `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
 ╭────────✦✧✦────────╯
 
@@ -36,14 +42,16 @@ cmd({
 🔗 https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J
 
 > *Send You Want Song Formate ⤵️*`;
-    // nonbutton mode - list message
+
+    // ✳️ If nonbutton mode
     if (config.MODE === "nonbutton") {
       const sections = [{
         title: "",
         rows: [
           { title: "1. Audio 🎧", rowId: `${prefix}ytaud ${data.url}|${data.title}`, description: "Normal type song" },
           { title: "2. Document 📂", rowId: `${prefix}ytdoc ${data.url}|${data.title}`, description: "Document type song" },
-          { title: "3. Voice Note(Ptt)-🎧", rowId: `${prefix}ytvoice ${data.url}|${data.title}`, description: "Voice Note type song" }
+          { title: "3. Voice Note(Ptt)-🎧", rowId: `${prefix}ytvoice ${data.url}|${data.title}`, description: "Voice Note type song" },
+          { title: "4. Video File 📽️", rowId: `${prefix}devilv ${data.url}|${data.title}`, description: "Video Document or Normal Video" }
         ]
       }];
       const listMessage = {
@@ -54,12 +62,13 @@ cmd({
       };
       return await robin.sendMessage(from, listMessage, { quoted: mek });
     }
-    // button mode - with single_select (nativeFlowInfo)
+
+    // ✳️ If button mode
     if (config.MODE === "button") {
       const listData = {
-        title: "Choos Format⎙",
+        title: "Choose Format ⎙",
         sections: [{
-          title: "DINUWH MD",
+          title: "DINUWH MD OPTIONS",
           rows: [
             {
               title: "[Audio 🎧]",
@@ -75,36 +84,41 @@ cmd({
               title: "[Voice (ptt) 💡]",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
               id: `${prefix}ytvoice ${data.url}`
-            }
+            },
             {
               title: "[Video File 📽️]",
-              description: "Download as Video Document Or Norml\n〽️ade By Dinuwh Bbh",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
               id: `${prefix}devilv ${data.url}`
             }
           ]
         }]
       };
+
       return await robin.sendMessage(from, {
         image: { url: data.thumbnail },
         caption: cap,
-        footer:  "> 〽️ade By Dinuwh Bbh",
+        footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
           {
             buttonId: `${prefix}ytvoice ${data.url}`,
-            buttonText: { displayText: "\`[Voice Note(Ptt) 🎧]\`" },
+            buttonText: { displayText: "`[Voice Note(Ptt) 🎧]`" },
+            type: 1
           },
           {
             buttonId: `${prefix}ytaud ${data.url}`,
-            buttonText: { displayText: "\`[Audio Type 🎧]\`" },
+            buttonText: { displayText: "`[Audio Type 🎧]`" },
+            type: 1
           },
           {
             buttonId: `${prefix}ytdoc ${data.url}`,
-            buttonText: { displayText: "\`[Document 📁]\`" },
+            buttonText: { displayText: "`[Document 📁]`" },
+            type: 1
           },
           {
             buttonId: `${prefix}devilv ${data.url}`,
-            buttonText: { displayText: "\`[Video 📽️]\`" },
-          }
+            buttonText: { displayText: "`[Video 📽️]`" },
+            type: 1
+          },
           {
             buttonId: "action",
             buttonText: { displayText: "🔘 Choose Song Type" },
@@ -124,6 +138,7 @@ cmd({
     reply(`❌ Error: ${e.message}`);
   }
 });
+
 
 
 //𝚈𝚃 𝚍𝚎𝚟𝚒𝚕𝚕-𝚊𝚞𝚝𝚘
