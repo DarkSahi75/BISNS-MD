@@ -1,4 +1,4 @@
-const { cmd } = require('../command');
+const { cmd } = require('../lib/command');
 const fetch = require("node-fetch");
 const ytsearch = require("yt-search");
 
