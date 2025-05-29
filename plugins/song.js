@@ -24,7 +24,7 @@ cmd({
     try { 
         if (!q) return await reply("\`⚠️ Give Link Or Text\`");
 
-        const yt = await ytsearch(q);
+        const yt = await yts(q);
         if (yt.videos.length < 1) return reply("\`❌ Not Result || හමු නොවීය\`");
 
         let yts = yt.videos[0];  
