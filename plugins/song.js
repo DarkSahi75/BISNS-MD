@@ -19,15 +19,20 @@ cmd({
     const search = await yts(q);
     if (!search.videos.length) return reply("❌ Video not found!");
     const data = search.videos[0];
-    const cap = `〲 Dinu-x Beta YT Song Downloader
-\`✗ Title\`    : ${data.title}
-\`✗ Url\`      : ${data.url}
-\`✗ Time\`     : ${data.timestamp} (${data.seconds} sec)    
-\`✗ Upload\`   : ${data.ago}
-\`✗ Views\`    : ${data.views}
- 
-\`\`\`ƒσℓℓσω υѕ мυѕι¢ ¢нαηηєℓ🧚‍♂️\`\`\`
-https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J`;
+    const cap = `\`\`\`〲 𝙳𝙸𝙽𝚄-𝚇 𝙱𝙴𝚃𝙰 || 🎧 𝚈𝚃 𝚂𝙾𝙽𝙶 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝚁`\`\`\
+
+* \`✦ 𝚃𝚒𝚝𝚕𝚎\`     :  _${data.title}_
+* \`✦ 𝚄𝚁𝙻\`       : _${data.url}_
+* \`✦ 𝙳𝚞𝚛𝚊𝚝𝚒𝚘𝚗\`  : _${data.timestamp} (${data.seconds} sec)_  
+* \`✦ 𝚄𝚙𝚕𝚘𝚊𝚍𝚎𝚍\`  : _${data.ago}_  
+* \`✦ 𝚅𝚒𝚎𝚠𝚜\`     : _${data.views}_  
+
+╭───────────────✿  
+│ 🎶 *ƒσℓℓσω υѕ мυѕι¢ ¢нαηηєℓ* 🧚‍♂️  
+╰───────────────✿  
+🔗 https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J
+
+> *Send You Want Song Formate ⤵️*`;
     // nonbutton mode - list message
     if (config.MODE === "nonbutton") {
       const sections = [{
