@@ -308,9 +308,11 @@ async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender
 //onst axios = require("axios");
 //const { cmd } = require("../lib/command");
 //onst config = require("../settings");
+//const axios = require("axios");
+//onst { cmd } = require("../lib/command");
 
 cmd({
-  pattern: "giftmp3",
+  pattern: "gift",
   alias: ["ytaudio", "giftedaudio"],
   react: "🎶",
   desc: "Download YouTube MP3 via GiftedTech API",
@@ -320,7 +322,7 @@ cmd({
   try {
     if (!q) return reply("🔎 කරුණාකර YouTube ලින්ක් එකක් හෝ නමක් දෙන්න!");
 
-    const url = encodeURIComponent(q.trim());
+    const url = q.trim();
     const api = `https://api.giftedtech.my.id/api/download/ytmp3?apikey=gifted&url=${url}`;
     const res = await axios.get(api);
 
