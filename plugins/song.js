@@ -22,11 +22,11 @@ cmd({
     const data = search.videos[0];
     const cap = `〲 𝙳𝙸𝙽𝚄-𝚇 𝙱𝙴𝚃𝙰 || 🎧 𝚈𝚃 𝚂𝙾𝙽𝙶 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳𝙴𝚁
 
-* \`✦ 𝚃𝚒𝚝𝚕𝚎\`         :  _${data.title}_
-* \`✦ 𝚄𝚁𝙻\`              : _${data.url}_
-* \`✦ 𝙳𝚞𝚛𝚊𝚝𝚒𝚘𝚗\`  : _${data.timestamp} (${data.seconds} sec)_  
+* \`✦ 𝚃𝚒𝚝𝚕𝚎\`     :  _*${data.title}*_
+* \`✦ 𝚄𝚁𝙻\`       : _${data.url}_
+* \`✦ 𝙳𝚞𝚛𝚊𝚝𝚒𝚘𝚗\`  : _*${data.timestamp} (${data.seconds} sec)*_  
 * \`✦ 𝚄𝚙𝚕𝚘𝚊𝚍𝚎𝚍\`  : _${data.ago}_  
-* \`✦ 𝚅𝚒𝚎𝚠𝚜\`          : _${data.views}_  
+* \`✦ 𝚅𝚒𝚎𝚠𝚜\`     : _*${data.views}*_  
 
 ╭───────────────✿  
 │ 🎶 *ƒσℓℓσω υѕ мυѕι¢ ¢нαηηєℓ* 🧚‍♂️  
@@ -39,9 +39,9 @@ cmd({
       const sections = [{
         title: "",
         rows: [
-          { title: "1. Voice🎧", rowId: `${prefix}ytvoice ${data.url}|${data.title}`, description: "Voice Note type song" },
-          { title: "2. Audio 🎧", rowId: `${prefix}ytaud ${data.url}|${data.title}`, description: "Normal type song" },
-          { title: "3. Document 📂", rowId: `${prefix}ytdoc ${data.url}|${data.title}`, description: "Document type song" }
+          { title: "1. Audio 🎧", rowId: `${prefix}ytaud ${data.url}|${data.title}`, description: "Normal type song" },
+          { title: "2. Document 📂", rowId: `${prefix}ytdoc ${data.url}|${data.title}`, description: "Document type song" },
+          { title: "3. Voice Note(Ptt)-🎧", rowId: `${prefix}ytvoice ${data.url}|${data.title}`, description: "Voice Note type song" }
         ]
       }];
       const listMessage = {
@@ -60,19 +60,19 @@ cmd({
           title: "DINUWH MD",
           rows: [
             {
-              title: "Voice 💡",
-              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
-            },
-            {
-              title: "Audio 🎧",
+              title: "[Audio 🎧]",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
               id: `${prefix}ytaud ${data.url}`
             },
             {
-              title: "Document 📁",
+              title: "[Document 📁]",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
               id: `${prefix}ytdoc ${data.url}`
+            },
+            {
+              title: "[Voice (ptt) 💡]",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${data.url}`
             }
           ]
         }]
@@ -84,15 +84,15 @@ cmd({
         buttons: [
           {
             buttonId: `${prefix}ytvoice ${data.url}`,
-            buttonText: { displayText: "Voice Note 🎧" },
+            buttonText: { displayText: "[Voice Note(Ptt) 🎧]" },
           },
           {
             buttonId: `${prefix}ytaud ${data.url}`,
-            buttonText: { displayText: "Audio 🎧" },
+            buttonText: { displayText: "[Audio Type 🎧]" },
           },
           {
             buttonId: `${prefix}ytdoc ${data.url}`,
-            buttonText: { displayText: "Document 📁" },
+            buttonText: { displayText: "[Document 📁]" },
           },
           {
             buttonId: "action",
