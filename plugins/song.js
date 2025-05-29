@@ -305,7 +305,7 @@ async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender
   }
 });
 
-const axios = require("axios");
+//onst axios = require("axios");
 //const { cmd } = require("../lib/command");
 //onst config = require("../settings");
 
