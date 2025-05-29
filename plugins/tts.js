@@ -1,40 +1,94 @@
-const { cmd } = require('../lib/command');
-const { tts } = require('google-tts-api');
-const axios = require('axios');
-const fs = require('fs');
+const { cmd } = require("../lib/command");
+const yts = require("yt-search");
+const axios = require("axios");
 
-cmd({
-  pattern: 'tts',
-  alias: ['text2voice', 'say'],
-  category: 'tools',
-  use: '.tts [text]',
-  desc: 'Convert text to voice using Google TTS',
-  react: '🗣️'
-}, async (m, text, { conn }) => {
-  if (!text) return m.reply('📝 කරුණාකර පණිවුඩයක් සපයන්න.\nตัวอย่าง: `.tts Hello world`');
+cmd(
+  {
+    pattern: "videorobin",
+    react: "🎥",
+    desc: "Download YouTube Video",
+    category: "download",
+    filename: __filename,
+  },
+  async (
+    robin,
+    mek,
+    m,
+    { from, quoted, body, isCmd, command, args, q, isGroup, sender, reply }
+  ) => {
+    try {
+      if (!q) return reply("*Provide a name or a YouTube link.* 🎥❤️");
 
-  try {
-    // Google TTS URL
-    const url = tts.getAudioUrl(text, {
-      lang: 'en',
-      slow: false,
-      host: 'https://translate.google.com',
-    });
+      // Search for the video
+      const search = await yts(q);
+      const data = search.videos[0];
+      const url = data.url;
 
-    const response = await axios.get(url, { responseType: 'arraybuffer' });
-    const filePath = './temp_tts.mp3';
+      // Video metadata description
+      let desc = `🎥 *ROBIN MAX VIDEO DOWNLOADER* 🎥
 
-    fs.writeFileSync(filePath, response.data);
+👻 *Title* : ${data.title}
+👻 *Duration* : ${data.timestamp}
+👻 *Views* : ${data.views}
+👻 *Uploaded* : ${data.ago}
+👻 *Channel* : ${data.author.name}
+👻 *Link* : ${data.url}
 
-    await conn.sendMessage(m.chat, {
-      audio: fs.readFileSync(filePath),
-      mimetype: 'audio/mpeg',
-      ptt: true // Send as voice message (PTT)
-    }, { quoted: m });
+𝐌𝐚𝐝𝐞 𝐛𝐲 ROBIN MAX`;
 
-    fs.unlinkSync(filePath);
-  } catch (e) {
-    console.error(e);
-    m.reply('❌ වචන ➜ හඬ වලට පරිවර්තනය කිරීමේදී දෝෂයක් ඇතිවිය.');
+      // Send metadata and thumbnail message
+      await robin.sendMessage(
+        from,
+        { image: { url: data.thumbnail }, caption: desc },
+        { quoted: mek }
+      );
+
+      // Video download function
+      const downloadVideo = async (url, quality) => {
+        const apiUrl = `https://p.oceansaver.in/ajax/download.php?format=${quality}&url=${encodeURIComponent(
+          url
+        )}&api=dfcb6d76f2f6a9894gjkege8a4ab232222`;
+
+        const response = await axios.get(apiUrl);
+
+        if (response.data && response.data.success) {
+          const { id, title } = response.data;
+
+          // Wait for download URL generation
+          const progressUrl = `https://p.oceansaver.in/ajax/progress.php?id=${id}`;
+          while (true) {
+            const progress = await axios.get(progressUrl);
+            if (progress.data.success && progress.data.progress === 1000) {
+              const videoBuffer = await axios.get(progress.data.download_url, {
+                responseType: "arraybuffer",
+              });
+              return { buffer: videoBuffer.data, title };
+            }
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+          }
+        } else {
+          throw new Error("Failed to fetch video details.");
+        }
+      };
+
+      // Specify desired quality (default: 720p)
+      const quality = "360";
+
+      // Download and send video
+      const video = await downloadVideo(url, quality);
+      await robin.sendMessage(
+        from,
+        {
+          video: video.buffer,
+          caption: `🎥 *${video.title}*\n\n𝐌𝐚𝐝𝐞 𝐛𝐲 ROBIN MAX`,
+        },
+        { quoted: mek }
+      );
+
+      reply("*Thanks for using my bot!* 🎥❤️");
+    } catch (e) {
+      console.error(e);
+      reply(`❌ Error: ${e.message}`);
+    }
   }
-});
+);
