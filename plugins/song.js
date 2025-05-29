@@ -22,21 +22,18 @@ cmd({
     if (!search.videos.length) return reply("❌ Video not found!");
 
     const data = search.videos[0];
-    const cap = `〲🎶𝙽𝙾𝚆 𝚄𝙿𝙻𝙾𝙰𝙳𝙸𝙽𝙶...㋞||🕊️
+    const cap = `〲 Dinu-x Beta YT Song Downloader
 
-🖇️𝚃𝙸𝚃𝙻𝙴     : ${data.title}
-✄𝚄𝚁𝙻         : ${data.url}
-✨𝚃𝙸𝙼𝙴       : ${data.timestamp}      
-✰𝚄𝙿𝙻𝙾𝙰𝙳  : ${data.ago}
-◲𝚅𝙸𝙴𝚆𝚂◱  : ${data.views}
+\`✗ Title\`    : ${data.title}
+✗ Url      : ${data.url}
+✗ Time     : ${data.timestamp}      
+✗ Upload   : ${data.ago}
+✗ Views    : ${data.views}
 
-> #DιηᵤW 🅱🅱🅷 ɱυʂιƈ ѕтуℓє㋛☚
+> 〽️ade By Dinuwh Bbh 
 
-*||අනිවාරෙන්ම රියැක්ට් කරන්න ළමයෝ...🕊️🌼 ඔයාගෙ ආසම සින්දු අහන්න සෙට් වෙලා ඉන්න...😚💖*
-> *𝙷𝙴𝙰𝙳𝙿𝙷𝙾𝙽𝙴 O𝚗 𝙵𝙴𝙴𝙻 𝚃𝙷𝙴 𝚅𝙸𝙱𝙴!*
-
-🖇️ALL MUSIC PLAY LIST 👇
-https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J/2311`;
+\`\`\`ƒσℓℓσω υѕ мυѕι¢ ¢нαηηєℓ🧚‍♂️`\`\`\
+https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J`;
 
     // nonbutton mode - list message
     if (config.MODE === "nonbutton") {
