@@ -305,53 +305,75 @@ async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender
   }
 });
 
-//onst axios = require("axios");
-//const { cmd } = require("../lib/command");
-//onst config = require("../settings");
-//const axios = require("axios");
-//onst { cmd } = require("../lib/command");
+//const { fetchJson } = require('../lib/functions');
+//onst { cmd } = require('../command');
+//onst yts = require("yt-search");
 
-cmd({
-  pattern: "gift",
-  alias: ["ytaudio", "giftedaudio"],
-  react: "🎶",
-  desc: "Download YouTube MP3 via GiftedTech API",
-  category: "download",
-  filename: __filename,
-}, async (conn, mek, m, { from, q, reply }) => {
-  try {
-    if (!q) return reply("🔎 කරුණාකර YouTube ලින්ක් එකක් හෝ නමක් දෙන්න!");
-
-    const url = q.trim();
-    const api = `https://api.giftedtech.my.id/api/download/ytmp3?apikey=gifted&url=${url}`;
-    const res = await axios.get(api);
-
-    if (!res.data.status || !res.data.result?.url) {
-      return reply("❌ MP3 බාගත කළ නොහැක!");
+cmd(
+  {
+    pattern: "giftv",
+    alias: ["ytvideo", "giftedyt"],
+    react: "🎬",
+    desc: "Download YouTube Video (MP4)",
+    category: "download",
+    filename: __filename,
+  },
+  async (
+    conn,
+    mek,
+    m,
+    {
+      from,
+      q,
+      reply
     }
+  ) => {
+    try {
+      if (!q) return reply("🔎 YouTube නමක් හෝ ලින්ක් එකක් දෙන්න!");
 
-    const result = res.data.result;
+      const search = await yts(q);
+      if (!search.videos.length) return reply("❌ වීඩියෝවක් හමුනොවුණා!");
 
-    const caption = `🎵 *${result.title}*\n🕒 Duration: ${result.duration}\n👤 Channel: ${result.channel}\n\n🔗 ${result.url}`;
+      const data = search.videos[0];
+      const url = data.url;
 
-    // ✅ Send thumbnail + caption
-    await conn.sendMessage(from, {
-      image: { url: result.thumb },
-      caption: caption,
-    }, { quoted: mek });
+      const api = `https://api.giftedtech.my.id/api/download/ytmp4?apikey=gifted&url=${encodeURIComponent(url)}`;
+      const res = await fetchJson(api);
 
-    // ✅ Send MP3 audio
-    await conn.sendMessage(from, {
-      audio: { url: result.url },
-      mimetype: 'audio/mpeg',
-      fileName: `${result.title}.mp3`,
-      ptt: false
-    }, { quoted: mek });
+      if (!res || !res.data?.url) return reply("❌ බාගත කිරීම අසාර්ථකයි!");
 
-    await conn.sendMessage(from, { react: { text: "✅", key: mek.key } });
+      const caption = `🎥 *𝚈𝚃 𝚅𝙸𝙳𝙴𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳*
 
-  } catch (err) {
-    console.error("YTMP3 Plugin Error:", err);
-    reply("❌ දෝෂයක් ඇතිවුණා. තවත් උත්සහ කරන්න!");
+📌 *Title:* ${data.title}
+⏱ *Duration:* ${data.timestamp}
+👁 *Views:* ${data.views}
+🌐 *Link:* ${data.url}
+
+> *𝙳𝙸 𝙽 𝚄 𝚆 𝙷 - 𝙼 𝙳 || 𝑴𝑼𝑺𝑰𝑪 𝑽𝑰𝑫𝑬𝑶 𝑺𝑻𝒀𝑳𝑬 💚*
+`;
+
+      await conn.sendMessage(
+        from,
+        {
+          image: { url: data.thumbnail },
+          caption,
+        },
+        { quoted: mek }
+      );
+
+      await conn.sendMessage(
+        from,
+        {
+          video: { url: res.data.url },
+          mimetype: "video/mp4",
+          caption: "✅ Video බාගන්න ලැබුණා!",
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply("❌ අවුලක් ආවා බං! " + e.message);
+    }
   }
-});
+);
