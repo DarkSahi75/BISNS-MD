@@ -16,6 +16,7 @@ JIDBEZ: process.env.JIDBEZ || "120363378149186656@newsletter",
 ANTI_DELETE: process.env.ANTI_DELETE || "true",
 MODE: process.env.MODE === undefined ? 'nonbutton' : process.env.MODE,
 STATUS_REPLY_MESSAGE: 'ʏᴏᴜʀ ꜱᴛᴀᴛᴜꜱ ᴊᴜꜱᴛ ɴᴏᴡ ꜱᴇᴇɴ ʙʏ Qᴜᴇᴇɴ ᴅᴇᴡᴍɪɴɪ ᴍᴅ',    
-ALIVE:  process.env.ALIVE  || '> QUEEN DEWMINI MD'  ,    
+ALIVE:  process.env.ALIVE  || '> QUEEN DEWMINI MD'  , 
+FOOTER: process.env.FOOTER || '> ∂ιηυω-χ вєтα✔️',
 DELETEMSGSENDTO : process.env.DELETEMSGSENDTO === undefined ? '' : process.env.DELETEMSGSENDTO        
 };
