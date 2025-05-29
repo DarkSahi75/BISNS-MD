@@ -201,6 +201,7 @@ cmd({
             buttonId: `${prefix}devilv ${data.url}`,
             buttonText: { displayText: "`[Video 📽️]`" },
             type: 1
+          },
 
           {
             buttonId: "action",
@@ -224,8 +225,103 @@ cmd({
 
 
 
+//devilvideosendjs=========================-====--%=%=%--%-%-%-$-#-#-#=##=$-$-#9#9=9.0=9.0-$839#=$-$738#=738.0$-%*$8##-%748$=$-%7$8$=$-%-
 
 
+cmd({
+  pattern: "devilv",
+  alias: "song",
+  react: "🎵",
+  desc: "Download Song",
+  category: "download",
+  filename: __filename,
+}, async (robin, mek, m, { from, q, prefix, reply }) => {
+  try {
+    if (!q) return reply("නමක් හරි ලින්ක් එකක් හරි දෙන්න 🌚❤️");
+
+    const search = await yts(q);
+    if (!search.videos.length) return reply("❌ Video not found!");
+    const data = search.videos[0];
+
+    const cap = `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
+╭────────✦✧✦────────╯
+
+ *Choos You Want Video File Type*`;
+
+    // ✳️ If nonbutton mode
+    if (config.MODE === "nonbutton") {
+      const sections = [{
+        title: "",
+        rows: [
+          { title: "1. Normal Video File 📽️", rowId: `${prefix}devilnewv ${data.url}|${data.title}`, description: "Normal type Video" },
+          { title: "2. Document Video File 📂", rowId: `${prefix}devilnewd ${data.url}|${data.title}`, description: "Document type Video" }
+        ]
+      }];
+      const listMessage = {
+        text: "*Normal Video File Or Document Video file Avaible*",
+        footer: "> *〽️ade By Dinuwh Bbh*",
+        buttonText: "```🔢 Reply below number you need song type```",
+        sections
+      };
+      return await robin.sendMessage(from, listMessage, { quoted: mek });
+    }
+
+    // ✳️ If button mode
+    if (config.MODE === "button") {
+      const listData = {
+        title: "Choose Format ⎙",
+        sections: [{
+          title: "DINUWH MD OPTIONS",
+          rows: [
+            {
+              title: "\`[Normle Video 📽️]\`",
+              description: "Download as Norml Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilnewv ${data.url}`
+            },
+            {
+              title: "\`[Document File 📄]\`",
+              description: "Download as Documrnt Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilnewd ${data.url}`
+            }
+          ]
+        }]
+      };
+
+      return await robin.sendMessage(from, {
+        image: { url: data.thumbnail },
+        caption: cap,
+        footer: "> 〽️ade By Dinuwh Bbh",
+        buttons: [
+          
+          {
+            buttonId: `${prefix}devilnewv ${data.url}`,
+            buttonText: { displayText: "\`[Document 📁]\`" },
+            type: 1
+          },
+          {
+            buttonId: `${prefix}devilnewd ${data.url}`,
+            buttonText: { displayText: "\`[Video 📽️]\`" },
+            type: 1
+
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
+          },
+        ],
+        headerType: 1,
+        viewOnce: true,
+      }, { quoted: mek });
+    }
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
 //Ptt
 cmd({
   pattern: "ytvoice",
