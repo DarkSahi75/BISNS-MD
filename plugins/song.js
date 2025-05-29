@@ -193,58 +193,52 @@ cmd({
 //video
 cmd({
   pattern: "v144",
-  //lias: ["yt144"],
+  //alias: ["yt144"],
   react: "📹",
-@@ -314,62 +84,3 @@ cmd(
-    category: "download",
-    filename: __filename,
-  },
-  async (
-    conn,
-    mek,
-    m,
-    {
-      from,
-      q,
-      reply
-    }
-  ) => {
-    try {
-      if (!q) return reply("🔎 YouTube නමක් හෝ ලින්ක් එකක් දෙන්න!");
-      const search = await yts(q);
-      if (!search.videos.length) return reply("❌ වීඩියෝවක් හමුනොවුණා!");
-      const data = search.videos[0];
-      const url = data.url;
-      const api = `https://api.giftedtech.my.id/api/download/ytmp4?apikey=gifted&url=${encodeURIComponent(url)}`;
-      const res = await fetchJson(api);
-      if (!res || !res.data?.url) return reply("❌ බාගත කිරීම අසාර්ථකයි!");
-      const caption = `🎥 *𝚈𝚃 𝚅𝙸𝙳𝙴𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳*
+  desc: "Download YouTube 144p video",
+  category: "download",
+  filename: __filename,
+},
+async (
+  conn,
+  mek,
+  m,
+  { from, q, reply }
+) => {
+  try {
+    if (!q) return reply("🔎 YouTube නමක් හෝ ලින්ක් එකක් දෙන්න!");
+    const search = await yts(q);
+    if (!search.videos.length) return reply("❌ වීඩියෝවක් හමුනොවුණා!");
+    const data = search.videos[0];
+    const url = data.url;
+    const api = `https://api.giftedtech.my.id/api/download/ytmp4?apikey=gifted&url=${encodeURIComponent(url)}`;
+    const res = await fetchJson(api);
+    if (!res || !res.data?.url) return reply("❌ බාගත කිරීම අසාර්ථකයි!");
+    
+    const caption = `🎥 *𝚈𝚃 𝚅𝙸𝙳𝙴𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳*
 📌 *Title:* ${data.title}
 ⏱ *Duration:* ${data.timestamp}
 👁 *Views:* ${data.views}
 🌐 *Link:* ${data.url}
-> *𝙳𝙸 𝙽 𝚄 𝚆 𝙷 - 𝙼 𝙳 || 𝑴𝑼𝑺𝑰𝑪 𝑽𝑰𝑫𝑬𝑶 𝑺𝑻𝒀𝑳𝑬 💚*
-`;
-      await conn.sendMessage(
-        from,
-        {
-          image: { url: data.thumbnail },
-          caption,
-        },
-        { quoted: mek }
-      );
-      await conn.sendMessage(
-        from,
-        {
-          video: { url: res.data.url },
-          mimetype: "video/mp4",
-          caption: "✅ Video බාගන්න ලැබුණා!",
-        },
-        { quoted: mek }
-      );
-    } catch (e) {
-      console.error(e);
-      reply("❌ අවුලක් ආවා බං! " + e.message);
-    }
+> *𝙳𝙸 𝙽 𝚄 𝚆 𝙷 - 𝙼 𝙳 || 𝑴𝑼𝑺𝑰𝑪 𝑽𝑰𝑫𝑬𝑶 𝑺𝑻𝒀𝑳𝑬 💚*`;
+
+    await conn.sendMessage(
+      from,
+      { image: { url: data.thumbnail }, caption },
+      { quoted: mek }
+    );
+
+    await conn.sendMessage(
+      from,
+      {
+        video: { url: res.data.url },
+        mimetype: "video/mp4",
+        caption: "✅ Video බාගන්න ලැබුණා!",
+      },
+      { quoted: mek }
+    );
+  } catch (e) {
+    console.error(e);
+    reply("❌ අවුලක් ආවා බං! " + e.message);
   }
-);
+});
