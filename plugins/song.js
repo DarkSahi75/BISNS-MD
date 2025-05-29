@@ -76,6 +76,11 @@ cmd({
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
               id: `${prefix}ytvoice ${data.url}`
             }
+            {
+              title: "[Video File 📽️]",
+              description: "Download as Video Document Or Norml\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
           ]
         }]
       };
@@ -86,16 +91,20 @@ cmd({
         buttons: [
           {
             buttonId: `${prefix}ytvoice ${data.url}`,
-            buttonText: { displayText: "[Voice Note(Ptt) 🎧]" },
+            buttonText: { displayText: "\`[Voice Note(Ptt) 🎧]\`" },
           },
           {
             buttonId: `${prefix}ytaud ${data.url}`,
-            buttonText: { displayText: "[Audio Type 🎧]" },
+            buttonText: { displayText: "\`[Audio Type 🎧]\`" },
           },
           {
             buttonId: `${prefix}ytdoc ${data.url}`,
-            buttonText: { displayText: "[Document 📁]" },
+            buttonText: { displayText: "\`[Document 📁]\`" },
           },
+          {
+            buttonId: `${prefix}devilv ${data.url}`,
+            buttonText: { displayText: "\`[Video 📽️]\`" },
+          }
           {
             buttonId: "action",
             buttonText: { displayText: "🔘 Choose Song Type" },
@@ -114,6 +123,50 @@ cmd({
     console.error(e);
     reply(`❌ Error: ${e.message}`);
   }
+});
+
+
+//𝚈𝚃 𝚍𝚎𝚟𝚒𝚕𝚕-𝚊𝚞𝚝𝚘
+
+//const { cmd } = require('../command')
+const fetch = require("node-fetch");
+//const ytsearch = require("yt-search");
+
+cmd({ 
+    pattern: "devilv", 
+    //lias: ["video2", "play"], 
+    react: "🎥", 
+    desc: "Download YouTube video", 
+    category: "download", 
+    use: '.video <YouTube URL or Name>', 
+    filename: __filename 
+}, async (conn, mek, m, { from, prefix, quoted, q, reply }) => { 
+    try { 
+        if (!q) return await reply("⚠️ Please provide a YouTube URL or song name!");
+
+        const yt = await ytsearch(q);
+        if (yt.videos.length < 1) return reply("❌ No results found!");
+
+        let yts = yt.videos[0];  
+        let apiUrl = `https://apis.davidcyriltech.my.id/download/ytmp4?url=${encodeURIComponent(yts.url)}`;
+
+        let response = await fetch(apiUrl);
+        let data = await response.json();
+
+        if (!data || data.status !== 200 || !data.result || !data.result.download_url) {
+            return reply("⚠️ Failed to fetch the video. Please try again later.");
+        }
+
+        // Send only the video
+        await conn.sendMessage(from, { 
+            video: { url: data.result.download_url }, 
+            mimetype: "video/mp4" 
+        }, { quoted: mek });
+
+    } catch (e) {
+        console.error(e);
+        reply("❌ An error occurred. Please try again later.");
+    }
 });
 
 //Ptt
