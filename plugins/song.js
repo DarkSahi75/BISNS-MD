@@ -96,7 +96,7 @@ cmd({
           {
             buttonId: "action",
             buttonText: { displayText: "🔘 Choose Song Type" },
-            type: 4,
+            type: 1,
             nativeFlowInfo: {
               name: "single_select",
               paramsJson: JSON.stringify(listData),
