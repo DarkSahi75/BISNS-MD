@@ -5,6 +5,8 @@ const yts = require("yt-search");
 const config = require("../settings");
 // Get prefix dynamically from settings or fallback
 const prefix = config.PREFIX || ".";
+const cheerio = require('cheerio'); // For HTML scraping from AN1
+const { JSDOM } = require('jsdom'); // For DOM parsing from HTML
 
 
 cmd({
@@ -588,6 +590,137 @@ console.log(error)
 reply(error)
 }
 });
+
+
+//fancy js===4=4.04=4.044=4.0444=4.04444=4.044444=4.04444444=4.044444444=4.0444444444
+//onst { cmd } = require('../command');
+//const { fetchJson } = require('../lib/functions');
+//const axios = require('axios'); // For API and scraping requests
+
+async function stylizeText(text) {
+    let res = await fetch('http://qaz.wtf/u/convert.cgi?text=' + encodeURIComponent(text));
+    let html = await res.text();
+    let dom = new JSDOM(html);
+    let table = dom.window.document.querySelector('table').children[0].children;
+    let obj = {};
+    
+    for (let tr of table) {
+        let content = tr.children[1].textContent.replace(/^\n/, '').replace(/\n$/, '');
+        obj[content] = content; // Use content as key and value
+    }
+    
+    return Object.values(obj); // Return only the values
+}
+
+cmd({
+    pattern: "fancy",
+    react: "🔮",
+    alias: ["stylefont", "style"],
+    desc: "It converts your replied sticker to video.",
+    category: "convert",
+    use: '.fancy *<Your Text>*',
+    filename: __filename
+},   
+  async (
+    conn,
+    mek,
+    m,
+    {
+      from,
+      prefix,
+      l,
+      quoted,
+      body,
+      isCmd,
+      command,
+      args,
+      q,
+      isGroup,
+      sender,
+      senderNumber,
+      botNumber2,
+      botNumber,
+      pushname,
+      isMe,
+      isPreUser,
+      isOwner,
+      groupMetadata,
+      groupName,
+      participants,
+      groupAdmins,
+      isBotAdmins,
+      isAdmins,
+      reply,
+    }
+  ) => {
+    if (!q) return reply("🚩 *Please give me words to style that text*");
+    
+    try {
+      var rows = [];
+      let res = await stylizeText(q);
+      res.map((v) => {
+        rows.push({
+          buttonId: prefix + `gettext ${v}`,
+          buttonText: { displayText: `${v}` },
+          type: 1,
+        });
+      });
+
+      const buttonMessage = {
+        image: `https://cdn.textstudio.com/output/sample/normal/4/7/8/7/fonts-style-changer-logo-832-17874.png`,
+        caption: `乂 *F O N T - C H A N G E R*`,
+        footer: config.FOOTER,
+        buttons: rows,
+        headerType: 4,
+      };
+      return await conn.buttonMessage(from, buttonMessage, mek);
+    } catch (e) {
+        reply('*Error !!*');
+        console.error(e);
+    }
+});
+cmd({
+    pattern: "gettext",
+    react: "🚩",
+    dontAddCommandList: true,
+    filename: __filename
+}, async (conn, mek, m, { from, reply, q }) => {
+    
+    try {
+        await reply(q)
+    } catch (e) {
+        reply('*Error !!*');
+        console.error(e);
+    }
+});
+
+async function ans(q) {
+    const url = `https://an1.com/tags/MOD/?story=${q}&do=search&subaction=search`;
+
+    try {
+        const { data } = await axios.get(url);
+        const $ = cheerio.load(data);
+
+        let results = [];
+
+        $("body > div.page > div > div > div.app_list > div").each((i, el) => {
+            let title = $(el).find("div.cont > div.data > div.name > a > span").text().trim() || "N/A";
+            let dev = $(el).find("div.cont > div.data > div.developer.xsmf.muted").text().trim() || "N/A";
+            let rating = $(el).find("div > ul > li.current-rating").text().trim() || "N/A";
+            let thumb = $(el).find("div.img > img").attr("src") || "N/A";
+            let link = $(el).find("div.cont > div.data > div.name > a").attr("href") || "N/A";
+
+            results.push({ title, dev, rating, thumb, link });
+        });
+
+        results = results.filter(item => item.title !== "N/A" && item.dev !== "N/A" && item.rating !== "N/A");
+
+        return results
+    } catch (error) {
+        console.error("error:", error);
+        return [];
+    }
+}
 
 
 
