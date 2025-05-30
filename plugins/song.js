@@ -176,25 +176,23 @@ if (config.MODE === 'nonbutton') {
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
-	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
-            {title: "3", rowId: `${prefix}ytvoice ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
-            {title: "4", rowId: `${prefix}devilv ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	    {title: "1", rowId: prefix + 'menu' , description: 'COMMANDS MENU'},
+	    {title: "2", rowId: prefix + 'ping' , description: 'VAJIRA-MD SPEED'} ,
+
 	]
     } 
 ]
 const listMessage = {
 caption: cap,
 image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
-footer: '> 〽️ade By Dinuwh Bbh',
+footer: config.FOOTER,
 title: '',
 buttonText: '*🔢 Reply below number*',
 sections
 }
 	
-return await robin.replyList(from, listMessage ,{ quoted : mek })
+return await conn.replyList(from, listMessage ,{ quoted : mek })
 
-	//button
 //button-==$=$==$=#=#=#=#==#=#=#=#=#=#=#=#=#=#=##=!=#=$=#=#=#==#=#=#=#=#=
     if (config.MODE === "button") {
       const listData = {
