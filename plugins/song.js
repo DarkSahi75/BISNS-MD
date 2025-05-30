@@ -544,7 +544,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 //const { cmd } = require('../command')
 //const { fetchJson } = require('../lib/functions')
 
-const apilink = 'https://www.dark-yasiya-api.site' 
+/*const apilink = 'https://www.dark-yasiya-api.site' 
 
 
 
@@ -599,7 +599,7 @@ reply(error)
 //const { fetchJson } = require('../lib/functions');
 //const axios = require('axios'); // For API and scraping requests
 
-/*async function stylizeText(text) {
+async function stylizeText(text) {
     let res = await fetch('http://qaz.wtf/u/convert.cgi?text=' + encodeURIComponent(text));
     let html = await res.text();
     let dom = new JSDOM(html);
@@ -881,5 +881,5 @@ function formatNumber(num) {
     return num.toString();
 }
 
-
+*/
 
