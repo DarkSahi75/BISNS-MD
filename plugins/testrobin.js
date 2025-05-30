@@ -1055,32 +1055,32 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
           rows: [
             {
               title: "\`❨ 144p Normal Video File ❩\` 📽️",
-              description: "*Download as Normal.Type 144p*\n> *〽️ade By Dinuwh Bbh*",
+              description: "*Download as Document.Type 144p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}144vd ${data.url}`
             },
             {
               title: "\`❨ 240p Normal Video File ❩\` 📽️",
-              description: "*Download as Normal.Type 240p*\n> *〽️ade By Dinuwh Bbh*",
+              description: "*Download as Document.Type 240p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}240vd ${data.url}`
             },
             {
               title: "\`❨ 360p Normal Video File ❩\` 📽️",
-              description: "*Download as Normal.Type 360p*\n> *〽️ade By Dinuwh Bbh*",
+              description: "*Download as Document.Type 360p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}360vd ${data.url}`
             },
             {
               title: "\`❨ 480p Normal Video File ❩\` 📽️",
-              description: "*Download as Normal.Type 480p*\n> *〽️ade By Dinuwh Bbh",
+              description: "*Download as Document.Type 480p*\n> *〽️ade By Dinuwh Bbh",
               id: `${prefix}480vd ${data.url}`
             },
 	    {
               title: "\`❨ 720p Normal Video File ❩\` 📽️",
-              description: "*Download as Normal.Type 720p*\n> *〽️ade By Dinuwh Bbh*",
+              description: "*Download as Document.Type 720p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}720vd ${data.url}`
             },
             {
               title: "\`❨ 1080p Normal Video File ❩\` 📽️",
-              description: "*Download as Normal.Type 1080p*\n> *〽️ade By Dinuwh Bbh",
+              description: "*Download as Document.Type 1080p*\n> *〽️ade By Dinuwh Bbh",
               id: `${prefix}1080vd ${data.url}`
             }
           ]
