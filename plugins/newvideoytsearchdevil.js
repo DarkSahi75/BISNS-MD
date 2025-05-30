@@ -83,3 +83,117 @@ cmd({
         reply("\`❌ Download ERROR- TRY ANOTHER TIME|| යම් කිසි ගැටලුවක්🤧.\`");
     }
 });
+
+const yts = require("@dark-yasiya/scraper").yts; // confirm your yts import here
+
+cmd({
+  pattern: "devilv",
+  alias: ["devilvideo", "ytdlvideo"],
+  react: "📽️",
+  desc: "Download YouTube Video",
+  category: "download",
+  filename: __filename,
+}, async (robin, mek, m, { from, q, prefix, reply }) => {
+  try {
+    if (!q) return reply("🔍 නමක් හෝ YouTube ලින්ක් එකක් දෙන්න!");
+
+    const search = await yts(q);
+    if (!search.videos.length) return reply("❌ Video not found!");
+
+    const data = search.videos[0];
+    const cap = `\`\`\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`\`\`
+
+📌 *Title:* ${data.title}
+⏰ *Duration:* ${data.timestamp}
+📥 *Views:* ${data.views}
+🔗 *URL:* ${data.url}
+
+✧––––––––––––––✧
+*Please choose the video type to download.*`;
+
+    if (config.MODE === "nonbutton") {
+      const sections = [
+        {
+          title: "DINUWH MD VIDEO OPTIONS",
+          rows: [
+            {
+              title: "📥 Normal Video",
+              description: "Download as regular video file",
+              rowId: `${prefix}devilnewv ${data.url}`
+            },
+            {
+              title: "📁 Document Video",
+              description: "Download as document",
+              rowId: `${prefix}devilnewd ${data.url}`
+            }
+          ]
+        }
+      ];
+
+      const listMessage = {
+        text: cap,
+        footer: config.FOOTER,
+        title: "Choose Format Below ⬇️",
+        buttonText: "🔘 Select Option",
+        sections,
+        image: { url: data.thumbnail }
+      };
+
+      return await robin.sendMessage(from, listMessage, { quoted: mek });
+    }
+
+    if (config.MODE === "button") {
+      const listData = {
+        title: "◎ Choose Format ◎",
+        sections: [{
+          title: "DINUWH MD OPTIONS",
+          rows: [
+            {
+              title: "[Video 🎥]",
+              description: "Download as normal video file",
+              id: `${prefix}devilnewv ${data.url}`
+            },
+            {
+              title: "[Document 📂]",
+              description: "Download as document video file",
+              id: `${prefix}devilnewd ${data.url}`
+            }
+          ]
+        }]
+      };
+
+      return await robin.sendMessage(from, {
+        image: { url: data.thumbnail },
+        caption: cap,
+        footer: config.FOOTER,
+        buttons: [
+          {
+            buttonId: `${prefix}devilnewv ${data.url}`,
+            buttonText: { displayText: "📥 Video" },
+            type: 1
+          },
+          {
+            buttonId: `${prefix}devilnewd ${data.url}`,
+            buttonText: { displayText: "📁 Document" },
+            type: 1
+          },
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Format" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
+          }
+        ],
+        headerType: 1,
+        viewOnce: true,
+      }, { quoted: mek });
+    }
+
+  } catch (e) {
+    console.error(e);
+    reply("❌ Video එක process කරන්න ගිය දේවල් වල error එකක් තියෙනවා. ටික වෙලාවක් බලා try කරන්න!");
+  }
+});
