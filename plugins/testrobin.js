@@ -1026,12 +1026,12 @@ if (config.MODE === 'nonbutton') {
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: `${prefix}144vd ${data.url}`, description: '\`❲ 144p Normal Video File ❳\` 📽️'},
-	    {title: "2", rowId: `${prefix}240vd ${data.url}`, description: '\`❲ 240p Normal Video File ❳\` 📽️'} ,
-      {title: "3", rowId: `${prefix}360vd ${data.url}`, description: '\`❲ 360p Normal Video File ❳\` 📽️'} ,
-      {title: "4", rowId: `${prefix}480vd ${data.url}`, description: '\`❲ 480p Normal Video File ❳\` 📽️'} ,
-      {title: "5", rowId: `${prefix}720vd ${data.url}`, description: '\`❲ 720p Normal Video File ❳\` 📽️'} ,
-      {title: "6", rowId: `${prefix}1080vd ${data.url}`, description: '\`❲ 1080 Normal Video File ❳\` 📽️'} ,
+	    {title: "1", rowId: `${prefix}144vd ${data.url}`, description: '\`❲ 144p Document Video File ❳\` 📽️'},
+	    {title: "2", rowId: `${prefix}240vd ${data.url}`, description: '\`❲ 240p Document Video File ❳\` 📽️'} ,
+      {title: "3", rowId: `${prefix}360vd ${data.url}`, description: '\`❲ 360p Document Video File ❳\` 📽️'} ,
+      {title: "4", rowId: `${prefix}480vd ${data.url}`, description: '\`❲ 480p Document Video File ❳\` 📽️'} ,
+      {title: "5", rowId: `${prefix}720vd ${data.url}`, description: '\`❲ 720p Document Video File ❳\` 📽️'} ,
+      {title: "6", rowId: `${prefix}1080vd ${data.url}`, description: '\`❲ 1080 Document Video File ❳\` 📽️'} ,
 	]
     } 
 ]
@@ -1054,32 +1054,32 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
           title: "DOCUMENT VIDEO OPTIONS",
           rows: [
             {
-              title: "\`❨ 144p Normal Video File ❩\` 📽️",
+              title: "\`❨ 144p Document Video File ❩\` 📽️",
               description: "*Download as Document.Type 144p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}144vd ${data.url}`
             },
             {
-              title: "\`❨ 240p Normal Video File ❩\` 📽️",
+              title: "\`❨ 240p Document Video File ❩\` 📽️",
               description: "*Download as Document.Type 240p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}240vd ${data.url}`
             },
             {
-              title: "\`❨ 360p Normal Video File ❩\` 📽️",
+              title: "\`❨ 360p Document Video File ❩\` 📽️",
               description: "*Download as Document.Type 360p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}360vd ${data.url}`
             },
             {
-              title: "\`❨ 480p Normal Video File ❩\` 📽️",
+              title: "\`❨ 480p Document Video File ❩\` 📽️",
               description: "*Download as Document.Type 480p*\n> *〽️ade By Dinuwh Bbh",
               id: `${prefix}480vd ${data.url}`
             },
 	    {
-              title: "\`❨ 720p Normal Video File ❩\` 📽️",
+              title: "\`❨ 720p Document Video File ❩\` 📽️",
               description: "*Download as Document.Type 720p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}720vd ${data.url}`
             },
             {
-              title: "\`❨ 1080p Normal Video File ❩\` 📽️",
+              title: "\`❨ 1080p Document Video File ❩\` 📽️",
               description: "*Download as Document.Type 1080p*\n> *〽️ade By Dinuwh Bbh",
               id: `${prefix}1080vd ${data.url}`
             }
