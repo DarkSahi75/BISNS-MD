@@ -490,13 +490,13 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
             {
               title: "*❨ Normal Quality Files ❩*",
               description: "*Normal  Type Videos*\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
+              id: `${prefix}normalv ${data.url}`
             },
             
             {
               title: "*❨ Document Quality Files ❩*",
               description: "*Document Type Videos*\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
+              id: `${prefix}documentv ${data.url}`
             }
           ]
         }]
@@ -520,7 +520,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 
           {
             buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
+            buttonText: { displayText: "🔘 Choose Type" },
             type: 4,
             nativeFlowInfo: {
               name: "single_select",
