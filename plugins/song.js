@@ -51,44 +51,44 @@ cmd({
 > *Send You Want Song Formate ⤵️*`;
 
     // ✳️ If nonbutton mode
-    if (config.MODE === "nonbutton") {
+if (config.MODE === "nonbutton") {
   const sections = [
     {
-      title: "🎶 Choose Song Format",
+      title: "🎵 SONG TYPE SELECT",
       rows: [
         {
-          title: "1. Audio 🎧",
+          title: "🎧 Audio",
           rowId: `${prefix}ytaud ${data.url}|${data.title}`,
-          description: "Normal type song",
+          description: "Send as normal audio",
         },
         {
-          title: "2. Document 📂",
+          title: "📂 Document",
           rowId: `${prefix}ytdoc ${data.url}|${data.title}`,
-          description: "Document type song",
+          description: "Send as document type",
         },
         {
-          title: "3. Voice Note (Ptt) 🎧",
+          title: "🎙️ Voice Note",
           rowId: `${prefix}ytvoice ${data.url}|${data.title}`,
-          description: "Voice Note format",
+          description: "Send as PTT (Voice)",
         },
         {
-          title: "4. Video File 📽️",
+          title: "📽️ Video",
           rowId: `${prefix}devilv ${data.url}|${data.title}`,
-          description: "Video document or mp4",
+          description: "Send as video file",
         },
       ],
     },
   ];
 
   const listMessage = {
-    title: "乂 DINUWH チ DOWNLOAD",
-    text: cap, // This shows song details
-    footer: "Powered by DINUWH MD V2",
-    buttonText: "🔘 Click to select song type",
+    text: "🔘 *Select the format you want to download the song in:*",
+    footer: "乂 DINUWH チ DOWNLOAD\nPowered by CYBER VENOM",
+    title: "Download Options 🎵",
+    buttonText: "🔽 Choose Format",
     sections: sections,
   };
 
-  return await robin.sendMessage(from, listMessage, { quoted: mek });
+  await robin.sendMessage(from, listMessage, { quoted: mek });
 }
     // ✳️ If button mode
     if (config.MODE === "button") {
