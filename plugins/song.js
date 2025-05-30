@@ -49,8 +49,8 @@ if (config.MODE === 'nonbutton') {
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: prefix + 'ytaud' , description: 'Norml Audio'},
-	    {title: "2", rowId: prefix + 'ytcoc' , description: 'Document File'} ,
+	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\`'},
+	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\`'} ,
 
 	]
     } 
@@ -58,7 +58,7 @@ if (config.MODE === 'nonbutton') {
 const listMessage = {
 caption: cap,
 image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
-footer: config.FOOTER,
+footer: '> 〽️ade By Dinuwh Bbh',
 title: '',
 buttonText: '*🔢 Reply below number*',
 sections
