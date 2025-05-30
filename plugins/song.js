@@ -7,7 +7,7 @@ const config = require("../settings");
 const prefix = config.PREFIX || ".";
 const cheerio = require('cheerio'); // For HTML scraping from AN1
 const { JSDOM } = require('jsdom'); // For DOM parsing from HTML
-
+const axios = require("axios");
 
 cmd({
   pattern: "dsong",
@@ -721,6 +721,70 @@ async function ans(q) {
         return [];
     }
 }
+//removebg
+
+
+cmd({
+    pattern: "removebg",
+    alias: ["nobg", "transparent"],
+    use: ".removebg (reply to image)",
+    react: "🖼️",
+    desc: "Remove image background",
+    category: "tools",
+    filename: __filename
+},
+async (conn, m, mek, { from, reply, tr }) => {
+    try {
+        let target = m.quoted ? m.quoted : m;
+        
+        const isImage = () => {
+            if (target.imageMessage) return true;
+            if (target.msg?.imageMessage) return true;
+            if (target.mimetype?.startsWith('image/')) return true;
+            if (target.msg?.mimetype?.startsWith('image/')) return true;
+            return false;
+        };
+
+        if (!isImage()) {
+            return await reply(await tr("*Please reply to an image!*"));
+        }
+
+        await conn.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+
+        const imageBuffer = await target.download();
+
+        const base64Image = imageBuffer.toString('base64');
+
+        const response = await axios.post(
+            "https://us-central1-ai-apps-prod.cloudfunctions.net/restorePhoto", 
+            {
+                image: `data:image/png;base64,${base64Image}`,
+                model: "fb8af171cfa1616ddcf1242c093f9c46bcada5ad4cf6f2fbe8b81b330ec5c003",
+            }
+        );
+
+        const resultUrl = response.data?.replace(/"/g, '');
+        if (!resultUrl) {
+            throw new Error("Background removal failed");
+        }
+        await conn.sendMessage(
+            from,
+            {
+                image: { url: resultUrl },
+                caption: "*Background removed by DARK SHAN MD*"
+            },
+            { quoted: mek }
+        );
+
+        await conn.sendMessage(from, { react: { text: '✅', key: mek.key } });
+
+    } catch (e) {
+        console.error('Error in removebg command:', e);
+        await reply(await tr("*Error occurred while removing background!*"));
+        await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
+    }
+});
+
 
 
 
