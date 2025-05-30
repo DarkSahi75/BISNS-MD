@@ -84,7 +84,7 @@ cmd({
     }
 });
 
-const yts = require("@dark-yasiya/scraper").yts; // confirm your yts import here
+//onst yts = require("@dark-yasiya/scraper").yts; // confirm your yts import here
 
 cmd({
   pattern: "devilv",
