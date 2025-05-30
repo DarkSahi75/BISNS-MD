@@ -865,7 +865,7 @@ cmd(
 
 
 cmd({
-  pattern: "videotype",
+  pattern: "normalv",
   alias: "song",
   react: "🎵",
   desc: "Download Song",
@@ -887,8 +887,8 @@ cmd({
 * *Same The Old Details 😴🖇️*
 \`╰───────────────✿\`
 ╭───────────────✿  
-│ *Select You Want Video Type And quality* 🧚‍♂️
-│ *ඔබට අවශ්‍ය වීඩියො වර්ගය සහ ගුණාත්මක තත්වය තෝරන්න 😴🖇️*
+│ *Select You Want Video quality* 🧚‍♂️
+│ *ඔබට අවශ්‍ය වීඩියෝ ණාත්මක තත්වය තෝරන්න 😴🖇️*
 ╰───────────────✿`;
 
     // ✳️ If nonbutton mode
@@ -897,12 +897,145 @@ if (config.MODE === 'nonbutton') {
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: `${prefix}144v ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
-	    {title: "2", rowId: `${prefix}240v ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
-      {title: "3", rowId: `${prefix}360v ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
-      {title: "4", rowId: `${prefix}480v ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
-      {title: "5", rowId: `${prefix}720v ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
-      {title: "6", rowId: `${prefix}1080v ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	    {title: "1", rowId: `${prefix}144v ${data.url}`, description: '\`❲ 144p Normal Video File ❳\` 📽️'},
+	    {title: "2", rowId: `${prefix}240v ${data.url}`, description: '\`❲ 240p Normal Video File ❳\` 📽️'} ,
+      {title: "3", rowId: `${prefix}360v ${data.url}`, description: '\`❲ 360p Normal Video File ❳\` 📽️'} ,
+      {title: "4", rowId: `${prefix}480v ${data.url}`, description: '\`❲ 480p Normal Video File ❳\` 📽️'} ,
+      {title: "5", rowId: `${prefix}720v ${data.url}`, description: '\`❲ 720p Normal Video File ❳\` 📽️'} ,
+      {title: "6", rowId: `${prefix}1080v ${data.url}`, description: '\`❲ 1080 Normal Video File ❳\` 📽️'} ,
+	]
+    } 
+]
+const listMessage = {
+caption: cap,
+image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
+footer: '> 〽️ade By Dinuwh Bbh',
+title: '',
+buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
+sections
+}
+	
+return await robin.replyList(from, listMessage ,{ quoted : mek })
+
+	//button
+} if (config.MODE === 'button') {
+      const listData = {
+        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        sections: [{
+          title: "DINUWH MD OPTIONS",
+          rows: [
+            {
+              title: "[Audio 🎧]",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytaud ${data.url}`
+            },
+            {
+              title: "[Document 📁]",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${data.url}`
+            },
+            {
+              title: "[Voice (ptt) 💡]",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${data.url}`
+            },
+            {
+              title: "[Video File 📽️]",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
+          ]
+        }]
+      };
+
+      return await robin.sendMessage(from, {
+        image: { url: data.thumbnail },
+        caption: cap,
+        footer: "> 〽️ade By Dinuwh Bbh",
+        buttons: [
+          {
+            buttonId: `${prefix}ytvoice ${data.url}`,
+            buttonText: { displayText: "`[Voice Note(Ptt) 🎧]`" },
+            type: 1
+          },
+          {
+            buttonId: `${prefix}ytaud ${data.url}`,
+            buttonText: { displayText: "`[Audio Type 🎧]`" },
+            type: 1
+          },
+          {
+            buttonId: `${prefix}ytdoc ${data.url}`,
+            buttonText: { displayText: "`[Document 📁]`" },
+            type: 1
+          },
+          {
+            buttonId: `${prefix}devilv ${data.url}`,
+            buttonText: { displayText: "`[Video 📽️]`" },
+            type: 1
+          },
+
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
+          },
+        ],
+        headerType: 1,
+        viewOnce: true,
+      }, { quoted: mek });
+    }
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
+
+
+//==$=3=3.03=3.032=3.0322=3.0322=3.03222=3.032222=3.032222
+
+cmd({
+  pattern: "documentv",
+  //alias: "song",
+  react: "🎵",
+  desc: "Download Song",
+  category: "download",
+  filename: __filename,
+}, async (robin, mek, m, { from, q, prefix, reply }) => {
+  try {
+    if (!q) return reply("\`Give Me SONG NAME OR LINK || නමක් දියන්😓❤️\`");
+
+    const search = await yts(q);
+    if (!search.videos.length) return reply("\`❌ Video not found!\`");
+    const data = search.videos[0];
+
+    const cap = `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
+╭────────✦✧✦────────╯
+
+* \`✦ 𝚃𝚒𝚝𝚕𝚎\`     :  _*${data.title}*_
+\`╭───────────────✿\` 
+* *Same The Old Details 😴🖇️*
+\`╰───────────────✿\`
+╭───────────────✿  
+│ *Select You Want Video quality* 🧚‍♂️
+│ *ඔබට අවශ්‍ය වීඩියො ගුණාත්මක තත්වය තෝරන්න 😴🖇️*
+╰───────────────✿`;
+
+    // ✳️ If nonbutton mode
+if (config.MODE === 'nonbutton') {
+  const sections = [
+    {
+	title: "",
+	rows: [
+      {title: "1", rowId: `${prefix}144vd ${data.url}`, description: '\`❲ 144p Document Video File ❳\` 📄'},
+      {title: "2", rowId: `${prefix}240vd ${data.url}`, description: '\`❲ 240p Document Video File ❳\` 📄'} ,
+      {title: "3", rowId: `${prefix}360vd ${data.url}`, description: '\`❲ 360p Document Video File ❳\` 📄'} ,
+      {title: "4", rowId: `${prefix}480vd ${data.url}`, description: '\`❲ 480p Document Video File ❳\` 📄'} ,
+      {title: "5", rowId: `${prefix}720vd ${data.url}`, description: '\`❲ 720p Document Video File ❳\` 📄'} ,
+      {title: "6", rowId: `${prefix}1080vd ${data.url}`, description: '\`❲ 1080p Document Video File ❳\` 📄'} ,
 	]
     } 
 ]
