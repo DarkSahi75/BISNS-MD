@@ -888,7 +888,7 @@ cmd({
 \`╰───────────────✿\`
 ╭───────────────✿  
 │ *Select You Want Video quality* 🧚‍♂️
-│ *ඔබට අවශ්‍ය වීඩියෝ ණාත්මක තත්වය තෝරන්න 😴🖇️*
+│ *ඔබට අවශ්‍ය වීඩියෝ ගුණාත්මක තත්වය තෝරන්න 😴🖇️*
 ╰───────────────✿`;
 
     // ✳️ If nonbutton mode
@@ -922,7 +922,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
       const listData = {
         title: "◎ ❨𝙲𝙷𝙾𝙾𝚂 𝚅𝙸𝙳𝙴𝙾 𝚀𝚄𝙰𝙻𝙸𝚃𝚈❩ ◎",
         sections: [{
-          title: "DOCUMENT VIDEO OPTIONS",
+          title: "NORMAL VIDEO OPTIONS",
           rows: [
             {
               title: "\`❨ 144p Normal Video File ❩\` 📽️",
@@ -989,12 +989,13 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
     reply(`❌ Error: ${e.message}`);
   }
 });
-	  
-//==$=3=3.03=3.032=3.0322=3.0322=3.03222=3.032222=3.032222
 
-/*cmd({
+
+//=======3=3.04=3.044=3.0444=3.0444=3.04444=3.044443=3.044443=3.0444434=3.04444344=3.044443444=3.0444434444
+
+cmd({
   pattern: "documentv",
-  //alias: "song",
+  alias: "song",
   react: "🎵",
   desc: "Download Song",
   category: "download",
@@ -1016,7 +1017,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 \`╰───────────────✿\`
 ╭───────────────✿  
 │ *Select You Want Video quality* 🧚‍♂️
-│ *ඔබට අවශ්‍ය වීඩියො ගුණාත්මක තත්වය තෝරන්න 😴🖇️*
+│ *ඔබට අවශ්‍ය වීඩියෝ ගුණාත්මක තත්වය තෝරන්න 😴🖇️*
 ╰───────────────✿`;
 
     // ✳️ If nonbutton mode
@@ -1025,12 +1026,12 @@ if (config.MODE === 'nonbutton') {
     {
 	title: "",
 	rows: [
-      {title: "1", rowId: `${prefix}144vd ${data.url}`, description: '\`❲ 144p Document Video File ❳\` 📄'},
-      {title: "2", rowId: `${prefix}240vd ${data.url}`, description: '\`❲ 240p Document Video File ❳\` 📄'} ,
-      {title: "3", rowId: `${prefix}360vd ${data.url}`, description: '\`❲ 360p Document Video File ❳\` 📄'} ,
-      {title: "4", rowId: `${prefix}480vd ${data.url}`, description: '\`❲ 480p Document Video File ❳\` 📄'} ,
-      {title: "5", rowId: `${prefix}720vd ${data.url}`, description: '\`❲ 720p Document Video File ❳\` 📄'} ,
-      {title: "6", rowId: `${prefix}1080vd ${data.url}`, description: '\`❲ 1080p Document Video File ❳\` 📄'} ,
+	    {title: "1", rowId: `${prefix}144vd ${data.url}`, description: '\`❲ 144p Normal Video File ❳\` 📽️'},
+	    {title: "2", rowId: `${prefix}240vd ${data.url}`, description: '\`❲ 240p Normal Video File ❳\` 📽️'} ,
+      {title: "3", rowId: `${prefix}360vd ${data.url}`, description: '\`❲ 360p Normal Video File ❳\` 📽️'} ,
+      {title: "4", rowId: `${prefix}480vd ${data.url}`, description: '\`❲ 480p Normal Video File ❳\` 📽️'} ,
+      {title: "5", rowId: `${prefix}720vd ${data.url}`, description: '\`❲ 720p Normal Video File ❳\` 📽️'} ,
+      {title: "6", rowId: `${prefix}1080vd ${data.url}`, description: '\`❲ 1080 Normal Video File ❳\` 📽️'} ,
 	]
     } 
 ]
@@ -1047,70 +1048,75 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
 } if (config.MODE === 'button') {
-const listData = {
-title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝚀𝚄𝙰𝙻𝙸𝚃𝚈 ◎",
-sections: [{
-title: "◎ Document Video OPTIONS ◎",
-rows: [
-{
-title: "`❲ 144p Document Video File ❳` 📄",
-description: "Download as 144p\n〽️ade By Dinuwh Bbh",
-id: ${prefix}144vd ${data.url}
-},
-{
-title: "`❲ 240p Document Video File ❳` 📄",
-description: "Download as 240p\n〽️ade By Dinuwh Bbh",
-id: ${prefix}240vd ${data.url}
-},
-{
-title: "`❲ 360p Document Video File ❳` 📄",
-description: "Download as 360p\n〽️ade By Dinuwh Bbh",
-id: ${prefix}360vd ${data.url}
-},
-{
-title: "`❲ 480p Document Video File ❳` 📄",
-description: "Download as 480p\n〽️ade By Dinuwh Bbh",
-id: ${prefix}480vd ${data.url}
-},
-{
-title: "`❲ 720p Document Video File ❳` 📄",
-description: "Download as 720p\n〽️ade By Dinuwh Bbh",
-id: ${prefix}720vd ${data.url}
-},
-{
-title: "`❲ 1080p Document Video File ❳ 📄",
-description: "Download as 1080p\n〽️ade By Dinuwh Bbh",
-id: ${prefix}1080vd ${data.url}
-},
-]
-}]
-};
+      const listData = {
+        title: "◎ ❨𝙲𝙷𝙾𝙾𝚂 𝚅𝙸𝙳𝙴𝙾 𝚀𝚄𝙰𝙻𝙸𝚃𝚈❩ ◎",
+        sections: [{
+          title: "DOCUMENT VIDEO OPTIONS",
+          rows: [
+            {
+              title: "\`❨ 144p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 144p*\n> *〽️ade By Dinuwh Bbh*",
+              id: `${prefix}144vd ${data.url}`
+            },
+            {
+              title: "\`❨ 240p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 240p*\n> *〽️ade By Dinuwh Bbh*",
+              id: `${prefix}240vd ${data.url}`
+            },
+            {
+              title: "\`❨ 360p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 360p*\n> *〽️ade By Dinuwh Bbh*",
+              id: `${prefix}360vd ${data.url}`
+            },
+            {
+              title: "\`❨ 480p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 480p*\n> *〽️ade By Dinuwh Bbh",
+              id: `${prefix}480vd ${data.url}`
+            },
+	    {
+              title: "\`❨ 720p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 720p*\n> *〽️ade By Dinuwh Bbh*",
+              id: `${prefix}720vd ${data.url}`
+            },
+            {
+              title: "\`❨ 1080p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 1080p*\n> *〽️ade By Dinuwh Bbh",
+              id: `${prefix}1080vd ${data.url}`
+            }
+          ]
+        }]
+      };
 
-return await robin.sendMessage(from, {  
-    image: { url: data.thumbnail },  
-    caption: cap,  
-    footer: "> 〽️ade By Dinuwh Bbh",  
-    buttons: [  
-      	  
-	{  
-                buttonId: `${prefix}ping`,  
-                buttonText: {  
-                    displayText: '\`CHECK BOT PING 📍\`'  
-                },  
-            },	  
-        ],  
-        headerType: 1,  
-        viewOnce: true  
-    }, {  
-        quoted: m  
-    });
+      return await robin.sendMessage(from, {
+        image: { url: data.thumbnail },
+        caption: cap,
+        footer: "> 〽️ade By Dinuwh Bbh",
+        buttons: [
+          
+          {
+            buttonId: `${prefix}ping ${data.url}`,
+            buttonText: { displayText: "`[CHECK BOT SPEED 📍]`" },
+            type: 1
+          },
 
-}
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
+          },
+        ],
+        headerType: 1,
+        viewOnce: true,
+      }, { quoted: mek });
+    }
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
+	  
 
-} catch (e) {
-reply('ERROR !!')
-l(e)
-}
-})
-
-*/
