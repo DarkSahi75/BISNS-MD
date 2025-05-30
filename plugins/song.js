@@ -170,23 +170,27 @@ cmd({
 
 ✗ *Choos You Want Video Type* `;
 
-    if (config.MODE === "nonbutton") {
-      const sections = [{
-        title: "VIDEO TYPE",
-        rows: [
-          { title: "1. Normal 🎥", rowId: `${prefix}devilnewv ${data.url}`, description: "Send as Video File" },
-          { title: "2. Document 📂", rowId: `${prefix}devilnewd ${data.url}`, description: "Send as Document" }
-        ]
-      }];
-      const listMessage = {
-        text: "*SELECT VIDEO TYPE*",
-        footer: sadiya_md_footer,
-        buttonText: "🔘 Choose Format",
-        sections
-      };
-      return await robin.sendMessage(from, listMessage, { quoted: mek });
-    }
-
+    if (config.MODE === 'nonbutton') {
+  const sections = [
+    {
+	title: "",
+	rows: [
+	    {title: "1", rowId: `${prefix}devilnewv ${data.url}`, description: '\`❲ Normal Video File ❳\` 📽️'},
+	    {title: "2", rowId: `${prefix}devilnewd ${data.url}`, description: '\`❲ Document Video File ❳\` 📄'} ,
+     ]
+    } 
+]
+const listMessage = {
+caption: cap,
+image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
+footer: '> 〽️ade By Dinuwh Bbh',
+title: '',
+buttonText: '*🔢 Reply below number*',
+sections
+}
+	
+return await robin.replyList(from, listMessage ,{ quoted : mek })
+//button-==$=$==$=#=#=#=#==#=#=#=#=#=#=#=#=#=#=##=!=#=$=#=#=#==#=#=#=#=#=
     if (config.MODE === "button") {
       const listData = {
         title: "◎ Choose Format ◎",
