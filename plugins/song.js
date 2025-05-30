@@ -52,27 +52,26 @@ cmd({
 
     // ✳️ If nonbutton mode
 if (config.MODE === 'nonbutton') {
-  const sections = [
+	
+const sections = [
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: prefix + 'menu' , description: 'COMMANDS MENU'},
-	    {title: "2", rowId: prefix + 'ping' , description: 'VAJIRA-MD SPEED'} ,
-
-	]
+  {title: "1", rowId: prefix + 'ytaud ' + q , description: 'Normal type song 🎶'}, 
+  {title: "2", rowId: prefix + 'ytdoc ' + q , description: 'Document type song 📁'},
+]
     } 
 ]
-const listMessage = {
-caption: cap,
-image : { url: config.LOGO },	
-footer: config.FOOTER,
+  const listMessage = {
+ text : dat ,
+footer: '〽️ade By Dinuwh Bbh',
 title: '',
 buttonText: '*🔢 Reply below number*',
 sections
 }
-	
 return await robin.replyList(from, listMessage ,{ quoted : mek })
 
+	//button
 } if (config.MODE === 'button') {
       const listData = {
         title: "◎ Choose Format ◎",
