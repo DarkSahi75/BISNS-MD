@@ -438,5 +438,74 @@ cmd(
 );
 
 
+//=$=$-$===Document-Type
+
+cmd(
+  {
+    pattern: "144vd",
+    react: "🎥",
+    desc: "Download YouTube Video",
+    category: "download",
+    filename: __filename,
+  },
+  async (
+    robin,
+    mek,
+    m,
+    { from, quoted, body, isCmd, command, args, q, isGroup, sender, reply }
+  ) => {
+    try {
+      if (!q) return reply("*📥 Please provide a name or a YouTube link.*");
+
+      const search = await yts(q);
+      const data = search.videos[0];
+      const url = data.url;
+
+      const downloadVideo = async (url, quality) => {
+        const apiUrl = `https://p.oceansaver.in/ajax/download.php?format=${quality}&url=${encodeURIComponent(
+          url
+        )}&api=dfcb6d76f2f6a9894gjkege8a4ab232222`;
+
+        const response = await axios.get(apiUrl);
+
+        if (response.data && response.data.success) {
+          const { id, title } = response.data;
+          const progressUrl = `https://p.oceansaver.in/ajax/progress.php?id=${id}`;
+
+          while (true) {
+            const progress = await axios.get(progressUrl);
+            if (progress.data.success && progress.data.progress === 1000) {
+              const videoBuffer = await axios.get(progress.data.download_url, {
+                responseType: "arraybuffer",
+              });
+              return { buffer: videoBuffer.data, title };
+            }
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+          }
+        } else {
+          throw new Error("📛 Failed to fetch video details.");
+        }
+      };
+
+      const quality = "144";
+      const video = await downloadVideo(url, quality);
+
+      await robin.sendMessage(
+        from,
+        {
+          document: video.buffer,
+          mimetype: "video/mp4",
+          fileName: `${video.title}.mp4`,
+          caption: `🎥 *${video.title}*\n\n*MADE BY - DINUWH-MD🖇️*`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply(`❌ Error: ${e.message}`);
+    }
+  }
+);
 
 
