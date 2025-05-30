@@ -864,7 +864,7 @@ cmd(
 //VideoDownload Main
 
 
-cmd({
+/*cmd({
   pattern: "normalv",
   alias: "song",
   react: "🎵",
@@ -1047,7 +1047,7 @@ sections
 	
 return await robin.replyList(from, listMessage ,{ quoted : mek })
 
-/*	//button
+	//button
 } if (config.MODE === 'button') {
 const listData = {
 title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝚀𝚄𝙰𝙻𝙸𝚃𝚈 ◎",
