@@ -864,7 +864,7 @@ cmd(
 //VideoDownload Main
 
 
-/*cmd({
+cmd({
   pattern: "normalv",
   alias: "song",
   react: "🎵",
@@ -994,7 +994,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 //==$=3=3.03=3.032=3.0322=3.0322=3.03222=3.032222=3.032222
 
-cmd({
+/*cmd({
   pattern: "documentv",
   //alias: "song",
   react: "🎵",
