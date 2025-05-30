@@ -570,15 +570,17 @@ const apk_info = await fetchJson(`${apilink}/download/apk?id=${apk_search.result
     
   // GET FIRST APK
   
-const apkcaption =` 
+const apkcaption =`\`乂 Ｄｉｎｕ 𝑿 Ａｐｋ Ｄｏｗｎｌｏａｄｅｒ ⚙️📥\`
+\`\`\`◎.LastUpdate\`\`\` = ❨${apk_info.result.lastUpdate}❩
 
-       🔥   *APK DOWNLOADER*   🔥
+\`\`\`◎. Apk Name \`\`\` = ❨${apk_info.result.name}❩
 
-     
-🔮 *Name* - ${apk_info.result.name}
-🔮 *Package* - ${apk_info.result.package}
-🔮 *Size* - ${apk_info.result.size}
-`
+\`\`\`◎.Package\`\`\` = ❨${apk_info.result.package}❩
+
+\`\`\`◎.Size\`\`\` = ❨${apk_info.result.size}❩
+
+_ƒσℓℓσω тσ ℓєαяη тє¢н 👨‍💻 :-_
+ _https://whatsapp.com/channel/0029Vb5XXIfDp2Q3A5zeZb1d_`
 await conn.sendMessage( from, { image: { url: apk_info.result.image || '' }, caption: apkcaption }, { quoted: mek })
 
 // SEND APK
