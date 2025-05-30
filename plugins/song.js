@@ -169,45 +169,29 @@ cmd({
 
 ✗ *Choose what type of video you want:*`;
 
-    if (config.MODE === 'nonbutton') {
-      const sections = [
-        {
-          title: "Choose Video Type",
-          rows: [
-            {
-              title: "1. Audio 🎧",
-              rowId: `${prefix}ytaud ${data.url}`,
-              description: 'MP3 audio file'
-            },
-            {
-              title: "2. Document 📄",
-              rowId: `${prefix}ytdoc ${data.url}`,
-              description: 'MP4 in document format'
-            },
-            {
-              title: "3. Voice Note 🎤",
-              rowId: `${prefix}ytvoice ${data.url}`,
-              description: 'PTT voice note format'
-            },
-            {
-              title: "4. Video 📽️",
-              rowId: `${prefix}devilnewv ${data.url}`,
-              description: 'Standard video download'
-            }
-          ]
-        }
-      ];
+    
+if (config.MODE === 'nonbutton') {
+  const sections = [
+    {
+	title: "",
+	rows: [
+	    {title: "1", rowId: prefix + 'menu' , description: 'COMMANDS MENU'},
+	    {title: "2", rowId: prefix + 'ping' , description: 'VAJIRA-MD SPEED'} ,
 
-      const listMessage = {
-        text: cap,
-        footer: "> 〽️ade By Dinuwh Bbh",
-        title: "🎬 YouTube Video Download",
-        buttonText: "🔢 Reply below number",
-        sections: sections
-      };
+	]
+    } 
+]
+const listMessage = {
+caption: cap,
+image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
+footer: config.FOOTER,
+title: '',
+buttonText: '*🔢 Reply below number*',
+sections
+}
+	
+return await conn.replyList(from, listMessage ,{ quoted : mek })
 
-      return await robin.sendMessage(from, listMessage, { quoted: mek });
-    }
 
     // BUTTON MODE
     if (config.MODE === "button") {
