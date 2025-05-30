@@ -84,7 +84,7 @@ cmd({
     }
 });
 
-//onst yts = require("@dark-yasiya/scraper").yts; // confirm your yts import here
+/*//onst yts = require("@dark-yasiya/scraper").yts; // confirm your yts import here
 
 cmd({
   pattern: "devilv",
@@ -197,3 +197,4 @@ cmd({
     reply("❌ Video එක process කරන්න ගිය දේවල් වල error එකක් තියෙනවා. ටික වෙලාවක් බලා try කරන්න!");
   }
 });
+*/
