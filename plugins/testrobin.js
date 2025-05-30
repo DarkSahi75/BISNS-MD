@@ -897,10 +897,12 @@ if (config.MODE === 'nonbutton') {
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
-	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
-            {title: "3", rowId: `${prefix}ytvoice ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
-            {title: "4", rowId: `${prefix}devilv ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	    {title: "1", rowId: `${prefix}144v ${data.url}`, description: '\`❲ 144p Normal Video File ❳\` 📽️'},
+	    {title: "2", rowId: `${prefix}240v ${data.url}`, description: '\`❲ 240p Normal Video File ❳\` 📽️'} ,
+      {title: "3", rowId: `${prefix}360v ${data.url}`, description: '\`❲ 360p Normal Video File ❳\` 📽️'} ,
+      {title: "4", rowId: `${prefix}480v ${data.url}`, description: '\`❲ 480p Normal Video File ❳\` 📽️'} ,
+      {title: "5", rowId: `${prefix}720v ${data.url}`, description: '\`❲ 720p Normal Video File ❳\` 📽️'} ,
+      {title: "6", rowId: `${prefix}1080v ${data.url}`, description: '\`❲ 1080 Normal Video File ❳\` 📽️'} ,
 	]
     } 
 ]
@@ -923,24 +925,34 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
           title: "DINUWH MD OPTIONS",
           rows: [
             {
-              title: "[Audio 🎧]",
+              title: "[Audio 144 🎧]",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
+              id: `${prefix}144v ${data.url}`
             },
             {
               title: "[Document 📁]",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
+              id: `${prefix}240v ${data.url}`
             },
             {
               title: "[Voice (ptt) 💡]",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
+              id: `${prefix}360v ${data.url}`
             },
             {
               title: "[Video File 📽️]",
               description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
+              id: `${prefix}480v ${data.url}`
+            },
+	    {
+              title: "[Video File 📽️]",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}720v ${data.url}`
+            },
+            {
+              title: "[Video File 📽️]",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}1080v ${data.url}`
             }
           ]
         }]
