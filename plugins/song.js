@@ -343,3 +343,91 @@ cmd({
 
 
 
+cmd({
+  pattern: "video",
+  alias: "ytmp4",
+  react: "🎵",
+  desc: "Download Song",
+  category: "download",
+  filename: __filename,
+}, async (robin, mek, m, { from, q, prefix, reply }) => {
+  try {
+    if (!q) return reply("\`Give Me  NAME OR LINK || නමක් දියන්😓❤️\`");
+
+    const search = await yts(q);
+    if (!search.videos.length) return reply("\`❌ Video not found!\`");
+    const data = search.videos[0];
+
+    const cap = `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
+╭────────✦✧✦────────╯
+
+* \`✦ 𝚃𝚒𝚝𝚕𝚎\`     :  _*${data.title}*_
+\`╭───────────────✿\` 
+
+* \`✦ 𝙳𝚞𝚛𝚊𝚝𝚒𝚘𝚗\`  : _*${data.timestamp} (${data.seconds} sec)*_  
+* \`✦ 𝚄𝚙𝚕𝚘𝚊𝚍𝚎𝚍\`  : _${data.ago}_  
+* \`✦ Channel\`   : *_${data.author.name}_*
+* \`✦ 𝚅𝚒𝚎𝚠𝚜\`     : _${data.views}_
+* \`✦ 𝚄𝚁𝙻\`       : *_${data.url}_*
+
+\`╰───────────────✿\`
+╭───────────────✿  
+│ 🎶 *ƒσℓℓσω υѕ мυѕι¢ ¢нαηηєℓ* 🧚‍♂️  
+╰───────────────✿  
+🔗 https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J
+
+> *Send You Want Video Formate ⤵️*`;
+
+    
+
+    // ✳️ If nonbutton mode
+if (config.MODE === 'nonbutton') {
+  const sections = [
+    {
+	title: "",
+	rows: [
+	    {title: "1", rowId: `${prefix}normalv ${data.url}`, description: '\`❲ Normal Video Files ❳\` 📽️'},
+	    {title: "2", rowId: `${prefix}documentv ${data.url}`, description: '\`❲ Document Video Files ❳\` 📄'} ,
+        
+	]
+    } 
+]
+const listMessage = {
+caption: cap,
+image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
+footer: '> 〽️ade By Dinuwh Bbh',
+title: '',
+buttonText: '> *◎PowerFull Whatsapp Bot Make By Dinuwh◎*',
+sections
+}
+	
+return await robin.replyList(from, listMessage ,{ quoted : mek })
+
+	//button
+} if (config.MODE === 'button') {
+      const listData = {
+        title: "◎ Choose Format ◎",
+        sections: [{
+          title: "DINUWH MD OPTIONS",
+          rows: [
+            {
+              title: "[Normle Video📽️]",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilnewv ${data.url}`
+            },
+            {
+              title: "[Document Video📁]",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilnewd ${data.url}`
+            }
+            
+          ]
+        }]
+      };
+
+       catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
+
