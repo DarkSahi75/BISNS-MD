@@ -8,13 +8,6 @@ const config = require("../settings");
 const prefix = config.PREFIX || ".";
 
 
-
-
-
-
-
-
-
 cmd({
   pattern: "dsong",
   alias: "song",
@@ -63,7 +56,7 @@ const sections = [
     } 
 ]
   const listMessage = {
- text : dat ,
+
 footer: '〽️ade By Dinuwh Bbh',
 title: '',
 buttonText: '*🔢 Reply below number*',
