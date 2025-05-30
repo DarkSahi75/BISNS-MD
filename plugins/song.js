@@ -1,5 +1,4 @@
 const fetch = require("node-fetch");
-const sadiya_md_footer = "🌀 Powered by DINUWH MD";
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson } = require('../lib/functions')
 const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
@@ -17,10 +16,10 @@ cmd({
   filename: __filename,
 }, async (robin, mek, m, { from, q, prefix, reply }) => {
   try {
-    if (!q) return reply("නමක් හරි ලින්ක් එකක් හරි දෙන්න 🌚❤️");
+    if (!q) return reply("\`Give Me SONG NAME OR LINK || නමක් දියන්😓❤️\`");
 
     const search = await yts(q);
-    if (!search.videos.length) return reply("❌ Video not found!");
+    if (!search.videos.length) return reply("\`❌ Video not found!\`");
     const data = search.videos[0];
 
     const cap = `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
@@ -61,7 +60,7 @@ caption: cap,
 image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
 footer: '> 〽️ade By Dinuwh Bbh',
 title: '',
-buttonText: '*🔢 Reply below number*',
+buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
 sections
 }
 	
@@ -70,7 +69,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 	//button
 } if (config.MODE === 'button') {
       const listData = {
-        title: "◎ Choose Format ◎",
+        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
         sections: [{
           title: "DINUWH MD OPTIONS",
           rows: [
@@ -158,10 +157,10 @@ cmd({
   filename: __filename,
 }, async (robin, mek, m, { from, q, prefix, reply }) => {
   try {
-    if (!q) return reply("නමක් හරි ලින්ක් එකක් හරි දෙන්න 🌚❤️");
+    if (!q) return reply("\`Give Me SONG NAME OR LINK || නමක් දියන්😓❤️\`");
 
     const search = await yts(q);
-    if (!search.videos.length) return reply("❌ Video not found!");
+    if (!search.videos.length) return reply("\`❌ Video not found!\`");
     const data = search.videos[0];
 
     const cap = `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
@@ -192,7 +191,7 @@ caption: cap,
 image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
 footer: '> 〽️ade By Dinuwh Bbh',
 title: '',
-buttonText: '*🔢 Reply below number*',
+buttonText: '> *◎PowerFull Whatsapp Bot Make By Dinuwh◎*',
 sections
 }
 	
@@ -338,55 +337,9 @@ cmd({
     console.log(e);
   }
 });
-//video
-cmd({
-  pattern: "v144",
-  //alias: ["yt144"],
-  react: "📹",
-  desc: "Download YouTube 144p video",
-  category: "download",
-  filename: __filename,
-},
-async (
-  conn,
-  mek,
-  m,
-  { from, q, reply }
-) => {
-  try {
-    if (!q) return reply("🔎 YouTube නමක් හෝ ලින්ක් එකක් දෙන්න!");
-    const search = await yts(q);
-    if (!search.videos.length) return reply("❌ වීඩියෝවක් හමුනොවුණා!");
-    const data = search.videos[0];
-    const url = data.url;
-    const api = `https://api.giftedtech.my.id/api/download/ytmp4?apikey=gifted&url=${encodeURIComponent(url)}`;
-    const res = await fetchJson(api);
-    if (!res || !res.data?.url) return reply("❌ බාගත කිරීම අසාර්ථකයි!");
-    
-    const caption = `🎥 *𝚈𝚃 𝚅𝙸𝙳𝙴𝙾 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳*
-📌 *Title:* ${data.title}
-⏱ *Duration:* ${data.timestamp}
-👁 *Views:* ${data.views}
-🌐 *Link:* ${data.url}
-> *𝙳𝙸 𝙽 𝚄 𝚆 𝙷 - 𝙼 𝙳 || 𝑴𝑼𝑺𝑰𝑪 𝑽𝑰𝑫𝑬𝑶 𝑺𝑻𝒀𝑳𝑬 💚*`;
 
-    await conn.sendMessage(
-      from,
-      { image: { url: data.thumbnail }, caption },
-      { quoted: mek }
-    );
 
-    await conn.sendMessage(
-      from,
-      {
-        video: { url: res.data.url },
-        mimetype: "video/mp4",
-        caption: "✅ Video බාගන්න ලැබුණා!",
-      },
-      { quoted: mek }
-    );
-  } catch (e) {
-    console.error(e);
-    reply("❌ අවුලක් ආවා බං! " + e.message);
-  }
-});
+//Music End Now Video Plugins ☝ All Erro Fixed all Up Plugins
+
+
+
