@@ -920,38 +920,38 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 	//button
 } if (config.MODE === 'button') {
       const listData = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        title: "◎ ❨𝙲𝙷𝙾𝙾𝚂 𝚅𝙸𝙳𝙴𝙾 𝚀𝚄𝙰𝙻𝙸𝚃𝚈❩ ◎",
         sections: [{
-          title: "DINUWH MD OPTIONS",
+          title: "DOCUMENT VIDEO OPTIONS",
           rows: [
             {
-              title: "[Audio 144 🎧]",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              title: "\`❨ 144p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 144p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}144v ${data.url}`
             },
             {
-              title: "[Document 📁]",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              title: "\`❨ 240p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 240p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}240v ${data.url}`
             },
             {
-              title: "[Voice (ptt) 💡]",
-              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              title: "\`❨ 360p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 360p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}360v ${data.url}`
             },
             {
-              title: "[Video File 📽️]",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              title: "\`❨ 480p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 480p*\n> *〽️ade By Dinuwh Bbh",
               id: `${prefix}480v ${data.url}`
             },
 	    {
-              title: "[Video File 📽️]",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              title: "\`❨ 720p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 720p*\n> *〽️ade By Dinuwh Bbh*",
               id: `${prefix}720v ${data.url}`
             },
             {
-              title: "[Video File 📽️]",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              title: "\`❨ 1080p Normal Video File ❩\` 📽️",
+              description: "*Download as Normal.Type 1080p*\n> *〽️ade By Dinuwh Bbh",
               id: `${prefix}1080v ${data.url}`
             }
           ]
@@ -963,24 +963,10 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
         caption: cap,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
+          
           {
-            buttonId: `${prefix}ytvoice ${data.url}`,
-            buttonText: { displayText: "`[Voice Note(Ptt) 🎧]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}ytaud ${data.url}`,
-            buttonText: { displayText: "`[Audio Type 🎧]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}ytdoc ${data.url}`,
-            buttonText: { displayText: "`[Document 📁]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}devilv ${data.url}`,
-            buttonText: { displayText: "`[Video 📽️]`" },
+            buttonId: `${prefix}ping ${data.url}`,
+            buttonText: { displayText: "`[CHECK BOT SPEED 📍]`" },
             type: 1
           },
 
