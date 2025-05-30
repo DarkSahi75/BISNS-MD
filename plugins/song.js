@@ -45,23 +45,25 @@ cmd({
 
     // ✳️ If nonbutton mode
 if (config.MODE === 'nonbutton') {
-	
-const sections = [
+  const sections = [
     {
 	title: "",
 	rows: [
-  {title: "1", rowId: prefix + 'ytaud ' + q , description: 'Normal type song 🎶'}, 
-  {title: "2", rowId: prefix + 'ytdoc ' + q , description: 'Document type song 📁'},
-]
+	    {title: "1", rowId: prefix + 'ytaud' , description: 'Norml Audio'},
+	    {title: "2", rowId: prefix + 'ytcoc' , description: 'Document File'} ,
+
+	]
     } 
 ]
-  const listMessage = {
-
-footer: '〽️ade By Dinuwh Bbh',
+const listMessage = {
+caption: cap,
+image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
+footer: config.FOOTER,
 title: '',
 buttonText: '*🔢 Reply below number*',
 sections
 }
+	
 return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
