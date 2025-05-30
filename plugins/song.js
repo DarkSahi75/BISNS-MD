@@ -144,12 +144,16 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
   }
 });
 
+
+
+
+//videoinfosendjs=========================-====--%=%=%--%-%-%-$-#-#-#=##=$-$-#9#9=9.0=9.0-$839#=$-$738#=738.0$-%*$8##-%748$=$-%7$8$=$-%-
+
 cmd({
-  //Devilvcmd({
   pattern: "devilv",
-//  alias: ["devilvideo", "ytdlvideo"],
-  react: "📽️",
-  desc: "Download YouTube Video",
+  //alias: "song",
+  react: "🎵",
+  desc: "Download Song",
   category: "download",
   filename: __filename,
 }, async (robin, mek, m, { from, q, prefix, reply }) => {
@@ -162,29 +166,31 @@ cmd({
 
     const cap = `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
 ╭────────✦✧✦────────╯
-*📌 Title:* ${data.title}
-*🕒 Duration:* ${data.timestamp}
-*👀 Views:* ${data.views}
-*🔗 Url:* ${data.url}
 
-✗ *Choose what type of video you want:*`;
+* \`✦ 𝚃𝚒𝚝𝚕𝚎\`     :  _*${data.title}*_
+\`╭───────────────✿\` 
 
-    
+*Details :- Same The Old Details 📽️*
+╭───────────────✿  
+│ *Send You Want Song Formate ⤵️*
+╰───────────────✿`;
+
+    // ✳️ If nonbutton mode
 if (config.MODE === 'nonbutton') {
   const sections = [
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: prefix + 'menu' , description: 'COMMANDS MENU'},
-	    {title: "2", rowId: prefix + 'ping' , description: 'VAJIRA-MD SPEED'} ,
-
+	    {title: "1", rowId: `${prefix}devilnewv ${data.url}`, description: '\`❲ Normal Video File ❳\` 📽️'},
+	    {title: "2", rowId: `${prefix}devilnewd ${data.url}`, description: '\`❲ Document Video File ❳\` 📄'} ,
+        
 	]
     } 
 ]
 const listMessage = {
 caption: cap,
 image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
-footer: 'Hutt',
+footer: '> 〽️ade By Dinuwh Bbh',
 title: '',
 buttonText: '*🔢 Reply below number*',
 sections
@@ -192,24 +198,24 @@ sections
 	
 return await robin.replyList(from, listMessage ,{ quoted : mek })
 
-
-    // BUTTON MODE
-    if (config.MODE === "button") {
+	//button
+} if (config.MODE === 'button') {
       const listData = {
         title: "◎ Choose Format ◎",
         sections: [{
           title: "DINUWH MD OPTIONS",
           rows: [
             {
-              title: "[Video 🎥]",
-              description: "Download as normal video file",
+              title: "[Normle Video📽️]",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
               id: `${prefix}devilnewv ${data.url}`
             },
             {
-              title: "[Document 📂]",
-              description: "Download as document video file",
+              title: "[Document Video📁]",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
               id: `${prefix}devilnewd ${data.url}`
             }
+            
           ]
         }]
       };
@@ -221,17 +227,18 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
         buttons: [
           {
             buttonId: `${prefix}devilnewv ${data.url}`,
-            buttonText: { displayText: "📥 Video" },
+            buttonText: { displayText: "`[Normal Video 📽️]`" },
             type: 1
           },
           {
             buttonId: `${prefix}devilnewd ${data.url}`,
-            buttonText: { displayText: "📁 Document" },
+            buttonText: { displayText: "`[Document Video 📄]`" },
             type: 1
           },
+
           {
             buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Format" },
+            buttonText: { displayText: "🔘 Choose Song Type" },
             type: 4,
             nativeFlowInfo: {
               name: "single_select",
@@ -243,19 +250,12 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
         viewOnce: true,
       }, { quoted: mek });
     }
-
   } catch (e) {
     console.error(e);
-    reply("❌ Video එක ගන්න Attempt එකේ දෝෂයක් වෙලා තියෙනවා. නැවත උත්සහ කරන්න!");
+    reply(`❌ Error: ${e.message}`);
   }
 });
-      
-
-
-
-//devilvideosendjs=========================-====--%=%=%--%-%-%-$-#-#-#=##=$-$-#9#9=9.0=9.0-$839#=$-$738#=738.0$-%*$8##-%748$=$-%7$8$=$-%-
-
-
+//Voice j=%=%=%==%=%=%==%=%=%==%%%=%==%=%=
 cmd({
   pattern: "ytvoice",
   //alias: ["ytmp3"],
