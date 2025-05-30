@@ -97,7 +97,7 @@ cmd({
   try {
     if (!q) return reply("🔍 නමක් හෝ YouTube ලින්ක් එකක් දෙන්න!");
 
-    const search = await yts(q);
+    const search = await ytsearch(q);
     if (!search.videos.length) return reply("❌ Video not found!");
 
     const data = search.videos[0];
