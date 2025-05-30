@@ -52,22 +52,25 @@ cmd({
 
     // ✳️ If nonbutton mode
     if (config.MODE === "nonbutton") {
-      const sections = [{
-        title: "",
-        rows: [
-          { title: "1. Audio 🎧", rowId: `${prefix}ytaud ${data.url}|${data.title}`, description: "Normal type song" },
-          { title: "2. Document 📂", rowId: `${prefix}ytdoc ${data.url}|${data.title}`, description: "Document type song" },
-          { title: "3. Voice Note(Ptt)-🎧", rowId: `${prefix}ytvoice ${data.url}|${data.title}`, description: "Voice Note type song" },
-          { title: "4. Video File 📽️", rowId: `${prefix}devilv ${data.url}|${data.title}`, description: "Video Document or Normal Video" }
-        ]
-      }];
-      const listMessage = {
-        text: "*SELECT SONG TYPE*",
-        footer: "*DINUWH MD V2 BOT*\n*POWERED BY CYBER VENOM*",
-        buttonText: "```🔢 Reply below number you need song type```",
-        sections
-      };
-      return await robin.sendMessage(from, listMessage, { quoted: mek });
+  const sections = [{
+    title: "🎶 Choose Song Format",
+    rows: [
+      { title: "1. Audio 🎧", rowId: `${prefix}ytaud ${data.url}|${data.title}`, description: "Normal type song" },
+      { title: "2. Document 📂", rowId: `${prefix}ytdoc ${data.url}|${data.title}`, description: "Document type song" },
+      { title: "3. Voice Note(Ptt)-🎧", rowId: `${prefix}ytvoice ${data.url}|${data.title}`, description: "Voice Note type song" },
+      { title: "4. Video File 📽️", rowId: `${prefix}devilv ${data.url}|${data.title}`, description: "Video Document or Normal Video" }
+    ]
+  }];
+
+  const listMessage = {
+    text: cap, // song info message
+    footer: "*DINUWH MD V2 BOT*\n*POWERED BY CYBER VENOM*",
+    title: "🎵 Song Type Selection",
+    buttonText: "```🔢 Reply below number you need song type```",
+    sections
+  };
+
+  return await robin.sendMessage(from, listMessage, { quoted: mek });
     }
 
     // ✳️ If button mode
