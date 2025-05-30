@@ -1048,7 +1048,7 @@ sections
 return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
-if (config.MODE === 'button') {
+}if (config.MODE === 'button') {
 
   // Quality Selection List
   const listMessage = {
