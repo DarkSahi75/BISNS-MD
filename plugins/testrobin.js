@@ -1048,74 +1048,72 @@ sections
 return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
-} if (config.MODE === 'button') {
-      const listData = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝚀𝚄𝙰𝙻𝙸𝚃𝚈 ◎",
-        sections: [{
-          title: "◎ Document Video OPTIONS ◎",
-          rows: [
-            {
-              title: "\`❲ 144p Document Video File ❳\` 📄",
-              description: "Download as 144p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}144vd ${data.url}`
-            },
-            {
-              title: "\`❲ 240p Document Video File ❳\` 📄",
-              description: "Download as 240p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}240vd ${data.url}`
-            },
-            {
-              title: "\`❲ 360p Document Video File ❳\` 📄",
-              description: "Download as 360p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}360vd ${data.url}`
-            },
-            {
-              title: "\`❲ 480p Document Video File ❳\` 📄",
-              description: "Download as 480p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}480vd ${data.url}`
-            },
-            {
-              title: "\`❲ 720p Document Video File ❳\` 📄",
-              description: "Download as 720p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}720vd ${data.url}`
-            },
-	   {
-              title: "\`❲ 1080p Document Video File ❳\` 📄",
-              description: "Download as 1080p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}1080vd ${data.url}`
-            },
-          ]
-        }]
-      };
+if (config.MODE === 'button') {
 
-      return await robin.sendMessage(from, {
-        image: { url: data.thumbnail },
-        caption: cap,
-        footer: "> 〽️ade By Dinuwh Bbh",
-        buttons: [
-          	
-		{
-                    buttonId: `${prefix}ping`,
-                    buttonText: {
-                        displayText: '\`CHECK BOT PING 📍\`'
-                    },
-                },	
-            ],
-            headerType: 1,
-            viewOnce: true
-        }, {
-            quoted: m
-        });
-        
+  // Quality Selection List
+  const listMessage = {
+    text: "◎ 𝙲𝙷𝙾𝙾𝚂 𝚀𝚄𝙰𝙻𝙸𝚃𝚈 ◎",
+    footer: "〽️ade By Dinuwh Bbh",
+    title: "🎞️ Video Quality Selector",
+    buttonText: "📥 CLICK HERE TO SELECT",
+    sections: [
+      {
+        title: "◎ Document Video OPTIONS ◎",
+        rows: [
+          {
+            title: "`❲ 144p Document Video File ❳` 📄",
+            description: "Download as 144p\n〽️ade By Dinuwh Bbh",
+            rowId: `${prefix}144vd ${data.url}`
+          },
+          {
+            title: "`❲ 240p Document Video File ❳` 📄",
+            description: "Download as 240p\n〽️ade By Dinuwh Bbh",
+            rowId: `${prefix}240vd ${data.url}`
+          },
+          {
+            title: "`❲ 360p Document Video File ❳` 📄",
+            description: "Download as 360p\n〽️ade By Dinuwh Bbh",
+            rowId: `${prefix}360vd ${data.url}`
+          },
+          {
+            title: "`❲ 480p Document Video File ❳` 📄",
+            description: "Download as 480p\n〽️ade By Dinuwh Bbh",
+            rowId: `${prefix}480vd ${data.url}`
+          },
+          {
+            title: "`❲ 720p Document Video File ❳` 📄",
+            description: "Download as 720p\n〽️ade By Dinuwh Bbh",
+            rowId: `${prefix}720vd ${data.url}`
+          },
+          {
+            title: "`❲ 1080p Document Video File ❳` 📄",
+            description: "Download as 1080p\n〽️ade By Dinuwh Bbh",
+            rowId: `${prefix}1080vd ${data.url}`
+          }
+        ]
+      }
+    ]
+  }
+
+  // Send Thumbnail + Caption + Ping Button
+  await robin.sendMessage(from, {
+    image: { url: data.thumbnail },
+    caption: cap,
+    footer: "〽️ade By Dinuwh Bbh",
+    buttons: [
+      {
+        buttonId: `${prefix}ping`,
+        buttonText: {
+          displayText: '`CHECK BOT PING 📍`'
+        },
+        type: 1
+      }
+    ],
+    headerType: 4, // 4 = Image Message with Buttons
+    viewOnce: true
+  }, { quoted: m });
+
+  // Then send Selector List
+  return await robin.sendMessage(from, listMessage, { quoted: m });
 
 }
-
-
-	
-} catch (e) {
-  reply('*ERROR !!*')
-  l(e)
-}
-})
-
-
