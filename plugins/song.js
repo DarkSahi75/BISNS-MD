@@ -462,10 +462,9 @@ if (config.MODE === 'nonbutton') {
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
-	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
-            {title: "3", rowId: `${prefix}ytvoice ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
-            {title: "4", rowId: `${prefix}devilv ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	    {title: "1", rowId: `${prefix}normalv ${data.url}`, description: '\`❲ Normal Type Videos ❳\` 📽️'},
+	    {title: "2", rowId: `${prefix}documentv ${data.url}`, description: '\`❲ Document Typr Videos ❳\` 📄'} ,
+            
 	]
     } 
 ]
