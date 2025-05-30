@@ -10,6 +10,29 @@ const { JSDOM } = require('jsdom'); // For DOM parsing from HTML
 const axios = require("axios");
 
 cmd({
+  pattern: "ttsadiya",
+  alias: ["tiktokwm"],
+  category: "downloader",
+  use: "<tiktok url>",
+  desc: "Download TikTok video with watermark",
+  react: "🎬"
+}, async (m, client, args) => {
+  let url = args[0];
+  if (!url) return m.reply("*🌐 TikTok link එකක් ලබාදෙන්න!*");
+
+  let res = await fetch(`https://sadiya-tech-apis.vercel.app/download/tiktokdl?url=${url}&apikey=sadiya`);
+  let json = await res.json();
+
+  if (!json.status) return m.reply("❌ Failed to fetch video!");
+
+  await client.sendMessage(m.chat, {
+    video: { url: json.result.wm },
+    caption: `🎬 *TIKTOK VIDEO WITH WATERMARK*\n\n📌 Title: ${json.result.title}\n⏱ Duration: ${json.result.duration}s\n🌍 Region: ${json.result.region}\n\n🔗 ${url}`
+  }, { quoted: m });
+});
+
+    
+cmd({
   pattern: "dsong",
   alias: "song",
   react: "🎵",
