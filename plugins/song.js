@@ -405,29 +405,34 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
 } if (config.MODE === 'button') {
-      const listData = {
-        title: "◎ Choose Format ◎",
-        sections: [{
-          title: "DINUWH MD OPTIONS",
-          rows: [
-            {
-              title: "[Normle Video📽️]",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilnewv ${data.url}`
-            },
-            {
-              title: "[Document Video📁]",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilnewd ${data.url}`
-            }
-            
-          ]
-        }]
-      };
+    const listData = {
+      title: "◎ Choose Format ◎",
+      sections: [{
+        title: "DINUWH MD OPTIONS",
+        rows: [
+          {
+            title: "[Normle Video📽️]",
+            description: "Download as audio\n〽️ade By Dinuwh Bbh",
+            id: `${prefix}devilnewv ${data.url}`
+          },
+          {
+            title: "[Document Video📁]",
+            description: "Download as document\n〽️ade By Dinuwh Bbh",
+            id: `${prefix}devilnewd ${data.url}`
+          }
+        ]
+      }]
+    };
 
-       catch (e) {
-    console.error(e);
-    reply(`❌ Error: ${e.message}`);
+    // ඔබට මෙහිදී listMessage එක යවන්න ඕනේ
+    await conn.sendMessage(m.chat, {
+      text: listData.title,
+      buttonText: "Click Here",
+      sections: listData.sections
+    }, { quoted: m });
+
   }
-});
-
+} catch (e) {
+  console.error(e);
+  reply(`❌ Error: ${e.message}`);
+}
