@@ -184,7 +184,7 @@ if (config.MODE === 'nonbutton') {
 const listMessage = {
 caption: cap,
 image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
-footer: config.FOOTER,
+footer: 'Hutt',
 title: '',
 buttonText: '*🔢 Reply below number*',
 sections
