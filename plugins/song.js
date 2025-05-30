@@ -144,10 +144,10 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
   }
 });
 
-
+cmd({
   //Devilvcmd({
   pattern: "devilv",
-  alias: ["devilvideo", "ytdlvideo"],
+//  alias: ["devilvideo", "ytdlvideo"],
   react: "📽️",
   desc: "Download YouTube Video",
   category: "download",
