@@ -149,7 +149,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 //devilvideosendjs=========================-====--%=%=%--%-%-%-$-#-#-#=##=$-$-#9#9=9.0=9.0-$839#=$-$738#=738.0$-%*$8##-%748$=$-%7$8$=$-%-
 
 
-/*cmd({
+cmd({
   pattern: "devilv",
   alias: ["devilvideo", "ytdlvideo"],
   react: "📽️",
@@ -170,14 +170,17 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 ✗ *Choos You Want Video Type* `;
 
-    if (config.MODE === 'nonbutton') {
+	  
+if (config.MODE === 'nonbutton') {
   const sections = [
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: `${prefix}devilnewv ${data.url}`, description: '\`❲ Normal Video File ❳\` 📽️'},
-	    {title: "2", rowId: `${prefix}devilnewd ${data.url}`, description: '\`❲ Document Video File ❳\` 📄'} ,
-     ]
+	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
+	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
+            {title: "3", rowId: `${prefix}ytvoice ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
+            {title: "4", rowId: `${prefix}devilv ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	]
     } 
 ]
 const listMessage = {
@@ -190,6 +193,8 @@ sections
 }
 	
 return await robin.replyList(from, listMessage ,{ quoted : mek })
+
+	//button
 //button-==$=$==$=#=#=#=#==#=#=#=#=#=#=#=#=#=#=##=!=#=$=#=#=#==#=#=#=#=#=
     if (config.MODE === "button") {
       const listData = {
@@ -245,7 +250,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
     console.error(e);
     reply("❌ Error while processing the video. Try again later.");
   }
-});*/
+});
 //Ptt
 cmd({
   pattern: "ytvoice",
