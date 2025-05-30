@@ -381,7 +381,7 @@ cmd({
     
 
     // ✳️ If nonbutton mode
-if (config.MODE === 'nonbutton') {
+/*if (config.MODE === 'nonbutton') {
   const sections = [
     {
 	title: "",
@@ -455,4 +455,89 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
   l(e)
 }
 })
+*/
+
+if (config.MODE === 'nonbutton') {
+  const sections = [
+    {
+	title: "",
+	rows: [
+	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
+	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
+            {title: "3", rowId: `${prefix}ytvoice ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
+            {title: "4", rowId: `${prefix}devilv ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	]
+    } 
+]
+const listMessage = {
+caption: cap,
+image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
+footer: '> 〽️ade By Dinuwh Bbh',
+title: '',
+buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
+sections
+}
+	
+return await robin.replyList(from, listMessage ,{ quoted : mek })
+
+	//button
+} if (config.MODE === 'button') {
+      const listData = {
+        title: "◎ 𝙲𝙷𝙾𝙾𝚂 Video 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        sections: [{
+          title: "Video Type OPTIONS",
+          rows: [
+            {
+              title: "*❨ Normal Quality Files ❩*",
+              description: "*Normal  Type Videos*\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytaud ${data.url}`
+            },
+            
+            {
+              title: "*❨ Document Quality Files ❩*",
+              description: "*Document Type Videos*\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
+          ]
+        }]
+      };
+
+      return await robin.sendMessage(from, {
+        image: { url: data.thumbnail },
+        caption: cap,
+        footer: "> 〽️ade By Dinuwh Bbh",
+        buttons: [
+          {
+            buttonId: `${prefix}normalv ${data.url}`,
+            buttonText: { displayText: "`\`❲ Normal Quality Files 📽️❳\``" },
+            type: 1
+          },
+          {
+            buttonId: `${prefix}documentv ${data.url}`,
+            buttonText: { displayText: "`\`❲ Document Quality Files 📄❳\``" },
+            type: 1
+          },
+
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
+          },
+        ],
+        headerType: 1,
+        viewOnce: true,
+      }, { quoted: mek });
+    }
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
+
+
+
 
