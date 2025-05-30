@@ -149,7 +149,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 //devilvideosendjs=========================-====--%=%=%--%-%-%-$-#-#-#=##=$-$-#9#9=9.0=9.0-$839#=$-$738#=738.0$-%*$8##-%748$=$-%7$8$=$-%-
 
 
-cmd({
+/*cmd({
   pattern: "devilv",
   alias: ["devilvideo", "ytdlvideo"],
   react: "📽️",
@@ -245,7 +245,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
     console.error(e);
     reply("❌ Error while processing the video. Try again later.");
   }
-});
+});*/
 //Ptt
 cmd({
   pattern: "ytvoice",
