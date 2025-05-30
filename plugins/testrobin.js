@@ -918,62 +918,76 @@ sections
 return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
-} if (config.MODE === 'button') {
-      let sections = [{
-                title: 'VAJIRA MD',
-                rows: [{
-                        title: 'Audio 🎧',
-                        description: `Download Audio file`,
-                        id: `${prefix}ytmp3 ` + data.url + '|' + data.title
-                    },
-                    {
-                        title: 'Document 📁',
-                        description: `Download Document file`,
-                        id: `${prefix}ytdocs ` + data.url + '|' + data.title
-                    },
-                ]
-            }
-        ]
 
-        let listMessage = {
-            title: 'Click Here⎙',
-            sections
-        };
+} if (config.MODE === 'button') {
+              title: "[Audio 🎧]",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytaud ${data.url}`
+            },
+            {
+              title: "[Document 📁]",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${data.url}`
+            },
+            {
+              title: "[Voice (ptt) 💡]",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${data.url}`
+            },
+            {
+              title: "[Video File 📽️]",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
+          ]
+        }]
+      };
 
       return await robin.sendMessage(from, {
         image: { url: data.thumbnail },
         caption: cap,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
-          
-            {
-                    buttonId: `${prefix}ping`,
-                    buttonText: {
-                        displayText: '\`CHECK BOT PING 📍\`'
-                    },
-                },	
-            ],
-            headerType: 1,
-            viewOnce: true
-        }, {
-            quoted: m
-        });
-        
+          {
+            buttonId: `${prefix}ytvoice ${data.url}`,
+            buttonText: { displayText: "`[Voice Note(Ptt) 🎧]`" },
+            type: 1
+          },
+          {
+            buttonId: `${prefix}ytaud ${data.url}`,
+            buttonText: { displayText: "`[Audio Type 🎧]`" },
+            type: 1
+          },
+          {
+            buttonId: `${prefix}ytdoc ${data.url}`,
+            buttonText: { displayText: "`[Document 📁]`" },
+            type: 1
+          },
+          {
+            buttonId: `${prefix}devilv ${data.url}`,
+            buttonText: { displayText: "`[Video 📽️]`" },
+            type: 1
+          },
 
-}
-
-
-	
-} catch (e) {
-  reply('*ERROR !!*')
-  l(e)
-}
-})
-
-
-
-
-
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
+          },
+        ],
+        headerType: 1,
+        viewOnce: true,
+      }, { quoted: mek });
+    }
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
 //==$=3=3.03=3.032=3.0322=3.0322=3.03222=3.032222=3.032222
 
 /*cmd({
