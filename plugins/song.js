@@ -171,6 +171,29 @@ cmd({
 ✗ *Choos You Want Video Type* `;
 
 	  
+	  if (config.MODE === 'nonbutton') {
+  const sections = [
+    {
+	title: "",
+	rows: [
+	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
+	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
+            {title: "3", rowId: `${prefix}ytvoice ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
+            {title: "4", rowId: `${prefix}devilv ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	]
+    } 
+]
+const listMessage = {
+caption: cap,
+image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
+footer: '> 〽️ade By Dinuwh Bbh',
+title: '',
+buttonText: '*🔢 Reply below number*',
+sections
+}
+	
+return await robin.replyList(from, listMessage ,{ quoted : mek })
+
 /*if (config.MODE === 'nonbutton') {
   const sections = [
     {
@@ -194,7 +217,7 @@ sections
 return await conn.replyList(from, listMessage ,{ quoted : mek })*/
 
 //button-==$=$==$=#=#=#=#==#=#=#=#=#=#=#=#=#=#=##=!=#=$=#=#=#==#=#=#=#=#=
-    if (config.MODE === "nonbutton") {
+    if (config.MODE === "button") {
       const listData = {
         title: "◎ Choose Format ◎",
         sections: [{
