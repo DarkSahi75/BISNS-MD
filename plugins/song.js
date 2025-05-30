@@ -51,47 +51,29 @@ cmd({
 > *Send You Want Song Formate ⤵️*`;
 
     // ✳️ If nonbutton mode
-if (config.MODE === "nonbutton") {
+if (config.MODE === 'nonbutton') {
   const sections = [
     {
-      title: "🎵 SONG TYPE SELECT",
-      rows: [
-        {
-          title: "🎧 Audio",
-          rowId: `${prefix}ytaud ${data.url}|${data.title}`,
-          description: "Send as normal audio",
-        },
-        {
-          title: "📂 Document",
-          rowId: `${prefix}ytdoc ${data.url}|${data.title}`,
-          description: "Send as document type",
-        },
-        {
-          title: "🎙️ Voice Note",
-          rowId: `${prefix}ytvoice ${data.url}|${data.title}`,
-          description: "Send as PTT (Voice)",
-        },
-        {
-          title: "📽️ Video",
-          rowId: `${prefix}devilv ${data.url}|${data.title}`,
-          description: "Send as video file",
-        },
-      ],
-    },
-  ];
+	title: "",
+	rows: [
+	    {title: "1", rowId: prefix + 'menu' , description: 'COMMANDS MENU'},
+	    {title: "2", rowId: prefix + 'ping' , description: 'VAJIRA-MD SPEED'} ,
 
-  const listMessage = {
-    text: "🔘 *Select the format you want to download the song in:*",
-    footer: "乂 DINUWH チ DOWNLOAD\nPowered by CYBER VENOM",
-    title: "Download Options 🎵",
-    buttonText: "🔽 Choose Format",
-    sections: sections,
-  };
-
-  await robin.sendMessage(from, listMessage, { quoted: mek });
+	]
+    } 
+]
+const listMessage = {
+caption: cap,
+image : { url: config.LOGO },	
+footer: config.FOOTER,
+title: '',
+buttonText: '*🔢 Reply below number*',
+sections
 }
-    // ✳️ If button mode
-    if (config.MODE === "button") {
+	
+return await conn.replyList(from, listMessage ,{ quoted : mek })
+
+} if (config.MODE === 'button') {
       const listData = {
         title: "◎ Choose Format ◎",
         sections: [{
