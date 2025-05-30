@@ -920,30 +920,40 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 	//button
 } if (config.MODE === 'button') {
       const listData = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝚀𝚄𝙰𝙻𝙸𝚃𝚈 ◎",
         sections: [{
-          title: "DINUWH MD OPTIONS",
+          title: "◎ Document Video OPTIONS ◎",
           rows: [
             {
-              title: "[Audio 🎧]",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
+              title: "\`❲ 144p Normal Video File ❳\` 📄",
+              description: "Download as 144p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}144v ${data.url}`
             },
             {
-              title: "[Document 📁]",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
+              title: "\`❲ 240p Normal Video File ❳\` 📄",
+              description: "Download as 240p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}240v ${data.url}`
             },
             {
-              title: "[Voice (ptt) 💡]",
-              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
+              title: "\`❲ 360p Normal Video File ❳\` 📄",
+              description: "Download as 360p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}360v ${data.url}`
             },
             {
-              title: "[Video File 📽️]",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
-            }
+              title: "\`❲ 480p Normal Video File ❳\` 📄",
+              description: "Download as 480p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}480v ${data.url}`
+            },
+            {
+              title: "\`❲ 720p Normal Video File ❳\` 📄",
+              description: "Download as 720p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}720v ${data.url}`
+            },
+	   {
+              title: "\`❲ 1080p Normal Video File ❳\` 📄",
+              description: "Download as 1080p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}1080v ${data.url}`
+            },
           ]
         }]
       };
@@ -953,46 +963,33 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
         caption: cap,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
-          {
-            buttonId: `${prefix}ytvoice ${data.url}`,
-            buttonText: { displayText: "`[Voice Note(Ptt) 🎧]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}ytaud ${data.url}`,
-            buttonText: { displayText: "`[Audio Type 🎧]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}ytdoc ${data.url}`,
-            buttonText: { displayText: "`[Document 📁]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}devilv ${data.url}`,
-            buttonText: { displayText: "`[Video 📽️]`" },
-            type: 1
-          },
+          
+            {
+                    buttonId: `${prefix}ping`,
+                    buttonText: {
+                        displayText: '\`CHECK BOT PING 📍\`'
+                    },
+                },	
+            ],
+            headerType: 1,
+            viewOnce: true
+        }, {
+            quoted: m
+        });
+        
 
-          {
-            buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify(listData),
-            },
-          },
-        ],
-        headerType: 1,
-        viewOnce: true,
-      }, { quoted: mek });
-    }
-  } catch (e) {
-    console.error(e);
-    reply(`❌ Error: ${e.message}`);
-  }
-});
+}
+
+
+	
+} catch (e) {
+  reply('*ERROR !!*')
+  l(e)
+}
+})
+
+
+
 
 
 //==$=3=3.03=3.032=3.0322=3.0322=3.03222=3.032222=3.032222
@@ -1053,30 +1050,40 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 	//button
 } if (config.MODE === 'button') {
       const listData = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝚀𝚄𝙰𝙻𝙸𝚃𝚈 ◎",
         sections: [{
-          title: "DINUWH MD OPTIONS",
+          title: "◎ Document Video OPTIONS ◎",
           rows: [
             {
-              title: "[Audio 🎧]",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
+              title: "\`❲ 144p Document Video File ❳\` 📄",
+              description: "Download as 144p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}144vd ${data.url}`
             },
             {
-              title: "[Document 📁]",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
+              title: "\`❲ 240p Document Video File ❳\` 📄",
+              description: "Download as 240p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}240vd ${data.url}`
             },
             {
-              title: "[Voice (ptt) 💡]",
-              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
+              title: "\`❲ 360p Document Video File ❳\` 📄",
+              description: "Download as 360p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}360vd ${data.url}`
             },
             {
-              title: "[Video File 📽️]",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
-            }
+              title: "\`❲ 480p Document Video File ❳\` 📄",
+              description: "Download as 480p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}480vd ${data.url}`
+            },
+            {
+              title: "\`❲ 720p Document Video File ❳\` 📄",
+              description: "Download as 720p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}720vd ${data.url}`
+            },
+	   {
+              title: "\`❲ 1080p Document Video File ❳\` 📄",
+              description: "Download as 1080p\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}1080vd ${data.url}`
+            },
           ]
         }]
       };
@@ -1086,47 +1093,29 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
         caption: cap,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
-          {
-            buttonId: `${prefix}ytvoice ${data.url}`,
-            buttonText: { displayText: "`[Voice Note(Ptt) 🎧]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}ytaud ${data.url}`,
-            buttonText: { displayText: "`[Audio Type 🎧]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}ytdoc ${data.url}`,
-            buttonText: { displayText: "`[Document 📁]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}devilv ${data.url}`,
-            buttonText: { displayText: "`[Video 📽️]`" },
-            type: 1
-          },
+          	
+		{
+                    buttonId: `${prefix}ping`,
+                    buttonText: {
+                        displayText: '\`CHECK BOT PING 📍\`'
+                    },
+                },	
+            ],
+            headerType: 1,
+            viewOnce: true
+        }, {
+            quoted: m
+        });
+        
 
-          {
-            buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify(listData),
-            },
-          },
-        ],
-        headerType: 1,
-        viewOnce: true,
-      }, { quoted: mek });
-    }
-  } catch (e) {
-    console.error(e);
-    reply(`❌ Error: ${e.message}`);
-  }
-});
+}
 
 
+	
+} catch (e) {
+  reply('*ERROR !!*')
+  l(e)
+}
+})
 
 
