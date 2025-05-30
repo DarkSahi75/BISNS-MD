@@ -897,12 +897,10 @@ if (config.MODE === 'nonbutton') {
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: `${prefix}144v ${data.url}`, description: '\`❲ 144p Normal Video File ❳\` 📽️'},
-	    {title: "2", rowId: `${prefix}240v ${data.url}`, description: '\`❲ 240p Normal Video File ❳\` 📽️'} ,
-      {title: "3", rowId: `${prefix}360v ${data.url}`, description: '\`❲ 360p Normal Video File ❳\` 📽️'} ,
-      {title: "4", rowId: `${prefix}480v ${data.url}`, description: '\`❲ 480p Normal Video File ❳\` 📽️'} ,
-      {title: "5", rowId: `${prefix}720v ${data.url}`, description: '\`❲ 720p Normal Video File ❳\` 📽️'} ,
-      {title: "6", rowId: `${prefix}1080v ${data.url}`, description: '\`❲ 1080 Normal Video File ❳\` 📽️'} ,
+	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
+	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
+            {title: "3", rowId: `${prefix}ytvoice ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
+            {title: "4", rowId: `${prefix}devilv ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
 	]
     } 
 ]
@@ -918,8 +916,13 @@ sections
 return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
-
 } if (config.MODE === 'button') {
+      const listData = {
+        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        sections: [{
+          title: "DINUWH MD OPTIONS",
+          rows: [
+            {
               title: "[Audio 🎧]",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
               id: `${prefix}ytaud ${data.url}`
@@ -988,6 +991,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
     reply(`❌ Error: ${e.message}`);
   }
 });
+	  
 //==$=3=3.03=3.032=3.0322=3.0322=3.03222=3.032222=3.032222
 
 /*cmd({
