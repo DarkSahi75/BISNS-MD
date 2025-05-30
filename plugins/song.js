@@ -149,7 +149,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 //devilvideosendjs=========================-====--%=%=%--%-%-%-$-#-#-#=##=$-$-#9#9=9.0=9.0-$839#=$-$738#=738.0$-%*$8##-%748$=$-%7$8$=$-%-
 
 
-/*cmd({
+cmd({
   pattern: "devilv",
   alias: ["devilvideo", "ytdlvideo"],
   react: "📽️",
@@ -171,7 +171,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 ✗ *Choos You Want Video Type* `;
 
 	  
-if (config.MODE === 'nonbutton') {
+/*if (config.MODE === 'nonbutton') {
   const sections = [
     {
 	title: "",
@@ -191,10 +191,10 @@ buttonText: '*🔢 Reply below number*',
 sections
 }
 	
-return await conn.replyList(from, listMessage ,{ quoted : mek })
+return await conn.replyList(from, listMessage ,{ quoted : mek })*/
 
 //button-==$=$==$=#=#=#=#==#=#=#=#=#=#=#=#=#=#=##=!=#=$=#=#=#==#=#=#=#=#=
-    if (config.MODE === "button") {
+    if (config.MODE === "nonbutton") {
       const listData = {
         title: "◎ Choose Format ◎",
         sections: [{
@@ -303,7 +303,7 @@ cmd({
     reply("❌ *ERROR! Something went wrong*");
     console.log(e);
   }
-});*/
+});
 //=======
 cmd({
   pattern: "ytaud",
