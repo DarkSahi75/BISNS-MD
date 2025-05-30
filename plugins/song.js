@@ -145,11 +145,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 });
 
 
-        
-//devilvideosendjs=========================-====--%=%=%--%-%-%-$-#-#-#=##=$-$-#9#9=9.0=9.0-$839#=$-$738#=738.0$-%*$8##-%748$=$-%7$8$=$-%-
-
-
-cmd({
+  //Devilvcmd({
   pattern: "devilv",
   alias: ["devilvideo", "ytdlvideo"],
   react: "📽️",
@@ -166,57 +162,54 @@ cmd({
 
     const cap = `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
 ╭────────✦✧✦────────╯
-* The same old details.
+*📌 Title:* ${data.title}
+*🕒 Duration:* ${data.timestamp}
+*👀 Views:* ${data.views}
+*🔗 Url:* ${data.url}
 
-✗ *Choos You Want Video Type* `;
+✗ *Choose what type of video you want:*`;
 
-	  
-	  if (config.MODE === 'nonbutton') {
-  const sections = [
-    {
-	title: "",
-	rows: [
-	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
-	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
-            {title: "3", rowId: `${prefix}ytvoice ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
-            {title: "4", rowId: `${prefix}devilv ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
-	]
-    } 
-]
-const listMessage = {
-caption: cap,
-image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
-footer: '> 〽️ade By Dinuwh Bbh',
-title: '',
-buttonText: '*🔢 Reply below number*',
-sections
-}
-	
-return await robin.replyList(from, listMessage ,{ quoted : mek })
+    if (config.MODE === 'nonbutton') {
+      const sections = [
+        {
+          title: "Choose Video Type",
+          rows: [
+            {
+              title: "1. Audio 🎧",
+              rowId: `${prefix}ytaud ${data.url}`,
+              description: 'MP3 audio file'
+            },
+            {
+              title: "2. Document 📄",
+              rowId: `${prefix}ytdoc ${data.url}`,
+              description: 'MP4 in document format'
+            },
+            {
+              title: "3. Voice Note 🎤",
+              rowId: `${prefix}ytvoice ${data.url}`,
+              description: 'PTT voice note format'
+            },
+            {
+              title: "4. Video 📽️",
+              rowId: `${prefix}devilnewv ${data.url}`,
+              description: 'Standard video download'
+            }
+          ]
+        }
+      ];
 
-/*if (config.MODE === 'nonbutton') {
-  const sections = [
-    {
-	title: "",
-	rows: [
-	    {title: "1", rowId: prefix + 'menu' , description: 'COMMANDS MENU'},
-	    {title: "2", rowId: prefix + 'ping' , description: 'VAJIRA-MD SPEED'} ,
+      const listMessage = {
+        text: cap,
+        footer: "> 〽️ade By Dinuwh Bbh",
+        title: "🎬 YouTube Video Download",
+        buttonText: "🔢 Reply below number",
+        sections: sections
+      };
 
-	]
-    } 
-]
-const listMessage = {
-caption: cap,
-image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
-footer: config.FOOTER,
-title: '',
-buttonText: '*🔢 Reply below number*',
-sections
-}
-	
-return await conn.replyList(from, listMessage ,{ quoted : mek })*/
+      return await robin.sendMessage(from, listMessage, { quoted: mek });
+    }
 
-//button-==$=$==$=#=#=#=#==#=#=#=#=#=#=#=#=#=#=##=!=#=$=#=#=#==#=#=#=#=#=
+    // BUTTON MODE
     if (config.MODE === "button") {
       const listData = {
         title: "◎ Choose Format ◎",
@@ -240,7 +233,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })*/
       return await robin.sendMessage(from, {
         image: { url: data.thumbnail },
         caption: cap,
-        footer: sadiya_md_footer,
+        footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
           {
             buttonId: `${prefix}devilnewv ${data.url}`,
@@ -269,10 +262,16 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })*/
 
   } catch (e) {
     console.error(e);
-    reply("❌ Error while processing the video. Try again later.");
+    reply("❌ Video එක ගන්න Attempt එකේ දෝෂයක් වෙලා තියෙනවා. නැවත උත්සහ කරන්න!");
   }
 });
-//Ptt
+      
+
+
+
+//devilvideosendjs=========================-====--%=%=%--%-%-%-$-#-#-#=##=$-$-#9#9=9.0=9.0-$839#=$-$738#=738.0$-%*$8##-%748$=$-%7$8$=$-%-
+
+
 cmd({
   pattern: "ytvoice",
   //alias: ["ytmp3"],
