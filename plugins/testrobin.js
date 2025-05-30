@@ -919,44 +919,26 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
 } if (config.MODE === 'button') {
-      const listData = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝚀𝚄𝙰𝙻𝙸𝚃𝚈 ◎",
-        sections: [{
-          title: "◎ Document Video OPTIONS ◎",
-          rows: [
-            {
-              title: "\`❲ 144p Normal Video File ❳\` 📄",
-              description: "Download as 144p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}144v ${data.url}`
-            },
-            {
-              title: "\`❲ 240p Normal Video File ❳\` 📄",
-              description: "Download as 240p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}240v ${data.url}`
-            },
-            {
-              title: "\`❲ 360p Normal Video File ❳\` 📄",
-              description: "Download as 360p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}360v ${data.url}`
-            },
-            {
-              title: "\`❲ 480p Normal Video File ❳\` 📄",
-              description: "Download as 480p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}480v ${data.url}`
-            },
-            {
-              title: "\`❲ 720p Normal Video File ❳\` 📄",
-              description: "Download as 720p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}720v ${data.url}`
-            },
-	   {
-              title: "\`❲ 1080p Normal Video File ❳\` 📄",
-              description: "Download as 1080p\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}1080v ${data.url}`
-            },
-          ]
-        }]
-      };
+      let sections = [{
+                title: 'VAJIRA MD',
+                rows: [{
+                        title: 'Audio 🎧',
+                        description: `Download Audio file`,
+                        id: `${prefix}ytmp3 ` + data.url + '|' + data.title
+                    },
+                    {
+                        title: 'Document 📁',
+                        description: `Download Document file`,
+                        id: `${prefix}ytdocs ` + data.url + '|' + data.title
+                    },
+                ]
+            }
+        ]
+
+        let listMessage = {
+            title: 'Click Here⎙',
+            sections
+        };
 
       return await robin.sendMessage(from, {
         image: { url: data.thumbnail },
