@@ -404,7 +404,8 @@ sections
 return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
-} if (config.MODE === 'button') {
+try {
+  if (config.MODE === 'button') {
     const listData = {
       title: "◎ Choose Format ◎",
       sections: [{
@@ -424,13 +425,11 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
       }]
     };
 
-    // ඔබට මෙහිදී listMessage එක යවන්න ඕනේ
     await conn.sendMessage(m.chat, {
       text: listData.title,
       buttonText: "Click Here",
       sections: listData.sections
     }, { quoted: m });
-
   }
 } catch (e) {
   console.error(e);
