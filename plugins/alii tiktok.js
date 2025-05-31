@@ -135,11 +135,52 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
     reply(`❌ Error: ${e.message}`);
   }
 });
+cmd({
+  pattern: "alive",
+  desc: "Show bot status with website button",
+  category: "general",
+  use: '.alive'
+}, async (m, text, { conn, prefix }) => {
 
+  const botName = "DINUWH MD"
+  const ownerName = "𝙳𝙸 𝙽 𝚄 𝚆 𝙷 - 𝙼 𝙳"
+  const webURL = "https://dinuwhofficial.vercel.app"  // <-- ඔයාගේ web එක මෙතනට දාන්න
+
+  await conn.sendMessage(m.chat, {
+    text: `╭━━〔 *💠 ${botName} 💠* 〕━━━⬣  
+┃  
+┃  ✅ Bot ක්‍රියාත්මකයි  
+┃  👑 Owner: ${ownerName}  
+┃  📅 Date: ${new Date().toLocaleDateString('si-LK')}  
+┃  ⏰ Time: ${new Date().toLocaleTimeString('si-LK')}  
+┃  
+┃  🔗 Visit our official site 👇  
+┃  
+╰━━━━━━━━━━━━━━━━⬣`,
+    footer: "Powered by DINUWH MD",
+    templateButtons: [
+      {
+        index: 1,
+        urlButton: {
+          displayText: "🌐 Visit Website",
+          url: webURL
+        }
+      },
+      {
+        index: 2,
+        quickReplyButton: {
+          displayText: "📜 Menu",
+          id: `${prefix}menu`
+        }
+      }
+    ]
+  }, { quoted: m })
+
+});
 
 //onst axios = require("axios");
 //const { cmd } = require('../lib/plugins');
-
+/*
 cmd({
   pattern: "tiok",
   alias: ["ttv", "ttdl"],
@@ -176,4 +217,4 @@ cmd({
     await reply("⚠️ වැරැද්දක් වෙලා. ටික වේලාවකට පස්සේ නැවත උත්සහ කරන්න.");
     await conn.sendMessage(from, { react: { text: "❌", key: m.key } });
   }
-});
+});*/
