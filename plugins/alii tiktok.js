@@ -53,7 +53,7 @@ if (config.MODE === 'nonbutton') {
     } 
 ]
 const listMessage = {
-caption: cap,
+caption: detailsMsg,
 image: { url:thumbnail },  // <-- use YouTube thumbnail here
 footer: '> 〽️ade By Dinuwh Bbh',
 title: '',
@@ -96,7 +96,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
 
       return await conn.sendMessage(from, {
         image: { url:thumbnail },
-        caption: cap,
+        caption: detailsMsg,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
           {
