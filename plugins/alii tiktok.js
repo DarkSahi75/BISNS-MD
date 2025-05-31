@@ -135,9 +135,10 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
     reply(`❌ Error: ${e.message}`);
   }
 });
+
 cmd({
   pattern: "alive",
-  react: "😁",
+  react: '😁',
   desc: "Show bot status with website button",
   category: "general",
   use: '.alive'
@@ -181,9 +182,9 @@ cmd({
 
 //onst axios = require("axios");
 //const { cmd } = require('../lib/plugins');
-/*
+
 cmd({
-  pattern: "tiok",
+  pattern: "tikv",
   alias: ["ttv", "ttdl"],
   react: '📥',
   desc: "Download TikTok video without watermark",
@@ -218,4 +219,4 @@ cmd({
     await reply("⚠️ වැරැද්දක් වෙලා. ටික වේලාවකට පස්සේ නැවත උත්සහ කරන්න.");
     await conn.sendMessage(from, { react: { text: "❌", key: m.key } });
   }
-});*/
+});
