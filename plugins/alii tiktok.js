@@ -2,16 +2,13 @@ const axios = require("axios");
 const { cmd } = require("../lib/command");
 
 //const axios = require("axios");
-//const { cmd } = require("../lib/command");plugins');
-
-//onst axios = require("axios");
-const config = require('../settings'); // includes MODE and FOOTER
-//const { cmd } = require('../lib/plugins');
+const config = require('../settings');
+//onst { cmd } = require('../lib/plugins');
 
 cmd({
   pattern: "tiok",
   alias: ["ttinfo", "ttdetails", "tt"],
-  react: '🔎',
+  react: '🔍',
   desc: "Get TikTok video details only.",
   category: "tools",
   use: ".tiok <TikTok video URL>",
@@ -20,15 +17,19 @@ cmd({
   try {
     const tiktokUrl = args[0];
     if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
-      return reply('```🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\nඋදාහරණයක්: .tiok https://www.tiktok.com/@user/video/123...```');
+      return reply('🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\n\n*උදාහරණයක්:* `.tiok https://www.tiktok.com/@user/video/...`');
     }
 
     await conn.sendMessage(from, { react: { text: '🔍', key: m.key } });
 
     const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
-    const response = await axios.get(apiUrl);
+    const res = await axios.get(apiUrl);
 
-    const { title, thumbnail, author, metrics } = response.data.result;
+    if (!res.data || !res.data.result) {
+      return reply("❌ TikTok වීඩියෝවක් හමු නොවුණා. ලින්ක් එක හරියද බලන්න.");
+    }
+
+    const { title, author, metrics } = res.data.result;
 
     const cap = `📌 *TikTok Video Info*\n\n` +
       `🔖 *Title*: ${title || "N/A"}\n` +
@@ -40,60 +41,63 @@ cmd({
       `🔗 *Link*: ${tiktokUrl}\n\n` +
       `> *DINU X MD™*`;
 
-    // ➤ Non-button MODE
+    // Non-button mode
     if (config.MODE === 'nonbutton') {
       const sections = [
         {
-          title: "",
+          title: "📥 Download Options",
           rows: [
             {
-              title: "🎥 Video",
+              title: "🎥 Download Video",
               rowId: `${prefix}ttv ${tiktokUrl}`,
-              description: 'Download Video Without Watermark'
+              description: "No watermark TikTok Video"
             },
             {
-              title: "🎧 Audio",
+              title: "🎧 Download Audio",
               rowId: `${prefix}tta ${tiktokUrl}`,
-              description: 'Download Audio (MP3 Only)'
+              description: "Extract MP3 only"
             }
           ]
         }
       ];
       const listMessage = {
-        caption: cap,
-        footer: "DINU X MD",
-        title: '',
-        buttonText: '*🔢 Reply below number*',
+        text: cap,
+        footer: config.FOOTER || "DINU X MD",
+        title: "📌 TikTok Details",
+        buttonText: "🔽 Select an option",
         sections
       };
-      return await conn.replyList(from, listMessage, { quoted: mek });
+      return await conn.sendMessage(from, listMessage, { quoted: mek });
     }
 
-    // ➤ Button MODE
+    // Button mode
     if (config.MODE === 'button') {
       return conn.sendMessage(from, {
-        caption: cap,
-        footer: "DINU X MD",
+        text: cap,
+        footer: config.FOOTER || "DINU X MD",
         buttons: [
           {
             buttonId: `${prefix}ttv ${tiktokUrl}`,
-            buttonText: { displayText: '🎥 Video' }
+            buttonText: { displayText: '🎥 Video' },
+            type: 1
           },
           {
             buttonId: `${prefix}tta ${tiktokUrl}`,
-            buttonText: { displayText: '🎧 Audio' }
+            buttonText: { displayText: '🎧 Audio' },
+            type: 1
           }
         ],
-        headerType: 1,
-        viewOnce: true
+        headerType: 1
       }, { quoted: mek });
     }
 
   } catch (e) {
-    console.error('TikTok detail error:', e);
-    reply('*❌ Error getting video details*');
+    console.error("TikTok Plugin Error:", e);
+    await reply("❌ වැරැද්දක් වෙලා. කරුණාකර ටික වෙලාවකට පස්සේ නැවත උත්සහ කරන්න.");
+    await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
   }
 });
+
 cmd({
   pattern: "tiktok",
   alias: ["ttdl", "tiktokdl","tt"],
