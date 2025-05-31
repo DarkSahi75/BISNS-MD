@@ -34,29 +34,28 @@ let dat = `[👨‍💻 ＶＡＪＩＲＡ - ＭＤ 👨‍💻]
 
 if (config.MODE === 'button') {
 
-	
 const sections = [
-    {
-	title: "Without Watermark",
-	rows: [	
-        {title: "    1.1", rowId: `${prefix}ttw ${q}`,description: 'Withoit-Watermark'},
-        {title: "    1.2", rowId: `${prefix}ttwd ${q}`,description: 'Without-Watermark Doc'},
-	]
-    },
-	{
-	title: "With Watermark",
-	rows: [	
-        {title: "    2.1", rowId: `${prefix}tnd ${q}`,description: 'With-Watermark'} ,
-        {title: "    2.2", rowId: `${prefix}tndd ${q}`,description: 'With-Watermark Doc'},      
-	]
-    },
-	{	
-	title: "VOICE CUT TYPE 🎶",
-	rows: [	
-	{title: "    3.1", rowId: `${prefix}ta ${q}`,description: 'AUDIO DOWNLOAD'} ,
-	{title: "    2.2", rowId: `${prefix}td ${q}`,description: 'DOCUMENT DOWNLOAD'} ,	
-  ]
-    } 
+  {
+    title: "Without Watermark",
+    rows: [
+      { title: "    1.1", rowId: `${prefix}ttw ${q}`, description: 'Without-Watermark' },
+      { title: "    1.2", rowId: `${prefix}ttwd ${q}`, description: 'Without-Watermark Doc' },
+    ],
+  },
+  {
+    title: "With Watermark",
+    rows: [
+      { title: "    2.1", rowId: `${prefix}tnd ${q}`, description: 'With-Watermark' },
+      { title: "    2.2", rowId: `${prefix}tndd ${q}`, description: 'With-Watermark Doc' },
+    ],
+  },
+  {
+    title: "VOICE CUT TYPE 🎶",
+    rows: [
+      { title: "    3.1", rowId: `${prefix}ta ${q}`, description: 'AUDIO DOWNLOAD' },
+      { title: "    3.2", rowId: `${prefix}td ${q}`, description: 'DOCUMENT DOWNLOAD' },
+    ],
+  },
 ]
 	
 const listMessage = {
