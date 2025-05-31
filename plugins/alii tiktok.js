@@ -136,12 +136,53 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
   }
 });
 
-//=3=3=3.0=3.03=3.033=3.0333=3.03333=3.033333=3.0333333=3.03333333=3.033333333=3.0333333333=3.0333333333=3.0333333333
+/*cmd({
+  pattern: "alive",
+  react: '😁',
+  desc: "Show bot status with website button",
+  category: "general",
+  use: '.alive'
+}, async (m, text, { conn, prefix }) => {
 
-//const axios = require("axios");nst { cmd } = require("../command");
+  const botName = "DINUWH MD"
+  const ownerName = "𝙳𝙸 𝙽 𝚄 𝚆 𝙷 - 𝙼 𝙳"
+  const webURL = "https://dinuwhofficial.vercel.app"  // <-- ඔයාගේ web එක මෙතනට දාන්න
+
+  await conn.sendMessage(m.chat, {
+    text: `╭━━〔 *💠 ${botName} 💠* 〕━━━⬣  
+┃  
+┃  ✅ Bot ක්‍රියාත්මකයි  
+┃  👑 Owner: ${ownerName}  
+┃  📅 Date: ${new Date().toLocaleDateString('si-LK')}  
+┃  ⏰ Time: ${new Date().toLocaleTimeString('si-LK')}  
+┃  
+┃  🔗 Visit our official site 👇  
+┃  
+╰━━━━━━━━━━━━━━━━⬣`,
+    footer: "Powered by DINUWH MD",
+    templateButtons: [
+      {
+        index: 1,
+        urlButton: {
+          displayText: "🌐 Visit Website",
+          url: webURL
+        }
+      },
+      {
+        index: 2,
+        quickReplyButton: {
+          displayText: "📜 Menu",
+          id: `${prefix}menu`
+        }
+      }
+    ]
+  }, { quoted: m })
+
+});*/
+//const axios = require("axios");const { cmd } = require("../command");
 
 cmd({
-  pattern: "ttvideo",
+  pattern: "tvideo",
   alias: ["ttdl", "tiktokdl", "tt"],
   react: '⏰',
   desc: "Download TikTok videos.",
@@ -152,7 +193,7 @@ cmd({
   try {
     const tiktokUrl = args[0];
     if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
-      return reply('Please provide a valid TikTok video URL. Example: `.tiktok https://tiktok.com/...`');
+      return reply('🔗 කරුණාකර වලංගු TikTok link එකක් දෙන්න. උදා: `.tiktok https://tiktok.com/...`');
     }
 
     await conn.sendMessage(from, { react: { text: '⏳', key: m.key } });
@@ -161,27 +202,85 @@ cmd({
     const response = await axios.get(apiUrl);
 
     if (!response.data || response.data.status !== 200 || !response.data.result) {
-      return reply('❌ Unable to fetch the video. Please check the URL and try again.');
+      return reply('❌ වීඩියෝව ලබා ගන්න බැරිවුණා. කරුණාකර link එක පරීක්ෂා කරන්න.');
     }
 
     const { url } = response.data.result;
     const videoResponse = await axios.get(url, { responseType: 'arraybuffer' });
+
     if (!videoResponse.data) {
-      return reply('❌ Failed to download the video. Please try again later.');
+      return reply('❌ වීඩියෝව බාගත කිරීමේදී දෝෂයකි.');
     }
 
     const videoBuffer = Buffer.from(videoResponse.data, 'binary');
 
     await conn.sendMessage(from, {
-      video: videoBuffer
+      video: videoBuffer,
+      caption: '*〽️ade By Diniwh Bbh 😩💗*'
     }, { quoted: mek });
 
     await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
+
   } catch (error) {
-    console.error('Error downloading TikTok video:', error);
-    reply('❌ Unable to download the video. Please try again later.');
+    console.error('TikTok download error:', error);
+    reply('❌ වීඩියෝව බාගත කරන්න බැරිවුණා. ආයෙත් උත්සාහ කරන්න.');
     await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
   }
 });
 
 
+//=3==3=3.03=3.033=3.0333=3.03333=3.033333=3.033333=3.0333333=3.03333333=3.033333333=3.0333333333=3.0333333333
+
+//const axios = require("axios");const { cmd } = require("../command");
+
+cmd({
+  pattern: "tdoc",
+  alias: ["ttdl", "tiktokdl", "tt"],
+  react: '⏰',
+  desc: "Download TikTok videos.",
+  category: "download",
+  use: ".tiktok <TikTok video URL>",
+  filename: __filename
+}, async (conn, mek, m, { from, reply, args }) => {
+  try {
+    const tiktokUrl = args[0];
+    if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
+      return reply('🔗 කරුණාකර වලංගු TikTok link එකක් දෙන්න. උදා: `.tiktok https://tiktok.com/...`');
+    }
+
+    await conn.sendMessage(from, { react: { text: '⏳', key: m.key } });
+
+    const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
+    const response = await axios.get(apiUrl);
+
+    if (!response.data || response.data.status !== 200 || !response.data.result) {
+      return reply('❌ වීඩියෝව ලබා ගන්න බැරිවුණා. කරුණාකර link එක පරීක්ෂා කරන්න.');
+    }
+
+    const { url } = response.data.result;
+    const videoResponse = await axios.get(url, { responseType: 'arraybuffer' });
+
+    if (!videoResponse.data) {
+      return reply('❌ වීඩියෝව බාගත කිරීමේදී දෝෂයකි.');
+    }
+
+    const videoBuffer = Buffer.from(videoResponse.data, 'binary');
+
+    await conn.sendMessage(from, {
+      document: videoBuffer,
+      mimetype: 'video/mp4',
+      fileName: 'tiktok_video.mp4',
+      caption: '*〽️ade By Diniwh Bbh 😩💗*'
+    }, { quoted: mek });
+
+    await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
+
+  } catch (error) {
+    console.error('TikTok download error:', error);
+    reply('❌ වීඩියෝව බාගත කරන්න බැරිවුණා. ආයෙත් උත්සාහ කරන්න.');
+    await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
+  }
+});
+
+
+//=3=3.03=3.033=3.033=3.0333=3.03333=3.033333=3.0333333=3.03333333=3.03333333
