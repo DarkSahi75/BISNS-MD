@@ -136,7 +136,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
   }
 });
 
-cmd({
+/*cmd({
   pattern: "alive",
   react: '😁',
   desc: "Show bot status with website button",
@@ -178,7 +178,7 @@ cmd({
     ]
   }, { quoted: m })
 
-});
+});*/
 
 //onst axios = require("axios");
 //const { cmd } = require('../lib/plugins');
