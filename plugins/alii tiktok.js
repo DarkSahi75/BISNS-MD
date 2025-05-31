@@ -5,33 +5,30 @@ const { cmd } = require("../lib/command");
 const config = require('../settings');
 //onst { cmd } = require('../lib/plugins');
 
+
 cmd({
   pattern: "tiok",
   alias: ["ttinfo", "ttdetails", "tt"],
-  react: '🔍',
+  react: '🔎',
   desc: "Get TikTok video details only.",
   category: "tools",
   use: ".tiok <TikTok video URL>",
   filename: __filename
-}, async (conn, mek, m, { from, reply, args, prefix }) => {
+}, async (conn, mek, m, { from, reply, args }) => {
   try {
     const tiktokUrl = args[0];
     if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
-      return reply('🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\n\n*උදාහරණයක්:* `.tiok https://www.tiktok.com/@user/video/...`');
+      return reply('```🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\nඋදාහරණයක්: .tiok https://www.tiktok.com/@user/video/123...```');
     }
 
     await conn.sendMessage(from, { react: { text: '🔍', key: m.key } });
 
     const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
-    const res = await axios.get(apiUrl);
+    const response = await axios.get(apiUrl);
 
-    if (!res.data || !res.data.result) {
-      return reply("❌ TikTok වීඩියෝවක් හමු නොවුණා. ලින්ක් එක හරියද බලන්න.");
-    }
+    const { title, thumbnail, author, metrics } = response.data.result;
 
-    const { title, author, metrics } = res.data.result;
-
-    const cap = `📌 *TikTok Video Info*\n\n` +
+    const detailsMsg = `📌 *TikTok Video Info*\n\n` +
       `🔖 *Title*: ${title || "N/A"}\n` +
       `👤 *Author*: ${author.nickname} (@${author.username})\n` +
       `❤️ *Likes*: ${metrics.digg_count}\n` +
@@ -39,61 +36,18 @@ cmd({
       `🔁 *Shares*: ${metrics.share_count}\n` +
       `📥 *Downloads*: ${metrics.download_count}\n\n` +
       `🔗 *Link*: ${tiktokUrl}\n\n` +
-      `> *DINU X MD™*`;
+      `> *Powered by DINUWH MD™*`;
 
-    // Non-button mode
-    if (config.MODE === 'nonbutton') {
-      const sections = [
-        {
-          title: "📥 Download Options",
-          rows: [
-            {
-              title: "🎥 Download Video",
-              rowId: `${prefix}ttv ${tiktokUrl}`,
-              description: "No watermark TikTok Video"
-            },
-            {
-              title: "🎧 Download Audio",
-              rowId: `${prefix}tta ${tiktokUrl}`,
-              description: "Extract MP3 only"
-            }
-          ]
-        }
-      ];
-      const listMessage = {
-        text: cap,
-        footer: config.FOOTER || "DINU X MD",
-        title: "📌 TikTok Details",
-        buttonText: "🔽 Select an option",
-        sections
-      };
-      return await conn.sendMessage(from, listMessage, { quoted: mek });
-    }
+    await conn.sendMessage(from, {
+      image: { url: thumbnail },
+      caption: detailsMsg
+    }, { quoted: mek });
 
-    // Button mode
-    if (config.MODE === 'button') {
-      return conn.sendMessage(from, {
-        text: cap,
-        footer: config.FOOTER || "DINU X MD",
-        buttons: [
-          {
-            buttonId: `${prefix}ttv ${tiktokUrl}`,
-            buttonText: { displayText: '🎥 Video' },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}tta ${tiktokUrl}`,
-            buttonText: { displayText: '🎧 Audio' },
-            type: 1
-          }
-        ],
-        headerType: 1
-      }, { quoted: mek });
-    }
+    await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
 
-  } catch (e) {
-    console.error("TikTok Plugin Error:", e);
-    await reply("❌ වැරැද්දක් වෙලා. කරුණාකර ටික වෙලාවකට පස්සේ නැවත උත්සහ කරන්න.");
+  } catch (error) {
+    console.error('TikTok detail fetch error:', error);
+    await reply('❌ TikTok වීඩියෝ විස්තර ලබා ගන්න බැරි වුණා. පස්සෙ උත්සහ කරන්න.');
     await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
   }
 });
