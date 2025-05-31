@@ -9,6 +9,8 @@
         "stash": "git stash && git stash drop"
     },
     "dependencies": {
+        "@whiskeysockets/baileys": "github:MR-LAKIYA/Baileys",
+        "@xct007/frieren-scraper": "^0.0.2",
         "@adiwajshing/keyed-db": "^0.2.4",
         "@blackamda/telegram-image-url": "^1.0.0",
         "sharp": "^0.34.1",
@@ -23,8 +25,6 @@
         "@sl-code-lords/photooxy": "^1.0.1",
         "@sl-code-lords/si-subdl": "^1.1.1",
         "@sl-code-lords/text-pro-me": "^1.0.0",
-        "@whiskeysockets/baileys": "latest",
-        "@xct007/frieren-scraper": "^0.0.2",
         "adm-zip": "^0.5.16",
         "async-g-i-s":"^1.4.0",
         "api-dylux": "latest",
