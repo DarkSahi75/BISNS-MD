@@ -79,3 +79,80 @@ cmd({
     await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
   }
 });
+
+
+//const axios = require("axios");
+//onst { cmd } = require("../command");
+
+cmd({
+  pattern: "tiktokbtn",
+  alias: ["tta", "ttaudio", "ttmp3"],
+  react: "🎧",
+  desc: "TikTok Audio Downloader with Button & Non-Button Modes",
+  category: "download",
+  use: ".tiktok <link> [button/nounbutton]",
+  filename: __filename
+}, async (conn, mek, m, { from, args, reply }) => {
+  try {
+    const url = args[0];
+    const mode = (args[1] || "").toLowerCase();
+
+    if (!url || !url.includes("tiktok.com")) {
+      return reply("🔗 *වලංගු TikTok ලින්ක් එකක් දාන්න!*\nඋදා: `.tiktok https://tiktok.com/...`");
+    }
+
+    await conn.sendMessage(from, { react: { text: "⏳", key: m.key } });
+
+    const api = `https://api.nexoracle.com/downloader/tiktok-mp3?apikey=free_key@maher_apis&url=${encodeURIComponent(url)}`;
+    const res = await axios.get(api);
+    if (!res.data || res.data.status !== 200 || !res.data.result?.url) {
+      return reply("❌ *ඕඩියෝ එක ලබාගන්න බැරිවුණා. වෙන ලින්ක් එකක් ට්‍රයි කරන්න.*");
+    }
+
+    const audioUrl = res.data.result.url;
+
+    if (mode === "nounbutton") {
+      // Non-button mode (reply directly)
+      const audio = await axios.get(audioUrl, { responseType: "arraybuffer" });
+      const audioBuffer = Buffer.from(audio.data, "binary");
+
+      await conn.sendMessage(from, {
+        audio: audioBuffer,
+        mimetype: "audio/mp4",
+        ptt: false
+      }, { quoted: mek });
+
+      return await conn.sendMessage(from, { react: { text: "✅", key: m.key } });
+    }
+
+    // Button List Mode
+    const sections = [{
+      title: "🌀 Choose Format",
+      rows: [
+        {
+          title: "1.1 🎧 Audio",
+          rowId: `.ttaudio ${url} nounbutton`
+        },
+        {
+          title: "1.2 🎵 Document",
+          rowId: `.ttaudio ${url} doc`
+        }
+      ]
+    }];
+
+    const listMessage = {
+      text: "🔊 *ඔයාට ඕනෙ Format එක තෝරන්න*",
+      footer: "Powered by DINUWH MD",
+      title: "🎧 TikTok Audio Downloader",
+      buttonText: "🧲 Select Format",
+      sections
+    };
+
+    await conn.sendMessage(from, listMessage, { quoted: mek });
+
+  } catch (e) {
+    console.error("TT Audio Error:", e);
+    reply("❌ *Error එකක් ආවා. ටිකට පස්සෙ ට්‍රයි කරන්න.*");
+    await conn.sendMessage(from, { react: { text: "❌", key: m.key } });
+  }
+});
