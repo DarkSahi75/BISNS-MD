@@ -179,12 +179,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
   }, { quoted: m })
 
 });*/
-
-//onst axios = require("axios");
-//const { cmd } = require('../lib/plugins');
-
-cmd({
-  pattern: "tikv",
+/*pattern: "tikv",
   alias: ["ttv", "ttdl"],
   react: '📥',
   desc: "Download TikTok video without watermark",
@@ -219,4 +214,4 @@ cmd({
     await reply("⚠️ වැරැද්දක් වෙලා. ටික වේලාවකට පස්සේ නැවත උත්සහ කරන්න.");
     await conn.sendMessage(from, { react: { text: "❌", key: m.key } });
   }
-});
+});*/
