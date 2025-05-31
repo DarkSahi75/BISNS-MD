@@ -4,6 +4,10 @@ const { cmd } = require("../lib/command");
 //const axios = require("axios");
 //const { cmd } = require("../lib/command");plugins');
 
+//onst axios = require("axios");
+const config = require('../settings'); // includes MODE and FOOTER
+//const { cmd } = require('../lib/plugins');
+
 cmd({
   pattern: "tiok",
   alias: ["ttinfo", "ttdetails", "tt"],
@@ -12,7 +16,7 @@ cmd({
   category: "tools",
   use: ".tiok <TikTok video URL>",
   filename: __filename
-}, async (conn, mek, m, { from, reply, args }) => {
+}, async (conn, mek, m, { from, reply, args, prefix }) => {
   try {
     const tiktokUrl = args[0];
     if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
@@ -26,7 +30,7 @@ cmd({
 
     const { title, thumbnail, author, metrics } = response.data.result;
 
-    const detailsMsg = `📌 *TikTok Video Info*\n\n` +
+    const cap = `📌 *TikTok Video Info*\n\n` +
       `🔖 *Title*: ${title || "N/A"}\n` +
       `👤 *Author*: ${author.nickname} (@${author.username})\n` +
       `❤️ *Likes*: ${metrics.digg_count}\n` +
@@ -34,22 +38,62 @@ cmd({
       `🔁 *Shares*: ${metrics.share_count}\n` +
       `📥 *Downloads*: ${metrics.download_count}\n\n` +
       `🔗 *Link*: ${tiktokUrl}\n\n` +
-      `> *Powered by DINUWH MD™*`;
+      `> *DINU X MD™*`;
 
-    await conn.sendMessage(from, {
-      image: { url: thumbnail },
-      caption: detailsMsg
-    }, { quoted: mek });
+    // ➤ Non-button MODE
+    if (config.MODE === 'nonbutton') {
+      const sections = [
+        {
+          title: "",
+          rows: [
+            {
+              title: "🎥 Video",
+              rowId: `${prefix}ttv ${tiktokUrl}`,
+              description: 'Download Video Without Watermark'
+            },
+            {
+              title: "🎧 Audio",
+              rowId: `${prefix}tta ${tiktokUrl}`,
+              description: 'Download Audio (MP3 Only)'
+            }
+          ]
+        }
+      ];
+      const listMessage = {
+        caption: cap,
+        footer: "DINU X MD",
+        title: '',
+        buttonText: '*🔢 Reply below number*',
+        sections
+      };
+      return await conn.replyList(from, listMessage, { quoted: mek });
+    }
 
-    await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
+    // ➤ Button MODE
+    if (config.MODE === 'button') {
+      return conn.sendMessage(from, {
+        caption: cap,
+        footer: "DINU X MD",
+        buttons: [
+          {
+            buttonId: `${prefix}ttv ${tiktokUrl}`,
+            buttonText: { displayText: '🎥 Video' }
+          },
+          {
+            buttonId: `${prefix}tta ${tiktokUrl}`,
+            buttonText: { displayText: '🎧 Audio' }
+          }
+        ],
+        headerType: 1,
+        viewOnce: true
+      }, { quoted: mek });
+    }
 
-  } catch (error) {
-    console.error('TikTok detail fetch error:', error);
-    await reply('❌ TikTok වීඩියෝ විස්තර ලබා ගන්න බැරි වුණා. පස්සෙ උත්සහ කරන්න.');
-    await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
+  } catch (e) {
+    console.error('TikTok detail error:', e);
+    reply('*❌ Error getting video details*');
   }
 });
-
 cmd({
   pattern: "tiktok",
   alias: ["ttdl", "tiktokdl","tt"],
