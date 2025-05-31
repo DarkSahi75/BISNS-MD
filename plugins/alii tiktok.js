@@ -137,6 +137,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
 });
 cmd({
   pattern: "alive",
+  react: "😁",
   desc: "Show bot status with website button",
   category: "general",
   use: '.alive'
