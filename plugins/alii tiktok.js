@@ -47,10 +47,10 @@ if (config.MODE === 'nonbutton') {
     {
 	title: "",
 	rows: [
-	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
-	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
-            {title: "3", rowId: `${prefix}ytvoice ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
-            {title: "4", rowId: `${prefix}devilv ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	    {title: "1", rowId: `${prefix}ytaud ${tiktokUrl}`, description: '\`❲ Audio File ❳\` 🎧'},
+	    {title: "2", rowId: `${prefix}ytdoc ${tiktokUrl}`, description: '\`❲ Document File ❳\` 📄'} ,
+            {title: "3", rowId: `${prefix}ytvoice ${tiktokUrl}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
+            {title: "4", rowId: `${prefix}devilv ${tiktokUrl}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
 	]
     } 
 ]
@@ -75,22 +75,22 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
             {
               title: "[Audio 🎧]",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
+              id: `${prefix}ytaud ${tiktokUrl}`
             },
             {
               title: "[Document 📁]",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
+              id: `${prefix}ytdoc ${tiktokUrl}`
             },
             {
               title: "[Voice (ptt) 💡]",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
+              id: `${prefix}ytvoice ${tiktokUrl}`
             },
             {
               title: "[Video File 📽️]",
               description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
+              id: `${prefix}devilv ${tiktokUrl}`
             }
           ]
         }]
@@ -102,22 +102,22 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
           {
-            buttonId: `${prefix}ytvoice ${data.url}`,
+            buttonId: `${prefix}ytvoice ${tiktokUrl}`,
             buttonText: { displayText: "`[Voice Note(Ptt) 🎧]`" },
             type: 1
           },
           {
-            buttonId: `${prefix}ytaud ${data.url}`,
+            buttonId: `${prefix}ytaud ${tiktokUrl}`,
             buttonText: { displayText: "`[Audio Type 🎧]`" },
             type: 1
           },
           {
-            buttonId: `${prefix}ytdoc ${data.url}`,
+            buttonId: `${prefix}ytdoc ${tiktokUrl}`,
             buttonText: { displayText: "`[Document 📁]`" },
             type: 1
           },
           {
-            buttonId: `${prefix}devilv ${data.url}`,
+            buttonId: `${prefix}devilv ${tiktokUrl}`,
             buttonText: { displayText: "`[Video 📽️]`" },
             type: 1
           },
