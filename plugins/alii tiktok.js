@@ -136,83 +136,52 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
   }
 });
 
-/*cmd({
-  pattern: "alive",
-  react: '😁',
-  desc: "Show bot status with website button",
-  category: "general",
-  use: '.alive'
-}, async (m, text, { conn, prefix }) => {
+//=3=3=3.0=3.03=3.033=3.0333=3.03333=3.033333=3.0333333=3.03333333=3.033333333=3.0333333333=3.0333333333=3.0333333333
 
-  const botName = "DINUWH MD"
-  const ownerName = "𝙳𝙸 𝙽 𝚄 𝚆 𝙷 - 𝙼 𝙳"
-  const webURL = "https://dinuwhofficial.vercel.app"  // <-- ඔයාගේ web එක මෙතනට දාන්න
+//const axios = require("axios");nst { cmd } = require("../command");
 
-  await conn.sendMessage(m.chat, {
-    text: `╭━━〔 *💠 ${botName} 💠* 〕━━━⬣  
-┃  
-┃  ✅ Bot ක්‍රියාත්මකයි  
-┃  👑 Owner: ${ownerName}  
-┃  📅 Date: ${new Date().toLocaleDateString('si-LK')}  
-┃  ⏰ Time: ${new Date().toLocaleTimeString('si-LK')}  
-┃  
-┃  🔗 Visit our official site 👇  
-┃  
-╰━━━━━━━━━━━━━━━━⬣`,
-    footer: "Powered by DINUWH MD",
-    templateButtons: [
-      {
-        index: 1,
-        urlButton: {
-          displayText: "🌐 Visit Website",
-          url: webURL
-        }
-      },
-      {
-        index: 2,
-        quickReplyButton: {
-          displayText: "📜 Menu",
-          id: `${prefix}menu`
-        }
-      }
-    ]
-  }, { quoted: m })
-
-});*/
 cmd({
-pattern: "tikv",
-  alias: ["ttv", "ttdl"],
-  react: '📥',
-  desc: "Download TikTok video without watermark",
-  category: "downloader",
-  use: ".tiok <TikTok video URL>",
+  pattern: "ttvideo",
+  alias: ["ttdl", "tiktokdl", "tt"],
+  react: '⏰',
+  desc: "Download TikTok videos.",
+  category: "download",
+  use: ".tiktok <TikTok video URL>",
   filename: __filename
-}, async (conn, mek, m, { from, args, reply }) => {
+}, async (conn, mek, m, { from, reply, args }) => {
   try {
-    const url = args[0];
-    if (!url || !url.includes("tiktok.com")) {
-      return reply("🔗 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\n\n*උදාහරණය:* .tiok https://www.tiktok.com/@user/video/1234567890");
+    const tiktokUrl = args[0];
+    if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
+      return reply('Please provide a valid TikTok video URL. Example: `.tiktok https://tiktok.com/...`');
     }
 
-    await conn.sendMessage(from, { react: { text: "📥", key: m.key } });
+    await conn.sendMessage(from, { react: { text: '⏳', key: m.key } });
 
-    const api = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(url)}`;
-    const res = await axios.get(api);
+    const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
+    const response = await axios.get(apiUrl);
 
-    const videoUrl = res?.data?.result?.video;
-
-    if (!videoUrl) {
-      return reply("❌ වීඩියෝ එක ලබාගන්න බෑ. වෙනත් link එකක් උත්සහ කරන්න.");
+    if (!response.data || response.data.status !== 200 || !response.data.result) {
+      return reply('❌ Unable to fetch the video. Please check the URL and try again.');
     }
+
+    const { url } = response.data.result;
+    const videoResponse = await axios.get(url, { responseType: 'arraybuffer' });
+    if (!videoResponse.data) {
+      return reply('❌ Failed to download the video. Please try again later.');
+    }
+
+    const videoBuffer = Buffer.from(videoResponse.data, 'binary');
 
     await conn.sendMessage(from, {
-      video: { url: videoUrl },
-      caption: `📤 TikTok Video එක එන්නෙ මෙන්න 😎\n\n🔗 ${url}\n\n🪄 Powered by DINU X MD™`
+      video: videoBuffer
     }, { quoted: mek });
 
-  } catch (e) {
-    console.error("TIok Error:", e);
-    await reply("⚠️ වැරැද්දක් වෙලා. ටික වේලාවකට පස්සේ නැවත උත්සහ කරන්න.");
-    await conn.sendMessage(from, { react: { text: "❌", key: m.key } });
+    await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
+  } catch (error) {
+    console.error('Error downloading TikTok video:', error);
+    reply('❌ Unable to download the video. Please try again later.');
+    await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
   }
 });
+
+
