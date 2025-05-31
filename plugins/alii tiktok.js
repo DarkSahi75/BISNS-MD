@@ -30,7 +30,7 @@ cmd({
     const response = await axios.get(apiUrl);
 
    
-    }
+  
 
     // Extract the video details
     const { title, thumbnail, author, metrics, url } = response.data.result;
