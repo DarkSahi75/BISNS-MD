@@ -29,9 +29,7 @@ cmd({
     // Call the API using GET
     const response = await axios.get(apiUrl);
 
-    // Check if the API response is valid
-    if (!response.data || response.data.status !== 200 || !response.data.result) {
-      return reply('❌ Unable to fetch the video. Please check the URL and try again.');
+   
     }
 
     // Extract the video details
