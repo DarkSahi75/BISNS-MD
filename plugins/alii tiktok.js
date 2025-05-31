@@ -441,5 +441,52 @@ cmd({
   }
 });
 
+//=2=2.02=2.022=2.0222=2.02222=2.022222=2.0222222=2.0222222=2.0222222=2.0222222
 
+const axios = require("axios");
+const { cmd } = require("../command");
 
+cmd({
+  pattern: "tptt",
+  alias: ["ttdl", "tiktokdl", "tt"],
+  react: '🎧',
+  desc: "Download TikTok audio as voice message.",
+  category: "download",
+  use: ".tiktok <TikTok video URL>",
+  filename: __filename
+}, async (conn, mek, m, { from, reply, args }) => {
+  try {
+    const tiktokUrl = args[0];
+    if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
+      return reply('🔗 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න. උදාහරණයක්: `.tiktok https://www.tiktok.com/...`');
+    }
+
+    await conn.sendMessage(from, { react: { text: '⏳', key: m.key } });
+
+    // Call the TikTok audio API
+    const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
+    const res = await axios.get(apiUrl);
+
+    if (!res.data || res.data.status !== 200 || !res.data.result.audio) {
+      return reply('❌ TikTok audio link එක ගන්න බැරිවුණා.');
+    }
+
+    const audioUrl = res.data.result.audio;
+
+    const audioRes = await axios.get(audioUrl, { responseType: 'arraybuffer' });
+    const audioBuffer = Buffer.from(audioRes.data, 'binary');
+
+    await conn.sendMessage(from, {
+      audio: audioBuffer,
+      mimetype: 'audio/mpeg',
+      ptt: true,
+      caption: '*〽️ade By Diniwh Bbh 😩💗*'
+    }, { quoted: mek });
+
+    await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
+  } catch (err) {
+    console.error(err);
+    await reply('⚠️ Error එකක් ඇතිවෙලා bro. ටික දවසකින් උත්සාහ කරන්න.');
+    await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
+  }
+});
