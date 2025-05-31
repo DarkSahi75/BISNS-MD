@@ -137,8 +137,8 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
 });
 
 
-const axios = require("axios");
-const { cmd } = require('../lib/plugins');
+//onst axios = require("axios");
+//const { cmd } = require('../lib/plugins');
 
 cmd({
   pattern: "tiok",
