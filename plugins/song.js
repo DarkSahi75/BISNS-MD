@@ -10,7 +10,7 @@ const { JSDOM } = require('jsdom'); // For DOM parsing from HTML
 const axios = require("axios");
 
 
-cmd({
+/*cmd({
     pattern: "tiktok",
     alias: ["ttdl","tt"],
     react: '🏷️',
