@@ -182,7 +182,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
 
 //onst axios = require("axios");
 //const { cmd } = require('../lib/plugins');
-
+/*
 cmd({
   pattern: "tikv",
   alias: ["ttv", "ttdl"],
