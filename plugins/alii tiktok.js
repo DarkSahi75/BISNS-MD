@@ -5,8 +5,6 @@ const { cmd } = require("../lib/command");
 const config = require('../settings');
 //onst { cmd } = require('../lib/plugins');
 
-//const config = require("../settings");
-// Get prefix dynamically from settings or fallback
 const prefix = config.PREFIX || ".";
 
 cmd({
@@ -63,7 +61,7 @@ buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
 sections
 }
 	
-return await robin.replyList(from, listMessage ,{ quoted : mek })
+return await conn.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
 } if (config.MODE === 'button') {
@@ -96,7 +94,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
         }]
       };
 
-      return await robin.sendMessage(from, {
+      return await conn.sendMessage(from, {
         image: { url:thumbnail },
         caption: cap,
         footer: "> 〽️ade By Dinuwh Bbh",
@@ -141,10 +139,6 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
     reply(`❌ Error: ${e.message}`);
   }
 });
-
-
-
-
 
 cmd({
   pattern: "tiktok",
