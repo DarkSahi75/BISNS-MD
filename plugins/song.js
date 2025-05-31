@@ -32,7 +32,7 @@ let dat = `[👨‍💻 ＶＡＪＩＲＡ - ＭＤ 👨‍💻]
 *📃 Title:* ${data.result.title}
 *✍🏼 Link:* ${q}`
 
-if (config.MODE === 'nonbutton') {
+if (config.MODE === 'button') {
 
 	
 const sections = [
@@ -69,7 +69,7 @@ sections
 }
 return await conn.replyList(from, listMessage ,{ quoted : mek })
 
-} if (config.MODE === 'button') {
+/*} if (config.MODE === 'button') {
 
 let sections = [{
         title: 'Without Watermark',
@@ -174,7 +174,7 @@ let listMessage = {
   l(e)
 }
 })
-
+*/
 
 
 
