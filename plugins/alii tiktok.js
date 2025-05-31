@@ -284,3 +284,162 @@ cmd({
 
 
 //=3=3.03=3.033=3.033=3.0333=3.03333=3.033333=3.0333333=3.03333333=3.03333333
+
+//const axios = require("axios");
+//const { cmd } = require("../command");
+
+cmd({
+  pattern: "tauddoc",
+  alias: ["ttdl", "tiktokdl", "tt"],
+  react: '🎧',
+  desc: "Download TikTok audio.",
+  category: "download",
+  use: ".tiktok <TikTok video URL>",
+  filename: __filename
+}, async (conn, mek, m, { from, reply, args }) => {
+  try {
+    const tiktokUrl = args[0];
+    if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
+      return reply('🔗 කරුණාකර වලංගු TikTok link එකක් දෙන්න. උදා: `.tiktok https://tiktok.com/...`');
+    }
+
+    await conn.sendMessage(from, { react: { text: '⏳', key: m.key } });
+
+    const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
+    const response = await axios.get(apiUrl);
+
+    if (!response.data || response.data.status !== 200 || !response.data.result || !response.data.result.audio) {
+      return reply('❌ Audio link එක ගන්න බැරිවුණා. කරුණාකර link එක පරීක්ෂා කරන්න.');
+    }
+
+    const { audio } = response.data.result;
+
+    const audioRes = await axios.get(audio, { responseType: 'arraybuffer' });
+    if (!audioRes.data) {
+      return reply('❌ Audio බාගත කරන්න බැරිවුණා.');
+    }
+
+    const audioBuffer = Buffer.from(audioRes.data, 'binary');
+
+    await conn.sendMessage(from, {
+      document: audioBuffer,
+      mimetype: 'audio/mpeg',
+      fileName: 'tiktok_audio.mp3',
+      caption: '*〽️ade By Diniwh Bbh 😩💗*'
+    }, { quoted: mek });
+
+    await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
+
+  } catch (err) {
+    console.error('TikTok audio error:', err);
+    reply('❌ Audio බාගත කිරීමේදී දෝෂයක් සිදු වුණා.');
+    await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
+  }
+});
+
+//=4=4.04=4.044=4.0444=4.04444=4.0444=4.044444=4.044444=4.0444444=4.0444444=4.0444444
+
+
+
+cmd({
+  pattern: "taud",
+  alias: ["ttdl", "tiktokdl", "tt"],
+  react: '🎧',
+  desc: "Download TikTok audio (not document).",
+  category: "download",
+  use: ".tiktok <TikTok video URL>",
+  filename: __filename
+}, async (conn, mek, m, { from, reply, args }) => {
+  try {
+    const tiktokUrl = args[0];
+    if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
+      return reply('🔗 කරුණාකර වලංගු TikTok link එකක් දෙන්න. උදා: `.tiktok https://tiktok.com/...`');
+    }
+
+    await conn.sendMessage(from, { react: { text: '⏳', key: m.key } });
+
+    const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
+    const response = await axios.get(apiUrl);
+
+    if (!response.data || response.data.status !== 200 || !response.data.result || !response.data.result.audio) {
+      return reply('❌ TikTok audio link එක ගන්න බැරිවුණා.');
+    }
+
+    const { audio } = response.data.result;
+
+    const audioRes = await axios.get(audio, { responseType: 'arraybuffer' });
+    if (!audioRes.data) {
+      return reply('❌ Audio බාගත කිරීමේදී ගැටලුවක් තිබුණා.');
+    }
+
+    const audioBuffer = Buffer.from(audioRes.data, 'binary');
+
+    await conn.sendMessage(from, {
+      audio: audioBuffer,
+      mimetype: 'audio/mpeg',
+      ptt: false, // true = voice message (PTT), false = normal audio
+      caption: '*〽️ade By Diniwh Bbh 😩💗*'
+    }, { quoted: mek });
+
+    await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
+
+  } catch (err) {
+    console.error('TikTok audio error:', err);
+    reply('❌ Audio බාගත කිරීමේදී දෝෂයක් සිදු වුණා.');
+    await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
+  }
+});
+
+//3?3?3?3?3?3?3?3?3??333=333.03=333.033=333.033
+
+cmd({
+  pattern: "taudptt",
+  alias: ["ttdl", "tiktokdl", "tt"],
+  react: '🎧',
+  desc: "Download TikTok audio as PTT (voice).",
+  category: "download",
+  use: ".tiktok <TikTok video URL>",
+  filename: __filename
+}, async (conn, mek, m, { from, reply, args }) => {
+  try {
+    const tiktokUrl = args[0];
+    if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
+      return reply('🔗 කරුණාකර වලංගු TikTok link එකක් දෙන්න. උදා: `.tiktok https://tiktok.com/...`');
+    }
+
+    await conn.sendMessage(from, { react: { text: '⏳', key: m.key } });
+
+    const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
+    const response = await axios.get(apiUrl);
+
+    if (!response.data || response.data.status !== 200 || !response.data.result || !response.data.result.audio) {
+      return reply('❌ TikTok audio link එක ගන්න බැරිවුණා.');
+    }
+
+    const { audio } = response.data.result;
+
+    const audioRes = await axios.get(audio, { responseType: 'arraybuffer' });
+    if (!audioRes.data) {
+      return reply('❌ Audio බාගත කිරීමේදී ගැටලුවක් තිබුණා.');
+    }
+
+    const audioBuffer = Buffer.from(audioRes.data, 'binary');
+
+    await conn.sendMessage(from, {
+      audio: audioBuffer,
+      mimetype: 'audio/mpeg',
+      ptt: true, // PTT: true means voice message
+      caption: '*〽️ade By Diniwh Bbh 😩💗*'
+    }, { quoted: mek });
+
+    await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
+
+  } catch (err) {
+    console.error('TikTok PTT error:', err);
+    reply('❌ Audio බාගත කිරීමේදී දෝෂයක් සිදු වුණා.');
+    await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
+  }
+});
+
+
+
