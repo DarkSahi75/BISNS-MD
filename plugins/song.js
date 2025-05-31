@@ -9,7 +9,7 @@ const cheerio = require('cheerio'); // For HTML scraping from AN1
 const { JSDOM } = require('jsdom'); // For DOM parsing from HTML
 const axios = require("axios");
 
-/*cmd({
+cmd({
     pattern: "tiktokv",
     alias: ["ttdl","tt"],
     react: '🏷️',
@@ -360,7 +360,7 @@ await conn.sendMessage(from, { react: { text: '✔', key: mek.key }})
   reply('*ERROR !!*')
 l(e)
 }
-})*/
+})
     
 cmd({
   pattern: "dsong",
