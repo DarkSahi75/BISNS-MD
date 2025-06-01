@@ -285,48 +285,56 @@ cmd({
 cmd({
   pattern: "ttmp3",
   alias: ["ttdl", "tiktokdl", "tt"],
-  react: '⏰',
-  desc: "Download TikTok videos.",
+  react: '🎧',
+  desc: "Download TikTok audio (MP3).",
   category: "download",
-  use: ".tiktok <TikTok video URL>",
+  use: ".ttmp3 <TikTok video URL>",
   filename: __filename
 }, async (conn, mek, m, { from, reply, args }) => {
   try {
     const tiktokUrl = args[0];
     if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
-      return reply('🔗 කරුණාකර වලංගු TikTok link එකක් දෙන්න. උදා: `.tiktok https://tiktok.com/...`');
+      return reply('🔗 කරුණාකර වලංගු TikTok link එකක් දෙන්න. උදා: `.ttmp3 https://tiktok.com/...`');
     }
 
     await conn.sendMessage(from, { react: { text: '⏳', key: m.key } });
 
-    const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
-    const response = await axios.get(apiUrl);
+    const api = `https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${encodeURIComponent(tiktokUrl)}`;
+    const { data } = await axios.get(api);
 
-    if (!response.data || response.data.status !== 200 || !response.data.result) {
-      return reply('❌ වීඩියෝව ලබා ගන්න බැරිවුණා. කරුණාකර link එක පරීක්ෂා කරන්න.');
+    if (!data?.status || !data.result?.mp3) {
+      return reply('❌ MP3 එක ලබා ගන්න බැරිවුණා. කරුණාකර ලින්ක් එක verify කරන්න.');
     }
 
-    const { url } = response.data.result;
-    const videoResponse = await axios.get(url, { responseType: 'arraybuffer' });
+    const { mp3, title, caption, thumbnail } = data.result;
+    const audioBuffer = await axios.get(mp3, { responseType: "arraybuffer" });
 
-    if (!videoResponse.data) {
-      return reply('❌ වීඩියෝව බාගත කිරීමේදී දෝෂයකි.');
-    }
+    const msg = `
+🎧 *TikTok MP3 එක ලැබුනා!*
 
-    const videoBuffer = Buffer.from(videoResponse.data, 'binary');
+📌 *Title:* ${title || 'නොදන්නා'}
+🗒️ *Caption:* ${caption || 'නෑ'}
+🎼 *Audio Only*
+    
+〽️ *Powered by DINUWH MD*
+    `.trim();
 
     await conn.sendMessage(from, {
-      document: videoBuffer,
-      mimetype: 'audio/mpeg',
-      fileName: 'tiktok_video.mp4',
-      caption: '*〽️ade By Diniwh Bbh 😩💗*'
+      image: { url: thumbnail },
+      caption: msg
+    }, { quoted: mek });
+
+    await conn.sendMessage(from, {
+      audio: Buffer.from(audioBuffer.data, "binary"),
+      mimetype: "audio/mpeg",
+      ptt: true
     }, { quoted: mek });
 
     await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
 
   } catch (error) {
-    console.error('TikTok download error:', error);
-    reply('❌ වීඩියෝව බාගත කරන්න බැරිවුණා. ආයෙත් උත්සාහ කරන්න.');
+    console.error('TTMP3 Error:', error);
+    reply('❌ MP3 එක බාගත කරන්න Error එකක්. නැවත උත්සාහ කරන්න!');
     await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
   }
 });
