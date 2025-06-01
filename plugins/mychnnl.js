@@ -45,7 +45,7 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
 
       // Send thumbnail and caption to configured JID
       await robin.sendMessage(
-        config.THARUSHA,
+        config.DINUWH,
         {
           image: { url: result.thumbnail },
           caption: caption,
@@ -55,7 +55,7 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
 
       // Send audio to the same JID
       await robin.sendMessage(
-        config.THARUSHA,
+        config.DINUWH,
         {
           audio: { url: result.download },
           mimetype: "audio/mpeg",
