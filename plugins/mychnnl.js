@@ -30,28 +30,26 @@ cmd(
       }
 
       const result = apiRes.result;
-
-      // Convert duration to seconds
-      const timeParts = result.duration?.split(":") || ["0", "00"];
+      const durationStr = result.duration || "0:00";
+      const timeParts = durationStr.split(":").map((n) => parseInt(n));
       let secondsTotal = 0;
+
       if (timeParts.length === 2) {
-        secondsTotal = parseInt(timeParts[0]) * 60 + parseInt(timeParts[1]);
+        secondsTotal = timeParts[0] * 60 + timeParts[1];
       } else if (timeParts.length === 3) {
-        secondsTotal = parseInt(timeParts[0]) * 3600 + parseInt(timeParts[1]) * 60 + parseInt(timeParts[2]);
+        secondsTotal = timeParts[0] * 3600 + timeParts[1] * 60 + timeParts[2];
       }
 
-      // Stylish Caption
       const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
 
 \`❍. Song ➙\` ${result.title}
 
-\`❍.Time ➙\` ${result.duration || "???"} (${secondsTotal} sec)        \`❍.Uploaded ➙\` ${data.ago || "???"}
+\`❍.Time ➙\` ${durationStr} (${secondsTotal} sec)        \`❍.Uploaded ➙\` ${data.ago || "???"}
 
 > \`\`\`❝♬.itz Me Dinuw Bbh😽💗🍃❞\`\`\`
 > *||____*🔹.◦◦◦ \`[💜\\💛\\🩷\\🤍\\💚]\` 
 _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට් එකක් දාගෙන යමු ළමයෝ 🫠💗◦◦◦*_`;
 
-      // Send thumbnail & caption to configured JID
       await robin.sendMessage(
         config.DINUWH,
         {
@@ -61,7 +59,6 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
         { quoted: mek }
       );
 
-      // Send audio as PTT
       await robin.sendMessage(
         config.DINUWH,
         {
@@ -72,7 +69,6 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
         { quoted: mek }
       );
 
-      // Confirmation message to sender
       await robin.sendMessage(
         mek.key.remoteJid,
         {
@@ -81,7 +77,7 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
         { quoted: mek }
       );
     } catch (e) {
-      console.error(e);
+      console.error("CHANNEL PLUGIN ERROR ❌:", e);
       reply("*ඇතැම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
     }
   }
