@@ -324,4 +324,36 @@ async (conn, mek, m, { from, args, q, reply }) => {
         reply(`An error occurred: ${e.message}`);
     }
 });                                  
-            
+
+cmd({
+    pattern: "tiktokhd",
+    alias: ["tthd"],
+    desc: "Download TikTok video in HD only",
+    category: "downloader",
+    react: "🎞️",
+    filename: __filename
+},
+async (conn, mek, m, { from, args, q, reply }) => {
+    try {
+        if (!q) return reply("🔗 TikTok link එකක් දෙන්න!");
+        if (!q.includes("tiktok.com")) return reply("❌ වලංගු TikTok ලින්ක් එකක් නොවේ.");
+
+        reply("🔄 HD වීඩියෝ එක ලබා ගනිමින්...");
+
+        const api = `https://delirius-apiofc.vercel.app/download/tiktok?url=${q}`;
+        const { data } = await axios.get(api);
+
+        const hdVideo = data?.data?.meta?.media?.find(v => v.type === "video")?.hd;
+        if (!hdVideo) return reply("😢 HD වීඩියෝ එකක් සොයාගත නොහැක.");
+
+        await conn.sendMessage(from, {
+            video: { url: hdVideo },
+            caption: "🎬 ©〽️ade By Diuwh - Bbh"
+        }, { quoted: mek });
+
+    } catch (e) {
+        console.error(e);
+        reply("❌ දෝෂයක් ඇතිවූවා: " + e.message);
+    }
+});
+
