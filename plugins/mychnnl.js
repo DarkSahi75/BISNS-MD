@@ -5,8 +5,7 @@ const config = require("../settings");
 
 cmd(
   {
-    pattern: "channel",
-    alias: ["my"],
+    pattern: "dinuwa",
     desc: "Send YouTube MP3 to a specific JID",
     category: "download",
     react: "🎧",
@@ -30,26 +29,24 @@ cmd(
       }
 
       const result = apiRes.result;
-      const durationStr = result.duration || "0:00";
-      const timeParts = durationStr.split(":").map((n) => parseInt(n));
-      let secondsTotal = 0;
 
-      if (timeParts.length === 2) {
-        secondsTotal = timeParts[0] * 60 + timeParts[1];
-      } else if (timeParts.length === 3) {
-        secondsTotal = timeParts[0] * 3600 + timeParts[1] * 60 + timeParts[2];
-      }
+      const caption = `◈=======================◈
+╭──────────────╮
+┃ 🎵 *𝙏𝙞𝙩𝙡𝙚* : ${result.title}
+┃
+┃ ⏱️ *𝘿𝙪𝙧𝙖𝙩𝙞𝙤𝙣* : ${data.timestamp}
+┃
+┃ 📅 *𝙍𝙚𝙡𝙚𝙖𝙨𝙚* : ${data.ago}
+┃
+┃ 📊 *𝙑𝙞𝙚𝙬𝙨* : ${data.views}
+┃
+┃ 🔗 *𝙇𝙞𝙣𝙠* : ${data.url}
+╰──────────────╯
+⦁⦂⦁━┉━┉━┉━┉━┉━┉━┉━⦁⦂⦁
 
-      const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
+*🎧 Use headphones for best experience..!*`;
 
-\`❍. Song ➙\` ${result.title}
-
-\`❍.Time ➙\` ${durationStr} (${secondsTotal} sec)        \`❍.Uploaded ➙\` ${data.ago || "???"}
-
-> \`\`\`❝♬.itz Me Dinuw Bbh😽💗🍃❞\`\`\`
-> *||____*🔹.◦◦◦ \`[💜\\💛\\🩷\\🤍\\💚]\` 
-_*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට් එකක් දාගෙන යමු ළමයෝ 🫠💗◦◦◦*_`;
-
+      // Send thumbnail and caption to configured JID
       await robin.sendMessage(
         config.DINUWH,
         {
@@ -59,6 +56,7 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
         { quoted: mek }
       );
 
+      // Send audio to the same JID
       await robin.sendMessage(
         config.DINUWH,
         {
@@ -69,15 +67,16 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
         { quoted: mek }
       );
 
+      // Confirmation message to command sender
       await robin.sendMessage(
         mek.key.remoteJid,
         {
-          text: `✅ *"${result.title}"* නම් ගීතය *${config.DINUWH}* වෙත සාර්ථකව යවනු ලැබීය.`,
+          text: `✅ *"${result.title}"* නම් ගීතය *${config.THARUSHA}* වෙත සාර්ථකව යවනු ලැබීය.`,
         },
         { quoted: mek }
       );
     } catch (e) {
-      console.error("CHANNEL PLUGIN ERROR ❌:", e);
+      console.error(e);
       reply("*ඇතැම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
     }
   }
