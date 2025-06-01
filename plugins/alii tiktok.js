@@ -357,3 +357,72 @@ async (conn, mek, m, { from, args, q, reply }) => {
     }
 });
 
+//Tiktok Wm download
+
+
+cmd({
+    pattern: "tiktokwm",
+    alias: ["ttwm"],
+    desc: "Download TikTok video with Watermark only",
+    category: "downloader",
+    react: "📹",
+    filename: __filename
+},
+async (conn, mek, m, { from, args, q, reply }) => {
+    try {
+        if (!q) return reply("🔗 TikTok link එකක් දෙන්න!");
+        if (!q.includes("tiktok.com")) return reply("❌ වලංගු TikTok ලින්ක් එකක් නොවේ.");
+
+        reply("🔄 WM වීඩියෝ එක ලබා ගනිමින්...");
+
+        const api = `https://delirius-apiofc.vercel.app/download/tiktok?url=${q}`;
+        const { data } = await axios.get(api);
+
+        const wmVideo = data?.data?.meta?.media?.find(v => v.type === "video")?.wm;
+        if (!wmVideo) return reply("😢 Watermark වීඩියෝ එකක් සොයාගත නොහැක.");
+
+        await conn.sendMessage(from, {
+            video: { url: wmVideo },
+            caption: "🎬 ©〽️ade By Diuwh - Bbh"
+        }, { quoted: mek });
+
+    } catch (e) {
+        console.error(e);
+        reply("❌ දෝෂයක් ඇතිවූවා: " + e.message);
+    }
+});
+
+// Tiktok Audio Download
+cmd({
+    pattern: "tiktokorg",
+    alias: ["ttorg"],
+    desc: "Download original TikTok video as audio (not PTT)",
+    category: "downloader",
+    react: "🎧",
+    filename: __filename
+},
+async (conn, mek, m, { from, args, q, reply }) => {
+    try {
+        if (!q) return reply("🔗 TikTok link එකක් දෙන්න!");
+        if (!q.includes("tiktok.com")) return reply("❌ වලංගු TikTok ලින්ක් එකක් නොවේ.");
+
+        reply("🎧 Audio extract කරනවා...");
+
+        const api = `https://delirius-apiofc.vercel.app/download/tiktok?url=${q}`;
+        const { data } = await axios.get(api);
+
+        const orgVideo = data?.data?.meta?.media?.find(v => v.type === "video")?.org;
+        if (!orgVideo) return reply("😢 Original video link එකක් නැහැ.");
+
+        // Convert org video to audio (let Telegram/WhatsApp auto handle it)
+        await conn.sendMessage(from, {
+            audio: { url: orgVideo },
+            mimetype: 'audio/mp4',
+            ptt: false
+        }, { quoted: mek });
+
+    } catch (e) {
+        console.error(e);
+        reply("❌ දෝෂයක් ඇතිවූවා: " + e.message);
+    }
+});
