@@ -283,53 +283,50 @@ cmd({
 });
 //5=5.05=5.054=5.054=4=4.04=4.044=4.0444=4.0444
 
-//const axios = require("axios");
-//const { cmd } = require("../command");
+//nst axios = require("axios");
+//onst { cmd } = require("../command");
+const { Buffer } = require("buffer");
 
 cmd({
   pattern: "tiktok",
-  alias: ["ttdl", "ttmp3"],
-  react: '🎧',
-  desc: "Download TikTok audio as PTT voice.",
+  alias: ["ttdlptt", "ttmp3"],
+  react: "🎧",
+  desc: "Download TikTok audio as PTT voice message",
   category: "download",
-  use: ".tiktok <TikTok video URL>",
-  filename: __filename
-}, async (conn, mek, m, { from, reply, args }) => {
+  use: ".tiktok <TikTok video url>",
+  filename: __filename,
+}, async (conn, mek, m, { from, args, reply }) => {
   try {
-    const tiktokUrl = args[0];
-    if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
-      return reply('🔗 කරුණාකර වලංගු TikTok link එකක් දෙන්න. උදා: `.tiktok https://vt.tiktok.com/...`');
+    const url = args[0];
+    if (!url || !url.includes("tiktok.com")) {
+      return reply("🔗 කරුණාකර වලංගු TikTok link එකක් දෙන්න.\n\nඋදා: .tiktok https://vt.tiktok.com/...");
     }
 
-    await conn.sendMessage(from, { react: { text: '⏳', key: m.key } });
+    await conn.sendMessage(from, { react: { text: "⏳", key: m.key } });
 
-    // VajiraTech API call
-    const api = `https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${encodeURIComponent(tiktokUrl)}`;
+    const api = `https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${encodeURIComponent(url)}`;
     const res = await axios.get(api);
+    const result = res.data?.result;
 
-    if (!res.data || res.data.status !== true || !res.data.result.mp3) {
-      return reply('❌ TikTok audio link එක ගන්න බැරිවුණා.');
-    }
+    if (!result || !result.mp3) return reply("❌ TikTok audio link එක ගන්න බැරිවුණා.");
 
-    const mp3Url = res.data.result.mp3;
+    // Decode base64-encoded mp3 URL
+    const decodedMp3 = Buffer.from(result.mp3, "base64").toString("utf-8");
 
-    const audioRes = await axios.get(mp3Url, { responseType: 'arraybuffer' });
-    const audioBuffer = Buffer.from(audioRes.data, 'binary');
+    const audioData = await axios.get(decodedMp3, { responseType: "arraybuffer" });
+    const audioBuffer = Buffer.from(audioData.data, "binary");
 
     await conn.sendMessage(from, {
       audio: audioBuffer,
-      mimetype: 'audio/mpeg',
+      mimetype: "audio/mpeg",
       ptt: true,
-      caption: '*〽️ade By Diniwh Bbh 😩💗*'
+      caption: "*〽️ade By Diniwh Bbh 😩💗*"
     }, { quoted: mek });
 
-    await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
-  } catch (err) {
-    console.error("TikTok MP3 Error:", err);
-    await reply('⚠️ උනා බං, audio එක එවන්න බැරිවුණා. නැවත උත්සාහ කරන්න.');
-    await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
+    await conn.sendMessage(from, { react: { text: "✅", key: m.key } });
+  } catch (e) {
+    console.error("TikTok Audio Error:", e);
+    await reply("⚠️ TikTok audio එක ගන්න ගියාම error එකක් ආවා. නැවත උත්සාහ කරන්න.");
+    await conn.sendMessage(from, { react: { text: "❌", key: m.key } });
   }
 });
-
-
-        
