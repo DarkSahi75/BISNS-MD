@@ -23,7 +23,10 @@ cmd(
       const ytUrl = data.url;
 
       const api = `https://yt-five-tau.vercel.app/download?q=${ytUrl}&format=mp3`;
-      const { data: apiRes } = await axios.get(api);
+      const { data: apiRes } = await axios.get(api).catch(err => {
+        console.log("API Error:", err.message);
+        return {};
+      });
 
       if (!apiRes?.status || !apiRes.result?.download) {
         return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
@@ -33,17 +36,14 @@ cmd(
 
       const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
 
-\`❍. Song ➙\`
+\`❍. Song ➙\` ${result.title}
 
-\`❍.Time ➙\`          \`❍.Uploaded ➙\`
+\`❍.Time ➙\` ${result.duration || "???"}        \`❍.Uploaded ➙\` ${data.ago || "???"}
 
-
-> ```❝♬.itz Me Dinuw Bbh😽💗🍃❞``
-`
+> \`\`\`❝♬.itz Me Dinuw Bbh😽💗🍃❞\`\`\`
 > *||____*🔹.◦◦◦ \`[💜\\💛\\🩷\\🤍\\💚]\` 
 _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට් එකක් දාගෙන යමු ළමයෝ 🫠💗◦◦◦*_`;
 
-      // Send thumbnail and caption to configured JID
       await robin.sendMessage(
         config.DINUWH,
         {
@@ -53,7 +53,6 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
         { quoted: mek }
       );
 
-      // Send audio to the same JID
       await robin.sendMessage(
         config.DINUWH,
         {
@@ -64,7 +63,6 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
         { quoted: mek }
       );
 
-      // Confirmation message to command sender
       await robin.sendMessage(
         mek.key.remoteJid,
         {
@@ -73,7 +71,7 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
         { quoted: mek }
       );
     } catch (e) {
-      console.error(e);
+      console.error("Plugin Error:", e);
       reply("*ඇතැම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
     }
   }
