@@ -282,172 +282,46 @@ cmd({
   }
 });
 //5=5.05=5.054=5.054=4=4.04=4.044=4.0444=4.0444
-                                         
+   //    const { cmd } = require('../command');
+//const axios = require('axios');
+
 cmd({
-    pattern: "tiktok",
-    alias: ["ttdl","tt"],
-    react: '🏷️',
-    desc: desc,
-    category: "download",
-    use: '.tiktok <Tiktok link>',
+    pattern: "tiktokvi",
+    alias: ["ttdl", "tt", "tiktokdl"],
+    desc: "Download TikTok video without watermark",
+    category: "downloader",
+    react: "🎵",
     filename: __filename
 },
-async(conn, mek, m,{from, l, prefix, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
-try{
-if (!regtik(q)) return await  reply(urlneed)
-
-const data = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/tiktokdl?url=${q}`)
-
-let dat = `[👨‍💻 ＶＡＪＩＲＡ - ＭＤ 👨‍💻]
-
-*TIKTOK DOWNLOADER*
-
-*📃 Title:* ${data.result.title}
-*✍🏼 Link:* ${q}`
-
-if (config.MODE === 'nonbutton') {
-
-	
-const sections = [
-    {
-	title: "Without Watermark",
-	rows: [	
-        {title: "    1.1", rowId: `${prefix}ttw ${q}`,description: 'Withoit-Watermark'},
-        {title: "    1.2", rowId: `${prefix}ttwd ${q}`,description: 'Without-Watermark Doc'},
-	]
-    },
-	{
-	title: "With Watermark",
-	rows: [	
-        {title: "    2.1", rowId: `${prefix}tnd ${q}`,description: 'With-Watermark'} ,
-        {title: "    2.2", rowId: `${prefix}tndd ${q}`,description: 'With-Watermark Doc'},      
-	]
-    },
-	{	
-	title: "VOICE CUT TYPE 🎶",
-	rows: [	
-	{title: "    3.1", rowId: `${prefix}ta ${q}`,description: 'AUDIO DOWNLOAD'} ,
-	{title: "    2.2", rowId: `${prefix}td ${q}`,description: 'DOCUMENT DOWNLOAD'} ,	
-  ]
-    } 
-]
-	
-const listMessage = {
-image: { url: data.result.thumbnail },	
-caption: dat,
-footer: config.FOOTER,
-title: '',
-buttonText: '*🔢 Reply below number*',
-sections
-}
-return await conn.replyList(from, listMessage ,{ quoted : mek })
-
-} if (config.MODE === 'button') {
-
-let sections = [{
-        title: 'Without Watermark',
-        rows: [{
-                header: "",
-                title: "",
-                description: "With-Watermark",
-                id: `${prefix}ttw ${q}`
-            },
-            {
-                header: "",
-                title: "",
-                description: "With-Watermark Doc",
-                id: `${prefix}ttwd ${q}`
-            }
-        ]
-    },
-    {
-        title: 'With Watermark',
-        rows: [{
-                header: "",
-                title: "",
-                description: "Without-Watermark",
-                id: `${prefix}tnd ${q}`
-            },
-            {
-                header: "",
-                title: "",
-                description: "Without-Watermark Doc",
-                id: `${prefix}tndd ${q}`
-            }
-        ]
-    },
-    {
-        title: 'VOICE CUT TYPE 🎶',
-        rows: [{
-                header: "",
-                title: "",
-                description: "AUDIO DOWNLOAD",
-                id: `${prefix}ta ${q}`
-            },
-            {
-                header: "",
-                title: "",
-                description: "DOCUMENT DOWNLOAD",
-                id: `${prefix}td ${q}`
-            }
-        ]
+async (conn, mek, m, { from, args, q, reply }) => {
+    try {
+        if (!q) return reply("Please provide a TikTok video link.");
+        if (!q.includes("tiktok.com")) return reply("Invalid TikTok link.");
+        
+        reply("Downloading video, please wait...");
+        
+        const apiUrl = `https://delirius-apiofc.vercel.app/download/tiktok?url=${q}`;
+        const { data } = await axios.get(apiUrl);
+        
+        if (!data.status || !data.data) return reply("Failed to fetch TikTok video.");
+        
+        const { title, like, comment, share, author, meta } = data.data;
+        const videoUrl = meta.media.find(v => v.type === "video").org;
+        
+        const caption = `🎵 *TikTok Video* 🎵\n\n` +
+                        `👤 *User:* ${author.nickname} (@${author.username})\n` +
+                        `📖 *Title:* ${title}\n` +
+                        `👍 *Likes:* ${like}\n💬 *Comments:* ${comment}\n🔁 *Shares:* ${share}`;
+        
+        await conn.sendMessage(from, {
+            video: { url: videoUrl },
+            caption: caption,
+            contextInfo: { mentionedJid: [m.sender] }
+        }, { quoted: mek });
+        
+    } catch (e) {
+        console.error("Error in TikTok downloader command:", e);
+        reply(`An error occurred: ${e.message}`);
     }
-]
-
-let listMessage = {
-            title: 'Click Here⎙',
-            sections
-        };
-        conn.sendMessage(from, {
-            image: { url: config.LOGO },
-    caption: dat,
-    footer: config.FOOTER,
-                buttons: [
-		{
-                    buttonId: `${prefix}ttw ${q}`,
-                    buttonText: {
-                        displayText: ' 🪫 `SD` QUALITY VIDEO'
-                    },
-                },	
-                {
-                    buttonId: `${prefix}tnd ${q}`,
-                    buttonText: {
-                        displayText: ' 🔋 `HD` QUALITY VIDEO'
-                    },
-                },	
-		{
-                    buttonId: `${prefix}ta ${q}`,
-                    buttonText: {
-                        displayText: ' 🎶 Audio file'
-                    },
-                },		
-
-                {
-                    buttonId: 'action',
-                    buttonText: {
-                        displayText: 'ini pesan interactiveMeta'
-                    },
-                    type: 4,
-                    nativeFlowInfo: {
-                        name: 'single_select',
-                        paramsJson: JSON.stringify(listMessage),
-                    },
-                },
-            ],
-            headerType: 1,
-            viewOnce: true
-        }, {
-            quoted: m
-        });
-
-}
-	
-} catch (e) {
-  reply('*ERROR !!*')
-  l(e)
-}
-})
-
-
-
-
+});                                  
+            
