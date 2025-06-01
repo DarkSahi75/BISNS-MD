@@ -282,59 +282,172 @@ cmd({
   }
 });
 //5=5.05=5.054=5.054=4=4.04=4.044=4.0444=4.0444
+                                         
 cmd({
-  pattern: "ttmp3",
-  alias: ["ttdl", "tiktokdl", "tt"],
-  react: '🎧',
-  desc: "Download TikTok audio (MP3).",
-  category: "download",
-  use: ".ttmp3 <TikTok video URL>",
-  filename: __filename
-}, async (conn, mek, m, { from, reply, args }) => {
-  try {
-    const tiktokUrl = args[0];
-    if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
-      return reply('🔗 කරුණාකර වලංගු TikTok link එකක් දෙන්න. උදා: `.ttmp3 https://tiktok.com/...`');
+    pattern: "tiktok",
+    alias: ["ttdl","tt"],
+    react: '🏷️',
+    desc: desc,
+    category: "download",
+    use: '.tiktok <Tiktok link>',
+    filename: __filename
+},
+async(conn, mek, m,{from, l, prefix, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+try{
+if (!regtik(q)) return await  reply(urlneed)
+
+const data = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/tiktokdl?url=${q}`)
+
+let dat = `[👨‍💻 ＶＡＪＩＲＡ - ＭＤ 👨‍💻]
+
+*TIKTOK DOWNLOADER*
+
+*📃 Title:* ${data.result.title}
+*✍🏼 Link:* ${q}`
+
+if (config.MODE === 'nonbutton') {
+
+	
+const sections = [
+    {
+	title: "Without Watermark",
+	rows: [	
+        {title: "    1.1", rowId: `${prefix}ttw ${q}`,description: 'Withoit-Watermark'},
+        {title: "    1.2", rowId: `${prefix}ttwd ${q}`,description: 'Without-Watermark Doc'},
+	]
+    },
+	{
+	title: "With Watermark",
+	rows: [	
+        {title: "    2.1", rowId: `${prefix}tnd ${q}`,description: 'With-Watermark'} ,
+        {title: "    2.2", rowId: `${prefix}tndd ${q}`,description: 'With-Watermark Doc'},      
+	]
+    },
+	{	
+	title: "VOICE CUT TYPE 🎶",
+	rows: [	
+	{title: "    3.1", rowId: `${prefix}ta ${q}`,description: 'AUDIO DOWNLOAD'} ,
+	{title: "    2.2", rowId: `${prefix}td ${q}`,description: 'DOCUMENT DOWNLOAD'} ,	
+  ]
+    } 
+]
+	
+const listMessage = {
+image: { url: data.result.thumbnail },	
+caption: dat,
+footer: config.FOOTER,
+title: '',
+buttonText: '*🔢 Reply below number*',
+sections
+}
+return await conn.replyList(from, listMessage ,{ quoted : mek })
+
+} if (config.MODE === 'button') {
+
+let sections = [{
+        title: 'Without Watermark',
+        rows: [{
+                header: "",
+                title: "",
+                description: "With-Watermark",
+                id: `${prefix}ttw ${q}`
+            },
+            {
+                header: "",
+                title: "",
+                description: "With-Watermark Doc",
+                id: `${prefix}ttwd ${q}`
+            }
+        ]
+    },
+    {
+        title: 'With Watermark',
+        rows: [{
+                header: "",
+                title: "",
+                description: "Without-Watermark",
+                id: `${prefix}tnd ${q}`
+            },
+            {
+                header: "",
+                title: "",
+                description: "Without-Watermark Doc",
+                id: `${prefix}tndd ${q}`
+            }
+        ]
+    },
+    {
+        title: 'VOICE CUT TYPE 🎶',
+        rows: [{
+                header: "",
+                title: "",
+                description: "AUDIO DOWNLOAD",
+                id: `${prefix}ta ${q}`
+            },
+            {
+                header: "",
+                title: "",
+                description: "DOCUMENT DOWNLOAD",
+                id: `${prefix}td ${q}`
+            }
+        ]
     }
+]
 
-    await conn.sendMessage(from, { react: { text: '⏳', key: m.key } });
+let listMessage = {
+            title: 'Click Here⎙',
+            sections
+        };
+        conn.sendMessage(from, {
+            image: { url: config.LOGO },
+    caption: dat,
+    footer: config.FOOTER,
+                buttons: [
+		{
+                    buttonId: `${prefix}ttw ${q}`,
+                    buttonText: {
+                        displayText: ' 🪫 `SD` QUALITY VIDEO'
+                    },
+                },	
+                {
+                    buttonId: `${prefix}tnd ${q}`,
+                    buttonText: {
+                        displayText: ' 🔋 `HD` QUALITY VIDEO'
+                    },
+                },	
+		{
+                    buttonId: `${prefix}ta ${q}`,
+                    buttonText: {
+                        displayText: ' 🎶 Audio file'
+                    },
+                },		
 
-    const api = `https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${encodeURIComponent(tiktokUrl)}`;
-    const { data } = await axios.get(api);
+                {
+                    buttonId: 'action',
+                    buttonText: {
+                        displayText: 'ini pesan interactiveMeta'
+                    },
+                    type: 4,
+                    nativeFlowInfo: {
+                        name: 'single_select',
+                        paramsJson: JSON.stringify(listMessage),
+                    },
+                },
+            ],
+            headerType: 1,
+            viewOnce: true
+        }, {
+            quoted: m
+        });
 
-    if (!data?.status || !data.result?.mp3) {
-      return reply('❌ MP3 එක ලබා ගන්න බැරිවුණා. කරුණාකර ලින්ක් එක verify කරන්න.');
-    }
+}
+	
+} catch (e) {
+  reply('*ERROR !!*')
+  l(e)
+}
+})
 
-    const { mp3, title, caption, thumbnail } = data.result;
-    const audioBuffer = await axios.get(mp3, { responseType: "arraybuffer" });
 
-    const msg = `
-🎧 *TikTok MP3 එක ලැබුනා!*
 
-📌 *Title:* ${title || 'නොදන්නා'}
-🗒️ *Caption:* ${caption || 'නෑ'}
-🎼 *Audio Only*
-    
-〽️ *Powered by DINUWH MD*
-    `.trim();
 
-    await conn.sendMessage(from, {
-      image: { url: thumbnail },
-      caption: msg
-    }, { quoted: mek });
-
-    await conn.sendMessage(from, {
-      audio: Buffer.from(audioBuffer.data, "binary"),
-      mimetype: "audio/mpeg",
-      ptt: true
-    }, { quoted: mek });
-
-    await conn.sendMessage(from, { react: { text: '✅', key: m.key } });
-
-  } catch (error) {
-    console.error('TTMP3 Error:', error);
-    reply('❌ MP3 එක බාගත කරන්න Error එකක්. නැවත උත්සාහ කරන්න!');
-    await conn.sendMessage(from, { react: { text: '❌', key: m.key } });
-  }
-});
