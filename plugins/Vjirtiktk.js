@@ -371,3 +371,39 @@ l(e)
 })
 
 
+
+cmd({
+  pattern: "tiktokmp3",
+  alias: ["ttmp3"],
+  category: "downloader",
+  use: ".tiktokmp3 <TikTok URL>",
+  desc: "🎵 TikTok Video එකක ගීතය MP3 එකක් විදිහට බාගන්න",
+  react: "🎶"
+}, async ({ msg, args, sock }) => {
+  if (!args || !args[0]?.includes("tiktok.com")) {
+    return msg.reply("🚫 කරුණාකර නිවැරදි TikTok ලින්ක් එකක් දෙන්න!\n\n📌 උදාහරණය: `.tiktokmp3 https://www.tiktok.com/....`");
+  }
+
+  try {
+    const api = `https://api-pink-venom.vercel.app/api/tiktok?url=${args[0]}`;
+    const { data } = await axios.get(api);
+
+    if (!data.status || !data.result?.music) {
+      return msg.reply("❌ MP3 එක ලබාගත නොහැක. වෙනත් TikTok ලින්ක් එකක් උත්සාහ කරන්න.");
+    }
+
+    const title = data.result.title || "TikTok MP3";
+    const mp3 = data.result.music;
+
+    await msg.reply(`🎧 *TikTok MP3 එක ඔබට ගෙනෙන්නෙ මෙන්න!*\n\n📌 *Title:* ${title.substring(0, 100)}...\n\n🔗 *Source:* ${args[0]}`, {
+      audio: { url: mp3 },
+      mimetype: 'audio/mpeg',
+      ptt: true,
+      fileName: `${title.substring(0, 30)}.mp3`,
+    });
+
+  } catch (e) {
+    console.error(e);
+    msg.reply("🥲 උපස්ථානයක දෝෂයක් ඇතිවුණා. නැවත උත්සාහ කරන්න.");
+  }
+});
