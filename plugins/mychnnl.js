@@ -241,42 +241,46 @@ Reply with the number of the option you want to download.
 
 const fetch = require('node-fetch');
 
-const fetchJson = async (url, options = {}) => {
-    const res = await fetch(url, options);
-    if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
-    return await res.json();
+const fetchJson = async (url) => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+  return await res.json();
 };
 
 cmd({
-    pattern: "ta",
-    react: "⬇",
-    filename: __filename
+  pattern: "ta",
+  react: "⬇",
+  filename: __filename
 },
-async(conn, mek, m, {
-    from, q, reply
-}) => {
-    try {
-        if (!q) return reply("🥺 කරුණාකර TikTok ලින්ක් එකක් දෙන්න!\n\n📌 උදාහරණය: .ta https://vm.tiktok.com/xxxx");
+async(conn, mek, m, { from, q, reply }) => {
+  try {
+    if (!q) return reply("📌 කරුණාකර TikTok ලින්ක් එකක් දෙන්න!\nඋදා: *.ta https://vm.tiktok.com/xxxx*");
 
-        const apiURL = `https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`;
-        const data = await fetchJson(apiURL);
+    const api = `https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`;
+    const res = await fetchJson(api);
 
-        if (!data || !data.result || !data.result.audio) {
-            return reply("❌ අරන් එන්නෙ TikTok MP3 එකක් නෙමෙයි. නැවත උත්සහ කරන්න!");
-        }
-
-        await conn.sendMessage(from, { react: { text: '⬆', key: mek.key }});
-        await conn.sendMessage(from, {
-            audio: { url: data.result.audio },
-            mimetype: "audio/mpeg",
-            ptt: true
-        }, { quoted: mek });
-
-        await conn.sendMessage(from, { react: { text: '✔', key: mek.key }});
-
-    } catch (e) {
-        await conn.sendMessage(from, { react: { text: '❌', key: mek.key }});
-        console.error(e);
-        reply(`Error !!\n\n*${e.message || e}*`);
+    if (!res.result || !res.result.audio) {
+      return reply("❌ MP3 link එක හමුවුනේ නැහැ. ලින්ක් එක හරිද බලන්න!");
     }
+
+    const mp3Link = res.result.audio;
+
+    // React with ⬆ before sending
+    await conn.sendMessage(from, { react: { text: '⬆', key: mek.key }});
+
+    // Send as PTT (voice message)
+    await conn.sendMessage(from, {
+      audio: { url: mp3Link },
+      mimetype: 'audio/mpeg',
+      ptt: true
+    }, { quoted: mek });
+
+    // React with ✔ after sent
+    await conn.sendMessage(from, { react: { text: '✔', key: mek.key }});
+
+  } catch (e) {
+    await conn.sendMessage(from, { react: { text: '❌', key: mek.key }});
+    console.error(e);
+    reply(`😵 Error!\n\n*${e.message || e}*`);
+  }
 });
