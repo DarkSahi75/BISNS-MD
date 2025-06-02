@@ -15,7 +15,7 @@ const util = require("util");
 const stream = require("stream");
 const https = require("https");
 const http = require("http");
-
+const desc = 'Download TikTok videos with or without watermark or as audio.';
 cmd({
     pattern: "tiktok",
     alias: ["ttdl","tt"],
