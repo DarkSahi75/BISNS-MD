@@ -1,3 +1,4 @@
+const { getBuffer, getFile, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson, jsonformat} = require('../lib/functions');
 const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
@@ -9,7 +10,7 @@ const ffmpeg = require("fluent-ffmpeg");
 const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 const { exec } = require("child_process");
 const { cmd } = require("../lib/command"); // Command handler path
-const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
+//const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const os = require("os");
 const util = require("util");
 const stream = require("stream");
