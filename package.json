@@ -13,6 +13,7 @@
         "@blackamda/telegram-image-url": "^1.0.0",
         "@bochilteam/scraper": "^4.0.22-alpha.0",
         "@distube/ytdl-core": "^4.13.5",
+        "jsdom": "^22.1.0",
         "@ffmpeg-installer/ffmpeg": "^1.1.0",
         "@kaveesha-sithum/derana-news": "latest",
         "@sasmeee/wabetainfo": "^1.0.2",
