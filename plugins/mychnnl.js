@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+//onst { cmd } = require('../lib/plugins'); // ඔබේ plugin handler එක අනුව වෙනස් කරන්න
 const { cmd } = require("../lib/command");
 const yts = require("yt-search");
 const axios = require("axios");
