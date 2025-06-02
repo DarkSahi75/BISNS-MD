@@ -1,4 +1,4 @@
-const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson} = require('../lib/functions')
+//onst { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson} = require('../lib/functions')
 const { cmd, commands } = require("../lib/command");
 //const { cmd } = require("../lib/command");
 const yts = require("yt-search");
@@ -239,27 +239,44 @@ Reply with the number of the option you want to download.
 });
 
 
+const fetch = require('node-fetch');
+
+const fetchJson = async (url, options = {}) => {
+    const res = await fetch(url, options);
+    if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+    return await res.json();
+};
+
 cmd({
     pattern: "ta",
-    react: "⬇",    
+    react: "⬇",
     filename: __filename
 },
+async(conn, mek, m, {
+    from, q, reply
+}) => {
+    try {
+        if (!q) return reply("🥺 කරුණාකර TikTok ලින්ක් එකක් දෙන්න!\n\n📌 උදාහරණය: .ta https://vm.tiktok.com/xxxx");
 
-async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
-try{
-  
+        const apiURL = `https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`;
+        const data = await fetchJson(apiURL);
 
+        if (!data || !data.result || !data.result.audio) {
+            return reply("❌ අරන් එන්නෙ TikTok MP3 එකක් නෙමෙයි. නැවත උත්සහ කරන්න!");
+        }
 
-const data = await fetchJson(`https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`)
+        await conn.sendMessage(from, { react: { text: '⬆', key: mek.key }});
+        await conn.sendMessage(from, {
+            audio: { url: data.result.audio },
+            mimetype: "audio/mpeg",
+            ptt: true
+        }, { quoted: mek });
 
+        await conn.sendMessage(from, { react: { text: '✔', key: mek.key }});
 
-
-await conn.sendMessage(from, { react: { text: '⬆', key: mek.key }})
-await conn.sendMessage(from, { audio: { url: data.result.audio }, mimetype: "audio/mpeg" }, { quoted: mek })  
-await conn.sendMessage(from, { react: { text: '✔', key: mek.key }})
-}catch(e){
-await conn.sendMessage(from, { react: { text: `❌`, key: mek.key } })
-console.log(e)
-reply(`Error !!\n\n*${e}*`)
-}
-})
+    } catch (e) {
+        await conn.sendMessage(from, { react: { text: '❌', key: mek.key }});
+        console.error(e);
+        reply(`Error !!\n\n*${e.message || e}*`);
+    }
+});
