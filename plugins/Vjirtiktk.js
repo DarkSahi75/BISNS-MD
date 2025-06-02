@@ -8,7 +8,7 @@ const { toAudio } = require("@whiskeysockets/baileys");
 const ffmpeg = require("fluent-ffmpeg");
 const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 const { exec } = require("child_process");
-const { cmd } = require("../lib/plugins"); // Command handler path
+const { cmd } = require("../lib/command"); // Command handler path
 const fetch = (...args) => import("node-fetch").then(({ default: fetch }) => fetch(...args));
 const os = require("os");
 const util = require("util");
