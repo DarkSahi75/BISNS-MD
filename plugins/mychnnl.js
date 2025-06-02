@@ -78,3 +78,48 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
     }
   }
 );
+
+//=3=3=3=3=3=33=3=3=33=3=3=3==3=3=3=3=3=3=3=3=3==3=3=3=
+
+//const axios = require("axios");
+//onst { cmd } = require("../lib/command");
+
+cmd(
+  {
+    pattern: "manutik",
+    desc: "Download TikTok MP3 (voice)",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    if (!q) return reply("🎯 *TikTok ලින්ක් එකක් දෙන්න!*");
+
+    try {
+      const { data } = await axios.get(`https://manul-ofc-private-api.vercel.app/scrape-tiktok?url=${encodeURIComponent(q)}&apikey=2022/02/02`);
+
+      if (!data?.status || data.data.status !== 'success') {
+        return reply("❌ TikTok video එක හදාගන්න බැරි වුණා.");
+      }
+
+      const info = data.data.data;
+
+      await robin.sendMessage(mek, {
+        image: { url: info.thumbnail },
+        caption: `🎧 *TikTok Audio Downloader*\n\n📌 *Title:* ${info.title}\n👤 *By:* ${info.author}\n\n🎵 Audio යවලා තියෙනවා...`,
+      }, { quoted: mek });
+
+      // Send as voice note (PTT)
+      await robin.sendMessage(mek, {
+        audio: { url: info.audio },
+        mimetype: 'audio/mpeg',
+        ptt: true,
+      }, { quoted: mek });
+
+    } catch (e) {
+      console.log(e);
+      return reply("💥 අයි උනා බ්‍රෝ – TikTok mp3 බාගැනීමේදී වැරැද්දක්!");
+    }
+  }
+);
+
