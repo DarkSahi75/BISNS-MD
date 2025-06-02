@@ -91,7 +91,7 @@ Thenux-AI
 
 //const { cmd } = require('../command');const axios = require('axios');
 
-cmd({
+/*cmd({
     pattern: "tikmanu",
     alias: ["tiktokdl"],
     react: "🎬",
@@ -283,4 +283,4 @@ async(conn, mek, m, { from, q, reply }) => {
     console.error(e);
     reply(`😵 Error!\n\n*${e.message || e}*`);
   }
-});
+});*/
