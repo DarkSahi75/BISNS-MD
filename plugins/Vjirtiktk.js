@@ -285,7 +285,7 @@ reply(`Error !!\n\n*${e}*`)
 
 
 cmd({
-    pattern: "ta",
+    pattern: "ttaud",
     react: "⬇",    
     filename: __filename
 },
