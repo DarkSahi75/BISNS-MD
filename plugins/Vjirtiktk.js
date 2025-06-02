@@ -371,39 +371,40 @@ l(e)
 })
 
 
+//const { cmd } = require("../lib/command");
+//const axios = require("axios");
 
 cmd({
-  pattern: "tiktokmp3",
+  pattern: "tikmp3n",
   alias: ["ttmp3"],
   category: "downloader",
   use: ".tiktokmp3 <TikTok URL>",
-  desc: "🎵 TikTok Video එකක ගීතය MP3 එකක් විදිහට බාගන්න",
+  desc: "Download TikTok audio as MP3",
   react: "🎶"
-}, async ({ msg, args, sock }) => {
+}, async ({ msg, args }) => {
   if (!args || !args[0]?.includes("tiktok.com")) {
-    return msg.reply("🚫 කරුණාකර නිවැරදි TikTok ලින්ක් එකක් දෙන්න!\n\n📌 උදාහරණය: `.tiktokmp3 https://www.tiktok.com/....`");
+    return msg.reply("❌ Please provide a valid TikTok link.\n\nExample: .tiktokmp3 https://www.tiktok.com/...");
   }
 
   try {
-    const api = `https://api-pink-venom.vercel.app/api/tiktok?url=${args[0]}`;
-    const { data } = await axios.get(api);
+   
 
-    if (!data.status || !data.result?.music) {
-      return msg.reply("❌ MP3 එක ලබාගත නොහැක. වෙනත් TikTok ලින්ක් එකක් උත්සාහ කරන්න.");
-    }
+  const res = await fetchJson(`https://api-pink-venom.vercel.app/api/tiktok?url=${q}`)
 
-    const title = data.result.title || "TikTok MP3";
-    const mp3 = data.result.music;
+const manul = res.result 
 
-    await msg.reply(`🎧 *TikTok MP3 එක ඔබට ගෙනෙන්නෙ මෙන්න!*\n\n📌 *Title:* ${title.substring(0, 100)}...\n\n🔗 *Source:* ${args[0]}`, {
-      audio: { url: mp3 },
+const title = manul.title
+const audio_link = manul.music
+
+    await msg.reply(`🎧 Here's your TikTok audio!\n\n🔹 *Title:* ${title}`, {
+      audio: { url: audio_link },
       mimetype: 'audio/mpeg',
       ptt: true,
-      fileName: `${title.substring(0, 30)}.mp3`,
+      fileName: `${title}.mp3`,
     });
 
   } catch (e) {
     console.error(e);
-    msg.reply("🥲 උපස්ථානයක දෝෂයක් ඇතිවුණා. නැවත උත්සාහ කරන්න.");
+    msg.reply(`${e}`);
   }
 });
