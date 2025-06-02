@@ -29,7 +29,7 @@ async(conn, mek, m,{from, l, prefix, quoted, body, isCmd, command, args, q, isGr
 try{
 if (!regtik(q)) return await  reply(urlneed)
 
-const data = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/tiktokdl?url=${q}`)
+const data = await fetchJson(`https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`)
 
 let dat = `[👨‍💻 ＶＡＪＩＲＡ - ＭＤ 👨‍💻]
 
@@ -194,7 +194,7 @@ cmd({
 async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 
-const data = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/tiktokdl?url=${q}`)
+const data = await fetchJson(`https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`)
 
     
 
@@ -219,7 +219,7 @@ cmd({
 async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 
-const data = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/tiktokdl?url=${q}`)
+const data = await fetchJson(`https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`)
 
 
     
@@ -244,7 +244,7 @@ cmd({
 async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
  
-const data = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/tiktokdl?url=${q}`)
+const data = await fetchJson(`https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`)
 
 await conn.sendMessage(from, { react: { text: '⬆', key: mek.key }})
 await conn.sendMessage(from, { video: { url: data.result.watermark}, mimetype: "video/mp4", caption: `> *POWERED by VAJIRA-MD*` }, { quoted: mek })
@@ -267,7 +267,7 @@ cmd({
 async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
  
-const data = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/tiktokdl?url=${q}`)
+const data = await fetchJson(`https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`)
 
 
 await conn.sendMessage(from, { react: { text: '⬆', key: mek.key }})
@@ -294,7 +294,7 @@ try{
   
 
 
-const data = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/tiktokdl?url=${q}`)
+const data = await fetchJson(`https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`)
 
 
 
@@ -321,7 +321,7 @@ try{
   
 
 
-const data = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/tiktokdl?url=${q}`)
+const data = await fetchJson(`https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`)
 
 
 
