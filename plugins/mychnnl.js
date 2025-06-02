@@ -235,3 +235,29 @@ Reply with the number of the option you want to download.
         }
     }
 });
+
+
+cmd({
+    pattern: "ta",
+    react: "⬇",    
+    filename: __filename
+},
+
+async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+try{
+  
+
+
+const data = await fetchJson(`https://api-mainh-20a12b683c39.herokuapp.com/download/tiktokdl?url=${q}`)
+
+
+
+await conn.sendMessage(from, { react: { text: '⬆', key: mek.key }})
+await conn.sendMessage(from, { audio: { url: data.result.audio }, mimetype: "audio/mpeg" }, { quoted: mek })  
+await conn.sendMessage(from, { react: { text: '✔', key: mek.key }})
+}catch(e){
+await conn.sendMessage(from, { react: { text: `❌`, key: mek.key } })
+console.log(e)
+reply(`Error !!\n\n*${e}*`)
+}
+})
