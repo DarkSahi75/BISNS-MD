@@ -1,49 +1,44 @@
-// ✅ REQUIRED PACKAGES
-const {
-  jidDecode
-} = require("@whiskeysockets/baileys");
-const cmd = require("../lib/command");
-// ✅ PLUGIN START
+const { cmd } = require('../command');
+
 cmd({
-  pattern: "kthis",
-  alias: ["remove"],
-  desc: "Tag කරන ලද userලා group එකෙන් ඉවත් කරයි.",
-  category: "group",
-  use: ".kick @user",
-  filename: __filename
-}, async (m, conn, { isAdmin, isBotAdmin }) => {
-
-  // ✅ GROUP ONLY CHECK
-  if (!m.isGroup) return m.reply("⚠️ මේ කමාන්ඩ් එක group chats වලට විතරයි!");
-
-  // ✅ ADMIN CHECK
-  if (!isAdmin) return m.reply("🚫 ඔයා group එකේ admin කෙනෙක් වෙන්න ඕනේ මේක භාවිතා කරන්න.");
-
-  // ✅ BOT ADMIN CHECK
-  if (!isBotAdmin) return m.reply("🤖 මම admin නෙමෙයි! මට user kick කරන්න බැහැ.");
-
-  // ✅ TAG CHECK
-  if (!m.mentionedJid || m.mentionedJid.length === 0) {
-    return m.reply("🔖 කරුණාකර kick කරන්න ඕන user එක tag කරන්න!\n\nตัวอย่าง: `.kick @user`");
-  }
-
-  // ✅ REMOVE MENTIONED USERS
-  let kicked = [];
-  for (let user of m.mentionedJid) {
-    if (user.endsWith("@g.us")) continue; // group tag වලින් ආවොත් skip
+    pattern: "kickd",
+    alias: ["remove", "ban"],
+    desc: "Remove a mentioned user from the group.",
+    category: "main",
+    filename: __filename
+},
+async (robin, mek, m, { from, isGroup, isAdmins, isBotAdmins, reply, quoted }) => {
     try {
-      await conn.groupParticipantsUpdate(m.chat, [user], "remove");
-      kicked.push(user.split("@")[0]);
+        // Check if the command is used in a group
+        if (!isGroup) return reply("⚠️ This command can only be used in a group!");
+
+        // Check if the user issuing the command is an admin
+        if (!isAdmins) return reply("⚠️ Only group admins can use this command!");
+
+        // Check if the bot is an admin
+        if (!isBotAdmins) return reply("⚠️ I need to be an admin to execute this command!");
+
+        // Ensure a user is mentioned
+        if (!quoted) return reply("⚠️ Please reply to the user's message you want to kick!");
+
+        // Get the target user to remove
+        const target = quoted.sender;
+
+        // Ensure the target is not another admin
+        const groupMetadata = await robin.groupMetadata(from);
+        const groupAdmins = groupMetadata.participants.filter(participant => participant.admin).map(admin => admin.id);
+
+        if (groupAdmins.includes(target)) {
+            return reply("⚠️ I cannot remove another admin from the group!");
+        }
+
+        // Kick the target user
+        await robin.groupParticipantsUpdate(from, [target], "remove");
+
+        // Confirm the action
+        return reply(`✅ Successfully removed: @${target.split('@')[0]}`);
     } catch (e) {
-      m.reply(`❌ ${user.split("@")[0]} එක kick කරන්න බැරිවුණා!`);
+        console.error("Kick Error:", e);
+        reply(`❌ Failed to remove the user. Error: ${e.message}`);
     }
-  }
-
-  // ✅ SUCCESS MESSAGE
-  if (kicked.length > 0) {
-    await m.reply(`✅ Successfully kicked:\n\n🦶 ${kicked.map(x => `@${x}`).join("\n🦶 ")}`, {
-      mentions: m.mentionedJid
-    });
-  }
-
 });
