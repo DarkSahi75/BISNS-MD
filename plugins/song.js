@@ -377,63 +377,32 @@ sections
 	
 return await robin.replyList(from, listMessage ,{ quoted : mek })
 
-	//button
-} if (config.MODE === 'button') {
-      const listData = {
-        title: "◎ Choose Format ◎",
-        sections: [{
-          title: "DINUWH MD OPTIONS",
-          rows: [
-            {
-              title: "[Normle Video📽️]",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilnewv ${data.url}`
-            },
-            {
-              title: "[Document Video📁]",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilnewd ${data.url}`
-            }
-            
-          ]
-        }]
-      };
+	if (config.MODE === 'button') {
+  const listData = {
+    title: "◎ Choose Format ◎",
+    sections: [{
+      title: "DINUWH MD OPTIONS",
+      rows: [
+        {
+          title: "[Normle Video📽️]",
+          description: "Download as audio\n〽️ade By Dinuwh Bbh",
+          rowId: `${prefix}devilnewv ${data.url}`
+        },
+        {
+          title: "[Document Video📁]",
+          description: "Download as document\n〽️ade By Dinuwh Bbh",
+          rowId: `${prefix}devilnewd ${data.url}`
+        }
+      ]
+    }]
+  };
 
-      return await robin.sendMessage(from, {
-        image: { url: data.thumbnail },
-        caption: cap,
-        footer: "> 〽️ade By Dinuwh Bbh",
-        buttons: [
-          {
-            buttonId: `${prefix}devilnewv ${data.url}`,
-            buttonText: { displayText: "`[Normal Video 📽️]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}devilnewd ${data.url}`,
-            buttonText: { displayText: "`[Document Video 📄]`" },
-            type: 1
-          },
-
-          {
-            buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify(listData),
-            },
-          },
-        ],
-        headerType: 1,
-        viewOnce: true,
-      }, { quoted: mek });
-    }
-  } catch (e) {
-    console.error(e);
-    reply(`❌ Error: ${e.message}`);
-  }
-});
+  await conn.sendMessage(m.chat, {
+    text: "👇 Select format below",
+    buttonText: "Click here",
+    sections: listData.sections
+  }, { quoted: mek });
+}
 //Voice j=%=%=%==%=%=%==%=%=%==%%%=%==%=%=
 cmd({
   pattern: "ytvoice",
