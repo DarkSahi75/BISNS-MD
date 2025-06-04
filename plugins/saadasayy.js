@@ -103,3 +103,31 @@ cmd({
     if (!q) return reply("TikTok music url එක දෙන්න.");
     await conn.sendMessage(m.from, { audio: { url: q }, mimetype: 'audio/mpeg', ptt: true }, { quoted: m });
 });
+
+
+    
+                  
+cmd({
+  pattern: "tikwm",
+  alias: ["tt", "ttdl", "tiktokdl"],
+  react: '🎩',
+  desc: "Download TikTok videos (Watermark only)",
+  category: "download",
+  use: '.tiktok <tiktok url>',
+  filename: __filename
+},
+async (conn, mek, m, { from, q, reply }) => {
+  try {
+    if (!q) return await reply('📌 TikTok වීඩියෝ link එකක් දෙන්න.');
+    if (!q.includes("tiktok")) return await reply("🔗 වලංගු TikTok URL එකක් දෙන්න.");
+
+    const res = await fetch(`https://darksadasyt-tiktokdl.vercel.app/api/tiktok?q=${q}`);
+    const data = await res.json();
+
+    await conn.sendMessage(from, { video: { url: data.watermark } }, { quoted: mek });
+
+  } catch (e) {
+    console.log(e);
+    return reply(`❌ Error\n\n${e.message}`);
+  }
+});       
