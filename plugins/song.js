@@ -328,7 +328,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 //videoinfosendjs=========================-====--%=%=%--%-%-%-$-#-#-#=##=$-$-#9#9=9.0=9.0-$839#=$-$738#=738.0$-%*$8##-%748$=$-%7$8$=$-%-
 
-cmd({
+/*cmd({
   pattern: "devilv",
   //alias: "song",
   react: "🎵",
@@ -402,7 +402,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
     buttonText: "Click here",
     sections: listData.sections
   }, { quoted: mek });
-}
+}*/
 //Voice j=%=%=%==%=%=%==%=%=%==%%%=%==%=%=
 cmd({
   pattern: "ytvoice",
