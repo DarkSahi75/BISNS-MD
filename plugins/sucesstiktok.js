@@ -9,13 +9,13 @@ cmd({
   react: '🔎',
   desc: "Get TikTok video details only.",
   category: "tools",
-  use: ".tiok <TikTok video URL>",
+  use: ".tiktest <TikTok video URL>",
   filename: __filename
 }, async (conn, mek, m, { from, reply, args }) => {
   try {
     const tiktokUrl = args[0];
     if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
-      return reply('```🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\nඋදාහරණයක්: .tiok https://www.tiktok.com/@user/video/123...```');
+      return reply('```🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\nඋදාහරණයක්: .tiktest https://www.tiktok.com/@user/video/123...```');
     }
 
     await conn.sendMessage(from, { react: { text: '🔍', key: m.key } });
@@ -24,7 +24,8 @@ cmd({
     const response = await axios.get(apiUrl);
     const { title, thumbnail, author, metrics } = response.data.result;
 
-   const detailsMsg = \`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
+    const detailsMsg = `
+乂 Ｄ𝚒𝚗𝚞𝚠𝚑 Чт Ｄｏｗｎ⟩⟩⟩
 ╭────────✦✧✦────────╯
 
 \`╭───────────────✿\` 
@@ -42,6 +43,7 @@ cmd({
 
 > 〽️ade By Dinuwh Bbh
 `;
+
     const listData = {
       title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
       sections: [{
