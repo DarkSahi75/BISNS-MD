@@ -9,13 +9,13 @@ const cheerio = require('cheerio'); // For HTML scraping from AN1
 const { JSDOM } = require('jsdom'); // For DOM parsing from HTML
 const axios = require("axios");
 
-const fetch = require("node-fetch");
+/*const fetch = require("node-fetch");
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson } = require('../lib/functions');
 const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
 const config = require("../settings");
 
-const prefix = config.PREFIX || ".";
+const prefix = config.PREFIX || ".";*/
 
 cmd({
   pattern: "2song",
