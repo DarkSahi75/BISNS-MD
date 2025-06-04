@@ -73,3 +73,33 @@ async (conn, mek, m, {
     console.log(e);
   }
 });
+
+cmd({
+    pattern: "ttdl1",
+    category: "download",
+    desc: "Download TikTok no watermark video",
+    use: '.ttdl1 <url>'
+}, async (conn, m, { q, reply }) => {
+    if (!q) return reply("TikTok video url එක දෙන්න.");
+    await conn.sendMessage(m.from, { video: { url: q }, caption: "🎩 No Watermark Video" }, { quoted: m });
+});
+
+cmd({
+    pattern: "ttdl2",
+    category: "download",
+    desc: "Download TikTok watermark video",
+    use: '.ttdl2 <url>'
+}, async (conn, m, { q, reply }) => {
+    if (!q) return reply("TikTok video url එක දෙන්න.");
+    await conn.sendMessage(m.from, { video: { url: q }, caption: "📼 Watermark Video" }, { quoted: m });
+});
+
+cmd({
+    pattern: "ttdl3",
+    category: "download",
+    desc: "Download TikTok mp3",
+    use: '.ttdl3 <url>'
+}, async (conn, m, { q, reply }) => {
+    if (!q) return reply("TikTok music url එක දෙන්න.");
+    await conn.sendMessage(m.from, { audio: { url: q }, mimetype: 'audio/mpeg', ptt: true }, { quoted: m });
+});
