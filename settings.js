@@ -20,5 +20,6 @@ MODE: process.env.MODE === undefined ? 'nonbutton' : process.env.MODE,
 STATUS_REPLY_MESSAGE: 'ʏᴏᴜʀ ꜱᴛᴀᴛᴜꜱ ᴊᴜꜱᴛ ɴᴏᴡ ꜱᴇᴇɴ ʙʏ Qᴜᴇᴇɴ ᴅᴇᴡᴍɪɴɪ ᴍᴅ',    
 ALIVE:  process.env.ALIVE  || '> QUEEN DEWMINI MD'  , 
 FOOTER: process.env.FOOTER || '> ∂ιηυω-χ вєтα✔️',
+Freedom: process.env.Freedom ||"120363370227470443@newsletter",
 DELETEMSGSENDTO : process.env.DELETEMSGSENDTO === undefined ? '' : process.env.DELETEMSGSENDTO        
 };
