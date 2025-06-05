@@ -65,46 +65,48 @@ cmd({
       return await conn.sendMessage(from, listMessage, { quoted: mek });
     }
 
-    if (config.MODE === 'button') {
+if (config.MODE === 'button') {
   const listSections = [
-  {
-    title: "🔊 AUDIO OPTIONS",
-    rows: [
-      {
-        title: "[Audio 🎧]",
-        description: "Download as audio\n〽️ade By Dinuwh Bbh",
-        rowId: `${prefix}ytaud ${url}`
-      },
-      {
-        title: "[Voice Note 💬]",
-        description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-        rowId: `${prefix}ytvoice ${url}`
-      }
-    ]
-  },
-  {
-    title: "📁 VIDEO & DOC OPTIONS",
-    rows: [
-      {
-        title: "[Document 📁]",
-        description: "Download as document\n〽️ade By Dinuwh Bbh",
-        rowId: `${prefix}ytdoc ${url}`
-      },
-      {
-        title: "[Video File 📽️]",
-        description: "Download as Video File\n〽️ade By Dinuwh Bbh",
-        rowId: `${prefix}devilv ${url}`
-      }
-    ]
-  }
-];
+    {
+      title: "🔊 AUDIO OPTIONS",
+      rows: [
+        {
+          title: "[Audio 🎧]",
+          description: "Download as audio\n〽️ade By Dinuwh Bbh",
+          rowId: `${prefix}ytaud ${url}`
+        },
+        {
+          title: "[Voice Note 💬]",
+          description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+          rowId: `${prefix}ytvoice ${url}`
+        }
+      ]
+    },
+    {
+      title: "📁 VIDEO & DOC OPTIONS",
+      rows: [
+        {
+          title: "[Document 📁]",
+          description: "Download as document\n〽️ade By Dinuwh Bbh",
+          rowId: `${prefix}ytdoc ${url}`
+        },
+        {
+          title: "[Video File 📽️]",
+          description: "Download as Video File\n〽️ade By Dinuwh Bbh",
+          rowId: `${prefix}devilv ${url}`
+        }
+      ]
+    }
+  ];
 
-const listMessage = {
-  text: cap,
-  footer: "〽️ade By Dinuwh Bbh",
-  title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
-  buttonText: "🔘 Select Format",
-  sections: listSections
-};
+  const listMessage = {
+    caption: cap,
+    image: { url: thumbnail },
+    footer: "〽️ade By Dinuwh Bbh",
+    title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+    buttonText: "🔘 Select Format",
+    sections: listSections
+  };
 
-await conn.sendMessage(from, listMessage, { quoted: mek });
+  await conn.sendMessage(from, listMessage, { quoted: mek });
+}
