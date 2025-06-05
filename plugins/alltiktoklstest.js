@@ -66,72 +66,45 @@ cmd({
     }
 
     if (config.MODE === 'button') {
-  const listMessage = {
-    title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
-    sections: [{
-      title: "DINUWH MD OPTIONS",
-      rows: [
-        {
-          title: "[Audio 🎧]",
-          description: "Download as audio\n〽️ade By Dinuwh Bbh",
-          rowId: `${prefix}ytaud ${url}`
-        },
-        {
-          title: "[Document 📁]",
-          description: "Download as document\n〽️ade By Dinuwh Bbh",
-          rowId: `${prefix}ytdoc ${url}`
-        },
-        {
-          title: "[Voice (ptt) 💡]",
-          description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-          rowId: `${prefix}ytvoice ${url}`
-        },
-        {
-          title: "[Video File 📽️]",
-          description: "Download as Video\n〽️ade By Dinuwh Bbh",
-          rowId: `${prefix}devilv ${url}`
-        }
-      ]
-    }]
-  };
-
-  // Image + Buttons
-  await conn.sendMessage(from, {
-    image: { url: thumbnail },
-    caption: cap,
-    footer: "> 〽️ade By Dinuwh Bbh",
-    templateButtons: [
+  const listSections = [
+  {
+    title: "🔊 AUDIO OPTIONS",
+    rows: [
       {
-        index: 1,
-        urlButton: {
-          displayText: "📺 Watch on YouTube",
-          url: url
-        }
+        title: "[Audio 🎧]",
+        description: "Download as audio\n〽️ade By Dinuwh Bbh",
+        rowId: `${prefix}ytaud ${url}`
       },
       {
-        index: 2,
-        callButton: {
-          displayText: "📞 Contact Owner",
-          phoneNumber: "94761344523" // Change to your number
-        }
-      },
-      {
-        index: 3,
-        quickReplyButton: {
-          displayText: "🔘 Choose Song Type",
-          id: ".listmenu"
-        }
+        title: "[Voice Note 💬]",
+        description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+        rowId: `${prefix}ytvoice ${url}`
       }
     ]
-  }, { quoted: mek });
-
-  // Handle fake .listmenu button trigger
-  if (body === '.listmenu') {
-    return await conn.sendMessage(from, {
-      text: listMessage.title,
-      footer: "〽️ade By Dinuwh Bbh",
-      buttonText: "🔘 Select Download Format",
-      sections: listMessage.sections
-    }, { quoted: mek });
+  },
+  {
+    title: "📁 VIDEO & DOC OPTIONS",
+    rows: [
+      {
+        title: "[Document 📁]",
+        description: "Download as document\n〽️ade By Dinuwh Bbh",
+        rowId: `${prefix}ytdoc ${url}`
+      },
+      {
+        title: "[Video File 📽️]",
+        description: "Download as Video File\n〽️ade By Dinuwh Bbh",
+        rowId: `${prefix}devilv ${url}`
+      }
+    ]
   }
-}
+];
+
+const listMessage = {
+  text: cap,
+  footer: "〽️ade By Dinuwh Bbh",
+  title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+  buttonText: "🔘 Select Format",
+  sections: listSections
+};
+
+await conn.sendMessage(from, listMessage, { quoted: mek });
