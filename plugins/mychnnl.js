@@ -317,9 +317,9 @@ cmd(
 
       const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
 
-\`❐. Song ➛\` :- *${result.title*
+\`❐. Song ➛\` :- *${result.title}*
 
-\`❐.Time ➛\` :-  *${data.timestamp*          \`❐.Uploaded ➛\` :- *${data.ago*
+\`❐.Time ➛\` :-  *${data.timestamp}*          \`❐.Uploaded ➛\` :- *${data.ago}*
 
 
 > ❝♬.itz Me Dinuw Bbh😽💗🍃❞
