@@ -94,7 +94,35 @@ cmd({
           ]
         }]
       };
-
+      
+const listData = {
+        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        sections: [{
+          title: "DINUWH MD OPTIONS",
+          rows: [
+            {
+              title: "[Audio 🎧]",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytaud ${url}`
+            },
+            {
+              title: "[Document 📁]",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${url}`
+            },
+            {
+              title: "[Voice (ptt) 💡]",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${url}`
+            },
+            {
+              title: "[Video File 📽️]",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${url}`
+            }
+          ]
+        }]
+      };
       return await conn.sendMessage(from, {
         image: { url: thumbnail },
         caption: cap,
