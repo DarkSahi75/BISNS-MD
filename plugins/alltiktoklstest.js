@@ -4,7 +4,7 @@ const config = require('../settings');
 const prefix = config.PREFIX || ".";
 
 cmd({
-  pattern: "tiktest",
+  pattern: "tiklist",
   alias: ["tlist", "ttlist"],
   react: '🎵',
   desc: "TikTok Song Downloader with List Only",
@@ -65,48 +65,58 @@ cmd({
       return await conn.sendMessage(from, listMessage, { quoted: mek });
     }
 
-if (config.MODE === 'button') {
-  const listSections = [
-    {
-      title: "🔊 AUDIO OPTIONS",
-      rows: [
-        {
-          title: "[Audio 🎧]",
-          description: "Download as audio\n〽️ade By Dinuwh Bbh",
-          rowId: `${prefix}ytaud ${url}`
-        },
-        {
-          title: "[Voice Note 💬]",
-          description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-          rowId: `${prefix}ytvoice ${url}`
-        }
-      ]
-    },
-    {
-      title: "📁 VIDEO & DOC OPTIONS",
-      rows: [
-        {
-          title: "[Document 📁]",
-          description: "Download as document\n〽️ade By Dinuwh Bbh",
-          rowId: `${prefix}ytdoc ${url}`
-        },
-        {
-          title: "[Video File 📽️]",
-          description: "Download as Video File\n〽️ade By Dinuwh Bbh",
-          rowId: `${prefix}devilv ${url}`
-        }
-      ]
+    if (config.MODE === 'button') {
+      const listData = {
+        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        sections: [{
+          title: "DINUWH MD OPTIONS",
+          rows: [
+            {
+              title: "[Audio 🎧]",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytaud ${url}`
+            },
+            {
+              title: "[Document 📁]",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${url}`
+            },
+            {
+              title: "[Voice (ptt) 💡]",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${url}`
+            },
+            {
+              title: "[Video File 📽️]",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${url}`
+            }
+          ]
+        }]
+      };
+
+      return await conn.sendMessage(from, {
+        image: { url: thumbnail },
+        caption: cap,
+        footer: "> 〽️ade By Dinuwh Bbh",
+        buttons: [
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
+          }
+        ],
+        headerType: 1,
+        viewOnce: true,
+      }, { quoted: mek });
     }
-  ];
 
-  const listMessage = {
-    caption: cap,
-    image: { url: thumbnail },
-    footer: "〽️ade By Dinuwh Bbh",
-    title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
-    buttonText: "🔘 Select Format",
-    sections: listSections
-  };
-
-  await conn.sendMessage(from, listMessage, { quoted: mek });
-}
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
