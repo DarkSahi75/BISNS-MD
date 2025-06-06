@@ -361,3 +361,105 @@ _*✧ලස්සන හාට් ටිකක් ඕනී ❤️😽☘️✧*
     }
   }
 );
+
+
+//=3=3.0=3.03=3.033=3.0333=3.03333=3.033333=3.0333333=3.03333333=3.03333333=3.03333333=3.03333333
+
+
+
+
+let autoSenders = {};
+
+cmd(
+  {
+    pattern: "autosongd",
+    desc: "Send YouTube MP3 to a specific JID every 30 mins",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q.includes("&")) return reply("*📌 උදාහරණය: .autosong song name & 9476xxxxxxx@s.whatsapp.net*");
+
+      const [song, jid] = q.split("&").map(i => i.trim());
+
+      if (!song || !jid) return reply("*❌ ගීත නම හෝ JID එක අඩුයි...!*");
+
+      if (autoSenders[jid]) {
+        return reply("*⏳ මේ JID එකට දැනටමත් auto song sender එකක් run වෙනවා...*");
+      }
+
+      reply(`✅ *"${song}"* auto-send එක JID ➤ *${jid}* වෙත ක්‍රියාත්මකයි. සෑම විනාඩි 30කටත් එවෙනවා.`);
+
+      autoSenders[jid] = setInterval(async () => {
+        try {
+          const search = await yts(song);
+          if (!search.videos.length) return;
+
+          const data = search.videos[0];
+          const ytUrl = data.url;
+
+          const api = `https://yt-five-tau.vercel.app/download?q=${ytUrl}&format=mp3`;
+          const { data: apiRes } = await axios.get(api);
+
+          if (!apiRes?.status || !apiRes.result?.download) return;
+
+          const result = apiRes.result;
+
+          const caption = `*🎧 Auto Song From Dinuw:*
+
+\`📝 Title:\` ${result.title}
+\`🕒 Duration:\` ${data.timestamp}
+\`📅 Uploaded:\` ${data.ago}
+
+_🟢 Powered By: Dinuwh MD Bot_`;
+
+          await robin.sendMessage(
+            jid,
+            { image: { url: result.thumbnail }, caption },
+            { quoted: mek }
+          );
+
+          await robin.sendMessage(
+            jid,
+            {
+              audio: { url: result.download },
+              mimetype: "audio/mpeg",
+              ptt: true,
+            },
+            { quoted: mek }
+          );
+        } catch (e) {
+          console.error("[AutoSong Error]", e);
+        }
+      }, 1800000); // 30 mins
+    } catch (e) {
+      console.error(e);
+      reply("*🥺 වැරදියක් දැනගන්න ලැබුනා!*");
+    }
+  }
+);
+
+// Extra command to stop autosong
+cmd(
+  {
+    pattern: "stopautosong",
+    desc: "Stop AutoSong by JID",
+    category: "download",
+    react: "🛑",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    if (!q) return reply("*📌 උදා: .stopautosong 9476xxxxxxx@s.whatsapp.net*");
+
+    const jid = q.trim();
+    if (autoSenders[jid]) {
+      clearInterval(autoSenders[jid]);
+      delete autoSenders[jid];
+      reply(`✅ AutoSong sender එක *${jid}* සඳහා නවතා දමා ඇත.`);
+    } else {
+      reply("❌ මේ JID එකට කිසිම AutoSong sender එකක් ක්‍රියාත්මක නොවෙයි.");
+    }
+  }
+);
