@@ -367,30 +367,29 @@ _*✧ලස්සන හාට් ටිකක් ඕනී ❤️😽☘️✧*
 
 
 
-
 let autoSenders = {};
 
 cmd(
   {
     pattern: "autosongd",
-    desc: "Send YouTube MP3 to a specific JID every 30 mins",
+    desc: "Send YouTube MP3 to a specific JID every 30 seconds",
     category: "download",
     react: "🎧",
     filename: __filename,
   },
   async (robin, mek, m, { q, reply }) => {
     try {
-      if (!q.includes("&")) return reply("*📌 උදාහරණය: .autosong song name & 9476xxxxxxx@s.whatsapp.net*");
+      if (!q.includes("&")) return reply("*📌 උදාහරණය: .autosongd song name & 9476xxxxxxx@s.whatsapp.net*");
 
       const [song, jid] = q.split("&").map(i => i.trim());
 
       if (!song || !jid) return reply("*❌ ගීත නම හෝ JID එක අඩුයි...!*");
 
       if (autoSenders[jid]) {
-        return reply("*⏳ මේ JID එකට දැනටමත් auto song sender එකක් run වෙනවා...*");
+        return reply("*⏳ මේ JID එකට දැනටමත් auto song sender එකක් ක්‍රියාත්මකයි...*");
       }
 
-      reply(`✅ *"${song}"* auto-send එක JID ➤ *${jid}* වෙත ක්‍රියාත්මකයි. සෑම විනාඩි 30කටත් එවෙනවා.`);
+      reply(`✅ *"${song}"* auto-send ක්‍රමය *${jid}* වෙත ක්‍රියාත්මකයි. සෑම තත්පර 30කටත් එවෙනවා.`);
 
       autoSenders[jid] = setInterval(async () => {
         try {
@@ -433,7 +432,7 @@ _🟢 Powered By: Dinuwh MD Bot_`;
         } catch (e) {
           console.error("[AutoSong Error]", e);
         }
-      }, 18); // 30 mins
+      }, 30 * 1000); // ✅ 30 seconds
     } catch (e) {
       console.error(e);
       reply("*🥺 වැරදියක් දැනගන්න ලැබුනා!*");
@@ -441,7 +440,7 @@ _🟢 Powered By: Dinuwh MD Bot_`;
   }
 );
 
-// Extra command to stop autosong
+// ❌ Stop command
 cmd(
   {
     pattern: "stopautosong",
@@ -463,3 +462,4 @@ cmd(
     }
   }
 );
+  
