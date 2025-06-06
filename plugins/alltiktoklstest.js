@@ -42,7 +42,7 @@ cmd({
 > 〽️ade By Dinuwh Bbh
 `;
 
-    if (config.MODE === 'nonbutton') {
+    if (config.MODE === 'button') {
       const sections = [
         {
           title: "",
@@ -65,7 +65,7 @@ cmd({
       return await conn.sendMessage(from, listMessage, { quoted: mek });
     }
 
-    if (config.MODE === 'button') {
+    /*if (config.MODE === 'nonbutton') {
   // පළවෙනි list message (Audio + Document)
   const listData1 = {
     title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 1 ◎",
@@ -102,7 +102,7 @@ cmd({
     buttonText: "📁 Choose Voice/Video",
     listType: 1,
     sections: listData2.sections,
-  }, { quoted: mek });
+  }, { quoted: mek });*/
 
 } catch (e) {
   console.error(e);
