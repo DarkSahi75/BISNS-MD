@@ -4,7 +4,7 @@ const config = require('../settings');
 const prefix = config.PREFIX || ".";
 
 cmd({
-  pattern: "tiklist",
+  pattern: "tikend",
   alias: ["tlist", "ttlist"],
   react: '🎵',
   desc: "TikTok Song Downloader with List Only",
