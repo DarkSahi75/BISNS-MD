@@ -433,7 +433,7 @@ _🟢 Powered By: Dinuwh MD Bot_`;
         } catch (e) {
           console.error("[AutoSong Error]", e);
         }
-      }, 1800000); // 30 mins
+      }, 18); // 30 mins
     } catch (e) {
       console.error(e);
       reply("*🥺 වැරදියක් දැනගන්න ලැබුනා!*");
