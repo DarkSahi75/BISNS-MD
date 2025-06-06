@@ -39,3 +39,23 @@ reply('*Error !!*')
 l(e)
 }
 })
+
+cmd({
+    pattern: "anti_dell",
+    react: "🗣️",
+    desc: "To Activate auto news",
+    category: "main",
+    use: '.setprefix .',
+    filename: __filename
+},
+async(conn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+try{
+if(!isOwner) return await reply(BOTOW)
+    if ( config.PREFIX == q) return reply(`Succesfully Anti Delete Change To This Section`)
+  await input_set('ANTI_DELETE' , q)
+  return reply(`Anti Delete Mode was changed`)
+} catch (e) {
+reply('*Error !!*')
+l(e)
+}
+})
