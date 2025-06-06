@@ -14,7 +14,7 @@ cmd(
     react: "🎧",
     filename: __filename,
   },
-  async (robin, mek, m, { q, reply }) => {
+  async (robin, mek, m, { q, reply }) => { 
     try {
       if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
 
