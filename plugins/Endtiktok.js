@@ -20,8 +20,27 @@ cmd({
 
     const api = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(url)}`;
     const res = await axios.get(api);
-    const { title, thumbnail, music, play_count, download_count, comment_count, share_count, digg_count, region, video_url, nickname, unique_id } = res.data.result;
-const cap = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
+
+    if (!res.data || !res.data.result) return reply("🥲 TikTok API එකෙන් ප්‍රතිචාරයක් ලැබුණේ නැහැ.");
+
+    const {
+      title = "Unknown Title",
+      thumbnail,
+      music,
+      play_count = 0,
+      download_count = 0,
+      comment_count = 0,
+      share_count = 0,
+      digg_count = 0,
+      region = "N/A",
+      video_url = url,
+      nickname = "Unknown",
+      unique_id = "N/A"
+    } = res.data.result;
+
+    if (!music) return reply("🎵 ගීතය ලබාගත නොහැක. කරුණාකර වෙනත් TikTok link එකක් වගේ දෙන්න.");
+
+    const cap = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
 \`╭────────✦✧✦────────╯\`
 
 \`╭───────────────✿\`
@@ -42,7 +61,9 @@ const cap = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
 
 〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
 
-    if (config.MODE === 'nonbutton') {
+    const mode = config.MODE || 'button';
+
+    if (mode === 'nonbutton') {
       const sections = [
         {
           title: "",
@@ -65,7 +86,7 @@ const cap = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
       return await conn.sendMessage(from, listMessage, { quoted: mek });
     }
 
-    if (config.MODE === 'button') {
+    if (mode === 'button') {
       const listData = {
         title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
         sections: [{
