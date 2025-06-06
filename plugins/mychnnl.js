@@ -366,37 +366,37 @@ _*✧ලස්සන හාට් ටිකක් ඕනී ❤️😽☘️✧*
 //=3=3.0=3.03=3.033=3.0333=3.03333=3.033333=3.0333333=3.03333333=3.03333333=3.03333333=3.03333333
 
 
-
 let autoSenders = {};
+const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 cmd(
   {
     pattern: "autosongd",
-    desc: "Send YouTube MP3 to a specific JID every 30 seconds",
+    desc: "Send random YouTube MP3 to a specific JID every 30 seconds based on keyword",
     category: "download",
     react: "🎧",
     filename: __filename,
   },
   async (robin, mek, m, { q, reply }) => {
     try {
-      if (!q.includes("&")) return reply("*📌 උදාහරණය: .autosongd song name & 9476xxxxxxx@s.whatsapp.net*");
+      if (!q.includes("&")) return reply("*📌 උදාහරණය: .autosongd boot song & 9476xxxxxxx@s.whatsapp.net*");
 
-      const [song, jid] = q.split("&").map(i => i.trim());
+      const [keyword, jid] = q.split("&").map(i => i.trim());
 
-      if (!song || !jid) return reply("*❌ ගීත නම හෝ JID එක අඩුයි...!*");
+      if (!keyword || !jid) return reply("*❌ ගීත keyword එක හෝ JID එක අඩුයි...!*");
 
       if (autoSenders[jid]) {
         return reply("*⏳ මේ JID එකට දැනටමත් auto song sender එකක් ක්‍රියාත්මකයි...*");
       }
 
-      reply(`✅ *"${song}"* auto-send ක්‍රමය *${jid}* වෙත ක්‍රියාත්මකයි. සෑම තත්පර 30කටත් එවෙනවා.`);
+      reply(`✅ *"${keyword}"* keyword එකෙන් ගීත රැඳවීම් auto-send ක්‍රමය *${jid}* වෙත ක්‍රියාත්මකයි. සෑම තත්පර 30කට වරක් හුම් random song එකක් යවෙයි.`);
 
       autoSenders[jid] = setInterval(async () => {
         try {
-          const search = await yts(song);
+          const search = await yts(keyword);
           if (!search.videos.length) return;
 
-          const data = search.videos[0];
+          const data = getRandom(search.videos);
           const ytUrl = data.url;
 
           const api = `https://yt-five-tau.vercel.app/download?q=${ytUrl}&format=mp3`;
@@ -406,7 +406,7 @@ cmd(
 
           const result = apiRes.result;
 
-          const caption = `*🎧 Auto Song From Dinuw:*
+          const caption = `*🎧 Auto Song From Dinuwh:*
 
 \`📝 Title:\` ${result.title}
 \`🕒 Duration:\` ${data.timestamp}
@@ -432,7 +432,7 @@ _🟢 Powered By: Dinuwh MD Bot_`;
         } catch (e) {
           console.error("[AutoSong Error]", e);
         }
-      }, 30 * 1000); // ✅ 30 seconds
+      }, 30 * 1000); // 30 seconds
     } catch (e) {
       console.error(e);
       reply("*🥺 වැරදියක් දැනගන්න ලැබුනා!*");
@@ -440,7 +440,7 @@ _🟢 Powered By: Dinuwh MD Bot_`;
   }
 );
 
-// ❌ Stop command
+// Stop command
 cmd(
   {
     pattern: "stopautosong",
@@ -462,4 +462,3 @@ cmd(
     }
   }
 );
-  
