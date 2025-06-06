@@ -4,7 +4,7 @@ const config = require('../settings');
 const prefix = config.PREFIX || ".";
 
 cmd({
-  pattern: "tikend",
+  pattern: "tiklist",
   alias: ["tlist", "ttlist"],
   react: '🎵',
   desc: "TikTok Song Downloader with List Only",
@@ -21,8 +21,7 @@ cmd({
     const api = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(url)}`;
     const res = await axios.get(api);
     const { title, thumbnail, music, play_count, download_count, comment_count, share_count, digg_count, region, video_url, nickname, unique_id } = res.data.result;
-
-    const cap = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
+const cap = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
 \`╭────────✦✧✦────────╯\`
 
 \`╭───────────────✿\`
