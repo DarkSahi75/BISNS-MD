@@ -307,58 +307,90 @@ cmd({
       }, { quoted: mek });
     }
 
-    if (config.MODE === 'button') {
-      const listData = {
-        title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
-        sections: [{
-          title: "DINUWH-MD | TikTok Video Downloader",
-          rows: [
-            {
-              title: "🎥 Video - No Watermark",
-              description: "Download as normal video",
-              id: `${prefix}devilv ${q}`
-            },
-            {
-              title: "🎧 Audio",
-              description: "Download as audio",
-              id: `${prefix}ytaud ${q}`
-            },
-            {
-              title: "📄 Document",
-              description: "Download as document",
-              id: `${prefix}ytdoc ${q}`
-            },
-            {
-              title: "🎤 Voice Note",
-              description: "Download as voice note",
-              id: `${prefix}ytvoice ${q}`
-            }
-          ]
-        }]
-      };
+if (config.MODE === 'button') {
+  const listData = {
+    title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+    sections: [{
+      title: "ᴅɪɴᴜᴡʜ-ᴍᴅ || ᴛɪᴋᴛᴏᴋ ᴠɪᴅᴇᴏɴ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ⇲",
+      rows: [
+        {
+          title: "NonWaterMark Norml Video",
+          description: "Download as audio\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikaud ${q}`
+        },
+        {
+          title: "NonWaterMark Document Video",
+          description: "Download as document\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}ytdoc ${q}`
+        },
+        {
+          title: "WithWaterMark Normal Video",
+          description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}ytvoice ${q}`
+        },
+        {
+          title: "WithWaterMark Document Video",
+          description: "Download as Video\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}devilv ${q}`
+        }
+      ]
+    }]
+  };
 
-      return await conn.sendMessage(from, {
-        image: { url: thumbnail },
-        caption: detailsMsg,
-        footer: "> 〽️ade By Dinuwh Bbh",
-        buttons: [
-          {
-            buttonId: "btn1",
-            buttonText: { displayText: "🔘 Download Options" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify(listData)
-            }
-          }
-        ],
-        headerType: 1,
-        viewOnce: true
-      }, { quoted: mek });
-    }
+  const listData2 = {
+    title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+    sections: [{
+      title: "DINUWH MD OPTIONS",
+      rows: [
+        {
+          title: "[A2 🎧]",
+          description: "Download as audio\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}ytaud ${q}`
+        },
+        {
+          title: "[D2📁]",
+          description: "Download as document\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}ytdoc ${q}`
+        },
+        {
+          title: "[V2 💡]",
+          description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}ytvoice ${q}`
+        },
+        {
+          title: "[V2📽️]",
+          description: "Download as Video\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}devilv ${q}`
+        }
+      ]
+    }]
+  };
 
-  } catch (e) {
-    console.error(e);
-    return reply(`❌ Error: ${e.message || e}`);
-  }
-});
+  return await conn.sendMessage(from, {
+    image: { url: thumbnail },
+    caption: detailsMsg,
+    footer: "> 〽️ade By Dinuwh Bbh",
+    buttons: [
+      {
+        buttonId: "action1",
+        buttonText: { displayText: "🔘 Choose Video Type" },
+        type: 4,
+        nativeFlowInfo: {
+          name: "single_select",
+          paramsJson: JSON.stringify(listData),
+        },
+      },
+      {
+        buttonId: "action2",
+        buttonText: { displayText: "🔘 Choose Audio Type" },
+        type: 4,
+        nativeFlowInfo: {
+          name: "single_select",
+          paramsJson: JSON.stringify(listData2),
+        },
+      }
+    ],
+    headerType: 1,
+    viewOnce: true,
+  }, { quoted: mek });
+}
