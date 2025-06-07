@@ -74,99 +74,65 @@ cmd({
       };
       return await robin.replyList(from, listMessage, { quoted: mek });
     }
+if (config.MODE === 'button') {
+  const listData = {
+    title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+    sections: [{
+      title: "DINUWH MD OPTIONS",
+      rows: [
+        {
+          title: "[Audio 🎧]",
+          description: "Download as audio\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}ytaud ${data.url}`
+        },
+        {
+          title: "[Document 📁]",
+          description: "Download as document\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}ytdoc ${data.url}`
+        },
+        {
+          title: "[Voice (ptt) 💡]",
+          description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}ytvoice ${data.url}`
+        },
+        {
+          title: "[Video File 📽️]",
+          description: "Download as Video\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}devilv ${data.url}`
+        }
+      ]
+    }]
+  };
 
-    if (config.MODE === 'button') {
-      const listData = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
-        sections: [{
-          title: "DINUWH MD OPTIONS",
-          rows: [
-            {
-              title: "[Audio 🎧]",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
-            },
-            {
-              title: "[Document 📁]",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
-            },
-            {
-              title: "[Voice (ptt) 💡]",
-              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
-            },
-            {
-              title: "[Video File 📽️]",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
-            }
-          ]
-        }]
-      };
-
-      return await robin.sendMessage(from, {
-        image: { url: data.thumbnail },
-        caption: cap,
-        footer: "> 〽️ade By Dinuwh Bbh",
-        buttons: [
-          {
-            buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify(listData),
-            },
-          },
-          const listData = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
-        sections: [{
-          title: "DINUWH MD OPTIONS",
-          rows: [
-            {
-              title: "[Audio 🎧]",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
-            },
-            {
-              title: "[Document 📁]",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
-            },
-            {
-              title: "[Voice (ptt) 💡]",
-              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
-            },
-            {
-              title: "[Video File 📽️]",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
-            }
-          ]
-        }]
-      };
-
-      return await robin.sendMessage(from, {
-        image: { url: data.thumbnail },
-        caption: cap,
-        footer: "> 〽️ade By Dinuwh Bbh",
-        buttons: [
-          {
-            buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify(listData),
-            },
-          }
-        ],
-        headerType: 1,
-        viewOnce: true,
-      }, { quoted: mek });
-    }
+  return await robin.sendMessage(from, {
+    image: { url: data.thumbnail },
+    caption: cap,
+    footer: "> 〽️ade By Dinuwh Bbh",
+    buttons: [
+      {
+        buttonId: `${prefix}ytaud ${data.url}`,
+        buttonText: { displayText: "🎧 Audio" },
+        type: 1
+      },
+      {
+        buttonId: `${prefix}ytdoc ${data.url}`,
+        buttonText: { displayText: "📄 Document" },
+        type: 1
+      },
+      {
+        buttonId: "list_format_button",
+        buttonText: { displayText: "🔘 More Formats" },
+        type: 4,
+        nativeFlowInfo: {
+          name: "single_select",
+          paramsJson: JSON.stringify(listData)
+        }
+      }
+    ],
+    headerType: 4,
+    viewOnce: true,
+  }, { quoted: mek });
+}
 
   } catch (e) {
     console.error(e);
