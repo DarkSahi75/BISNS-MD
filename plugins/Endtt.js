@@ -307,35 +307,42 @@ cmd({
       }, { quoted: mek });
     }
 
-  if (config.MODE === 'button') {
-      const listData = {
-        title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
-        sections: [{
-          title: "TikTok Video File Downloader 🔎",
-          rows: [
-            {
-              title: "WhithWaterMark Normal Video 📹",
-              description: "Download as Video || Normal || With WaterMark\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikwm ${q}`
-            },
-            {
-              title: "WhithWaterMark Document Video 📃",
-              description: "Download as Video || Document || With WaterMark\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikwmdoc ${q}`
-            },
-            {
-              title: "WithOut WaterMark Normal Video 📹",
-              description: "Download as Video || Normal || Without WaterMark\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}tiknowm ${q}`
-            },
-            {
-              title: "WithOut WaterMark Document Video 📃",
-              description: "Download as Video||Document || With WaterMark\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}tiknowmdoc ${q}`
-            }
-          ]
-        }]
-      };
+if (config.MODE === 'button') {
+  const listData = {
+    title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
+    sections: [
+      {
+        title: "🌀 With Watermark Video Options",
+        rows: [
+          {
+            title: "Normal Video 📹",
+            description: "Download as Video || Normal || With WaterMark\n〽️ade By Dinuwh Bbh",
+            id: `${prefix}tikwm ${q}`
+          },
+          {
+            title: "Document Video 📃",
+            description: "Download as Video || Document || With WaterMark\n〽️ade By Dinuwh Bbh",
+            id: `${prefix}tikwmdoc ${q}`
+          }
+        ]
+      },
+      {
+        title: "🧊 No Watermark Video Options",
+        rows: [
+          {
+            title: "Normal Video 📹",
+            description: "Download as Video || Normal || Without WaterMark\n〽️ade By Dinuwh Bbh",
+            id: `${prefix}tiknowm ${q}`
+          },
+          {
+            title: "Document Video 📃",
+            description: "Download as Video || Document || Without WaterMark\n〽️ade By Dinuwh Bbh",
+            id: `${prefix}tiknowmdoc ${q}`
+          }
+        ]
+      }
+    ]
+  };
 
 const listData2 = {
         title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
