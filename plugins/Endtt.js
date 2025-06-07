@@ -307,7 +307,7 @@ cmd({
       }, { quoted: mek });
     }
 
-if (config.MODE === 'button') {
+      if (config.MODE === 'button') {
   const listData = {
     title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
     sections: [{
@@ -315,23 +315,23 @@ if (config.MODE === 'button') {
       rows: [
         {
           title: "NonWaterMark Norml Video",
-          description: "Download as audio\n〽️ade By Dinuwh Bbh",
+          description: "Download as normal video\n〽️ade By Dinuwh Bbh",
           id: `${prefix}tikaud ${q}`
         },
         {
           title: "NonWaterMark Document Video",
           description: "Download as document\n〽️ade By Dinuwh Bbh",
-          id: `${prefix}ytdoc ${q}`
+          id: `${prefix}tikdoc ${q}`
         },
         {
           title: "WithWaterMark Normal Video",
-          description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-          id: `${prefix}ytvoice ${q}`
+          description: "Download with watermark\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikwm ${q}`
         },
         {
           title: "WithWaterMark Document Video",
-          description: "Download as Video\n〽️ade By Dinuwh Bbh",
-          id: `${prefix}devilv ${q}`
+          description: "Document + WM\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikdocwm ${q}`
         }
       ]
     }]
@@ -344,23 +344,18 @@ if (config.MODE === 'button') {
       rows: [
         {
           title: "[A2 🎧]",
-          description: "Download as audio\n〽️ade By Dinuwh Bbh",
-          id: `${prefix}ytaud ${q}`
+          description: "Download as Audio\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikmp3 ${q}`
         },
         {
-          title: "[D2📁]",
-          description: "Download as document\n〽️ade By Dinuwh Bbh",
-          id: `${prefix}ytdoc ${q}`
+          title: "[D2 📁]",
+          description: "Download Audio as Document\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikmp3doc ${q}`
         },
         {
-          title: "[V2 💡]",
-          description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-          id: `${prefix}ytvoice ${q}`
-        },
-        {
-          title: "[V2📽️]",
-          description: "Download as Video\n〽️ade By Dinuwh Bbh",
-          id: `${prefix}devilv ${q}`
+          title: "[VN 🎤]",
+          description: "Send as Voice Note\n〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikvn ${q}`
         }
       ]
     }]
@@ -369,10 +364,10 @@ if (config.MODE === 'button') {
   return await conn.sendMessage(from, {
     image: { url: thumbnail },
     caption: detailsMsg,
-    footer: "> 〽️ade By Dinuwh Bbh",
+    footer: "〽️ade By Dinuwh Bbh",
     buttons: [
       {
-        buttonId: "action1",
+        buttonId: `${prefix}tiktokmenu ${q}`,
         buttonText: { displayText: "🔘 Choose Video Type" },
         type: 4,
         nativeFlowInfo: {
@@ -381,7 +376,7 @@ if (config.MODE === 'button') {
         },
       },
       {
-        buttonId: "action2",
+        buttonId: `${prefix}tiktokaudio ${q}`,
         buttonText: { displayText: "🔘 Choose Audio Type" },
         type: 4,
         nativeFlowInfo: {
@@ -393,4 +388,4 @@ if (config.MODE === 'button') {
     headerType: 1,
     viewOnce: true,
   }, { quoted: mek });
-}
+            }
