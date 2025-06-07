@@ -15,28 +15,28 @@ cmd({
   try {
     const tiktokUrl = args[0];
     if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
-      return reply('```🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\nඋදා: .tend https://www.tiktok.com/@user/video/123...```');
+      return reply('```🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\nඋදාහරණයක්: .tend https://www.tiktok.com/@user/video/123...```');
     }
 
     await conn.sendMessage(from, { react: { text: '🔍', key: m.key } });
 
     const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
     const response = await axios.get(apiUrl);
+    const { title, thumbnail, video_url, author = {}, metrics = {} } = response.data.result;
 
     const {
-      title,
-      thumbnail,
-      author: { nickname, unique_id },
-      video_url,
-      metrics: {
-        download_count,
-        comment_count,
-        share_count,
-        play_count,
-        digg_count,
-        region
-      }
-    } = response.data.result;
+      download_count = 'N/A',
+      comment_count = 'N/A',
+      share_count = 'N/A',
+      region = 'N/A',
+      play_count = 'N/A',
+      digg_count = 'N/A',
+    } = metrics;
+
+    const {
+      nickname = 'N/A',
+      unique_id = 'N/A'
+    } = author;
 
     const detailsMsg = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
 \`╭────────✦✧✦────────╯\`
@@ -59,7 +59,6 @@ cmd({
 
 〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
 
-    // ❎ Non-button mode
     if (config.MODE === 'nonbutton') {
       const sections = [
         {
@@ -68,7 +67,7 @@ cmd({
             { title: "1", rowId: `${prefix}ytaud ${tiktokUrl}`, description: '`❲ Audio File ❳` 🎧' },
             { title: "2", rowId: `${prefix}ytdoc ${tiktokUrl}`, description: '`❲ Document File ❳` 📄' },
             { title: "3", rowId: `${prefix}ytvoice ${tiktokUrl}`, description: '`❲ Voice Note (ptt) ❳` 🎤' },
-            { title: "4", rowId: `${prefix}devilv ${tiktokUrl}`, description: '`❲ Video File (mp4) ❳` 📽️' }
+            { title: "4", rowId: `${prefix}devilv ${tiktokUrl}`, description: '`❲ Video File (mp4) ❳` 📽️' },
           ]
         }
       ];
@@ -81,10 +80,8 @@ cmd({
         sections
       };
       return await conn.replyList(from, listMessage, { quoted: mek });
-    }
 
-    // ✅ Button mode
-    if (config.MODE === 'button') {
+    } else if (config.MODE === 'button') {
       const listData = {
         title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
         sections: [{
