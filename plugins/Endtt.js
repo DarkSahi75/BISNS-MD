@@ -283,7 +283,7 @@ cmd({
 
 〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
 
-    if (config.MODE === 'nonbutton') {
+      if (config.MODE === 'nonbutton') {
       const sections = [
         {
           title: "",
@@ -305,29 +305,70 @@ cmd({
       };
       return await conn.replyList(from, listMessage, { quoted: mek });
 
-    } else if (config.MODE === 'button') {
+  if (config.MODE === 'button') {
       const listData = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+        sections: [{
+          title: "ᴅɪɴᴜᴡʜ-ᴍᴅ || ᴛɪᴋᴛᴏᴋ ᴠɪᴅᴇᴏɴ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ⇲",
+          rows: [
+            {
+              title: "NonWaterMark Norml Video",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}tikaud ${data.url}`
+            },
+            {
+              title: "NonWaterMark Document Video",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${data.url}`
+            },
+            {
+              title: "WithWaterMark Normal Video",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${data.url}`
+            },
+            {
+              title: "WithWaterMark Document Video",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
+          ]
+        }]
+      };
+
+const listData2 = {
+        title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
         sections: [{
           title: "DINUWH MD OPTIONS",
           rows: [
-            { title: "[Audio 🎧]", description: "Download as audio\n〽️ade By Dinuwh Bbh", id: `${prefix}ytaud ${q}` },
-            { title: "[Document 📁]", description: "Download as document\n〽️ade By Dinuwh Bbh", id: `${prefix}ytdoc ${q}` },
-            { title: "[Voice (ptt) 💡]", description: "Download as Voice Note\n〽️ade By Dinuwh Bbh", id: `${prefix}ytvoice ${q}` },
-            { title: "[Video File 📽️]", description: "Download as Video\n〽️ade By Dinuwh Bbh", id: `${prefix}devilv ${q}` },
+            {
+              title: "[A2 🎧]",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytaud ${data.url}`
+            },
+            {
+              title: "[D2📁]",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${data.url}`
+            },
+            {
+              title: "[V2 💡]",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${data.url}`
+            },
+            {
+              title: "[V2📽️]",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
           ]
         }]
       };
 
       return await conn.sendMessage(from, {
-        image: { url: thumbnail },
-        caption: detailsMsg,
+        image: { url: data.thumbnail },
+        caption: cap,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
-          { buttonId: `${prefix}ytvoice ${q}`, buttonText: { displayText: "`[Voice Note(Ptt) 🎧]`" }, type: 1 },
-          { buttonId: `${prefix}ytaud ${q}`, buttonText: { displayText: "`[Audio Type 🎧]`" }, type: 1 },
-          { buttonId: `${prefix}ytdoc ${q}`, buttonText: { displayText: "`[Document 📁]`" }, type: 1 },
-          { buttonId: `${prefix}devilv ${q}`, buttonText: { displayText: "`[Video 📽️]`" }, type: 1 },
           {
             buttonId: "action",
             buttonText: { displayText: "🔘 Choose Song Type" },
@@ -337,6 +378,15 @@ cmd({
               paramsJson: JSON.stringify(listData),
             },
           },
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData2),
+            },
+          }
         ],
         headerType: 1,
         viewOnce: true,
@@ -345,6 +395,6 @@ cmd({
 
   } catch (e) {
     console.error(e);
-    reply(`❌ Error: ${e.message || 'TikTok video data grab එකේ Error එකක්! Retry කරන්න.'}`);
+    reply(`❌ Error: ${e.message}`);
   }
 });
