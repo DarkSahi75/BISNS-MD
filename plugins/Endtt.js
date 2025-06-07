@@ -368,7 +368,7 @@ const listData2 = {
 
       return await conn.sendMessage(from, {
         image: { url:thumbnail },
-        caption: cap,
+        caption: detailsMsg,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
           {
