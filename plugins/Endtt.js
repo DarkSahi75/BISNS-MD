@@ -309,7 +309,7 @@ cmd({
 
   if (config.MODE === 'button') {
       const listData = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
         sections: [{
           title: "DINUWH MD OPTIONS",
           rows: [
@@ -338,30 +338,26 @@ cmd({
       };
 
 const listData2 = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
         sections: [{
           title: "DINUWH MD OPTIONS",
           rows: [
             {
               title: "[Audio 🎧]",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${q}`
+              id: `${prefix}tikaud ${q}`
             },
             {
               title: "[Document 📁]",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${q}`
+              id: `${prefix}tikauddoc ${q}`
             },
             {
               title: "[Voice (ptt) 💡]",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${q}`
-            },
-            {
-              title: "[Video File 📽️]",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${q}`
+              id: `${prefix}tikaudptt ${q}`
             }
+            
           ]
         }]
       };
