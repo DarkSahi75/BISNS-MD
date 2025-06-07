@@ -13,14 +13,14 @@ cmd({
   filename: __filename
 }, async (conn, mek, m, { from, reply, args }) => {
   try {
-    const tiktokUrl = args[0];
-    if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
+    const q = args[0] || m.quoted?.text;
+    if (!q || !q.includes("tiktok.com")) {
       return reply('```🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\nඋදාහරණයක්: .tend https://www.tiktok.com/@user/video/123...```');
     }
 
     await conn.sendMessage(from, { react: { text: '🔍', key: m.key } });
 
-    const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
+    const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(q)}`;
     const response = await axios.get(apiUrl);
     const { title, thumbnail, video_url, author = {}, metrics = {} } = response.data.result;
 
@@ -35,7 +35,7 @@ cmd({
 
     const {
       nickname = 'N/A',
-      unique_id = 'N/A'
+      unique_id: username = 'N/A'
     } = author;
 
     const detailsMsg = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
@@ -64,10 +64,10 @@ cmd({
         {
           title: "",
           rows: [
-            { title: "1", rowId: `${prefix}ytaud ${tiktokUrl}`, description: '`❲ Audio File ❳` 🎧' },
-            { title: "2", rowId: `${prefix}ytdoc ${tiktokUrl}`, description: '`❲ Document File ❳` 📄' },
-            { title: "3", rowId: `${prefix}ytvoice ${tiktokUrl}`, description: '`❲ Voice Note (ptt) ❳` 🎤' },
-            { title: "4", rowId: `${prefix}devilv ${tiktokUrl}`, description: '`❲ Video File (mp4) ❳` 📽️' },
+            { title: "1", rowId: `${prefix}ytaud ${q}`, description: '`❲ Audio File ❳` 🎧' },
+            { title: "2", rowId: `${prefix}ytdoc ${q}`, description: '`❲ Document File ❳` 📄' },
+            { title: "3", rowId: `${prefix}ytvoice ${q}`, description: '`❲ Voice Note (ptt) ❳` 🎤' },
+            { title: "4", rowId: `${prefix}devilv ${q}`, description: '`❲ Video File (mp4) ❳` 📽️' },
           ]
         }
       ];
@@ -90,22 +90,22 @@ cmd({
             {
               title: "[Audio 🎧]",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${tiktokUrl}`
+              id: `${prefix}ytaud ${q}`
             },
             {
               title: "[Document 📁]",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${tiktokUrl}`
+              id: `${prefix}ytdoc ${q}`
             },
             {
               title: "[Voice (ptt) 💡]",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${tiktokUrl}`
+              id: `${prefix}ytvoice ${q}`
             },
             {
               title: "[Video File 📽️]",
               description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${tiktokUrl}`
+              id: `${prefix}devilv ${q}`
             }
           ]
         }]
@@ -117,22 +117,22 @@ cmd({
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
           {
-            buttonId: `${prefix}ytvoice ${tiktokUrl}`,
+            buttonId: `${prefix}ytvoice ${q}`,
             buttonText: { displayText: "`[Voice Note(Ptt) 🎧]`" },
             type: 1
           },
           {
-            buttonId: `${prefix}ytaud ${tiktokUrl}`,
+            buttonId: `${prefix}ytaud ${q}`,
             buttonText: { displayText: "`[Audio Type 🎧]`" },
             type: 1
           },
           {
-            buttonId: `${prefix}ytdoc ${tiktokUrl}`,
+            buttonId: `${prefix}ytdoc ${q}`,
             buttonText: { displayText: "`[Document 📁]`" },
             type: 1
           },
           {
-            buttonId: `${prefix}devilv ${tiktokUrl}`,
+            buttonId: `${prefix}devilv ${q}`,
             buttonText: { displayText: "`[Video 📽️]`" },
             type: 1
           },
