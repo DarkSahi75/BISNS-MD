@@ -231,7 +231,7 @@ async (conn, mek, m, { from, q, reply }) => {
 
 
 cmd({
-  pattern: "tiktok",
+  pattern: "tiktokall",
   alias: ["tt", "ttdl", "tiktokdl"],
   react: '🔎',
   desc: "Get TikTok video details only.",
