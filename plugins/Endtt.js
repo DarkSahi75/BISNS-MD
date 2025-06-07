@@ -307,7 +307,7 @@ cmd({
       }, { quoted: mek });
     }
 
-        if (config.MODE === 'button') {
+  if (config.MODE === 'button') {
       const listData = {
         title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
         sections: [{
@@ -316,22 +316,22 @@ cmd({
             {
               title: "[Audio 🎧]",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
+              id: `${prefix}ytaud ${q}`
             },
             {
               title: "[Document 📁]",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
+              id: `${prefix}ytdoc ${q}`
             },
             {
               title: "[Voice (ptt) 💡]",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
+              id: `${prefix}ytvoice ${q}`
             },
             {
               title: "[Video File 📽️]",
               description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
+              id: `${prefix}devilv ${q}`
             }
           ]
         }]
@@ -345,29 +345,29 @@ const listData2 = {
             {
               title: "[Audio 🎧]",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
+              id: `${prefix}ytaud ${q}`
             },
             {
               title: "[Document 📁]",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
+              id: `${prefix}ytdoc ${q}`
             },
             {
               title: "[Voice (ptt) 💡]",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
+              id: `${prefix}ytvoice ${q}`
             },
             {
               title: "[Video File 📽️]",
               description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
+              id: `${prefix}devilv ${q}`
             }
           ]
         }]
       };
 
-      return await robin.sendMessage(from, {
-        image: { url: data.thumbnail },
+      return await conn.sendMessage(from, {
+        image: { url:thumbnail },
         caption: cap,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
