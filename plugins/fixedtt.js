@@ -1,11 +1,13 @@
 const fetch = require('node-fetch');
-const { cmd } = require('../lib/command'); // ඔබගේ structure එකට adjust කරන්න
-//AUDIO-ONLY==========3=3.03=3.03=3.03=3.03=3.033-3
+const { cmd } = require('../lib/command'); 
+const axios = require("axios");
+const config = require('../settings');
+const prefix = config.PREFIX || ".";
 
 cmd({
   pattern: "tikaud",
  // alias: ["tt", "ttdl", "tiktokdl"],
-  react: '🎩',
+  react: '🎧',
   desc: "Download TikTok video (WM) + Audio",
   category: "download",
   use: '.tiktok <tiktok url>',
@@ -35,7 +37,7 @@ async (conn, mek, m, { from, q, reply }) => {
 cmd({
   pattern: "tikauddoc",
 //  alias: ["tt", "ttdl", "tiktokdl"],
-  react: '🎩',
+  react: '🎧',
   desc: "Download TikTok audio (MP3 as document)",
   category: "download",
   use: '.tiktoksv <tiktok url>',
@@ -69,7 +71,7 @@ async (conn, mek, m, { from, q, reply }) => {
 cmd({
   pattern: "tikaudptt",
 //  alias: ["tt", "ttdl", "tiktokdl"],
-  react: '🎩',
+  react: '🎧',
   desc: "Download TikTok video (WM) + Audio",
   category: "download",
   use: '.tiktok <tiktok url>',
@@ -99,7 +101,7 @@ async (conn, mek, m, { from, q, reply }) => {
 cmd({
   pattern: "tikwm",
  // alias: ["tt", "ttdl", "tiktokdl"],
-  react: '🎩',
+  react: '📹',
   desc: "Download TikTok video (WM) + Audio",
   category: "download",
   use: '.tiktok <tiktok url>',
@@ -128,8 +130,8 @@ async (conn, mek, m, { from, q, reply }) => {
 
 cmd({
   pattern: "tikwmdoc",
-  alias: ["tt", "ttdl", "tiktokdl"],
-  react: '🎩',
+ // alias: ["tt", "ttdl", "tiktokdl"],
+  react: '📹',
   desc: "Download TikTok video (WM) as Document",
   category: "download",
   use: '.tiktoksv <tiktok url>',
@@ -163,8 +165,8 @@ async (conn, mek, m, { from, q, reply }) => {
 
 cmd({
   pattern: "tiknowm",
-  alias: ["tt", "ttdl", "tiktokdl"],
-  react: '🎩',
+ // alias: ["tt", "ttdl", "tiktokdl"],
+  react: '📹',
   desc: "Download TikTok video (WM) + Audio",
   category: "download",
   use: '.tiktok <tiktok url>',
@@ -195,8 +197,8 @@ async (conn, mek, m, { from, q, reply }) => {
 
 cmd({
   pattern: "tiknowmdoc",
-  alias: ["tt", "ttdl", "tiktokdl"],
-  react: '🎩',
+ // alias: ["tt", "ttdl", "tiktokdl"],
+  react: '📹',
   desc: "Download TikTok video (No Watermark) as Document",
   category: "download",
   use: '.tiktoksv <tiktok url>',
@@ -227,14 +229,10 @@ async (conn, mek, m, { from, q, reply }) => {
 
 //3=3.03=3.033=3.0333=3.03333=3.033333=3.033333
 
-const axios = require("axios");
-//const { cmd } = require("../lib/command");
-const config = require('../settings');
-const prefix = config.PREFIX || ".";
 
 cmd({
-  pattern: "ttlatest",
-  alias: ["ttinfo", "ttdetails", "tt"],
+  pattern: "tiktok",
+  alias: ["tt", "ttdl", "tiktokdl"],
   react: '🔎',
   desc: "Get TikTok video details only.",
   category: "tools",
@@ -286,26 +284,68 @@ cmd({
 〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
 
     if (config.MODE === 'nonbutton') {
-      const sections = [
+  const sections = [
+    {
+      title: "* *🌀 With Watermark Video Options*",
+      rows: [
         {
-          title: "Download Options",
-          rows: [
-            { title: "1. Audio 🎧", rowId: `${prefix}ytaud ${q}`, description: "Download as audio file" },
-            { title: "2. Document 📄", rowId: `${prefix}ytdoc ${q}`, description: "Download as document" },
-            { title: "3. Voice Note 🎤", rowId: `${prefix}ytvoice ${q}`, description: "Download as voice note" },
-            { title: "4. Video 📽️", rowId: `${prefix}devilv ${q}`, description: "Download as video file" }
-          ]
+          title: "1. Normal Video 📹",
+          description: "Download as video file (With Watermark)",
+          rowId: `${prefix}tikwm ${q}`
+        },
+        {
+          title: "2. Document Video 📃",
+          description: "Download as document video (With Watermark)",
+          rowId: `${prefix}tikwmdoc ${q}`
         }
-      ];
-      return await conn.replyList(from, {
-        caption: detailsMsg,
-        image: { url: thumbnail },
-        footer: '> 〽️ade By Dinuwh Bbh',
-        title: '📌 TikTok Download Menu',
-        buttonText: '> Choose File Type',
-        sections
-      }, { quoted: mek });
+      ]
+    },
+    {
+      title: "* *🧊 No Watermark Video Options*",
+      rows: [
+        {
+          title: "3. Normal Video 📹",
+          description: "Download as video file (No Watermark)",
+          rowId: `${prefix}tiknowm ${q}`
+        },
+        {
+          title: "4. Document Video 📃",
+          description: "Download as document video (No Watermark)",
+          rowId: `${prefix}tiknowmdoc ${q}`
+        }
+      ]
+    },
+    {
+      title: "*🎵 Audio Download Options*",
+      rows: [
+        {
+          title: "5. Audio 🎧",
+          description: "Download as normal audio file",
+          rowId: `${prefix}tiktokaud ${q}`
+        },
+        {
+          title: "6. Document Audio 📄",
+          description: "Download as document audio",
+          rowId: `${prefix}tiktokauddoc ${q}`
+        },
+        {
+          title: "7. Voice Note 🎙️",
+          description: "Download as voice note (PTT)",
+          rowId: `${prefix}tiktokaudptt ${q}`
+        }
+      ]
     }
+  ];
+
+  return await conn.replyList(from, {
+    caption: detailsMsg,
+    image: { url: thumbnail },
+    footer: '> *Reply Below Number*',
+    title: '📌 TikTok Download Menu',
+    buttonText: '> Choose File Type',
+    sections
+  }, { quoted: mek });
+          }
 
 if (config.MODE === 'button') {
   const listData = {
@@ -315,12 +355,12 @@ if (config.MODE === 'button') {
         title: "🌀 With Watermark Video Options",
         rows: [
           {
-            title: "Normal Video 📹",
+            title: "With Wm Normal Video 📹",
             description: "Download as Video || Normal || With WaterMark\n〽️ade By Dinuwh Bbh",
             id: `${prefix}tikwm ${q}`
           },
           {
-            title: "Document Video 📃",
+            title: "With Wm Document Video 📃",
             description: "Download as Video || Document || With WaterMark\n〽️ade By Dinuwh Bbh",
             id: `${prefix}tikwmdoc ${q}`
           }
@@ -330,12 +370,12 @@ if (config.MODE === 'button') {
         title: "🧊 No Watermark Video Options",
         rows: [
           {
-            title: "Normal Video 📹",
+            title: "No Wm Normal Video 📹",
             description: "Download as Video || Normal || Without WaterMark\n〽️ade By Dinuwh Bbh",
             id: `${prefix}tiknowm ${q}`
           },
           {
-            title: "Document Video 📃",
+            title: "No Wm Document Video 📃",
             description: "Download as Video || Document || Without WaterMark\n〽️ade By Dinuwh Bbh",
             id: `${prefix}tiknowmdoc ${q}`
           }
