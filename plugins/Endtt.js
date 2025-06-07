@@ -340,21 +340,21 @@ cmd({
 const listData2 = {
         title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
         sections: [{
-          title: "DINUWH MD OPTIONS",
+          title: "TikTok Audio Files Downloader ❐",
           rows: [
             {
-              title: "[Audio 🎧]",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              title: "Normal Audio File 🎧",
+              description: "\`Download as TT Normal audio\`\n〽️ade By Dinuwh Bbh",
               id: `${prefix}tikaud ${q}`
             },
             {
-              title: "[Document 📁]",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              title: "Document Audio File 📃",
+              description: "\`Download as Tt documentType Audio\`\n〽️ade By Dinuwh Bbh",
               id: `${prefix}tikauddoc ${q}`
             },
             {
-              title: "[Voice (ptt) 💡]",
-              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              title: "Voice Note Type File 🎤",
+              description: "\`Download as TT Voice Type Audio\`\n〽️ade By Dinuwh Bbh",
               id: `${prefix}tikaudptt ${q}`
             }
             
@@ -365,7 +365,7 @@ const listData2 = {
       return await conn.sendMessage(from, {
         image: { url:thumbnail },
         caption: detailsMsg,
-        footer: "> 〽️ade By Dinuwh Bbh",
+        footer: "> *Click You Want Type(Video or Audio)🔎*",
         buttons: [
           {
             buttonId: "action",
