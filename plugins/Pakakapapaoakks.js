@@ -121,22 +121,22 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
             {
               title: "NonWaterMark Norml Video",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaud ${data.url}`
+              id: `${prefix}tikaud ${tiktokUrl}`
             },
             {
               title: "NonWaterMark Document Video",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
+              id: `${prefix}ytdoc ${tiktokUrl}`
             },
             {
               title: "WithWaterMark Normal Video",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
+              id: `${prefix}ytvoice ${tiktokUrl}`
             },
             {
               title: "WithWaterMark Document Video",
               description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
+              id: `${prefix}devilv ${tiktokUrl}`
             }
           ]
         }]
@@ -150,30 +150,30 @@ const listData2 = {
             {
               title: "[A2 🎧]",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
+              id: `${prefix}ytaud ${tiktokUrl}`
             },
             {
               title: "[D2📁]",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
+              id: `${prefix}ytdoc ${tiktokUrl}`
             },
             {
               title: "[V2 💡]",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
+              id: `${prefix}ytvoice ${tiktokUrl}`
             },
             {
               title: "[V2📽️]",
               description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
+              id: `${prefix}devilv ${tiktokUrl}`
             }
           ]
         }]
       };
 
       return await conn.sendMessage(from, {
-        image: { url: data.thumbnail },
-        caption: cap,
+        image: { url: thumbnail },
+        caption: DetailsMsg,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
           {
