@@ -1,4 +1,4 @@
-const { cmd } = require("../lib/plugins");
+const { cmd } = require("../lib/command");
 
 cmd(
   {
