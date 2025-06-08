@@ -49,18 +49,57 @@ cmd({
     // ✳️ If nonbutton mode
 if (config.MODE === 'nonbutton') {
   const sections = [
-    {
-	title: "𝐓𝐢𝐤 𝐓𝐨𝐤 𝐕𝐢𝐝𝐞𝐨 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐞𝐫 𝐋𝐢𝐬𝐭",
-	rows: [
-	    {title: "1", rowId: `${prefix}tikwm ${tiktokUrl}`, description: '\`❲ With Watermark Normal❳\ 📹'},
-	    {title: "2", rowId: `${prefix}tikwmdoc ${tiktokUrl}`, description: '\`❲ With Watermark Document ❳\` 📄'} ,
-            {title: "3", rowId: `${prefix}tiknowm ${tiktokUrl}`, description: '\`❲ No WaterMark Normal ❳\` 📹'} ,
-            {title: "4", rowId: `${prefix}tiknowmdoc ${tiktokUrl}`, description: '\`❲ No WaterMark Document ❳\` 📄'} ,
-
-
-	]
-    } 
-]
+  {
+    title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
+    rows: [
+      {
+        title: "1.",
+        rowId: `${prefix}tikwm ${tiktokUrl}`,
+        description: '`❲ With Watermark Normal ❳` 📹'
+      },
+      {
+        title: "2.",
+        rowId: `${prefix}tikwmdoc ${tiktokUrl}`,
+        description: '`❲ With Watermark Document ❳` 📄'
+      }
+    ]
+  },
+  {
+    title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐍𝐨 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
+    rows: [
+      {
+        title: "3.",
+        rowId: `${prefix}tiknowm ${tiktokUrl}`,
+        description: '`❲ No Watermark Normal ❳` 📹'
+      },
+      {
+        title: "4.",
+        rowId: `${prefix}tiknowmdoc ${tiktokUrl}`,
+        description: '`❲ No Watermark Document ❳` 📄'
+      }
+    ]
+  },
+  {
+    title: "🎧 𝐀𝐮𝐝𝐢𝐨 𝐎𝐩𝐭𝐢𝐨𝐧𝐬",
+    rows: [
+      {
+        title: "5.",
+        rowId: `${prefix}tikaud ${tiktokUrl}`,
+        description: '`❲ Audio With Normal File ❳` 🎵'
+      },
+      {
+        title: "6.",
+        rowId: `${prefix}tikauddoc ${tiktokUrl}`,
+        description: '`❲ Audio With Document File ❳` 📄'
+      },
+      {
+        title: "7.",
+        rowId: `${prefix}tikaudptt ${tiktokUrl}`,
+        description: '`❲ Audio With Voice Note ❳` 🎤'
+      }
+    ]
+  }
+];
 const listMessage = {
 caption: detailsMsg,
 image: { url:thumbnail },  // <-- use YouTube thumbnail here
