@@ -47,7 +47,7 @@ cmd({
 〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
 
     // ✳️ If nonbutton mode
-if (config.MODE === 'nonbutton') {
+if (config.MODE === 'button') {
   const sections = [
   {
     title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
@@ -112,62 +112,70 @@ sections
 return await conn.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
-} if (config.MODE === 'button') {
+} if (config.MODE === 'nonbutton') {
       const listData = {
-        title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
+        title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+        sections: [{
+          title: "ᴅɪɴᴜᴡʜ-ᴍᴅ || ᴛɪᴋᴛᴏᴋ ᴠɪᴅᴇᴏɴ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ⇲",
+          rows: [
+            {
+              title: "NonWaterMark Norml Video",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}tikaud ${data.url}`
+            },
+            {
+              title: "NonWaterMark Document Video",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${data.url}`
+            },
+            {
+              title: "WithWaterMark Normal Video",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${data.url}`
+            },
+            {
+              title: "WithWaterMark Document Video",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
+          ]
+        }]
+      };
+
+const listData2 = {
+        title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
         sections: [{
           title: "DINUWH MD OPTIONS",
           rows: [
             {
-              title: "[Audio 🎧]",
+              title: "[A2 🎧]",
               description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${tiktokUrl}`
+              id: `${prefix}ytaud ${data.url}`
             },
             {
-              title: "[Document 📁]",
+              title: "[D2📁]",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${tiktokUrl}`
+              id: `${prefix}ytdoc ${data.url}`
             },
             {
-              title: "[Voice (ptt) 💡]",
+              title: "[V2 💡]",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${tiktokUrl}`
+              id: `${prefix}ytvoice ${data.url}`
             },
             {
-              title: "[Video File 📽️]",
+              title: "[V2📽️]",
               description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${tiktokUrl}`
+              id: `${prefix}devilv ${data.url}`
             }
           ]
         }]
       };
 
       return await conn.sendMessage(from, {
-        image: { url:thumbnail },
-        caption: detailsMsg,
+        image: { url: data.thumbnail },
+        caption: cap,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
-          {
-            buttonId: `${prefix}ytvoice ${tiktokUrl}`,
-            buttonText: { displayText: "`[Voice Note(Ptt) 🎧]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}ytaud ${tiktokUrl}`,
-            buttonText: { displayText: "`[Audio Type 🎧]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}ytdoc ${tiktokUrl}`,
-            buttonText: { displayText: "`[Document 📁]`" },
-            type: 1
-          },
-          {
-            buttonId: `${prefix}devilv ${tiktokUrl}`,
-            buttonText: { displayText: "`[Video 📽️]`" },
-            type: 1
-          },
-
           {
             buttonId: "action",
             buttonText: { displayText: "🔘 Choose Song Type" },
@@ -177,11 +185,21 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
               paramsJson: JSON.stringify(listData),
             },
           },
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData2),
+            },
+          }
         ],
         headerType: 1,
         viewOnce: true,
       }, { quoted: mek });
     }
+
   } catch (e) {
     console.error(e);
     reply(`❌ Error: ${e.message}`);
