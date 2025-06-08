@@ -290,14 +290,14 @@ if (config.MODE === 'nonbutton') {
 	rows: [
 	    {title: "1", rowId: `${prefix}tikwm ${q}`, description: '\`❲ Audio File ❳\` 🎧'},
 	    {title: "2", rowId: `${prefix}tikwmdoc ${q}`, description: '\`❲ Document File ❳\` 📄'} ,
-      {title: "3", rowId: `${prefix}tiknowm ${q}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
-      {title: "4", rowId: `${prefix}tiknowmdoc ${q}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
-	]
+            {title: "3", rowId: `${prefix}tiknowm ${q}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
+            {title: "4", rowId: `${prefix}tiknowmdoc ${q}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+    	]
     } 
 ]
 const listMessage = {
-caption: cap,
-image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
+caption: detailsMsg,
+image: { url:thumbnail },  // <-- use YouTube thumbnail here
 footer: '> 〽️ade By Dinuwh Bbh',
 title: '',
 buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
