@@ -47,7 +47,7 @@ cmd({
 〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
 
     // ✳️ If nonbutton mode
-if (config.MODE === 'button') {
+if (config.MODE === 'nonbutton') {
   const sections = [
   {
     title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
@@ -62,8 +62,7 @@ if (config.MODE === 'button') {
         rowId: `${prefix}tikwmdoc ${tiktokUrl}`,
         description: '`❲ With Watermark Document ❳` 📄'
       }
-    ]
-  },
+    ] },
   {
     title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐍𝐨 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
     rows: [
@@ -103,7 +102,7 @@ if (config.MODE === 'button') {
 const listMessage = {
 caption: detailsMsg,
 image: { url:thumbnail },  // <-- use YouTube thumbnail here
-//footer: '> 〽️ade By Dinuwh Bbh',
+footer: '> 〽️ade By Dinuwh Bbh',
 title: '',
 buttonText: '> *◎Reply Below Number ⇲◎*',
 sections
@@ -112,7 +111,7 @@ sections
 return await conn.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
-} if (config.MODE === 'nonbutton') {
+} if (config.MODE === 'button') {
       const listData = {
   title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
   sections: [
@@ -151,27 +150,23 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
 const listData2 = {
         title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
         sections: [{
-          title: "DINUWH MD OPTIONS",
+          title: "TikTok Audio Down Section 🎧",
           rows: [
+            
             {
-              title: "[A2 🎧]",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${tiktokUrl}`
-            },
-            {
-              title: "[D2📁]",
+              title: "\`Audio With Normal\`",
               description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${tiktokUrl}`
+              id: `${prefix}tikaud ${tiktokUrl}`
             },
             {
-              title: "[V2 💡]",
+              title: "\`Audio With Document\`",
               description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${tiktokUrl}`
+              id: `${prefix}tikauddoc ${tiktokUrl}`
             },
             {
-              title: "[V2📽️]",
+              title: "\`Audio With Voice Note\`",
               description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${tiktokUrl}`
+              id: `${prefix}tikaudptt ${tiktokUrl}`
             }
           ]
         }]
