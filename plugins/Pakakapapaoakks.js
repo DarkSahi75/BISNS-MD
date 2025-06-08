@@ -30,17 +30,17 @@ cmd({
 
 \`╭───────────────✿\`
 
-- \`D\` ᴏᴡɴʟᴏᴀᴅꜱ : _${download_count}_
-- \`C\` ᴏᴍᴍᴇɴᴛꜱ  : _*${comment_count}*_
-- \`S\` ʜᴀʀᴇꜱ    : _${share_count}_
-- \`R\` ᴇɢɪᴏɴ    : _*${region}*_
-- \`P\` ʟᴀʏꜱ     : _${play_count}_
-- \`L\` ɪᴋᴇꜱ     : _*${digg_count}*_
-- \`L\` ɪɴᴋ      : _${q}_
+- \`D\` ᴏᴡɴʟᴏᴀᴅꜱ : _${metrics.download_count}_
+- \`C\` ᴏᴍᴍᴇɴᴛꜱ  : _*${metrics.comment_count}*_
+- \`S\` ʜᴀʀᴇꜱ    : _${metrics.share_count}_
+- \`R\` ᴇɢɪᴏɴ    : _*${metrics.region}*_
+- \`P\` ʟᴀʏꜱ     : _${metrics.play_count}_
+- \`L\` ɪᴋᴇꜱ     : _*${metrics.digg_count}*_
+- \`L\` ɪɴᴋ      : _${q}_ || _${tiktokUrl}_
 
 ✠.Aᴜᴛʜᴏʀ :
-- Nɪᴄᴋ Nᴀᴍᴇ :- *${nickname}*
-- Uꜱᴇʀɴᴀᴍᴇ   :- *${username}*
+- Nɪᴄᴋ Nᴀᴍᴇ :- *${author.nickname}*
+- Uꜱᴇʀɴᴀᴍᴇ   :- *@${author.username}*
 
 \`╰───────────────✿\`
 
