@@ -229,9 +229,8 @@ async (conn, mek, m, { from, q, reply }) => {
 
 //3=3.03=3.033=3.0333=3.03333=3.033333=3.033333
 
-/*
 cmd({
-  pattern: "ttlatest",
+  pattern: "titk",
   alias: ["ttinfo", "ttdetails", "tt"],
   react: '🔎',
   desc: "Get TikTok video details only.",
@@ -261,27 +260,33 @@ cmd({
       `📥 *Downloads*: ${metrics.download_count}\n\n` +
       `🔗 *Link*: ${tiktokUrl}\n\n` +
       `> *Powered by DINUWH MD™*`;
-    if (config.MODE === 'nonbutton') {
-      const sections = [
-        {
-          title: "",
-          rows: [
-            { title: "1", rowId: `${prefix}ytaud ${q}`, description: '`❲ Audio File ❳` 🎧' },
-            { title: "2", rowId: `${prefix}ytdoc ${q}`, description: '`❲ Document File ❳` 📄' },
-            { title: "3", rowId: `${prefix}ytvoice ${q}`, description: '`❲ Voice Note (ptt) ❳` 🎤' },
-            { title: "4", rowId: `${prefix}devilv ${q}`, description: '`❲ Video File (mp4) ❳` 📽️' },
-          ]
-        }
-      ];
-      const listMessage = {
-        caption: detailsMsg,
-        image: { url: thumbnail },
-        footer: '> 〽️ade By Dinuwh Bbh',
-        title: '',
-        buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
-        sections
-      };
-      return await conn.replyList(from, listMessage, { quoted: mek });
+
+    // ✳️ If nonbutton mode
+if (config.MODE === 'nonbutton') {
+  const sections = [
+    {
+	title: "",
+	rows: [
+	    {title: "1", rowId: `${prefix}ytaud ${tiktokUrl}`, description: '\`❲ Audio File ❳\` 🎧'},
+	    {title: "2", rowId: `${prefix}ytdoc ${tiktokUrl}`, description: '\`❲ Document File ❳\` 📄'} ,
+            {title: "3", rowId: `${prefix}ytvoice ${tiktokUrl}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
+            {title: "4", rowId: `${prefix}devilv ${tiktokUrl}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	]
+    } 
+]
+const listMessage = {
+caption: detailsMsg,
+image: { url:thumbnail },  // <-- use YouTube thumbnail here
+footer: '> 〽️ade By Dinuwh Bbh',
+title: '',
+buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
+sections
+}
+	
+return await conn.replyList(from, listMessage ,{ quoted : mek })
+
+	//button
+
 
   if (config.MODE === 'button') {
       const listData = {
@@ -376,4 +381,4 @@ const listData2 = {
     reply(`❌ Error: ${e.message}`);
   }
 });
-*/
+
