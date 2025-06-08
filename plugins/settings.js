@@ -59,3 +59,24 @@ reply('*Error !!*')
 l(e)
 }
 })
+
+
+cmd({
+    pattern: "run",
+    react: "🗣️",
+    desc: "To Activate auto news",
+    category: "main",
+    use: '.setprefix .',
+    filename: __filename
+},
+async(conn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+try{
+if(!isOwner) return await reply(BOTOW)
+    if ( config.PREFIX == q) return reply(`Succesfully Mode Changed To This Section`)
+  await input_set('MODE' , q)
+  return reply(`run Mode was changed`)
+} catch (e) {
+reply('*Error !!*')
+l(e)
+}
+})
