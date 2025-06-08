@@ -282,32 +282,9 @@ const detailsMsg = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
 
 〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʰ;
 
-try {
-  if (config.MODE === 'nonbutton') {
-    const sections = [
-      {
-        title: "",
-        rows: [
-          { title: "1", rowId: `${prefix}tikwm ${q}`, description: '`❲ Audio File ❳` 🎧' },
-          { title: "2", rowId: `${prefix}tikwmdoc ${q}`, description: '`❲ Document File ❳` 📄' },
-          { title: "3", rowId: `${prefix}tiknowm ${q}`, description: '`❲ Voice Note (ptt) ❳` 🎤' },
-          { title: "4", rowId: `${prefix}tiknowmdoc ${q}`, description: '`❲ Video File (mp4) ❳` 📽️' },
-        ]
-      }
-    ];
 
-    const listMessage = {
-      caption: detailsMsg,
-      image: { url: thumbnail },
-      footer: '> 〽️ade By Dinuwh Bbh',
-      title: '',
-      buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
-      sections
-    };
 
-    return await robin.replyList(from, listMessage, { quoted: mek });
-
-  } else if (config.MODE === 'button') {
+  } else if (config.MODE === 'nonbutton') {
     const listData = {
       title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
       sections: [
