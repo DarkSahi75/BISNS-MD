@@ -286,67 +286,12 @@ Uꜱᴇʀɴᴀᴍᴇ   :- ${username}
 
 〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
 
+
+
+
+
+
 if (config.MODE === 'nonbutton') {
-
-const sections = [
-{
-title: "* 🌀 With Watermark Video Options",
-rows: [
-{
-title: "1. Normal Video 📹",
-rowId: ${prefix}tikwm ${url}
-},
-{
-title: "2. Document Video 📃",
-rowId: ${prefix}tikwmdoc ${url}
-}
-]
-},
-{
-title: "* 🧊 No Watermark Video Options",
-rows: [
-{
-title: "4. Document Video 📃",
-rowId: ${prefix}tiknowm ${url}
-},
-{
-title: "4. Document Video 📃",
-rowId: ${prefix}tiknowmdoc ${url}
-}
-]
-},
-{
-title: "🎵 Audio Download Options",
-rows: [
-{
-title: "5. Audio 🎧",
-rowId: ${prefix}tiktokaud ${url}
-},
-{
-title: "6. Document Audio 📄",
-rowId: ${prefix}tiktokauddoc ${url}
-},
-{
-title: "7. Voice Note 🎙️",
-rowId: ${prefix}tiktokaudptt ${url}
-}
-]
-}
-];
-
-return await conn.replyList(from, {
-caption: detailsMsg,
-image: { url: thumbnail },
-footer: '> Reply Below Number',
-buttonText: '> Choose File Type',
-sections
-}, { quoted: mek });
-}
-
-
-
-
-if (config.MODE === 'button') {
   const listData = {
     title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
     sections: [
