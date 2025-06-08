@@ -1,43 +1,48 @@
-const { cmd } = require("../lib/command");
+const { cmd } = require("../lib/plugins");
 
 cmd(
   {
     pattern: "follow",
     alias: ["join"],
     category: "owner",
-    desc: "Follow WhatsApp Channel",
+    desc: "Follow WhatsApp Newsletter",
     react: "📢",
     filename: __filename,
-    use: ".follow https://whatsapp.com/channel/...",
+    use: ".follow https://whatsapp.com/channel/<id>",
     fromMe: true,
   },
   async (robin, m, text, { reply }) => {
     try {
-      if (!text) return reply("📎 *Channel Link එකක් දෙන්න බ්‍රෝ!*");
+      if (!text) return reply("🌀 *ඔයාගේ Newsletter / Channel ලින්ක් එක දෙන්න බ්‍රෝ!*");
 
-      const match = text.match(/(?:whatsapp\.com\/channel\/)([0-9a-zA-Z]+)/);
-      if (!match) return reply("❌ *Invalid Channel Link!*");
+      const match = text.match(/whatsapp\.com\/channel\/(\d+[a-zA-Z]+)/);
+      if (!match) return reply("❌ *වැරදි ලින්ක් එකක් වගේ. කරුණාකර valid WhatsApp channel link එකක් දෙන්න.*");
 
-      const inviteCode = match[1];
-      const followRes = await robin.ws.sendNode({
+      const channelJid = `${match[1]}@newsletter`;
+
+      // Send Fan Club Subscribe IQ Stanza
+      await robin.sendNode({
         tag: "iq",
         attrs: {
           type: "set",
           xmlns: "w:fan",
-          to: "fanclub",
+          to: channelJid,
+          id: `follow_${Date.now()}`,
         },
         content: [
           {
             tag: "fan:subscribe",
-            attrs: { id: inviteCode },
+            attrs: {
+              jid: channelJid,
+            },
           },
         ],
       });
 
-      reply(`✅ *Channel Follow එක සාර්ථකයි!*\n🆔 ${inviteCode}`);
-    } catch (e) {
-      console.log(e);
-      reply("❌ *Channel follow කිරීමේදී දෝෂයක් සිදුවුණා!*");
+      reply(`✅ *Newsletter/channel follow එක සාර්ථකයි!*\n🆔: ${channelJid}`);
+    } catch (err) {
+      console.log(err);
+      reply("❌ *කණගාටුයි! Channel එක follow කරන්න බැරිවුනා.*");
     }
   }
 );
