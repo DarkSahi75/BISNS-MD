@@ -50,21 +50,23 @@ cmd({
 if (config.MODE === 'nonbutton') {
   const sections = [
     {
-	title: "",
+	title: "𝐓𝐢𝐤 𝐓𝐨𝐤 𝐕𝐢𝐝𝐞𝐨 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐞𝐫 𝐋𝐢𝐬𝐭",
 	rows: [
-	    {title: "1", rowId: `${prefix}ytaud ${tiktokUrl}`, description: '\`❲ Audio File ❳\` 🎧'},
-	    {title: "2", rowId: `${prefix}ytdoc ${tiktokUrl}`, description: '\`❲ Document File ❳\` 📄'} ,
-            {title: "3", rowId: `${prefix}ytvoice ${tiktokUrl}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
-            {title: "4", rowId: `${prefix}devilv ${tiktokUrl}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	    {title: "1", rowId: `${prefix}tikwm ${tiktokUrl}`, description: '\`❲ With Watermark Normal❳\ 📹'},
+	    {title: "2", rowId: `${prefix}tikwmdoc ${tiktokUrl}`, description: '\`❲ With Watermark Document ❳\` 📄'} ,
+            {title: "3", rowId: `${prefix}tiknowm ${tiktokUrl}`, description: '\`❲ No WaterMark Normal ❳\` 📹'} ,
+            {title: "4", rowId: `${prefix}tiknowmdoc ${tiktokUrl}`, description: '\`❲ No WaterMark Document ❳\` 📄'} ,
+
+
 	]
     } 
 ]
 const listMessage = {
 caption: detailsMsg,
 image: { url:thumbnail },  // <-- use YouTube thumbnail here
-footer: '> 〽️ade By Dinuwh Bbh',
+//footer: '> 〽️ade By Dinuwh Bbh',
 title: '',
-buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
+buttonText: '> *◎Reply Below Number ⇲◎*',
 sections
 }
 	
