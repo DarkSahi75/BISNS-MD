@@ -266,32 +266,50 @@ const detailsMsg = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
 
 \`╭───────────────✿\`
 
-\`D\` ᴏᴡɴʟᴏᴀᴅꜱ : ${download_count}
-\`C\` ᴏᴍᴍᴇɴᴛꜱ  : ${comment_count}
-\`S\` ʜᴀʀᴇꜱ    : ${share_count}
-\`R\` ᴇɢɪᴏɴ    : ${region}
-\`P\` ʟᴀʏꜱ     : ${play_count}
-\`L\` ɪᴋᴇꜱ     : ${digg_count}
-\`L\` ɪɴᴋ      : ${q}
-
+- \`D\` ᴏᴡɴʟᴏᴀᴅꜱ : _${download_count}_
+- \`C\` ᴏᴍᴍᴇɴᴛꜱ  : _${comment_count}_
+- \`S\` ʜᴀʀᴇꜱ    : _${share_count}_
+- \`R\` ᴇɢɪᴏɴ    : _${region}_
+- \`P\` ʟᴀʏꜱ     : _${play_count}_
+- \`L\` ɪᴋᴇꜱ     : _${digg_count}_
+- \`L\` ɪɴᴋ      : _${q}_
 
 ✠.Aᴜᴛʜᴏʀ :
-
-Nɪᴄᴋ Nᴀᴍᴇ :- ${nickname}
-
-Uꜱᴇʀɴᴀᴍᴇ   :- ${username}
-
+- Nɪᴄᴋ Nᴀᴍᴇ :- *${nickname}*
+- Uꜱᴇʀɴᴀᴍᴇ  :- *${username}*
 
 \`╰───────────────✿\`
 
 〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
 
 
-
-
-
-
 if (config.MODE === 'nonbutton') {
+  const sections = [
+    {
+	title: "",
+	rows: [
+	    {title: "1", rowId: `${prefix}tikwm ${q}`, description: '\`❲ Audio File ❳\` 🎧'},
+	    {title: "2", rowId: `${prefix}tikwmdoc ${q}`, description: '\`❲ Document File ❳\` 📄'} ,
+      {title: "3", rowId: `${prefix}tiknowm ${q}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
+      {title: "4", rowId: `${prefix}tiknowmdoc ${q}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
+	]
+    } 
+]
+const listMessage = {
+caption: cap,
+image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
+footer: '> 〽️ade By Dinuwh Bbh',
+title: '',
+buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
+sections
+}
+	
+return await robin.replyList(from, listMessage ,{ quoted : mek })
+
+
+
+
+if (config.MODE === 'button') {
   const listData = {
     title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
     sections: [
