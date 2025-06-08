@@ -374,11 +374,11 @@ const listData2 = {
         headerType: 1,
         viewOnce: true,
       }, { quoted: mek });
-    }*/
+    }
 
   } catch (e) {
     console.error(e);
     reply(`❌ Error: ${e.message}`);
   }
 });
-
+*/
