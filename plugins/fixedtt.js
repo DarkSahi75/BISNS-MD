@@ -284,97 +284,118 @@ const detailsMsg = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
 
 
 
-  } else if (config.MODE === 'nonbutton') {
-    const listData = {
-      title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
-      sections: [
+    if (config.MODE === 'nonbutton') {
+      const sections = [
         {
-          title: "🌀 With Watermark Video Options",
+          title: "",
           rows: [
-            {
-              title: "With Wm Normal Video 📹",
-              description: "Download as Video || Normal || With WaterMark\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikwm ${q}`
-            },
-            {
-              title: "With Wm Document Video 📃",
-              description: "Download as Video || Document || With WaterMark\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikwmdoc ${q}`
-            }
-          ]
-        },
-        {
-          title: "🧊 No Watermark Video Options",
-          rows: [
-            {
-              title: "No Wm Normal Video 📹",
-              description: "Download as Video || Normal || Without WaterMark\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}tiknowm ${q}`
-            },
-            {
-              title: "No Wm Document Video 📃",
-              description: "Download as Video || Document || Without WaterMark\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}tiknowmdoc ${q}`
-            }
+            { title: "1", rowId: `${prefix}ytaud ${q}`, description: '`❲ Audio File ❳` 🎧' },
+            { title: "2", rowId: `${prefix}ytdoc ${q}`, description: '`❲ Document File ❳` 📄' },
+            { title: "3", rowId: `${prefix}ytvoice ${q}`, description: '`❲ Voice Note (ptt) ❳` 🎤' },
+            { title: "4", rowId: `${prefix}devilv ${q}`, description: '`❲ Video File (mp4) ❳` 📽️' },
           ]
         }
-      ]
-    };
+      ];
+      const listMessage = {
+        caption: detailsMsg,
+        image: { url: thumbnail },
+        footer: '> 〽️ade By Dinuwh Bbh',
+        title: '',
+        buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
+        sections
+      };
+      return await conn.replyList(from, listMessage, { quoted: mek });
 
-    const listData2 = {
-      title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ⇲",
-      sections: [{
-        title: "TikTok Audio Files Downloader ❐",
-        rows: [
+  if (config.MODE === 'button') {
+      const listData = {
+        title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+        sections: [{
+          title: "ᴅɪɴᴜᴡʜ-ᴍᴅ || ᴛɪᴋᴛᴏᴋ ᴠɪᴅᴇᴏɴ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ⇲",
+          rows: [
+            {
+              title: "NonWaterMark Norml Video",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}tikaud ${data.url}`
+            },
+            {
+              title: "NonWaterMark Document Video",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${data.url}`
+            },
+            {
+              title: "WithWaterMark Normal Video",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${data.url}`
+            },
+            {
+              title: "WithWaterMark Document Video",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
+          ]
+        }]
+      };
+
+const listData2 = {
+        title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+        sections: [{
+          title: "DINUWH MD OPTIONS",
+          rows: [
+            {
+              title: "[A2 🎧]",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytaud ${data.url}`
+            },
+            {
+              title: "[D2📁]",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${data.url}`
+            },
+            {
+              title: "[V2 💡]",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${data.url}`
+            },
+            {
+              title: "[V2📽️]",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
+          ]
+        }]
+      };
+
+      return await conn.sendMessage(from, {
+        image: { url: data.thumbnail },
+        caption: cap,
+        footer: "> 〽️ade By Dinuwh Bbh",
+        buttons: [
           {
-            title: "Normal Audio File 🎧",
-            description: "`Download as TT Normal audio`\n〽️ade By Dinuwh Bbh",
-            id: `${prefix}tikaud ${q}`
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
           },
           {
-            title: "Document Audio File 📃",
-            description: "`Download as Tt documentType Audio`\n〽️ade By Dinuwh Bbh",
-            id: `${prefix}tikauddoc ${q}`
-          },
-          {
-            title: "Voice Note Type File 🎤",
-            description: "`Download as TT Voice Type Audio`\n〽️ade By Dinuwh Bbh",
-            id: `${prefix}tikaudptt ${q}`
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData2),
+            },
           }
-        ]
-      }]
-    };
+        ],
+        headerType: 1,
+        viewOnce: true,
+      }, { quoted: mek });
+    }
 
-    return await conn.sendMessage(from, {
-      image: { url: thumbnail },
-      caption: detailsMsg,
-      footer: "> *Click You Want Type(Video or Audio)🔎*",
-      buttons: [
-        {
-          buttonId: "action",
-          buttonText: { displayText: "🔘 Choose Song Type" },
-          type: 4,
-          nativeFlowInfo: {
-            name: "single_select",
-            paramsJson: JSON.stringify(listData),
-          },
-        },
-        {
-          buttonId: "action",
-          buttonText: { displayText: "🔘 Choose Song Type" },
-          type: 4,
-          nativeFlowInfo: {
-            name: "single_select",
-            paramsJson: JSON.stringify(listData2),
-          },
-        }
-      ],
-      headerType: 1,
-      viewOnce: true,
-    }, { quoted: mek });
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
   }
-
-} catch (e) {
-  console.error(e);
-  reply(`❌ Error: ${e.message}`);
-}
+});
