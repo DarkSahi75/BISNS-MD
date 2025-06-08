@@ -173,7 +173,7 @@ const listData2 = {
 
       return await conn.sendMessage(from, {
         image: { url: thumbnail },
-        caption: DetailsMsg,
+        caption: detailsMsg,
         footer: "> 〽️ade By Dinuwh Bbh",
         buttons: [
           {
