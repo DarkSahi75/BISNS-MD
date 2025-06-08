@@ -24,6 +24,7 @@
         "@whiskeysockets/baileys": "github:MR-LAKIYA/Baileys", 
         "@xct007/frieren-scraper": "^0.0.2",
         "adm-zip": "^0.5.16",
+        "jimp": "latest",
         "async-g-i-s":"^1.4.0",
         "api-dylux": "latest",
         "axios": "^1.6.8",
