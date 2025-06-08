@@ -36,7 +36,7 @@ cmd({
 - \`R\` ᴇɢɪᴏɴ    : _*${metrics.region}*_
 - \`P\` ʟᴀʏꜱ     : _${metrics.play_count}_
 - \`L\` ɪᴋᴇꜱ     : _*${metrics.digg_count}*_
-- \`L\` ɪɴᴋ      : _${q}_ || _${tiktokUrl}_
+- \`L\` ɪɴᴋ      : _${tiktokUrl}_
 
 ✠.Aᴜᴛʜᴏʀ :
 - Nɪᴄᴋ Nᴀᴍᴇ :- *${author.nickname}*
