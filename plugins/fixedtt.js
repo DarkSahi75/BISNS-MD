@@ -259,7 +259,6 @@ const digg_count    = metrics?.digg_count    || 'N/A';
 
 const nickname = author?.nickname || 'N/A';  
 const username = author?.unique_id || 'N/A';  
-
 const detailsMsg = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
 
 \`╭────────✦✧✦────────╯\`
@@ -280,7 +279,7 @@ const detailsMsg = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
 
 \`╰───────────────✿\`
 
-〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʰ;
+〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ;`;
 
 
 
