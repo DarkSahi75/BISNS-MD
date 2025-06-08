@@ -229,115 +229,99 @@ async (conn, mek, m, { from, q, reply }) => {
 
 //3=3.03=3.033=3.0333=3.03333=3.033333=3.033333
 
-
 cmd({
   pattern: "tiktokall",
   alias: ["tt", "ttdl", "tiktokdl"],
   react: '🔎',
-  desc: "Get TikTok video details only.",
+  desc: "Get TikTok video details with download options.",
   category: "tools",
-  use: ".ttlatest <TikTok video URL>",
+  use: ".tiktokall <TikTok video URL>",
   filename: __filename
-}, async (conn, mek, m, { from, reply, args }) => {
+}, async (conn, mek, m, { from, reply, args, prefix }) => {
   try {
     const q = args[0] || m.quoted?.text;
     if (!q || !q.includes("tiktok.com")) {
-      return reply('```🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\nඋදාහරණයක්: .ttlatest https://www.tiktok.com/@user/video/123...```');
+      return reply('❌ Please provide a valid TikTok video URL.\nExample: .tiktokall https://www.tiktok.com/@user/video/123...');
     }
 
     await conn.sendMessage(from, { react: { text: '🔍', key: m.key } });
 
     const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(q)}`;
-    const response = await axios.get(apiUrl);
+    const { data } = await axios.get(apiUrl);
 
-    const { title, thumbnail, video_url, author = {}, metrics = {} } = response.data.result;
+    if (!data?.result?.video_url) {
+      return reply('❌ Failed to fetch video. Try a different link.');
+    }
+
+    const { title, thumbnail, video_url, author = {}, metrics = {} } = data.result;
+    const url = video_url;
 
     const download_count = metrics?.download_count || 'N/A';
-    const comment_count = metrics?.comment_count || 'N/A';
-    const share_count   = metrics?.share_count   || 'N/A';
-    const region        = metrics?.region        || '🌍 Unknown';
-    const play_count    = metrics?.play_count    || 'N/A';
-    const digg_count    = metrics?.digg_count    || 'N/A';
+    const comment_count  = metrics?.comment_count || 'N/A';
+    const share_count    = metrics?.share_count   || 'N/A';
+    const region         = metrics?.region        || '🌍 Unknown';
+    const play_count     = metrics?.play_count    || 'N/A';
+    const digg_count     = metrics?.digg_count    || 'N/A';
 
-    const nickname = author?.nickname || 'N/A';
-    const username = author?.unique_id || 'N/A';
+    const nickname = author?.nickname   || 'N/A';
+    const username = author?.unique_id  || 'N/A';
 
-    const detailsMsg = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
-\`╭────────✦✧✦────────╯\`
+    const detailsMsg = `📥 TIKTOK VIDEO INFO:
 
-\`╭───────────────✿\`
+- Downloads   : ${download_count}
+- Comments    : ${comment_count}
+- Shares      : ${share_count}
+- Region      : ${region}
+- Plays       : ${play_count}
+- Likes       : ${digg_count}
 
-- \`D\` ᴏᴡɴʟᴏᴀᴅꜱ : _${download_count}_
-- \`C\` ᴏᴍᴍᴇɴᴛꜱ  : _*${comment_count}*_
-- \`S\` ʜᴀʀᴇꜱ    : _${share_count}_
-- \`R\` ᴇɢɪᴏɴ    : _*${region}*_
-- \`P\` ʟᴀʏꜱ     : _${play_count}_
-- \`L\` ɪᴋᴇꜱ     : _*${digg_count}*_
-- \`L\` ɪɴᴋ      : _${q}_
+🎬 Title      : ${title}
+🔗 Link       : ${q}
 
-✠.Aᴜᴛʜᴏʀ :
-- Nɪᴄᴋ Nᴀᴍᴇ :- *${nickname}*
-- Uꜱᴇʀɴᴀᴍᴇ   :- *${username}*
+👤 Creator Info:
+- Nickname    : ${nickname}
+- Username    : ${username}
 
-\`╰───────────────✿\`
+🎯 Choose your file type below`;
 
-〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
+    const sections = [
+      {
+        title: "🌀 With Watermark Video Options",
+        rows: [
+          { title: "1. Normal Video 📹", rowId: `${prefix}tikwm ${url}` },
+          { title: "2. Document Video 📃", rowId: `${prefix}tikwmdoc ${url}` }
+        ]
+      },
+      {
+        title: "🧊 No Watermark Video Options",
+        rows: [
+          { title: "3. Normal Video 📹", rowId: `${prefix}tiknowm ${url}` },
+          { title: "4. Document Video 📃", rowId: `${prefix}tiknowmdoc ${url}` }
+        ]
+      },
+      {
+        title: "🎵 Audio Download Options",
+        rows: [
+          { title: "5. Audio 🎧", rowId: `${prefix}tiktokaud ${url}` },
+          { title: "6. Document Audio 📄", rowId: `${prefix}tiktokauddoc ${url}` },
+          { title: "7. Voice Note 🎙️", rowId: `${prefix}tiktokaudptt ${url}` }
+        ]
+      }
+    ];
 
-    if (config.MODE === 'nonbutton') {
-  const sections = [
-    {
-      title: "* *🌀 With Watermark Video Options*",
-      rows: [
-        {
-          title: "1. Normal Video 📹",
-          rowId: `${prefix}tikwm ${url}`
-        },
-        {
-          title: "2. Document Video 📃",
-          rowId: `${prefix}tikwmdoc ${url}`
-        }
-      ]
-    },
-    {
-      title: "* *🧊 No Watermark Video Options*",
-      rows: [
-        {
-          title: "3. Normal Video 📹",
-          rowId: `${prefix}tiknowm ${url}`
-        },
-        {
-          title: "4. Document Video 📃",
-          rowId: `${prefix}tiknowmdoc ${url}`
-        }
-      ]
-    },
-    {
-      title: "*🎵 Audio Download Options*",
-      rows: [
-        {
-          title: "5. Audio 🎧",
-         rowId: `${prefix}tiktokaud ${url}`
-        },
-        {
-          title: "6. Document Audio 📄",
-          rowId: `${prefix}tiktokauddoc ${url}`
-        },
-        {
-          title: "7. Voice Note 🎙️",
-          rowId: `${prefix}tiktokaudptt ${url}`
-        }
-      ]
-    }
-  ];
+    return await conn.replyList(from, {
+      caption: detailsMsg,
+      image: { url: thumbnail },
+      footer: 'Reply with a number to select your download format.',
+      buttonText: '📥 Choose File Type',
+      sections
+    }, { quoted: mek });
 
-  return await conn.replyList(from, {
-    caption: detailsMsg,
-    image: { url: thumbnail },
-    footer: '> *Reply Below Number*',
-    buttonText: '> Choose File Type',
-    sections
-  }, { quoted: mek });
-          }
+  } catch (e) {
+    console.error(e);
+    return reply('⚠️ Something went wrong while processing the request.');
+  }
+});
 
 if (config.MODE === 'button') {
   const listData = {
