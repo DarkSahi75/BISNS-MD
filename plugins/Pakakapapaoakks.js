@@ -37,14 +37,11 @@ cmd({
 - \`P\` ʟᴀʏꜱ     : _${metrics.play_count}_
 - \`L\` ɪᴋᴇꜱ     : _*${metrics.digg_count}*_
 - \`L\` ɪɴᴋ      : _${tiktokUrl}_
-
 ✠.Aᴜᴛʜᴏʀ :
 - Nɪᴄᴋ Nᴀᴍᴇ :- *${author.nickname}*
 - Uꜱᴇʀɴᴀᴍᴇ   :- *@${author.username}*
 
-\`╰───────────────✿\`
-
-〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
+\`╰───────────────✿\``;
 
     // ✳️ If nonbutton mode
 if (config.MODE === 'nonbutton') {
