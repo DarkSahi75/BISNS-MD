@@ -26,8 +26,6 @@ cmd({
     const { title, thumbnail, author, metrics } = response.data.result;
 
     const detailsMsg = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
-\`╭────────✦✧✦────────╯\`
-
 \`╭───────────────✿\`
 
 - \`D\` ᴏᴡɴʟᴏᴀᴅꜱ : _${metrics.download_count}_
@@ -98,7 +96,7 @@ if (config.MODE === 'nonbutton') {
 const listMessage = {
 caption: detailsMsg,
 image: { url:thumbnail },  // <-- use YouTube thumbnail here
-footer: '> 〽️ade By Dinuwh Bbh',
+footer: '> *〽️ade By Dinuwh Bbh*',
 title: '',
 buttonText: '> *◎Reply Below Number ⇲◎*',
 sections
@@ -116,12 +114,12 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
       rows: [
         {
           title: "NonWaterMark Normal Video",
-          description: "Download as normal video\n〽️ade By Dinuwh Bbh",
+          description: "〽️ade By Dinuwh Bbh",
           id: `${prefix}tikaud ${tiktokUrl}`
         },
         {
           title: "NonWaterMark Document Video",
-          description: "Download as document\n〽️ade By Dinuwh Bbh",
+          description: "〽️ade By Dinuwh Bbh",
           id: `${prefix}ytdoc ${tiktokUrl}`
         }
       ]
@@ -131,12 +129,12 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
       rows: [
         {
           title: "WithWaterMark Normal Video",
-          description: "Download as normal video\n〽️ade By Dinuwh Bbh",
+          description: "〽️ade By Dinuwh Bbh",
           id: `${prefix}ytvoice ${tiktokUrl}`
         },
         {
           title: "WithWaterMark Document Video",
-          description: "Download as document\n〽️ade By Dinuwh Bbh",
+          description: "〽️ade By Dinuwh Bbh",
           id: `${prefix}devilv ${tiktokUrl}`
         }
       ]
@@ -151,17 +149,17 @@ const listData2 = {
             
             {
               title: "\`Audio With Normal\`",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              description: "〽️ade By Dinuwh Bbh",
               id: `${prefix}tikaud ${tiktokUrl}`
             },
             {
               title: "\`Audio With Document\`",
-              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              description: "〽️ade By Dinuwh Bbh",
               id: `${prefix}tikauddoc ${tiktokUrl}`
             },
             {
               title: "\`Audio With Voice Note\`",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              description: "〽️ade By Dinuwh Bbh",
               id: `${prefix}tikaudptt ${tiktokUrl}`
             }
           ]
@@ -171,7 +169,7 @@ const listData2 = {
       return await conn.sendMessage(from, {
         image: { url: thumbnail },
         caption: detailsMsg,
-        footer: "> 〽️ade By Dinuwh Bbh",
+        footer: "> *〽️ade By Dinuwh Bbh*",
         buttons: [
           {
             buttonId: "action",
