@@ -228,61 +228,38 @@ async (conn, mek, m, { from, q, reply }) => {
 
 
 //3=3.03=3.033=3.0333=3.03333=3.033333=3.033333
+
 cmd({
-pattern: "tiktokall",
-alias: ["tt", "ttdl", "tiktokdl"],
-react: '🔎',
-desc: "Get TikTok video details only.",
-category: "tools",
-use: ".ttlatest <TikTok video URL>",
-filename: __filename
+  pattern: "ttlatest",
+  alias: ["ttinfo", "ttdetails", "tt"],
+  react: '🔎',
+  desc: "Get TikTok video details only.",
+  category: "tools",
+  use: ".tiok <TikTok video URL>",
+  filename: __filename
 }, async (conn, mek, m, { from, reply, args }) => {
-try {
-const q = args[0] || m.quoted?.text;
-if (!q || !q.includes("tiktok.com")) {
-return reply('🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\nඋදාහරණයක්: .ttlatest https://www.tiktok.com/@user/video/123...');
-}
+  try {
+    const tiktokUrl = args[0];
+    if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
+      return reply('```🥲 කරුණාකර වලංගු TikTok ලින්ක් එකක් දෙන්න.\nඋදාහරණයක්: .tiok https://www.tiktok.com/@user/video/123...```');
+    }
 
-await conn.sendMessage(from, { react: { text: '🔍', key: m.key } });  
+    await conn.sendMessage(from, { react: { text: '🔍', key: m.key } });
 
-const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(q)}`;  
-const response = await axios.get(apiUrl);  
+    const apiUrl = `https://api.nexoracle.com/downloader/tiktok-nowm?apikey=free_key@maher_apis&url=${encodeURIComponent(tiktokUrl)}`;
+    const response = await axios.get(apiUrl);
 
-const { title, thumbnail, video_url, author = {}, metrics = {} } = response.data.result;  
+    const { title, thumbnail, author, metrics } = response.data.result;
 
-const download_count = metrics?.download_count || 'N/A';  
-const comment_count = metrics?.comment_count || 'N/A';  
-const share_count   = metrics?.share_count   || 'N/A';  
-const region        = metrics?.region        || '🌍 Unknown';  
-const play_count    = metrics?.play_count    || 'N/A';  
-const digg_count    = metrics?.digg_count    || 'N/A';  
-
-const nickname = author?.nickname || 'N/A';  
-const username = author?.unique_id || 'N/A';  
-const detailsMsg = `乂 ᗪIᑎᑌᗯᕼ TIKTOK ᗪOᗯᑎ ⟩⟩⟩
-
-\`╭────────✦✧✦────────╯\`
-
-\`╭───────────────✿\`
-
-- \`D\` ᴏᴡɴʟᴏᴀᴅꜱ : _${download_count}_
-- \`C\` ᴏᴍᴍᴇɴᴛꜱ  : _${comment_count}_
-- \`S\` ʜᴀʀᴇꜱ    : _${share_count}_
-- \`R\` ᴇɢɪᴏɴ    : _${region}_
-- \`P\` ʟᴀʏꜱ     : _${play_count}_
-- \`L\` ɪᴋᴇꜱ     : _${digg_count}_
-- \`L\` ɪɴᴋ      : _${q}_
-
-✠.Aᴜᴛʜᴏʀ :
-- Nɪᴄᴋ Nᴀᴍᴇ :- *${nickname}*
-- Uꜱᴇʀɴᴀᴍᴇ  :- *${username}*
-
-\`╰───────────────✿\`
-
-〽️ᴀᴅᴇ ʙʏ Dɪɴᴜᴡʜ ʙʙʜ`;
-
-
-
+    const detailsMsg = `📌 *TikTok Video Info*\n\n` +
+      `🔖 *Title*: ${title || "N/A"}\n` +
+      `👤 *Author*: ${author.nickname} (@${author.username})\n` +
+      `❤️ *Likes*: ${metrics.digg_count}\n` +
+      `💬 *Comments*: ${metrics.comment_count}\n` +
+      `🔁 *Shares*: ${metrics.share_count}\n` +
+      `📥 *Downloads*: ${metrics.download_count}\n\n` +
+      `🔗 *Link*: ${tiktokUrl}\n\n` +
+      `> *Powered by DINUWH MD™*`;
     if (config.MODE === 'nonbutton') {
       const sections = [
         {
