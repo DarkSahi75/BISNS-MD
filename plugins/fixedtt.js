@@ -229,7 +229,8 @@ async (conn, mek, m, { from, q, reply }) => {
 
 //3=3.03=3.033=3.0333=3.03333=3.033333=3.033333
 
-/*cmd({
+/*
+cmd({
   pattern: "ttlatest",
   alias: ["ttinfo", "ttdetails", "tt"],
   react: '🔎',
@@ -375,3 +376,4 @@ const listData2 = {
     reply(`❌ Error: ${e.message}`);
   }
 });
+*/
