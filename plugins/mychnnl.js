@@ -462,3 +462,82 @@ cmd(
     }
   }
 );
+
+//=3==3.03=3.033=3.033=3.033=3.0333=3.03333=3.03333=3.03333
+
+
+cmd(
+  {
+    pattern: "minddcm",
+    desc: "Send YouTube MP3 to a specific JID",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const ytUrl = data.url;
+
+      const api = `https://yt-five-tau.vercel.app/download?q=${ytUrl}&format=mp3`;
+      const { data: apiRes } = await axios.get(api);
+
+      if (!apiRes?.status || !apiRes.result?.download) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const result = apiRes.result;
+
+      // 🖼️ Stylish Caption
+      const caption = `🔮 *Tɪᴛʟᴇ :* ${result.title}
+
+▫️📆 *Rᴇʟᴇᴀꜱᴇᴅ :* ${data.ago}
+▫️⏱️ *Dᴜʀᴀᴛɪᴏɴ :* ${data.seconds} seconds (${data.timestamp})
+▫️🎭 *Vɪᴇᴡꜱ :* ${data.views.toLocaleString()}
+
+\`▫️ඔයා ආස පාටකිම් හාට් එකක් දාන් යමූ ❤‍🩹😽🍃*\`
+
+> 𝙈 𝘪 𝘯 𝘥  𝙁 𝘳 𝘦 𝘦 𝘥 𝘰 𝘮 💆🤍 | 🇱🇰*
+`;
+
+      // 🖼️ Send Thumbnail + Caption to Target JID
+      await robin.sendMessage(
+        config.TMJID,
+        {
+          image: { url: result.thumbnail },
+          caption,
+        },
+        { quoted: mek }
+      );
+
+      // 🔊 Send MP3 Audio to same JID
+      await robin.sendMessage(
+        config.TMJID,
+        {
+          audio: { url: result.download },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // ✅ Confirmation to sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${result.title}"* නම් ගීතය *${config.TMJID}* වෙත සාර්ථකව යවනු ලැබීය.`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply("*🥲 උත්සහය අසාර්ථක වුණා! වෙනස් එකක් දාන්න හොඳයි.*");
+    }
+  }
+);
