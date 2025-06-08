@@ -288,7 +288,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
 	//button
 
 
-  if (config.MODE === 'button') {
+  /*if (config.MODE === 'button') {
       const listData = {
         title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
         sections: [{
@@ -374,7 +374,7 @@ const listData2 = {
         headerType: 1,
         viewOnce: true,
       }, { quoted: mek });
-    }
+    }*/
 
   } catch (e) {
     console.error(e);
