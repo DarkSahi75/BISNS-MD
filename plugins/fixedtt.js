@@ -290,11 +290,11 @@ cmd({
       rows: [
         {
           title: "1. Normal Video 📹",
-          rowId: `${prefix}tikwm ${q}`
+          rowId: `${prefix}tikwm ${url}`
         },
         {
           title: "2. Document Video 📃",
-          rowId: `${prefix}tikwmdoc ${q}`
+          rowId: `${prefix}tikwmdoc ${url}`
         }
       ]
     },
@@ -303,11 +303,11 @@ cmd({
       rows: [
         {
           title: "3. Normal Video 📹",
-          rowId: `${prefix}tiknowm ${q}`
+          rowId: `${prefix}tiknowm ${url}`
         },
         {
           title: "4. Document Video 📃",
-          rowId: `${prefix}tiknowmdoc ${q}`
+          rowId: `${prefix}tiknowmdoc ${url}`
         }
       ]
     },
@@ -316,15 +316,15 @@ cmd({
       rows: [
         {
           title: "5. Audio 🎧",
-         rowId: `${prefix}tiktokaud ${q}`
+         rowId: `${prefix}tiktokaud ${url}`
         },
         {
           title: "6. Document Audio 📄",
-          rowId: `${prefix}tiktokauddoc ${q}`
+          rowId: `${prefix}tiktokauddoc ${url}`
         },
         {
           title: "7. Voice Note 🎙️",
-          rowId: `${prefix}tiktokaudptt ${q}`
+          rowId: `${prefix}tiktokaudptt ${url}`
         }
       ]
     }
