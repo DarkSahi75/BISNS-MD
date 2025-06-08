@@ -290,12 +290,10 @@ cmd({
       rows: [
         {
           title: "1. Normal Video 📹",
-          description: "Download as video file (With Watermark)",
           rowId: `${prefix}tikwm ${q}`
         },
         {
           title: "2. Document Video 📃",
-          description: "Download as document video (With Watermark)",
           rowId: `${prefix}tikwmdoc ${q}`
         }
       ]
@@ -305,12 +303,10 @@ cmd({
       rows: [
         {
           title: "3. Normal Video 📹",
-          description: "Download as video file (No Watermark)",
           rowId: `${prefix}tiknowm ${q}`
         },
         {
           title: "4. Document Video 📃",
-          description: "Download as document video (No Watermark)",
           rowId: `${prefix}tiknowmdoc ${q}`
         }
       ]
@@ -320,17 +316,14 @@ cmd({
       rows: [
         {
           title: "5. Audio 🎧",
-          description: "Download as normal audio file",
-          rowId: `${prefix}tiktokaud ${q}`
+         rowId: `${prefix}tiktokaud ${q}`
         },
         {
           title: "6. Document Audio 📄",
-          description: "Download as document audio",
           rowId: `${prefix}tiktokauddoc ${q}`
         },
         {
           title: "7. Voice Note 🎙️",
-          description: "Download as voice note (PTT)",
           rowId: `${prefix}tiktokaudptt ${q}`
         }
       ]
@@ -341,7 +334,6 @@ cmd({
     caption: detailsMsg,
     image: { url: thumbnail },
     footer: '> *Reply Below Number*',
-    title: '📌 TikTok Download Menu',
     buttonText: '> Choose File Type',
     sections
   }, { quoted: mek });
