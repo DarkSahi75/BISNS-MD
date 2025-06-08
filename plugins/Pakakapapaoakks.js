@@ -33,7 +33,6 @@ cmd({
 - \`D\` ᴏᴡɴʟᴏᴀᴅꜱ : _${metrics.download_count}_
 - \`C\` ᴏᴍᴍᴇɴᴛꜱ  : _*${metrics.comment_count}*_
 - \`S\` ʜᴀʀᴇꜱ    : _${metrics.share_count}_
-- \`R\` ᴇɢɪᴏɴ    : _*${metrics.region}*_
 - \`P\` ʟᴀʏꜱ     : _${metrics.play_count}_
 - \`L\` ɪᴋᴇꜱ     : _*${metrics.digg_count}*_
 - \`L\` ɪɴᴋ      : _${tiktokUrl}_
