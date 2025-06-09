@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const config = require('./config'); // make sure config.ANTI_EDIT is defined
-const { cmd, command} = require(../lib/command);
+const { cmd } = require("../lib/command");
 function getStorageFilePath(jid) {
   return path.join(__dirname, `./lib/messageStore/${jid}.json`);
 }
