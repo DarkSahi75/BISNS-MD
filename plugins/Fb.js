@@ -8,7 +8,7 @@ cmd({
   pattern: "fb",
   react: '#️⃣',
   alias: ["fbdl","facebook"],
-  desc: desc1,
+  desc: "Facebook වීඩියෝවක් download කරන්න",
   category: "download",
   use: '.fb <Fb video link>',
   filename: __filename
