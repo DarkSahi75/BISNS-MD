@@ -1,3 +1,9 @@
+const fetch = require('node-fetch');
+const { cmd } = require('../lib/plugins.js');
+const { fetchJson } = require('../lib/myfunc.js'); // මේක තියෙන්නේ නම්
+const config = require('../settings.js');
+const { generateWAMessageFromContent } = require('@whiskeysockets/baileys');
+
 cmd({
   pattern: "fb",
   react: '#️⃣',
