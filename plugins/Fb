@@ -1,47 +1,45 @@
-const cmd = require('../lib/command');
-const { fetchJson } = require('../lib/function');
+const { cmd } = require('../lib/command')
+const { fetchJson } = require('../lib/function')
 
 cmd({
-  pattern: "fbl",
-  alias: ["fbinfo", "fbdata"],
+  pattern: "fbdetail",
+  alias: ["fbinfo"],
   category: "downloader",
-  desc: "Facebook Video Details Only",
-  use: '.fbdetail <facebook url>',
+  desc: "Facebook video details only",
+  use: '.fbdetail <facebook video url>',
   filename: __filename
 }, async (conn, m, { q }) => {
-  if (!q || !q.includes("facebook.com")) {
-    return m.reply("📌 *කරුණාකර වලංගු Facebook වීඩියෝ ලින්ක් එකක් දෙන්න!*\nตัวอย่าง:\n.fbdetail https://www.facebook.com/username/videos/1234567890")
-  }
+  if (!q) return m.reply("📌 *කරුණාකර Facebook video link එකක් ලබාදෙන්න!*");
 
   try {
-    const json = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/fbdown?url=${q}`);
-    const res = json?.result;
+    const response = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/fbdown?url=${q}`);
     
-    if (!res) return m.reply("❌ විස්තර ලබාගත නොහැක.");
+    if (!response || !response.result) {
+      return m.reply("⚠️ වීඩියෝ විස්තර ලබාගැනීමට අසාර්ථකයි.");
+    }
 
-    let { title, desc, thumb, sd, hd } = res;
+    const { title, desc, thumb, sd, hd } = response.result;
 
-    let msg = `🎬 *Facebook Video Info*
+    let caption = `🎬 *Facebook Video Details*
 
-📌 *Title:* ${title || "No title"}
-📝 *Description:* ${desc || "No description"}
+📌 *Title:* ${title || "Unavailable"}
+📝 *Description:* ${desc || "Unavailable"}
 
-🎞️ *Available Qualities:*
-🔹 SD: ${sd ? `[Download](${sd})` : "Unavailable"}
-🔸 HD: ${hd ? `[Download](${hd})` : "Unavailable"}
+🎞️ *Download Links:*
+🔹 [SD Video](${sd})
+🔸 [HD Video](${hd})
 
-🔗 *Source URL:* ${q}
+🔗 *Original URL:* ${q}
 
-💠 *Powered by:* @DINUWH_MD`;
+📸 *Thumbnail Below*`;
 
     await conn.sendMessage(m.chat, {
       image: { url: thumb },
-      caption: msg,
-      jpegThumbnail: Buffer.alloc(0)
+      caption
     }, { quoted: m });
-    
-  } catch (e) {
-    console.error(e);
-    m.reply("⚠️ එකක් ඇරියා වගේ! නැවත උත්සාහ කරන්න.");
+
+  } catch (err) {
+    console.error(err);
+    m.reply("❌ දෝෂයක් ඇතිවුණා. කරුණාකර link එක සොයා බලන්න හෝ නැවත උත්සාහ කරන්න.");
   }
 });
