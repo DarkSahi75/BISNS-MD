@@ -28,8 +28,6 @@ async (conn, mek, m, {
 
     let dat = `🎥 *Facebook Downloader*
 
-let dat = `🎥 *Facebook Downloader*
-
 *📌 Title:* ${result.title || "No title available"}
 📝 *Description:* ${result.description || "No description"}
 🔗 *URL:* ${q}`;
