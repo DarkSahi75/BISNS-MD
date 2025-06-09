@@ -28,6 +28,7 @@ async (conn, mek, m, {
 
     let dat = `🎥 *Facebook Downloader*
 
+*Title* ${data.title}
 📌 *URL:* ${q}`;
 
     if (config.MODE === 'nonbutton') {
