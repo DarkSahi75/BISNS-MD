@@ -28,8 +28,11 @@ async (conn, mek, m, {
 
     let dat = `🎥 *Facebook Downloader*
 
-*Title* ${data.title}
-📌 *URL:* ${q}`;
+let dat = `🎥 *Facebook Downloader*
+
+*📌 Title:* ${result.title || "No title available"}
+📝 *Description:* ${result.description || "No description"}
+🔗 *URL:* ${q}`;
 
     if (config.MODE === 'nonbutton') {
 
