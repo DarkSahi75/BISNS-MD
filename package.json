@@ -9,7 +9,7 @@
         "stash": "git stash && git stash drop"
     },
     "dependencies": {
-        "@whiskeysockets/baileys": "github:AxellNetwork/Baileys",
+        "@whiskeysockets/baileys": "github:DINU-FXMD/baileys",
         "@xct007/frieren-scraper": "^0.0.2",
         "@adiwajshing/keyed-db": "^0.2.4",
         "@blackamda/telegram-image-url": "^1.0.0",
