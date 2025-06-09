@@ -16,7 +16,7 @@ cmd({
 async(conn, mek, m,{from, prefix, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 if (!fbreg(q)) return await  reply(urlneed2)	
-const result = await fetchJson(`https://vajira-api-0aaeb51465b5.herokuapp.com/download/fbdown?url=${q}`)
+const result = await fetchJson(`https://api-mainh-20a12b683c39.herokuapp.com/download/fbdown?url=${q}`)
 
 let dat = `VAJIRA MD FB DOWNLOADER
 
