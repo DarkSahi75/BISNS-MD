@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const { cmd } = require('../lib/command');
-const { fetchJson } = require('../lib/function'); // මේක තියෙන්නේ නම්
+const { fetchJson } = require('../lib/functions'); // මේක තියෙන්නේ නම්
 const config = require('../settings');
 const { generateWAMessageFromContent } = require('@whiskeysockets/baileys');
 
