@@ -14,12 +14,12 @@ cmd({
     const from = m.chat;
     const pushname = m.pushName || "User";
 
-    const caption = `𝙷𝙴𝚈 *" ${pushname} "* 🫣💗
+    const text = `𝙷𝙴𝚈 *" ${pushname} "* 🫣💗
 
 🤖 I Am The Bezzz Channel Chat Bot!  
 🛠️ MADE BY 𝙳𝙸 𝙽 𝚄 𝚆 𝙷 (728899640)
 
-*му ραι∂ ρ𝚁σмσтιση ρ𝚁ι¢є ℓιѕт ⤵️*
+*μү ραі∂ ρяσмσтιση ρяι¢є ℓιѕт ⤵️*
 
 ⏰ *1 Hour* :- _RS 300/=_
 ⏰ *2 Hour* :- _RS 500/=_
@@ -40,24 +40,24 @@ https://whatsapp.com/channel/0029VazV7oYBVJl03iU3au1a
       {
         title: "📋 Select Option Below",
         rows: [
-          { title: "1", rowId: prefix + 'menu', description: 'COMMANDS MENU' },
-          { title: "2", rowId: prefix + 'ping', description: 'VAJIRA-MD SPEED' }
+          { title: "1. Menu 📜", rowId: prefix + 'menu', description: '📌 COMMANDS MENU' },
+          { title: "2. Ping 📶", rowId: prefix + 'ping', description: '⚡ VAJIRA-MD SPEED' }
         ]
       }
     ];
 
     const listMessage = {
-      text: caption,
-      footer: 'Powered by DINUWH MD',
-      title: '📌 Paid Promotion Plans',
-      buttonText: '*🔢 Reply below number*',
-      sections
+      text: text,
+      footer: '🔥 POWERED BY DINUWH MD 🔥',
+      title: '💸 PROMOTION PLANS',
+      buttonText: '🧾 CLICK TO SEE OPTIONS',
+      sections: sections
     };
 
-    return await conn.sendMessage(from, listMessage, { quoted: m });
+    await conn.sendMessage(from, listMessage, { quoted: m });
 
   } catch (e) {
-    await m.reply('*ERROR !!*');
     console.error(e);
+    await m.reply('*❌ ERROR occurred while sending list!*');
   }
 });
