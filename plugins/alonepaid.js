@@ -56,7 +56,7 @@ https://whatsapp.com/channel/0029VazV7oYBVJl03iU3au1a
     } 
 ]
 const listMessage = {
-caption: cap,
+caption: caption,
 image : 'https://i.ibb.co/DgCyJntp/DiNuWhMd.jpg',	
 footer: 'config.FOOTER',
 title: '😒',
