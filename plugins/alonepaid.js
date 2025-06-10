@@ -37,36 +37,135 @@ https://whatsapp.com/channel/0029VazV7oYBVJl03iU3au1a
 ⚠️ *ප්‍රමෝශන් ඇඩ් එක්ක් දාගන්නවානම් පමණක් මෙතනින් එහා ඉදිරියට යන්න ☺️🪄*  
 ⚠️ *Proceed here only if you are placing a promotional ad ☺️🪄*`;
 
-    const sections = [
-      {
-        title: "📋 Choose Your Command Menu Below",
-        rows: [
-          { title: "1. Downloader Menu", rowId: prefix + 'downmenu', description: 'Download-related commands' },
-          { title: "2. Search Menu", rowId: prefix + 'searchmenu', description: 'Search-related commands' },
-          { title: "3. Convert Menu", rowId: prefix + 'convertmenu', description: 'Convert tools' },
-          { title: "4. Logo Menu", rowId: prefix + 'logomenu', description: 'Stylish logo generators' },
-          { title: "5. Main Menu", rowId: prefix + 'mainmenu', description: 'Main system commands' },
-          { title: "6. Group Menu", rowId: prefix + 'groupmenu', description: 'Group management' },
-          { title: "7. Bug Menu", rowId: prefix + 'bugmenu', description: 'Bug report tools' },
-          { title: "8. Movie Menu", rowId: prefix + 'moviemenu', description: 'Movie and series tools' },
-          { title: "9. Other Menu", rowId: prefix + 'othermenu', description: 'Other helpful features' }
+    if (config.MODE === 'nonbutton') {
+	
+  const sections = [
+    {
+	title: "",
+	rows: [
+	    
+            {title: "1", rowId: prefix + 'downmenu' , description: 'Downloader Commands'},
+	    {title: "2", rowId: prefix + 'searchmenu' , description: 'Search Commands'},
+	    {title: "3", rowId: prefix + 'convertmenu' , description: 'Converter Commands'}, 
+	    {title: "4", rowId: prefix + 'logomenu' , description: 'Logo Commands'},
+	    {title: "5", rowId: prefix + 'mainmenu' , description: 'Main Commands'},
+	    {title: "6", rowId: prefix + 'groupmenu' , description: 'Group Commands'},
+	    {title: "7", rowId: prefix + 'bugmenu' , description: 'Bug commands'},	
+	    {title: "8", rowId: prefix + 'moviemenu' , description: 'Movie commands'},
+	    {title: "9", rowId: prefix + 'othermenu' , description: 'Other commands'},
+		
+	]
+    } 
+]
+const listMessage = {
+caption: cap,
+image : 'https://i.ibb.co/DgCyJntp/DiNuWhMd.jpg',	
+footer: 'config.FOOTER',
+title: '😒',
+buttonText: '*🔢 Reply below number*',
+sections
+}
+return await conn.replyList(from, listMessage ,{ quoted : mek })
+
+
+} if (config.MODE === 'button') {
+
+
+        let sections = [{
+                title: '🔑 Select menu type',
+                rows: [{
+                        title: 'DOWNLOAD MENU',
+                        description: `Download commands`,
+                        id: `${prefix}downmenu`
+                    },
+                    {
+                        title: `SEARCH MENU`,
+                        description: 'Search commands',
+                        id: `${prefix}searchmenu`
+                    },
+		    {
+                        title: `CONVERT MENU`,
+                        description: 'Convert commands',
+                        id: `${prefix}convertmenu`
+                    },
+                    {
+                        title: `MAIN MENU`,
+                        description: 'Convert commands',
+                        id: `${prefix}mainmenu`
+                    },
+		    {
+                        title: `GROUP MENU`,
+                        description: 'Group commands',
+                        id: `${prefix}groupmenu`
+                    },
+                    {
+                        title: `LOGO MENU`,
+                        description: 'Logo commands',
+                        id: `${prefix}logomenu`
+                    },
+		    {
+                        title: `BUG MENU`,
+                        description: 'Bug commands',
+                        id: `${prefix}bugmenu`
+                    },
+                    {
+                        title: `MOVIE MENU`,
+                        description: 'Movie commands',
+                        id: `${prefix}moviemenu`
+                    },   
+		    {
+                        title: `OTHER MENU`,
+                        description: 'Other commands',
+                        id: `${prefix}othermenu`
+                    },      
+                ]
+            }
         ]
-      }
-    ];
 
-    const listMessage = {
-  caption: cap, // <-- FIXED HERE
-  footer: '⚡ POWERED BY DINUWH MD ⚡',
-  title: '💸 PROMOTION PLANS',
-  buttonText: '🧾 CLICK TO SEE COMMANDS',
-  sections,
-  image: { url: 'https://i.ibb.co/TDNMgMzX/5945.jpg' } // Image is okay here
-};
+        let listMessage = {
+            title: 'Click Here⎙',
+            sections
+        };
+        conn.sendMessage(from, {
+            image: 'https://i.ibb.co/DgCyJntp/DiNuWhMd.jpg',
+    caption: cap,
+    footer: 'configFOOTER',
+                buttons: [
+			{
+                    buttonId: `${prefix}alive`,
+                    buttonText: {
+                        displayText: 'ALIVE'
+                    },
+                },
+		{
+                    buttonId: `${prefix}ping`,
+                    buttonText: {
+                        displayText: 'PING'
+                    },
+                },	
+                {
+                    buttonId: 'action',
+                    buttonText: {
+                        displayText: 'ini pesan interactiveMeta'
+                    },
+                    type: 4,
+                    nativeFlowInfo: {
+                        name: 'single_select',
+                        paramsJson: JSON.stringify(listMessage),
+                    },
+                },
+            ],
+            headerType: 1,
+            viewOnce: true
+        }, {
+            quoted: m
+        });
+	
+}
+	
+} catch (e) {
+reply()
+l(e)
+}
+})   
 
-    await conn.sendMessage(from, listMessage, { quoted: m });
-
-  } catch (e) {
-    console.error(e);
-    await m.reply('❌ *ERROR SENDING LIST MESSAGE!*');
-  }
-});
