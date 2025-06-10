@@ -55,13 +55,13 @@ https://whatsapp.com/channel/0029VazV7oYBVJl03iU3au1a
     ];
 
     const listMessage = {
-      text: cap,
-      footer: config.FOOTER || '⚡ POWERED BY DINUWH MD ⚡',
-      title: '💸 PROMOTION PLANS',
-      buttonText: '🧾 CLICK TO SEE COMMANDS',
-      sections,
-      image: { url: 'https://i.ibb.co/TDNMgMzX/5945.jpg' }
-    };
+  caption: 'cap', // <-- FIXED HERE
+  footer: '⚡ POWERED BY DINUWH MD ⚡',
+  title: '💸 PROMOTION PLANS',
+  buttonText: '🧾 CLICK TO SEE COMMANDS',
+  sections,
+  image: { url: 'https://i.ibb.co/TDNMgMzX/5945.jpg' } // Image is okay here
+};
 
     await conn.sendMessage(from, listMessage, { quoted: m });
 
