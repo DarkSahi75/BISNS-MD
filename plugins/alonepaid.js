@@ -74,7 +74,8 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
 
 
 
-/*cmd({
+/*
+md({
   pattern: "𝙿𝚁𝙾𝙼𝙾𝚃𝙴-𝙼𝚈-𝙰𝙳𝙳",
   react: "🧚‍♂️",
   desc: "Render Paid Promotion Plans",
@@ -210,4 +211,5 @@ reply()
 l(e)
 }
 })   
+*/
 
