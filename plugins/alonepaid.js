@@ -55,7 +55,7 @@ https://whatsapp.com/channel/0029VazV7oYBVJl03iU3au1a
     ];
 
     const listMessage = {
-  caption: 'cap', // <-- FIXED HERE
+  caption: cap, // <-- FIXED HERE
   footer: '⚡ POWERED BY DINUWH MD ⚡',
   title: '💸 PROMOTION PLANS',
   buttonText: '🧾 CLICK TO SEE COMMANDS',
