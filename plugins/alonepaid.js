@@ -35,28 +35,27 @@ https://whatsapp.com/channel/0029VazV7oYBVJl03iU3au1a
 ⚠️ *ප්‍රමෝශන් ඇඩ් එක්ක් දාගන්නවානම් පමණක් මෙතනින් එහා ඉදිරියට යන්න ☺️🪄*  
 ⚠️ *Proceed here only if you are placing a promotional ad ☺️🪄*
 `;
-const sections = [
-    {
-	title: "",
-	rows: [
-	    {title: "1", rowId: prefix + 'menu' , description: 'COMMANDS MENU'},
-	    {title: "2", rowId: prefix + 'ping' , description: 'VAJIRA-MD SPEED'} ,
 
-	]
-    } 
-]
-const listMessage = {
-caption: "ap",
-//mage : { url: config.LOGO },	
-footer: "FOOTER",
-title: '',
-buttonText: '*🔢 Reply below number*',
-sections
-}
-	
-return await conn.replyList(from, listMessage ,{ quoted : mek })
+    const sections = [
+      {
+        title: "📋 Select Option Below",
+        rows: [
+          { title: "1", rowId: prefix + 'menu', description: 'COMMANDS MENU' },
+          { title: "2", rowId: prefix + 'ping', description: 'VAJIRA-MD SPEED' }
+        ]
+      }
+    ];
 
-    
+    const listMessage = {
+      text: caption,
+      footer: 'Powered by DINUWH MD',
+      title: '📌 Paid Promotion Plans',
+      buttonText: '*🔢 Reply below number*',
+      sections
+    };
+
+    return await conn.sendMessage(from, listMessage, { quoted: m });
+
   } catch (e) {
     await m.reply('*ERROR !!*');
     console.error(e);
