@@ -35,43 +35,28 @@ https://whatsapp.com/channel/0029VazV7oYBVJl03iU3au1a
 ⚠️ *ප්‍රමෝශන් ඇඩ් එක්ක් දාගන්නවානම් පමණක් මෙතනින් එහා ඉදිරියට යන්න ☺️🪄*  
 ⚠️ *Proceed here only if you are placing a promotional ad ☺️🪄*
 `;
+const sections = [
+    {
+	title: "",
+	rows: [
+	    {title: "1", rowId: prefix + 'menu' , description: 'COMMANDS MENU'},
+	    {title: "2", rowId: prefix + 'ping' , description: 'VAJIRA-MD SPEED'} ,
 
-    const listMessage = {
-      title: "🪄 PROMO PLAN SELECTION",
-      text: caption,
-      footer: '𝗣𝗢𝗪𝗘𝗥𝗘𝗗 𝗕𝗬 𝙳𝙸 𝙽 𝚄 𝚆 𝙷 - 𝙼 𝙳',
-      buttonText: "📋 Choose Plan",
-      sections: [
-        {
-          title: "📁 Select a Promo Plan Below",
-          rows: [
-            {
-              title: "1. 📁 Want 1 Hour Plan",
-              rowId: prefix + '1hour'
-            },
-            {
-              title: "2. 📁 Want 2 Hour Plan",
-              rowId: prefix + '2hour'
-            },
-            {
-              title: "3. 📁 Want 3 Hour Plan",
-              rowId: prefix + '3hour'
-            },
-            {
-              title: "4. 📁 Want 8H (Night) Plan",
-              rowId: prefix + '8hour'
-            },
-            {
-              title: "5. 📁 Want Group Full Plan",
-              rowId: prefix + 'gfull'
-            }
-          ]
-        }
-      ]
-    };
+	]
+    } 
+]
+const listMessage = {
+caption: cap,
+//mage : { url: config.LOGO },	
+footer: "FOOTER",
+title: '',
+buttonText: '*🔢 Reply below number*',
+sections
+}
+	
+return await conn.replyList(from, listMessage ,{ quoted : mek })
 
-    await conn.sendMessage(from, listMessage, { quoted: m });
-
+    
   } catch (e) {
     await m.reply('*ERROR !!*');
     console.error(e);
