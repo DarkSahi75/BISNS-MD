@@ -46,7 +46,7 @@ const sections = [
     } 
 ]
 const listMessage = {
-caption: cap,
+caption: "ap",
 //mage : { url: config.LOGO },	
 footer: "FOOTER",
 title: '',
