@@ -128,25 +128,29 @@ async function connectToWA() {
                     require("./plugins/" + plugin);
                 }
             });
-            console.log('Plugins installed ✅')
-            console.log('Bot connected ✅')
+            
+        console.log('Plugins installed ✅');
+console.log('Bot connected ✅');
+
 conn.sendMessage(conn.user.id, {
-text: "*👨‍💻 ᴠᴀᴊɪʀᴀ ᴍᴅ 👨‍💻 successfully connected* ✓\n\n Use .Update command to see Vajira md new update news \n\n> ◦ *Official GitHub* - ```https://github.com/VajiraTech```\n> ◦ ᴊᴏɪɴ ᴏᴜʀ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ ᴠɪᴀ ᴛʏᴘᴇ: .joinsup\n*👨‍💻 ᴠᴀᴊɪʀᴀ ᴍᴅ 👨‍💻 ᴡʜᴀᴛꜱᴀᴘᴘ ᴜꜱᴇʀ ʙᴏᴛ*\n*ᴄʀᴇᴀᴛᴇᴅ ʙʏ • ᴠᴀᴊɪʀᴀ ʀᴀᴛʜɴᴀʏᴀᴋᴀ*",
-contextInfo: {
-externalAdReply: {
-title: "👨‍💻 ᴠᴀᴊɪʀᴀ ᴍᴅ 👨‍💻\nSuccessfully Connected !",	
-thumbnailUrl: "https://cdn.dribbble.com/users/15468/screenshots/2450252/logo.jpg",
-sourceUrl: "",
-mediaType: 1,
-renderLargerThumbnail: true
-}}}) 
+  text: "*👨‍💻 DINUWH MD V2 👨‍💻 successfully connected* ✓\n\n Use *.update* command to see DINUWH MD new update news.\n\n> ◦ *Official GitHub* - ```https://github.com/YourGitHubHere```\n> ◦ ᴊᴏɪɴ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ ᴛʏᴘᴇ: *.joinsup*\n\n*👨‍💻 DINUWH MD 👨‍💻 WhatsApp Bot*\n*Created by • Dinuwh Rathnayaka*",
+  contextInfo: {
+    externalAdReply: {
+      title: "👨‍💻 DINUWH MD V2 👨‍💻\nSuccessfully Connected!",
+      thumbnailUrl: "https://i.ibb.co/tC37Q7B/20241220-122443.jpg",
+      sourceUrl: "https://github.com/YourGitHubHere", // මේක ඕනම URL එකක් දාන්න පුලුවන්
+      mediaType: 1,
+      renderLargerThumbnail: true
     }
-  })
+  }
+});
 
-
-
-
-        
+// Send image with caption to owner
+let up = `*🤖 DINUWH MD V2 💚 Wa-BOT connected successfully ✅*\n\n*PREFIX:* ${prefix}`;
+conn.sendMessage(ownerNumber + "@s.whatsapp.net", {
+  image: { url: 'https://i.ibb.co/tC37Q7B/20241220-122443.jpg' },
+  caption: up
+});
       
 //==================================================================
 
