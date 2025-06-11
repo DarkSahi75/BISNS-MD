@@ -57,7 +57,7 @@ cmd(
 //> https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J
       // Send song detail with thumbnail to config.JID
       await robin.sendMessage(
-        config.JIDPASINDU,
+        config.ALONE,
         {
           image: { url: data.thumbnail },
           caption: desc,
@@ -82,7 +82,7 @@ cmd(
 
       // Send audio to config.JID
       await robin.sendMessage(
-        config.JIDPASINDU,
+        config.ALONE,
         {
           audio: { url: dl_link },
           mimetype: "audio/mpeg",
@@ -92,7 +92,7 @@ cmd(
       );
 
       // Notify user
-      reply(`🎵 SONG AND SONG DETAIL SENT TO\n=> ${config.JIDPASINDU}`);
+      reply(`🎵 SONG AND SONG DETAIL SENT TO\n=> ${config.ALONE}`);
 
     } catch (e) {
       console.error(e);
