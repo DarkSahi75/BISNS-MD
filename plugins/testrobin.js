@@ -52,7 +52,7 @@ cmd(
         }
       };
 
-      const quality = "1080";
+      const quality = "720";
       const video = await downloadVideo(url, quality);
 
       await robin.sendMessage(
