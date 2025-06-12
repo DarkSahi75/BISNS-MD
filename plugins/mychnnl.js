@@ -598,9 +598,10 @@ cmd(
 
 
 //==3=3=3=3=3===
+
 cmd(
   {
-    pattern: "cartoon",
+    pattern: "Cartoon",
     react: "🎥",
     desc: "Send YouTube 1080p Video to a specific JID",
     category: "download",
@@ -616,6 +617,8 @@ cmd(
       if (!q) return reply("*📥 YouTube ලින්ක් එකක් හෝ ගීත නමක් ලබාදෙන්න.*");
 
       const search = await yts(q);
+      if (!search.videos.length) return reply("❌ Video එක හමු නොවුණා!");
+
       const data = search.videos[0];
       const url = data.url;
 
@@ -641,34 +644,35 @@ cmd(
             await new Promise((resolve) => setTimeout(resolve, 5000));
           }
         } else {
-          throw new Error("📛 Failed to fetch video details.");
+          throw new Error("📛 Video එක බාගත කිරීම අසාර්ථකයි.");
         }
       };
 
       const quality = "1080";
       const video = await downloadVideo(url, quality);
 
-      // === මෙතනින් යවන්න තියෙන්නෙ JID එකට ===
+      // 🔁 JID එක මෙතන set කරන්න
+      const JID = config.Cartoon; // උදා: "9471XXXXXXX@s.whatsapp.net"
+
+      // 🎥 Send video with preview (NOT as document)
       await robin.sendMessage(
-        config.DINUWH, // <- ඔයාගේ specific JID එක මෙතන
+        JID,
         {
-          document: video.buffer,
+          video: video.buffer,
           mimetype: "video/mp4",
-          fileName: `${video.title}.mp4`,
           caption: `🎥 *${video.title}*\n\n*MADE BY - DINUWH-MD🖇️*`,
         },
         { quoted: mek }
       );
 
-      // Command භාවිතා කරපු කෙනාට confirm msg එක
+      // ✅ Confirmation to sender
       await robin.sendMessage(
         mek.key.remoteJid,
         {
-          text: `✅ *"${video.title}"* නම් වීඩියෝව *${config.DINUWH}* වෙත සාර්ථකව යවනු ලැබීය.`,
+          text: `✅ *"${video.title}"* නම් වීඩියෝව *${JID}* වෙත සාර්ථකව යවා ඇත.`,
         },
         { quoted: mek }
       );
-
     } catch (e) {
       console.error(e);
       reply(`❌ Error: ${e.message}`);
