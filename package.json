@@ -24,6 +24,7 @@
         "@xct007/frieren-scraper": "^0.0.2",
         "adm-zip": "^0.5.16",
         "async-g-i-s":"^1.4.0",
+        "moment-timezone": "^0.5.43",
         "api-dylux": "latest",
         "axios": "^1.6.8",
         "axios-cookiejar-support": "latest",
