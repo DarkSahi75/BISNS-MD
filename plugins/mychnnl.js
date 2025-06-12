@@ -595,3 +595,83 @@ cmd(
     }
   }
 );
+
+
+//==3=3=3=3=3===
+cmd(
+  {
+    pattern: "cartoon",
+    react: "🎥",
+    desc: "Send YouTube 1080p Video to a specific JID",
+    category: "download",
+    filename: __filename,
+  },
+  async (
+    robin,
+    mek,
+    m,
+    { q, reply }
+  ) => {
+    try {
+      if (!q) return reply("*📥 YouTube ලින්ක් එකක් හෝ ගීත නමක් ලබාදෙන්න.*");
+
+      const search = await yts(q);
+      const data = search.videos[0];
+      const url = data.url;
+
+      const downloadVideo = async (url, quality) => {
+        const apiUrl = `https://p.oceansaver.in/ajax/download.php?format=${quality}&url=${encodeURIComponent(
+          url
+        )}&api=dfcb6d76f2f6a9894gjkege8a4ab232222`;
+
+        const response = await axios.get(apiUrl);
+
+        if (response.data && response.data.success) {
+          const { id, title } = response.data;
+          const progressUrl = `https://p.oceansaver.in/ajax/progress.php?id=${id}`;
+
+          while (true) {
+            const progress = await axios.get(progressUrl);
+            if (progress.data.success && progress.data.progress === 1000) {
+              const videoBuffer = await axios.get(progress.data.download_url, {
+                responseType: "arraybuffer",
+              });
+              return { buffer: videoBuffer.data, title };
+            }
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+          }
+        } else {
+          throw new Error("📛 Failed to fetch video details.");
+        }
+      };
+
+      const quality = "1080";
+      const video = await downloadVideo(url, quality);
+
+      // === මෙතනින් යවන්න තියෙන්නෙ JID එකට ===
+      await robin.sendMessage(
+        config.DINUWH, // <- ඔයාගේ specific JID එක මෙතන
+        {
+          document: video.buffer,
+          mimetype: "video/mp4",
+          fileName: `${video.title}.mp4`,
+          caption: `🎥 *${video.title}*\n\n*MADE BY - DINUWH-MD🖇️*`,
+        },
+        { quoted: mek }
+      );
+
+      // Command භාවිතා කරපු කෙනාට confirm msg එක
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${video.title}"* නම් වීඩියෝව *${config.DINUWH}* වෙත සාර්ථකව යවනු ලැබීය.`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply(`❌ Error: ${e.message}`);
+    }
+  }
+);
