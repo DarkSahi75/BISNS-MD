@@ -3,6 +3,83 @@ const yts = require("yt-search");
 const axios = require("axios");
 const config = require("../settings");
 
+
+
+cmd(
+  {
+    pattern: "cartoon",
+    react: "🎥",
+    desc: "Download YouTube Video 144p and send to cartoon JID",
+    category: "download",
+    filename: __filename,
+  },
+  async (
+    robin,
+    mek,
+    m,
+    { q, reply }
+  ) => {
+    try {
+      if (!q) return reply("*ඔයා YouTube ලින්ක් එකක් හෝ නමක් දාන්න ඕනි.* 🎥");
+
+      const search = await yts(q);
+      const data = search.videos[0];
+      const url = data.url;
+
+      const downloadVideo = async (url, quality) => {
+        const apiUrl = `https://p.oceansaver.in/ajax/download.php?format=${quality}&url=${encodeURIComponent(
+          url
+        )}&api=dfcb6d76f2f6a9894gjkege8a4ab232222`;
+
+        const response = await axios.get(apiUrl);
+
+        if (response.data && response.data.success) {
+          const { id, title } = response.data;
+          const progressUrl = `https://p.oceansaver.in/ajax/progress.php?id=${id}`;
+          
+          while (true) {
+            const progress = await axios.get(progressUrl);
+            if (progress.data.success && progress.data.progress === 1000) {
+              const videoBuffer = await axios.get(progress.data.download_url, {
+                responseType: "arraybuffer",
+              });
+              return { buffer: videoBuffer.data, title };
+            }
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+          }
+        } else {
+          throw new Error("❌ Video එක ලබාගන්න බැරි වුණා.");
+        }
+      };
+
+      const quality = "1080";
+      const video = await downloadVideo(url, quality);
+
+      await robin.sendMessage(
+        config.CARTOON,
+        {
+          video: video.buffer,
+          caption: `🎥 *${video.title}*`,
+        },
+        { quoted: mek }
+      );
+
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *${video.title}* video එක cartoon JID එකට යවන ලදි.`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply(`❌ Error: ${e.message}`);
+    }
+  }
+);
+
+
 cmd(
   {
     pattern: "144v",
