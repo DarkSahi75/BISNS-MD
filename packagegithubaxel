@@ -9,12 +9,8 @@
         "stash": "git stash && git stash drop"
     },
     "dependencies": {
-        "@whiskeysockets/baileys": "github:DINU-FXMD/baileys",
-        "@xct007/frieren-scraper": "^0.0.2",
         "@adiwajshing/keyed-db": "^0.2.4",
         "@blackamda/telegram-image-url": "^1.0.0",
-        "sharp": "^0.32.6",
-        "jimp": "^0.22.12",
         "@bochilteam/scraper": "^4.0.22-alpha.0",
         "@distube/ytdl-core": "^4.13.5",
         "@ffmpeg-installer/ffmpeg": "^1.1.0",
@@ -24,6 +20,8 @@
         "@sl-code-lords/photooxy": "^1.0.1",
         "@sl-code-lords/si-subdl": "^1.1.1",
         "@sl-code-lords/text-pro-me": "^1.0.0",
+        "@whiskeysockets/baileys": "github:AxellNetwork/Baileys",
+        "@xct007/frieren-scraper": "^0.0.2",
         "adm-zip": "^0.5.16",
         "async-g-i-s":"^1.4.0",
         "api-dylux": "latest",
@@ -35,7 +33,6 @@
         "express": "latest",
         "file-type": "^16.5.3",
         "form-data": "^4.0.0",
-        "node-cache": "^5.1.2",
         "fs": "^0.0.1-security",
         "fs-extra": "^11.1.0",
         "gradient-string": "^2.0.2",
@@ -47,7 +44,6 @@
         "imagemaker.js":"^2.0.4",
         "inrl-dl":"^1.0.0",
         "javascript-obfuscator":"^4.0.0",
-        "jsdom": "26.1.0",
         "mime-types": "^2.1.35",
         "mongoose": "latest",
         "mrnima-moviedl": "latest",
@@ -90,7 +86,6 @@
         "caliph-api":"^1.0.0",
         "yt-search" : "^2.11.1",
         "ytsearch-venom": "^1.0.0",
-        "denethdev-ytmp3":"1.0.2",
-        "google-tts-api": "2.0.2"
+        "denethdev-ytmp3":"1.0.2"
     }
 }
