@@ -1,7 +1,6 @@
 const config = require('../settings');
 const prefix = config.PREFIX;
 const { cmd } = require('../lib/command');
-// config = require("config");
 const {
   getBuffer,
   getGroupAdmins,
@@ -13,29 +12,18 @@ const {
   sleep,
   fetchJson
 } = require('../lib/functions');
-//const { cmd } = require("../command");
+
 const yts = require("yt-search");
-//onst config = require("../config");
 
 cmd(
   {
     pattern: "alone",
-    //alias: "ytmp3",
     react: "🎵",
     desc: "Download Song and send to JID",
     category: "download",
     filename: __filename,
   },
-  async (
-    robin,
-    mek,
-    m,
-    {
-      from,
-      q,
-      reply,
-    }
-  ) => {
+  async (robin, mek, m, { from, q, reply }) => {
     try {
       if (!q) return reply("නමක් හරි ලින්ක් එකක් හරි දෙන්න 🌚❤️");
 
@@ -45,21 +33,20 @@ cmd(
       const data = search.videos[0];
       const url = data.url;
 
-      // Song Description Format
       const desc = `🌀 *𝐓𝐢𝐭𝐥𝐞 : ${data.title}*
 
 ▫️📅 *𝐑𝐞𝐥𝐞𝐚𝐬 𝐃𝐚𝐭𝐞* : ${data.ago}
 ▫️⏱️ *𝐃𝐮𝐫𝐚𝐭𝐢𝐨𝐧* : ${data.timestamp}
 ▫️🎭 *𝐕𝐢𝐞𝐰𝐬* : ${data.views.toLocaleString()}
 
-*ᴜꜱᴇ ʜᴇᴀᴅᴘʜᴏɴᴇꜱ ꜰᴏʀ ʙᴇꜱᴛ ᴇxᴘᴇʀɪᴇɴᴄᴇ...☊"*
+\`\`\` ᴜꜱᴇ ʜᴇᴀᴅᴘʜᴏɴᴇꜱ ꜰᴏʀ ʙᴇꜱᴛ ᴇxᴘᴇʀɪᴇɴᴄᴇ...☊\`\`\`
 
-▫️ *සින්දුවට 𝚛𝚎𝚊𝚌𝚝 100 ක් ඕනෙ ලමායී...😫💖👇🏻*
+▫️ *සින්දුවට 𝚛𝚎𝚊𝚌𝚝 100 ක් ඕනෙ ලමායී...*
+*😫💖👇🏻*
 
 > *@Alone Music Vibes..☊ ❞*`;
-//> *මනෝපාරක් ගහන්න මෙහාටත් එන්නහ්💆‍♂️*
-//> https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J
-      // Send song detail with thumbnail to config.JID
+
+      // Send song details
       await robin.sendMessage(
         config.ALONE,
         {
@@ -69,7 +56,7 @@ cmd(
         { quoted: mek }
       );
 
-      // Duration check
+      // Duration check (limit 30 mins)
       const durationParts = data.timestamp.split(":").map(Number);
       const totalSeconds =
         durationParts.length === 3
@@ -84,7 +71,7 @@ cmd(
       const dataa = await fetchJson(`https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(url)}&apikey=Manul-Official`);
       const dl_link = dataa.data.url;
 
-      // Send audio to config.JID
+      // Send mp3 audio
       await robin.sendMessage(
         config.ALONE,
         {
@@ -95,7 +82,6 @@ cmd(
         { quoted: mek }
       );
 
-      // Notify user
       reply(`🎵 SONG AND SONG DETAIL SENT TO\n=> ${config.ALONE}`);
 
     } catch (e) {
