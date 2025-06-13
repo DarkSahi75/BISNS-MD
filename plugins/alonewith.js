@@ -35,6 +35,7 @@ async (conn, mek, m, { from, pushname, reply }) => {
 ⚠️ *Proceed here only if you are placing a promotional ad ☺️🪄*
 
 * *᚜Reply Below you Want Plan Number᚛*
+* *᚜ඔයාට ඕනී ප්ලෑන් එකට අදාල අන්කය රිප්ලයි එකක් ලෙස යොමු කරන්න 🤐᚛*
 
 1 = ᚜_1Hour Plan_᚛
 2 = ᚜_2Hour Plan_᚛
@@ -130,24 +131,6 @@ async (conn, mek, m, { from, pushname, reply }) => {
 > Payment Method || ගෙවීම් ක්‍රම සදහා
 
 ◻️ *.payment*  යනුවෙන් ටයිප් කර එවන්න`;
-                        break;
-                    case '5':
-                        response = `*◈ DOWNLOAD COMMAND LIST ◈*\n\n╭────────●●►\n│ • *apk*\n│ • *twitter*\n│ • *gdrive*\n│ • *mediafire*\n│ • *fb*\n│ • *ig*\n│ • *movie*\n│ • *song*\n│ • *video*\n│ • *play/yt*\n│ • *song2*\n│ • *video2*\n│ • *tiktok*\n│ • *img*\n│ • *xnxx*\n╰────────────────────●●►\n\n⭓ *Total Commands: 14*`;
-                        break;
-                    case '6':
-                        response = `*◈ MAIN COMMAND LIST ◈*\n\n╭────────●●►\n│ • *alive*\n│ • *about*\n│ • *menu*\n│ • *allmenu*\n│ • *support*\n│ • *system*\n│ • *ping*\n│ • *runtime*\n╰────────────────────●●►\n\n⭓ *Total Commands: 8*`;
-                        break;
-                    case '7':
-                        response = `*◈ GROUP COMMAND LIST ◈*\n\n╭────────●●►\n│ • *promote*\n│ • *demote*\n│ • *kick*\n│ • *add*\n│ • *admins*\n│ • *tagall*\n│ • *getpic*\n│ • *setwelcome*\n│ • *setgoodbye*\n│ • *gname*\n│ • *poll*\n│ • *kickall*\n│ • *ben*\n╰────────────────────●●►\n\n⭓ *Total Commands: 10*`;
-                        break;
-                    case '8':
-                        response = `*◈ FUN COMMAND LIST ◈*\n\n╭────────●●►\n│ • *dog*\n│ • *fact*\n│ • *hack*\n│ • *quote*\n╰────────────────────●●►\n\n⭓ *Total Commands: 4*`;
-                        break;
-                    case '9':
-                        response = `*◈ TOOLS COMMAND LIST ◈*\n\n╭────────●●►\n│ • *sticker*\n│ • *toimg*\n│ • *tomp3*\n│ • *qrcode*\n│ • *shortlink*\n│ • *calc*\n│ • *img2url*\n╰────────────────────●●►\n\n⭓ *Total Commands: 6*`;
-                        break;
-                    case '10':
-                        response = `*◈ OTHER COMMAND LIST ◈*\n\n╭────────●●►\n│ • *githubstalk*\n│ • *trt*\n│ • *weather*\n╰────────────────────●●►\n\n⭓ *Total Commands: 3*`;
                         break;
                     default:
                         response = "❌ *Invalid option. Please select a valid number.*";
