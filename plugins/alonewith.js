@@ -146,3 +146,90 @@ async (conn, mek, m, { from, pushname, reply }) => {
         reply('⚠️ *An error occurred while processing your request.*');
     }
 });
+
+
+//3=33=3=3=3=3=3=33=333=====33=3====
+//3-3-3-3-3-3-3----3-3-3-3-3-3--3-3-3
+
+cmd({
+    pattern: "payment",
+    alias: ["list"],
+    desc: "Displays the bot menu",
+    react: "📜",
+    category: "main"
+},
+async (conn, mek, m, { from, pushname, reply }) => {
+    try {
+        let desc = `💸 *PAYMENT METHODS* 💸
+
+*Dear ~The bezZZ - owner, please use one of the following methods to make the payment before confirming your plan.*
+
+───────────────
+
+🏦 *Bank Transfer*
+➤ *Reply 👉 1  below to view bank details.*
+───────────────`;
+
+        // Send the menu with an image
+        const menuMessage = await conn.sendMessage(from, { 
+            image: { url: "https://i.ibb.co/ccRBHK3n/DiNuWhMd.jpg" }, 
+            caption: desc 
+        }, { quoted: mek });
+
+        // Listen for the reply
+        conn.ev.on('messages.upsert', async (msgUpdate) => {
+            const msg = msgUpdate.messages[0];
+            if (!msg.message || !msg.message.extendedTextMessage) return;
+            
+            const selectedOption = msg.message.extendedTextMessage.text.trim();
+
+            // Check if the reply is in response to the menu message
+            if (msg.message.extendedTextMessage.contextInfo?.stanzaId === menuMessage.key.id) {
+                let response = "";
+
+                switch (selectedOption) {
+                    case '1':
+                        response = `🏦 *BANK PAYMENT METHOD*
+
+━━━━━━━━━━━━━━━
+🏛️ *Bank:* BOC  
+🔢 *Acc No:* 78023501  
+👤 *Name:* J.K.P. Nishara  
+🏬 *Branch:* Udawalawa  
+━━━━━━━━━━━━━━━
+
+*⭕සල්ලි දැමීමට පෙර අපට කෙටි පනිවිඩයක් දමා වෙලාවක් වෙන් කරගන්න..!!*
+
+*\`⭕8.00 a.m - 11.00 p.m\` දක්වා කාලය තුල ඔබට වේලාවක් වෙන් කරගත හැකිය..!!*
+
+> *අවසාන වතාවට මෙතන අවශ්‍ය පැකේජ් එක තෝරාගෙන මැසේජ් එකක් දාලා තියන්න-සල්ලි දැමූ පසු රිසිට් පතක ෆොටෝ එකක් දාන්න ☺️🤝*
+
+* BUY 1 HR PLAN 
+* _wa.me/779811475?text=1hour+plan+want+buy+pay+bank_
+
+* BUY 2 HR PLAN 
+* _wa.me/779811475?text=2hour+plan+want+buy+pay+bank_
+
+* BUY 3 HR PLAN 
+* _wa.me/779811475?text=3hour+plan+want+buy+pay+bank_
+
+* BUY GRUP FULL PLAN 
+* _wa.me/779811475?text=GRUPFULL+plan+want+buy+pay+bank_`;
+                        break;
+
+                    default:
+                        response = "❌ *Invalid option. Please select a valid number.*";
+                }
+
+                await conn.sendMessage(from, { text: response }, { quoted: msg });
+            }
+        });
+
+    } catch (e) {
+        console.error(e);
+        await conn.sendMessage(from, { react: { text: '❌', key: mek.key } });
+        reply('⚠️ *An error occurred while processing your request.*');
+    }
+});
+
+
