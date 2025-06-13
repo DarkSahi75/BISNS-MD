@@ -37,13 +37,10 @@ async (conn, mek, m, { from, pushname, reply }) => {
 * *᚜Reply Below you Want Plan Number᚛*
 * *᚜ඔයාට ඕනී ප්ලෑන් එකට අදාල අන්කය රිප්ලයි එකක් ලෙස යොමු කරන්න 🤐᚛*
 
-1 = ᚜_1Hour Plan_᚛
-2 = ᚜_2Hour Plan_᚛
-3 = ᚜_3Hour Plan_᚛
-
-4= ᚜_Grup Full Plan_᚛
-
- `;
+> 1 = *᚜_1Hour Plan_᚛
+> 2 = *᚜_2Hour Plan_᚛*
+> 3 *= ᚜_3Hour Plan_᚛*
+> *4= ᚜_Grup Full Plan_᚛* `;
 
         // Send the menu with an image
         const menuMessage = await conn.sendMessage(from, { 
