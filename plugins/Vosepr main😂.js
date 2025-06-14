@@ -699,29 +699,25 @@ cmd(
 );
 
 cmd({
-  pattern: "ali",
+  pattern: "ale",
   category: "main",
   react: "👋",
-  desc: "Auto resend user message except command",
-  use: ".alive [your message]",
+  desc: "Returns the message without .alive",
+  use: ".alive [your text]",
   filename: __filename
 },
 async (conn, mek, m, { from }) => {
   try {
-    const fullText = m.text || ""; // full incoming message (e.g. '.alive Hello')
+    const fullText = m.text || ""; // eg: ".alive Hello ai bot"
     
-    // regex එකෙන් `.alive` අරගෙන balance msg එක retain කරනවා
-    const userMsg = fullText.replace(/^([!.]alive)\s*/i, "").trim();
+    // remove command prefix and get rest of message
+    const msg = fullText.split(" ").slice(1).join(" ").trim();
 
-    if (userMsg.length > 0) {
-      // .alive එකට පසුව තියෙන කෑල්ල යවන්න
-      await conn.sendMessage(from, { text: userMsg }, { quoted: mek });
-    }
+    if (!msg) return; // if no message, do nothing
 
-    // මැසෙජ් එකක් නැති නම් කිසිවක් කරන්න එපා
-    return;
+    return await conn.sendMessage(from, { text: msg }, { quoted: mek });
 
   } catch (err) {
-    console.error("Alive Command Error:", err);
+    console.error("alive return error:", err);
   }
 });
