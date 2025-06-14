@@ -699,25 +699,20 @@ cmd(
 );
 
 cmd({
-  pattern: "ale",
+  pattern: "ae",
   category: "main",
   react: "👋",
-  desc: "Returns the message without .alive",
-  use: ".alive [your text]",
+  desc: "Catch text after .alive and resend it",
+  use: ".alive [your message]",
   filename: __filename
 },
-async (conn, mek, m, { from }) => {
+async (conn, mek, m, { from, q }) => {
   try {
-    const fullText = m.text || ""; // eg: ".alive Hello ai bot"
-    
-    // remove command prefix and get rest of message
-    const msg = fullText.split(" ").slice(1).join(" ").trim();
+    if (!q || q.trim() === "") return; // q එක නැත්නම් කිසිවක් කරන්න එපා
 
-    if (!msg) return; // if no message, do nothing
-
-    return await conn.sendMessage(from, { text: msg }, { quoted: mek });
+    await conn.sendMessage(from, { text: q.trim() }, { quoted: mek });
 
   } catch (err) {
-    console.error("alive return error:", err);
+    console.error("alive q error:", err);
   }
 });
