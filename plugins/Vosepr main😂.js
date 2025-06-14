@@ -712,7 +712,7 @@ async (conn, mek, m, { from, q }) => {
     
    if (!q || q.trim() === "") return; // q එක නැත්නම් කිසිවක් කරන්න එපා
 
-await conn.sendMessage(from, { text: `${PREFIX}${q.trim()}` }, { quoted: mek });
+await conn.sendMessage(from, { text: `${config.PREFIX}${q.trim()}` }, { quoted: mek });
   } catch (err) {
     console.error("alive q error:", err);
   }
