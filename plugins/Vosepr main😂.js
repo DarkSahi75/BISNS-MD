@@ -24,7 +24,8 @@ const { Sticker, createSticker, StickerTypes } = require('wa-sticker-formatter')
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
 const path = require('path');
-
+//const config = require('./settings');
+const prefix = config.PREFIX;
 // Converts video buffer to webp image buffer for stickers
 async function videoToWebp(videoBuffer) {
   // Create temporary file paths for .webp and .mp4 files
@@ -708,10 +709,10 @@ cmd({
 },
 async (conn, mek, m, { from, q }) => {
   try {
-    if (!q || q.trim() === "") return; // q එක නැත්නම් කිසිවක් කරන්න එපා
+    
+   if (!q || q.trim() === "") return; // q එක නැත්නම් කිසිවක් කරන්න එපා
 
-    await conn.sendMessage(from, { text: q.trim() }, { quoted: mek });
-
+await conn.sendMessage(from, { text: `${PREFIX}${q.trim()}` }, { quoted: mek });
   } catch (err) {
     console.error("alive q error:", err);
   }
