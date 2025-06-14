@@ -1,5 +1,5 @@
 // Importing required modules and functions
-const { cmd, commands } = require('../command');
+const { cmd, commands } = require('../lib/command');
 const {
   getBuffer,
   getGroupAdmins,
@@ -11,7 +11,7 @@ const {
   sleep,
   fetchJson,
 } = require('../lib/functions');
-const config = require('../config');
+const config = require('../settings');
 const fs = require('fs');
 const axios = require('axios');
 const googleTTS = require('google-tts-api');
