@@ -697,3 +697,32 @@ cmd(
     }
   }
 );
+
+cmd({
+  pattern: "al",
+  category: "main",
+  react: "👋",
+  desc: "Sends the remaining text",
+  use: ".alive [your message]",
+  filename: __filename
+},
+async (conn, mek, m, { from }) => {
+  try {
+    // සම්පුර්ණ message එක ගන්න
+    const fullText = m.text || "";
+
+    // ".alive" කියන කොටස කපලා balance එක ගන්න
+    const userMsg = fullText.replace(/^(\.|\!)alive\s*/i, "").trim();
+
+    // යමක් තියනව නම් එයාවම reply කරන්න
+    if (userMsg) {
+      return await conn.sendMessage(from, { text: userMsg }, { quoted: mek });
+    }
+
+    // නැත්තං හුදෙක් මොනවහරි .alive කිව්වොත් කිසිම දෙයක් නොකරන්න
+    return;
+
+  } catch (e) {
+    console.error("❌ Error in .alive:", e);
+  }
+});
