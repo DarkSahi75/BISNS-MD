@@ -1,8 +1,4 @@
-const fetch = require('node-fetch');
-//const axios = require('axios');
-const fs = require('fs-extra');
-const path = require('path');
-const ffmpeg = require('fluent-ffmpeg');
+
 const axios = require("axios");
 const cheerio = require('cheerio');
 const { cmd, commands } = require('../lib/command')
@@ -75,51 +71,12 @@ const api = `https://nethu-api-ashy.vercel.app`;
 
 //09.Instagram Download
 
-cmd({
-  pattern: "iglatest",
-  desc: "Download Instagram video and send as audio",
-  category: "download",
-  filename: __filename
-},
-async (conn, mek, m, { q, reply }) => {
-  try {
-    if (!q || !q.includes("instagram.com")) {
-      return reply("Please provide a valid Instagram URL.\nExample: .igmp3 https://www.instagram.com/reel/xyz/");
-    }
 
-    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
-
-    if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
-      return reply("Video not found or cannot be downloaded.");
-    }
-
-    const videoUrl = res.data.url[0].url;
-
-    // ffmpeg API එකෙන් audio convert කරන API call එක (example)
-    const conv = await fetchJson(`https://api.vevioz.com/api/button/mp3?url=${encodeURIComponent(videoUrl)}`); // <-- replace with valid API
-
-    if (!conv || !conv.data || !conv.data.url) {
-      return reply("Failed to convert video to audio.");
-    }
-
-    const audioUrl = conv.data.url;
-
-    await conn.sendMessage(m.chat, {
-      audio: { url: audioUrl },
-      mimetype: 'audio/mpeg',
-      ptt: false // true if you want voice note
-    }, { quoted: mek });
-
-  } catch (e) {
-    console.log(e);
-    reply("❌ Failed to process video to audio.");
-  }
-});
 cmd(
   {
-    pattern: "igm",
+    pattern: "ig",
     react: "📸",
-    alias: ["ig", "instadl", "reel"],
+    alias: ["insta", "instadl", "instagram"],
     desc: "Download Instagram Reel or Video",
     category: "download",
     use: '.instagram <instagram_url>',
@@ -150,7 +107,7 @@ cmd(
  if (config.MODE === 'nonbutton') {
   const sections = [
   {
-    title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
+    title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐖𝐚𝐭𝐞𝐫𝐦𝐚",
     rows: [
       {
         title: "1.",
@@ -242,36 +199,6 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
     }
   ]
 };
-const listData2 = {
-        title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
-        sections: [{
-          title: "InstarGrame Audio Down Section 🎧",
-          rows: [
-            
-            {
-              title: "\`Audio With Normal\`",
-              description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}igmp3 ${q}`
-            },
-            {
-              title: "\`Audio With Document\`",
-              description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}igmp3d ${q}`
-            },
-            {
-              title: "\`Audio With Voice Note\`",
-              description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}igmp3p ${q}`
-            }
-          ]
-        }]
-      };
-
-      return await conn.sendMessage(from, {
-        image: { url: thumb },
-        caption: caption,
-        footer: "> *〽️ade By Dinuwh Bbh*",
-        buttons: [
           {
             buttonId: "action",
             buttonText: { displayText: "🔘 Choose Song Type" },
@@ -279,15 +206,6 @@ const listData2 = {
             nativeFlowInfo: {
               name: "single_select",
               paramsJson: JSON.stringify(listData),
-            },
-          },
-          {
-            buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify(listData2),
             },
           }
         ],
