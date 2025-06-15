@@ -33,6 +33,7 @@
         "axios-cookiejar-support": "latest",
         "cheerio": "^1.0.0-rc.12",
         "child_process": "latest",
+        "darksadas-yt-pornhub-scrape":"latest",
         "cloudscraper": "4.6.0",
         "express": "latest",
         "file-type": "^16.5.3",
