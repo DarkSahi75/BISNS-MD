@@ -281,8 +281,8 @@ async (conn, mek, m, { q, reply }) => {
 
     await conn.sendMessage(m.chat, {
       video: { url: videoUrl },
-      caption: `*Instagram Video*\n\n> *〽️ade By Dinuwh Bbh*\n*User:* @${username}\n\n> Powered by loku-md`,
-      mimetype: 'video/mp4'
+     // caption: `*Instagram Video*\n\n> *〽️ade By Dinuwh Bbh*\n*User:* @${username}\n\n> Powered by loku-md`,
+      mimetype: 'video/mpeg'
     }, { quoted: mek });
 
   } catch (err) {
