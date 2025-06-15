@@ -1,4 +1,4 @@
-const cmd = require('../lib/command'); // Bot එකේ structure එකට අනුව වෙනස් වෙනවා
+const { cmd } = require('../lib/command'); // <-- මේ line එකම තමයි හරියට තියෙන්න ඕන
 const fetch = require('node-fetch');
 const axios = require('axios');
 const fs = require('fs-extra');
@@ -31,6 +31,7 @@ async function convertToMp3(videoPath, audioPath) {
   });
 }
 
+// 🎧 Voice note version
 cmd({
   pattern: "igadumolaya",
   desc: "Instagram video -> voice note",
@@ -67,5 +68,3 @@ async (conn, mek, m, { q, reply }) => {
     reply("❌ Error converting video to audio.");
   }
 });
-
-// Duplicate for igmp3 (normal audio) and igdoc (document audio)
