@@ -262,8 +262,9 @@ const listData2 = {
   }
 });
 
+
 cmd({
-  pattern: "dl_ig",
+  pattern: "igv",
   desc: "Send Instagram video directly",
   category: "download",
   filename: __filename
@@ -281,12 +282,11 @@ async (conn, mek, m, { q, reply }) => {
     }
 
     const videoUrl = res.data.url[0].url;
-    const title = res.data.meta?.title || "Instagram Video";
     const username = res.data.meta?.username || "unknown";
 
     await conn.sendMessage(m.chat, {
       video: { url: videoUrl },
-      caption: `*Instagram Video*\n\n*Title:* ${title}\n*User:* @${username}\n\n> Powered by loku-md`,
+      caption: `*Instagram Video*\n\n> *〽️ade By Dinuwh Bbh*\n*User:* @${username}\n\n> Powered by loku-md`,
       mimetype: 'video/mp4'
     }, { quoted: mek });
 
@@ -295,6 +295,78 @@ async (conn, mek, m, { q, reply }) => {
     reply("*ERROR*: Failed to download Instagram video.");
   }
 });
+
+cmd({
+  pattern: "igvd",
+  desc: "Send Instagram video directly as Document",
+  category: "download",
+  filename: __filename
+},
+async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("instagram.com")) {
+      return reply("Please provide a valid Instagram URL.\nExample: .dl_ig https://www.instagram.com/reel/xyz/");
+    }
+
+    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
+
+    if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
+      return reply("Video not found or cannot be downloaded.");
+    }
+
+    const videoUrl = res.data.url[0].url;
+    const username = res.data.meta?.username || "unknown";
+
+    await conn.sendMessage(m.chat, {
+      document: { url: videoUrl },
+      fileName: `instagram_video_${Date.now()}.mp4`,
+      mimetype: 'video/mp4',
+      caption: `*Instagram Video*\n\n> *〽️ade By Dinuwh Bbh*\n*User:* @${username}\n\n> Powered by loku-md`
+    }, { quoted: mek });
+
+  } catch (err) {
+    console.error(err);
+    reply("*ERROR*: Failed to download Instagram video.");
+  }
+});
+
+cmd({
+  pattern: "igvp",
+  desc: "Send Instagram video as Push-To-Video (PTV)",
+  category: "download",
+  filename: __filename
+},
+async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("instagram.com")) {
+      return reply("Please provide a valid Instagram URL.\nExample: .dl_ig https://www.instagram.com/reel/xyz/");
+    }
+
+    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
+
+    if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
+      return reply("Video not found or cannot be downloaded.");
+    }
+
+    const videoUrl = res.data.url[0].url;
+    const username = res.data.meta?.username || "unknown";
+
+    await conn.sendMessage(m.chat, {
+      video: { url: videoUrl },
+      mimetype: 'video/mp4',
+      ptv: true, // Push-To-Video Mode (PTV)
+     // caption: `*Instagram Video*\n\n> *〽️ade By Dinuwh Bbh*\n*User:* @${username}\n\n> Powered by loku-md`
+    }, { quoted: mek });
+
+  } catch (err) {
+    console.error(err);
+    reply("*ERROR*: Failed to download Instagram video.");
+  }
+});
+
+
+//ig Audio Section
+
 //01.Facebook Download
 cmd({
   pattern: "facebook",
