@@ -2190,9 +2190,9 @@ cmd(
   }
 );
 
-const { cmd } = require('your-command-lib'); // Adjust import according to your setup
-const { fetchJson } = require('your-utils'); // Adjust import according to your setup
-const config = require('your-config'); // Your config file with FOOTER and others
+//const { cmd } = require('your-command-lib'); // Adjust import according to your setup
+//const { fetchJson } = require('your-utils'); // Adjust import according to your setup
+//onst config = require('your-config'); // Your config file with FOOTER and others
 
 // Command: phinfo
 cmd(
