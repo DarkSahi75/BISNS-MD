@@ -98,6 +98,44 @@ async (conn, mek, m, { q, reply }) => {
   }
 });
 
+
+cmd({
+  pattern: "igkkk",
+  desc: "Send Instagram video directly",
+  category: "download",
+  filename: __filename
+},
+async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("instagram.com")) {
+      return reply("Please provide a valid Instagram URL.\nExample: .dl_ig https://www.instagram.com/reel/xyz/");
+    }
+
+    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
+
+    if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
+      return reply("Video not found or cannot be downloaded.");
+    }
+
+    const videoUrl = res.data.url[0].url;
+    const username = res.data.meta?.username || "unknown";
+
+    await conn.sendMessage(m.chat, {
+      audio: { url: videoUrl },
+      mimetype: 'audio/mpeg',
+      ptt: false,
+      fileName: `${data.title}.mp3`
+    }, { quoted: m });
+  } catch (e) {
+    reply("*🛑 ERROR! Something went wrong*");
+    console.log(e);
+  }
+});
+
+
+
+
+
 cmd(
   {
     pattern: "igm",
