@@ -1,3 +1,8 @@
+const fetch = require('node-fetch');
+//const axios = require('axios');
+const fs = require('fs-extra');
+const path = require('path');
+const ffmpeg = require('fluent-ffmpeg');
 const axios = require("axios");
 const cheerio = require('cheerio');
 const { cmd, commands } = require('../lib/command')
@@ -70,7 +75,46 @@ const api = `https://nethu-api-ashy.vercel.app`;
 
 //09.Instagram Download
 
+cmd({
+  pattern: "iglatest",
+  desc: "Download Instagram video and send as audio",
+  category: "download",
+  filename: __filename
+},
+async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("instagram.com")) {
+      return reply("Please provide a valid Instagram URL.\nExample: .igmp3 https://www.instagram.com/reel/xyz/");
+    }
 
+    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
+
+    if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
+      return reply("Video not found or cannot be downloaded.");
+    }
+
+    const videoUrl = res.data.url[0].url;
+
+    // ffmpeg API එකෙන් audio convert කරන API call එක (example)
+    const conv = await fetchJson(`https://api.vevioz.com/api/button/mp3?url=${encodeURIComponent(videoUrl)}`); // <-- replace with valid API
+
+    if (!conv || !conv.data || !conv.data.url) {
+      return reply("Failed to convert video to audio.");
+    }
+
+    const audioUrl = conv.data.url;
+
+    await conn.sendMessage(m.chat, {
+      audio: { url: audioUrl },
+      mimetype: 'audio/mpeg',
+      ptt: false // true if you want voice note
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.log(e);
+    reply("❌ Failed to process video to audio.");
+  }
+});
 cmd(
   {
     pattern: "igm",
