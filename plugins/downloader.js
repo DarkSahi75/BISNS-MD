@@ -70,7 +70,7 @@ const api = `https://nethu-api-ashy.vercel.app`;
 
 //09.Instagram Download
 cmd({
-  pattern: "instagram",
+  pattern: "igm",
   react: "📸",
   alias: ["ig", "instadl", "reel"],
   desc: "Download Instagram Reel or Video",
