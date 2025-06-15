@@ -69,44 +69,50 @@ else xvu = "*Download XVIDEO in use Url*"
 const api = `https://nethu-api-ashy.vercel.app`;
 
 //09.Instagram Download
-cmd({
-  pattern: "igm",
-  react: "📸",
-  alias: ["ig", "instadl", "reel"],
-  desc: "Download Instagram Reel or Video",
-  category: "download",
-  use: '.instagram <instagram_url>',
-  filename: __filename
-},
-async (conn, mek, m, { from, prefix, q, reply }) => {
-  try {
-    if (!q || !q.includes("instagram.com")) {
-      return reply("Please provide a valid Instagram URL.\nExample: .instagram https://www.instagram.com/reel/xyz/");
+cmd(
+  {
+    pattern: "igm",
+    react: "📸",
+    alias: ["ig", "instadl", "reel"],
+    desc: "Download Instagram Reel or Video",
+    category: "download",
+    use: '.instagram <instagram_url>',
+    filename: __filename
+  },
+  async (conn, mek, m, { from, prefix, q, reply }) => {
+    try {
+      if (!q || !q.includes("instagram.com")) {
+        return reply("Please provide a valid Instagram URL.\nExample: .instagram https://www.instagram.com/reel/xyz/");
+      }
+
+      const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
+
+      if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
+        return reply("Video not found or cannot be downloaded.");
+      }
+
+      const videoUrl = res.data.url[0].url;
+      const title = res.data.meta?.title || "Instagram Video";
+      const username = res.data.meta?.username || "unknown";
+      const thumb = res.data.thumb;
+
+      const caption = `*Instagram Downloader*\n\n`
+        + `*📝 Title:* ${title}\n`
+        + `*👤 User:* @${username}\n`
+        + `*🔗 Url:* ${q}`;
+
+      await conn.sendMessage(from, {
+        image: { url: thumb },
+        caption: caption,
+        footer: "> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄"
+      }, { quoted: mek });
+
+    } catch (err) {
+      console.error(err);
+      reply("*ERROR*: Unable to fetch Instagram video.");
     }
-
-    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
-
-    if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
-      return reply("Video not found or cannot be downloaded.");
-    }
-
-    const videoUrl = res.data.url[0].url;
-    const title = res.data.meta?.title || "Instagram Video";
-    const username = res.data.meta?.username || "unknown";
-    const thumb = res.data.thumb;
-
-    const caption = `*Instagram Downloader*\n\n`
-      + `*│* 📝 \`Title\` : ${title}\n`
-      + `*│* 👤 \`User\` : @${username}\n`
-      + `*│* 🔗 \`Url\` : ${q}`;
-
-    
-
-  } catch (err) {
-    console.error(err);
-    reply("*ERROR*: Unable to fetch Instagram video.");
   }
-});
+);
 
 cmd({
   pattern: "dl_ig",
