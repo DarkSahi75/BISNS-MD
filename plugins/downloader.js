@@ -70,71 +70,6 @@ const api = `https://nethu-api-ashy.vercel.app`;
 
 //09.Instagram Download
 
-cmd({
-  pattern: "igvoice",
-  desc: "Send Instagram audio as PTT",
-  category: "download",
-  filename: __filename
-},
-async (conn, mek, m, { q, reply }) => {
-  try {
-    if (!q || !q.includes("instagram.com")) {
-      return reply("Please provide a valid Instagram URL.\nExample: .igptt https://www.instagram.com/reel/xyz/");
-    }
-
-    // ඔයාගේ API එකෙන් audio url එක මෙහෙ දාන්න
-    // මේක උදාහරණයක් පමණි
-    const audioUrl = "https://example.com/path/to/audio.mp3"; 
-
-    await conn.sendMessage(m.chat, {
-      audio: { url: audioUrl },
-      mimetype: "audio/mpeg",
-      ptt: true
-    }, { quoted: mek });
-
-  } catch (e) {
-    console.error(e);
-    reply("Failed to send audio as PTT.");
-  }
-});
-
-
-cmd({
-  pattern: "igkkk",
-  desc: "Send Instagram video directly",
-  category: "download",
-  filename: __filename
-},
-async (conn, mek, m, { q, reply }) => {
-  try {
-    if (!q || !q.includes("instagram.com")) {
-      return reply("Please provide a valid Instagram URL.\nExample: .dl_ig https://www.instagram.com/reel/xyz/");
-    }
-
-    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
-
-    if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
-      return reply("Video not found or cannot be downloaded.");
-    }
-
-    const videoUrl = res.data.url[0].url;
-    const username = res.data.meta?.username || "unknown";
-
-    await conn.sendMessage(m.chat, {
-      audio: { url: videoUrl },
-      mimetype: 'audio/mpeg',
-      ptt: false,
-      fileName: `${data.title}.mp3`
-    }, { quoted: m });
-  } catch (e) {
-    reply("*🛑 ERROR! Something went wrong*");
-    console.log(e);
-  }
-});
-
-
-
-
 
 cmd(
   {
@@ -323,6 +258,39 @@ const listData2 = {
   }
 });
 
+cmd({
+  pattern: "igk",
+  desc: "Send Instagram audio as normal audio",
+  category: "download",
+  filename: __filename
+},
+async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("instagram.com")) {
+      return reply("Please provide a valid Instagram URL.\nExample: .igkkk https://www.instagram.com/reel/xyz/");
+    }
+
+    // API එකෙන් Audio URL ලැබෙන්න ඕන (video url එක නෙවෙයි)
+    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
+
+    if (!res.status || !res.data || !res.data.audio || !res.data.audio[0]) {
+      return reply("Audio not found or cannot be downloaded.");
+    }
+
+    const audioUrl = res.data.audio[0].url;
+    const title = res.data.meta?.title || "Audio";
+
+    await conn.sendMessage(m.chat, {
+      audio: { url: audioUrl },
+      mimetype: 'audio/mpeg',
+      fileName: `${title}.mp3`
+    }, { quoted: mek });
+
+  } catch (e) {
+    reply("*🛑 ERROR! Something went wrong*");
+    console.log(e);
+  }
+});
 
 cmd({
   pattern: "igv",
