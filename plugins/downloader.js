@@ -206,17 +206,17 @@ const listData2 = {
             {
               title: "\`Audio With Normal\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaud }`
+              id: `${prefix}igmp3 ${q}`
             },
             {
               title: "\`Audio With Document\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikauddoc }`
+              id: `${prefix}igmp3d ${q}`
             },
             {
               title: "\`Audio With Voice Note\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaudptt`
+              id: `${prefix}igmp3p ${q}`
             }
           ]
         }]
@@ -361,6 +361,73 @@ async (conn, mek, m, { q, reply }) => {
 
 
 //ig Audio Section
+
+cmd({
+  pattern: "igmp3",
+  desc: "Send normal MP3 audio",
+  category: "audio",
+  filename: __filename
+},
+async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("http")) return reply("MP3 URL එකක් දෙන්න බ්‍රෝ!");
+    
+    await conn.sendMessage(m.chat, {
+      audio: { url: q },
+      mimetype: 'audio/mpeg',
+    //  caption: `🎵 *Normal MP3*\n\n> *〽️ade By Dinuwh Bbh*`
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error(e);
+    reply("❌ Error: Cannot send MP3.");
+  }
+});
+
+cmd({
+  pattern: "igmp3p",
+  desc: "Send MP3 as voice (PTT)",
+  category: "audio",
+  filename: __filename
+},
+async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("http")) return reply("MP3 URL එකක් දෙන්න බ්‍රෝ!");
+    
+    await conn.sendMessage(m.chat, {
+      audio: { url: q },
+      mimetype: 'audio/mpeg',
+      ptt: true
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error(e);
+    reply("❌ Error: Cannot send PTT MP3.");
+  }
+});
+
+cmd({
+  pattern: "igmp3d",
+  desc: "Send MP3 as document",
+  category: "audio",
+  filename: __filename
+},
+async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("http")) return reply("MP3 URL එකක් දෙන්න බ්‍රෝ!");
+
+    await conn.sendMessage(m.chat, {
+      document: { url: q },
+      mimetype: 'audio/mpeg',
+      fileName: `audio_${Date.now()}.mp3`,
+      caption: `📁 *MP3 File*\n\n> *〽️ade By Dinuwh Bbh*`
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error(e);
+    reply("❌ Error: Cannot send Document MP3.");
+  }
+});
 
 //01.Facebook Download
 cmd({
