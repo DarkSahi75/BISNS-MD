@@ -611,7 +611,7 @@ cmd(
   }
 )
 
-cmd(
+/*cmd(
   {
     pattern: '/tiktok',
     alias: ['tt', 'ttdl', 'tiktokdl'],
@@ -668,7 +668,7 @@ cmd(
     }
   }
 )
-
+*/
 cmd(
   {
     pattern: 'ttdl1',
