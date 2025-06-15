@@ -168,51 +168,44 @@ sections
 return await conn.replyList(from, listMessage ,{ quoted : mek })
 
 	//button
-} if (config.MODE === 'button') {
-      const listData = {
-  title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
-  sections: [
-    {
-      title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
-      rows: [
-        {
-          title: "᚜Normal Video Tipe᚛",
-          description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}igv ${q}`
-        },
-        {
-          title: "᚜Document Video Tipe᚛",
-          description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}igvd ${q}`
-        }
-      ]
-    },
-    {
-      title: "Can Video Note ᴅᴏᴡɴʟᴏᴀᴅ ⇲",
-      rows: [
-        {
-          title: "᚜Video Note Tipe᚛",
-          description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}igvp ${q}`
-	}
-      ]
-    }
-  ]
-};
+if (config.MODE === 'button') {
+  const listData = {
+    title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+    sections: [
+      {
+        title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+        rows: [
           {
-            buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify(listData),
-            },
+            title: "᚜Normal Video Tipe᚛",
+            description: "〽️ade By Dinuwh Bbh",
+            id: `${prefix}igv ${q}`
+          },
+          {
+            title: "᚜Document Video Tipe᚛",
+            description: "〽️ade By Dinuwh Bbh",
+            id: `${prefix}igvd ${q}`
           }
-        ],
-        headerType: 1,
-        viewOnce: true,
-      }, { quoted: mek });
-    }
+        ]
+      },
+      {
+        title: "Can Video Note ᴅᴏᴡɴʟᴏᴀᴅ ⇲",
+        rows: [
+          {
+            title: "᚜Video Note Tipe᚛",
+            description: "〽️ade By Dinuwh Bbh",
+            id: `${prefix}igvp ${q}`
+          }
+        ]
+      }
+    ]
+  };
+
+  await conn.sendMessage(from, {
+    text: "Choose a download type below ⬇️",
+    buttonText: "🔘 Choose Song Type",
+    sections: listData.sections,
+  }, { quoted: mek });
+}
 
   } catch (e) {
     console.error(e);
