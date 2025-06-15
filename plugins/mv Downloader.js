@@ -622,7 +622,7 @@ cmd(
     filename: __filename,
   },
   async (conn, m, text, {
-    from, l, prefix, quoted, body, isCmd, command, args, q,
+    from, l, prefix, quoted, isCmd, command, args, q,
     isGroup, sender, senderNumber, botNumber2, botNumber,
     pushname, isMe, isOwner, groupMetadata, groupName,
     participants, groupAdmins, isBotAdmins, isAdmins, reply
