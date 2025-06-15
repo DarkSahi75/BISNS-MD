@@ -2001,7 +2001,7 @@ async function xnxxs(query) {
   });
 }
 
-const fetch = require('node-fetch');
+//const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
 cmd(
