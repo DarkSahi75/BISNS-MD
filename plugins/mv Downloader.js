@@ -2002,7 +2002,7 @@ async function xnxxs(query) {
 }
 
 //const fetch = require('node-fetch');
-const cheerio = require('cheerio');
+//onst cheerio = require('cheerio');
 
 cmd(
   {
