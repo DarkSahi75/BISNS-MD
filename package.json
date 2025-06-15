@@ -19,6 +19,7 @@
         "@sl-code-lords/image-library": "^1.0.0",
         "@sl-code-lords/photooxy": "^1.0.1",
          "jsdom": "^22.1.0",
+        "sharp":"latest",
         "g-i-s":"latest",
         "darksadasyt-imgbb-scraper": "latest",
         "google-tts-api":"latest",
