@@ -176,12 +176,12 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
         {
           title: "᚜Normal Video Tipe᚛",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}igv+${q}`
+          id: `${prefix}igv ${q}`
         },
         {
           title: "᚜Document Video Tipe᚛",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}igvd+${q}`
+          id: `${prefix}igvd ${q}`
         }
       ]
     },
@@ -191,7 +191,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
         {
           title: "᚜Video Note Tipe᚛",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}igvp+${q}`
+          id: `${prefix}igvp ${q}`
 	}
       ]
     }
