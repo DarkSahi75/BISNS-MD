@@ -789,10 +789,10 @@ cmd(
   }
 );
 
-const { cmd } = require('../lib/command');
-const { fetchJson } = require('../lib/functions');
+//const { cmd } = require('../lib/command');
+//const { fetchJson } = require('../lib/functions');
 const g_i_s = require('g-i-s');
-const config = require('../settings');
+//const config = require('../settings');
 
 // AI Chat Plugin
 cmd({
