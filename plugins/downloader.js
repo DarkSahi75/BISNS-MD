@@ -100,21 +100,7 @@ async (conn, mek, m, { from, prefix, q, reply }) => {
       + `*│* 👤 \`User\` : @${username}\n`
       + `*│* 🔗 \`Url\` : ${q}`;
 
-    const buttons = [
-      {
-        buttonId: `${prefix}dl_ig ${q}`,
-        buttonText: { displayText: "▶️ Download Now" },
-        type: 1
-      }
-    ];
-
-    await conn.buttonMessage2(from, {
-      image: { url: thumb },
-      caption,
-      footer: "> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄",
-      buttons,
-      headerType: 4
-    }, mek);
+    
 
   } catch (err) {
     console.error(err);
