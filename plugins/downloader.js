@@ -70,6 +70,34 @@ const api = `https://nethu-api-ashy.vercel.app`;
 
 //09.Instagram Download
 
+cmd({
+  pattern: "igvoice",
+  desc: "Send Instagram audio as PTT",
+  category: "download",
+  filename: __filename
+},
+async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("instagram.com")) {
+      return reply("Please provide a valid Instagram URL.\nExample: .igptt https://www.instagram.com/reel/xyz/");
+    }
+
+    // ඔයාගේ API එකෙන් audio url එක මෙහෙ දාන්න
+    // මේක උදාහරණයක් පමණි
+    const audioUrl = "https://example.com/path/to/audio.mp3"; 
+
+    await conn.sendMessage(m.chat, {
+      audio: { url: audioUrl },
+      mimetype: "audio/mpeg",
+      ptt: true
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error(e);
+    reply("Failed to send audio as PTT.");
+  }
+});
+
 cmd(
   {
     pattern: "igm",
