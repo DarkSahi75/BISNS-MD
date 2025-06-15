@@ -109,12 +109,12 @@ cmd(
     rows: [
       {
         title: "1.",
-        rowId: `${prefix}tikwm ${tiktokUrl}`,
+        rowId: `${prefix}tikwm }`,
         description: '`❲ With Watermark Normal ❳` 📹'
       },
       {
         title: "2.",
-        rowId: `${prefix}tikwmdoc ${tiktokUrl}`,
+        rowId: `${prefix}tikwmdoc }`,
         description: '`❲ With Watermark Document ❳` 📄'
       }
     ] },
@@ -123,12 +123,12 @@ cmd(
     rows: [
       {
         title: "3.",
-        rowId: `${prefix}tiknowm ${tiktokUrl}`,
+        rowId: `${prefix}tiknowm }`,
         description: '`❲ No Watermark Normal ❳` 📹'
       },
       {
         title: "4.",
-        rowId: `${prefix}tiknowmdoc ${tiktokUrl}`,
+        rowId: `${prefix}tiknowmdoc }`,
         description: '`❲ No Watermark Document ❳` 📄'
       }
     ]
@@ -138,17 +138,17 @@ cmd(
     rows: [
       {
         title: "5.",
-        rowId: `${prefix}tikaud ${tiktokUrl}`,
+        rowId: `${prefix}tikaud }`,
         description: '`❲ Audio With Normal File ❳` 🎵'
       },
       {
         title: "6.",
-        rowId: `${prefix}tikauddoc ${tiktokUrl}`,
+        rowId: `${prefix}tikauddoc }`,
         description: '`❲ Audio With Document File ❳` 📄'
       },
       {
         title: "7.",
-        rowId: `${prefix}tikaudptt ${tiktokUrl}`,
+        rowId: `${prefix}tikaudptt }`,
         description: '`❲ Audio With Voice Note ❳` 🎤'
       }
     ]
@@ -176,12 +176,12 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
         {
           title: "NonWaterMark Normal Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowm ${tiktokUrl}`
+          id: `${prefix}tiknowm }`
         },
         {
           title: "NonWaterMark Document Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowmdoc ${tiktokUrl}`
+          id: `${prefix}tiknowmdoc }`
         }
       ]
     },
@@ -191,12 +191,12 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
         {
           title: "WithWaterMark Normal Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwm ${tiktokUrl}`
+          id: `${prefix}tikwm }`
         },
         {
           title: "WithWaterMark Document Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwmdoc ${tiktokUrl}`
+          id: `${prefix}tikwmdoc }`
         }
       ]
     }
@@ -211,17 +211,17 @@ const listData2 = {
             {
               title: "\`Audio With Normal\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaud ${tiktokUrl}`
+              id: `${prefix}tikaud }`
             },
             {
               title: "\`Audio With Document\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikauddoc ${tiktokUrl}`
+              id: `${prefix}tikauddoc }`
             },
             {
               title: "\`Audio With Voice Note\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaudptt ${tiktokUrl}`
+              id: `${prefix}tikaudptt`
             }
           ]
         }]
