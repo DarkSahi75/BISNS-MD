@@ -621,12 +621,9 @@ cmd(
     use: '.tiktok <tiktok url>',
     filename: __filename,
   },
-  async (conn, m, text, {
-    from, l, prefix, quoted, isCmd, command, args, q,
-    isGroup, sender, senderNumber, botNumber2, botNumber,
-    pushname, isMe, isOwner, groupMetadata, groupName,
-    participants, groupAdmins, isBotAdmins, isAdmins, reply
-  }) => {
+  
+  async (conn, m, text, { from, q, reply }) => {
+    try {
     try {
       if (!q) return await reply('TikTok link එකක් දෙන්න!')
       if (!q.includes('tiktok')) return await reply('වැදගත් TikTok URL එකක් දෙන්න!')
