@@ -69,6 +69,7 @@ else xvu = "*Download XVIDEO in use Url*"
 const api = `https://nethu-api-ashy.vercel.app`;
 
 //09.Instagram Download
+
 cmd(
   {
     pattern: "igm",
@@ -101,18 +102,165 @@ cmd(
         + `*👤 User:* @${username}\n`
         + `*🔗 Url:* ${q}`;
 
-      await conn.sendMessage(from, {
+ if (config.MODE === 'nonbutton') {
+  const sections = [
+  {
+    title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
+    rows: [
+      {
+        title: "1.",
+        rowId: `${prefix}tikwm ${tiktokUrl}`,
+        description: '`❲ With Watermark Normal ❳` 📹'
+      },
+      {
+        title: "2.",
+        rowId: `${prefix}tikwmdoc ${tiktokUrl}`,
+        description: '`❲ With Watermark Document ❳` 📄'
+      }
+    ] },
+  {
+    title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐍𝐨 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
+    rows: [
+      {
+        title: "3.",
+        rowId: `${prefix}tiknowm ${tiktokUrl}`,
+        description: '`❲ No Watermark Normal ❳` 📹'
+      },
+      {
+        title: "4.",
+        rowId: `${prefix}tiknowmdoc ${tiktokUrl}`,
+        description: '`❲ No Watermark Document ❳` 📄'
+      }
+    ]
+  },
+  {
+    title: "🎧 𝐀𝐮𝐝𝐢𝐨 𝐎𝐩𝐭𝐢𝐨𝐧𝐬",
+    rows: [
+      {
+        title: "5.",
+        rowId: `${prefix}tikaud ${tiktokUrl}`,
+        description: '`❲ Audio With Normal File ❳` 🎵'
+      },
+      {
+        title: "6.",
+        rowId: `${prefix}tikauddoc ${tiktokUrl}`,
+        description: '`❲ Audio With Document File ❳` 📄'
+      },
+      {
+        title: "7.",
+        rowId: `${prefix}tikaudptt ${tiktokUrl}`,
+        description: '`❲ Audio With Voice Note ❳` 🎤'
+      }
+    ]
+  }
+];
+const listMessage = {
+caption: caption,
+image: { url:thumb },  // <-- use YouTube thumbnail here
+footer: '> *〽️ade By Dinuwh Bbh*',
+title: '',
+buttonText: '> *◎Reply Below Number ⇲◎*',
+sections
+}
+	
+return await conn.replyList(from, listMessage ,{ quoted : mek })
+
+	//button
+} if (config.MODE === 'button') {
+      const listData = {
+  title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+  sections: [
+    {
+      title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+      rows: [
+        {
+          title: "NonWaterMark Normal Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}tiknowm ${tiktokUrl}`
+        },
+        {
+          title: "NonWaterMark Document Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}tiknowmdoc ${tiktokUrl}`
+        }
+      ]
+    },
+    {
+      title: "💧 With-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+      rows: [
+        {
+          title: "WithWaterMark Normal Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikwm ${tiktokUrl}`
+        },
+        {
+          title: "WithWaterMark Document Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikwmdoc ${tiktokUrl}`
+        }
+      ]
+    }
+  ]
+};
+const listData2 = {
+        title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+        sections: [{
+          title: "TikTok Audio Down Section 🎧",
+          rows: [
+            
+            {
+              title: "\`Audio With Normal\`",
+              description: "〽️ade By Dinuwh Bbh",
+              id: `${prefix}tikaud ${tiktokUrl}`
+            },
+            {
+              title: "\`Audio With Document\`",
+              description: "〽️ade By Dinuwh Bbh",
+              id: `${prefix}tikauddoc ${tiktokUrl}`
+            },
+            {
+              title: "\`Audio With Voice Note\`",
+              description: "〽️ade By Dinuwh Bbh",
+              id: `${prefix}tikaudptt ${tiktokUrl}`
+            }
+          ]
+        }]
+      };
+
+      return await conn.sendMessage(from, {
         image: { url: thumb },
         caption: caption,
-        footer: "> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄"
+        footer: "> *〽️ade By Dinuwh Bbh*",
+        buttons: [
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
+          },
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData2),
+            },
+          }
+        ],
+        headerType: 1,
+        viewOnce: true,
       }, { quoted: mek });
-
-    } catch (err) {
-      console.error(err);
-      reply("*ERROR*: Unable to fetch Instagram video.");
     }
+
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
   }
-);
+});
 
 cmd({
   pattern: "dl_ig",
