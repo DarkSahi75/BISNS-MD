@@ -1,4 +1,4 @@
-const cmd = require('./lib/command'); // Bot එකේ structure එකට අනුව වෙනස් වෙනවා
+const cmd = require('../lib/command'); // Bot එකේ structure එකට අනුව වෙනස් වෙනවා
 const fetch = require('node-fetch');
 const axios = require('axios');
 const fs = require('fs-extra');
