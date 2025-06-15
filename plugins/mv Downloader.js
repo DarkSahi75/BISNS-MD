@@ -1226,27 +1226,27 @@ cmd(
       let buttons = [
         {
           buttonId: prefix + 'videodl144 ' + video.url,
-          buttonText: { displayText: '_144p Video 🎥_' },
+          buttonText: { displayText: '144p Video 🎥' },
           type: 1,
         },
         {
           buttonId: prefix + 'videodl240 ' + video.url,
-          buttonText: { displayText: '_240p Video 🎥_' },
+          buttonText: { displayText: '240p Video 🎥' },
           type: 1,
         },
         {
           buttonId: prefix + 'videodl360 ' + video.url,
-          buttonText: { displayText: '_360p Video 🎥_' },
+          buttonText: { displayText: '360p Video 🎥' },
           type: 1,
         },
         {
           buttonId: prefix + 'videodl720 ' + video.url,
-          buttonText: { displayText: '_720p Video 🎥_' },
+          buttonText: { displayText: '720p Video 🎥' },
           type: 1,
         },
         {
           buttonId: prefix + 'videodl1080 ' + video.url,
-          buttonText: { displayText: '_1080p Video 🎥_' },
+          buttonText: { displayText: '1080p Video 🎥' },
           type: 1,
         },
       ];
@@ -1255,22 +1255,22 @@ cmd(
       buttons.push(
         {
           buttonId: prefix + `docdl144 ${video.url}&${video.thumbnail}&${video.title}`,
-          buttonText: { displayText: '_144p Document 📄_' },
+          buttonText: { displayText: '144p Document 📄' },
           type: 1,
         },
         {
           buttonId: prefix + `docdl240 ${video.url}&${video.thumbnail}&${video.title}`,
-          buttonText: { displayText: '_240p Document 📄_' },
+          buttonText: { displayText: '240p Document 📄' },
           type: 1,
         },
         {
           buttonId: prefix + `docdl360 ${video.url}&${video.thumbnail}&${video.title}`,
-          buttonText: { displayText: '_360p Document 📄_' },
+          buttonText: { displayText: '360p Document 📄' },
           type: 1,
         },
         {
           buttonId: prefix + `docdl720 ${video.url}&${video.thumbnail}&${video.title}`,
-          buttonText: { displayText: '_720p Document 📄_' },
+          buttonText: { displayText: '720p Document 📄' },
           type: 1,
         },
         {
