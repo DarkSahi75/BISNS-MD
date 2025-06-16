@@ -84,3 +84,36 @@ cmd({
     reply("❌ MP3 Download එක fail වුණා!");
   }
 });
+
+// Facebook HD Video Download
+cmd({
+  pattern: 'fbhhhd',
+  dontAddCommandList: true,
+  filename: __filename,
+}, async (message, match, m, {
+  from, quoted, q, reply, senderNumber, botNumber
+}) => {
+  try {
+    const response = await fetchJson(
+      'https://sadiya-tech-apis.vercel.app/download/fbdl?url=' + q + '&apikey=' + sadiya_apikey
+    );
+    await message.sendMessage(
+      from,
+      {
+        video: { url: response.result.hd },
+        mimetype: 'video/mp4',
+        caption: 'HD VIDEO ✅\n\n' + sadiya_md_footer,
+      },
+      { quoted }
+    );
+  } catch (error) {
+    console.log(error);
+    reply("❌ I Couldn't find anything. Please try again later...");
+    await message.sendMessage(
+      botNumber + '@s.whatsapp.net',
+      { text: '⚠ Error Info: ' + error },
+      { quoted }
+    );
+  }
+});
+
