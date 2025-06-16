@@ -30,12 +30,14 @@ cmd({
     const title = res.data.meta?.title || "Instagram Video";
     const username = res.data.meta?.username || "unknown";
     const thumb = res.data.thumb;
+const caption = `乂 ᗪIᑎᑌᗯᕼ 𝙸𝚗𝚜𝚝𝚊 ᗪOᗯᑎ ⟩⟩⟩
 
-    const caption = `*Instagram Downloader*\n\n`
-      + `*📝 Title:* ${title}\n`
-      + `*👤 User:* @${username}\n`
-      + `*🔗 Url:* ${q}`;
-
+ \`╭───────────────✿\`
+* *\`A\`ᴜᴛʜᴏʀ :* _@${username}_
+* *\`L\` ɪɴᴋ   :* _${q}_
+* *\`𝚃\`𝚒𝚝𝚕𝚎  :* _${title}_
+\`╰───────────────✿\``;
+    
     // ✳️ If nonbutton mode
 if (config.MODE === 'nonbutton') {
   const sections = [
