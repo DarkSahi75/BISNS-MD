@@ -12,7 +12,7 @@ cmd({
   pattern: "facebook",
   react: "🎥",
   alias: ["fbbbb", "fbvideo", "fb"],
-  desc: ddesc,
+  desc: "ddesc",
   category: "download",
   use: '.facebook <facebook_url>',
   filename: __filename
