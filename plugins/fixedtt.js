@@ -300,7 +300,7 @@ async (conn, mek, m, { from, q, reply }) => {
 
 
 cmd({
-  pattern: "tipk",
+  pattern: "ttpaka",
   alias: ["ttinfo", "ttdetails", "tt"],
   react: '🔎',
   desc: "Get TikTok video details only.",
@@ -345,7 +345,7 @@ if (config.MODE === 'nonbutton') {
       {
         title: "1.",
         rowId: `${prefix}tikwm ${tiktokUrl}`,
-        description: '`With Watermark Normal` 📹'
+        description: 'With Watermark Normal 📹'
       },
       {
         title: "2",
@@ -355,16 +355,17 @@ if (config.MODE === 'nonbutton') {
       {
         title: "3",
         rowId: `${prefix}tikwmdoc ${tiktokUrl}`,
-        description: '`With Watermark Document` 📄'
+        description: 'With Watermark Document 📄'
       }
-    ] },
+    ] 
+  },
   {
     title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐍𝐨 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
     rows: [
       {
         title: "4",
         rowId: `${prefix}tiknowm ${tiktokUrl}`,
-        description: '`No Watermark Normal` 📹'
+        description: 'No Watermark Normal 📹'
       },
      {
         title: "5",
@@ -374,7 +375,7 @@ if (config.MODE === 'nonbutton') {
       {
         title: "6",
         rowId: `${prefix}tiknowmdoc ${tiktokUrl}`,
-        description: '`No Watermark Document` 📄'
+        description: 'No Watermark Document 📄'
       }
     ]
   },
@@ -384,17 +385,17 @@ if (config.MODE === 'nonbutton') {
       {
         title: "7",
         rowId: `${prefix}tikaud ${tiktokUrl}`,
-        description: '`Audio With Normal File` 🎵'
+        description: 'Audio With Normal File 🎵'
       },
       {
         title: "8",
         rowId: `${prefix}tikauddoc ${tiktokUrl}`,
-        description: '`Audio With Document File` 📄'
+        description: 'Audio With Document File📄'
       },
       {
         title: "9",
         rowId: `${prefix}tikaudptt ${tiktokUrl}`,
-        description: '`Audio With Voice Note` 🎤'
+        description: 'Audio With Voice Note 🎤'
       }
     ]
   }
