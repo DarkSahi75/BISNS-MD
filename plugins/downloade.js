@@ -53,21 +53,7 @@ if (config.MODE === 'nonbutton') {
         description: '`❲ With Watermark Document ❳` 📄'
       }
     ] },
-  {
-    title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐍𝐨 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
-    rows: [
-      {
-        title: "3.",
-        rowId: `${prefix}tiknowm }`,
-        description: '`❲ No Watermark Normal ❳` 📹'
-      },
-      {
-        title: "4.",
-        rowId: `${prefix}tiknowmdoc {}`,
-        description: '`❲ No Watermark Document ❳` 📄'
-      }
-    ]
-  },
+  
   {
     title: "🎧 𝐀𝐮𝐝𝐢𝐨 𝐎𝐩𝐭𝐢𝐨𝐧𝐬",
     rows: [
@@ -106,32 +92,29 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
   title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
   sections: [
     {
-      title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+      title: "📽️ ɪɴꜱᴛᴀʀɢʀᴀᴍ ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
       rows: [
         {
-          title: "NonWaterMark Normal Video",
+          title: "𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐍𝐨𝐫𝐦𝐚𝐥 𝐕𝐢𝐝𝐞𝐨 ⇲",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowm {}`
+          id: `${prefix}igv ${q}`
         },
         {
-          title: "NonWaterMark Document Video",
+          title: "𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐃𝐨𝐜𝐮𝐦𝐞𝐧𝐭 𝐕𝐢𝐝𝐞𝐨 ⇲",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowmdoc {}`
+          id: `${prefix}igvd ${q}`
         }
       ]
     },
     {
-      title: "💧 With-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+      title: "📽️ ᴠɪᴅᴇᴏ ɴᴏᴛᴇ ᴛʏᴘᴇ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
       rows: [
+        
+          
         {
-          title: "WithWaterMark Normal Video",
+          title: "𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐕𝐢𝐝𝐞𝐨 𝐍𝐨𝐭𝐞 ⇲",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwm {}`
-        },
-        {
-          title: "WithWaterMark Document Video",
-          description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwmdoc {}`
+          id: `${prefix}igvp ${q}`
         }
       ]
     }
@@ -146,7 +129,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
         buttons: [
           {
             buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
+            buttonText: { displayText: "🔘" },
             type: 4,
             nativeFlowInfo: {
               name: "single_select",
@@ -166,7 +149,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
 });
 // Directly send Instagram video normal
 cmd({
-  pattern: "igvnowm",
+  pattern: "igv",
   desc: "Send Instagram video normal no watermark",
   category: "download",
   filename: __filename,
@@ -198,7 +181,7 @@ cmd({
 
 // Document send for Instagram video no watermark
 cmd({
-  pattern: "igvnowmdoc",
+  pattern: "igvd",
   desc: "Send Instagram video as document no watermark",
   category: "download",
   filename: __filename,
