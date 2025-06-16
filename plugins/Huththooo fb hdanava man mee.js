@@ -52,17 +52,17 @@ let caption = `\`乂 Ｄ𝚒ｎｕｗｈ 𝐹𝛣 Ｄｏｗｎ⟩⟩⟩\`
     rows: [
       {
         title: "1",
-        rowId: `${prefix}tikwm ${tiktokUrl}`,
+        rowId: `${prefix}tikwm ${q}`,
         description: 'Wm Normal Video 📹'
       },
       {
         title: "2",
-        rowId: `${prefix}tikwmp ${tiktokUrl}`,
+        rowId: `${prefix}tikwmp ${q}`,
         description: '\`Wm video Note 📹\`'
       },
       {
         title: "3",
-        rowId: `${prefix}tikwmdoc ${tiktokUrl}`,
+        rowId: `${prefix}tikwmdoc ${q}`,
         description: 'Wm Document Video 📄'
       }
     ] 
@@ -72,17 +72,17 @@ let caption = `\`乂 Ｄ𝚒ｎｕｗｈ 𝐹𝛣 Ｄｏｗｎ⟩⟩⟩\`
     rows: [
       {
         title: "4",
-        rowId: `${prefix}tiknowm ${tiktokUrl}`,
+        rowId: `${prefix}tiknowm ${q}`,
         description: 'No_Wm Normal Video 📹'
       },
      {
         title: "5",
-        rowId: `${prefix}tiknowmp ${tiktokUrl}`,
+        rowId: `${prefix}tiknowmp ${q}`,
         description: '\`No_Wm Video Note 📹\`'
       }, 
       {
         title: "6",
-        rowId: `${prefix}tiknowmdoc ${tiktokUrl}`,
+        rowId: `${prefix}tiknowmdoc ${q}`,
         description: 'No_Wm Document Video 📄'
       }
     ]
@@ -92,25 +92,25 @@ let caption = `\`乂 Ｄ𝚒ｎｕｗｈ 𝐹𝛣 Ｄｏｗｎ⟩⟩⟩\`
     rows: [
       {
         title: "7",
-        rowId: `${prefix}tikaud ${tiktokUrl}`,
+        rowId: `${prefix}tikaud ${q}`,
         description: 'Audio With Normal File 🎵'
       },
       {
         title: "8",
-        rowId: `${prefix}tikauddoc ${tiktokUrl}`,
+        rowId: `${prefix}tikauddoc ${q}`,
         description: '\`Audio With Document File 📄\`'
       },
       {
         title: "9",
-        rowId: `${prefix}tikaudptt ${tiktokUrl}`,
+        rowId: `${prefix}tikaudptt ${q}`,
         description: 'Audio With Voice Note 🎤'
       }
     ]
   }
 ];
 const listMessage = {
-caption: detailsMsg,
-image: { url:thumbnail },  // <-- use YouTube thumbnail here
+caption: caption,
+image: { url: fb.result.thumbnail },// <-- use YouTube thumbnail here
 footer: '> *〽️ade By Dinuwh Bbh*',
 title: '',
 buttonText: '> *◎Reply Below Number ⇲◎*',
@@ -130,17 +130,17 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
         {
           title: "NonWaterMark Normal Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowm ${tiktokUrl}`
+          id: `${prefix}tiknowm ${q}`
         },
         {
           title: "NonWaterMark Document Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowmdoc ${tiktokUrl}`
+          id: `${prefix}tiknowmdoc ${q}`
         },
 	{
           title: "NonWatermark Video Note",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowmp ${tiktokUrl}`
+          id: `${prefix}tiknowmp ${q}`
 	}
       ]
     },
@@ -150,17 +150,17 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
         {
           title: "WithWaterMark Normal Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwm ${tiktokUrl}`
+          id: `${prefix}tikwm ${q}`
         },
 	{
           title: "WithWaterMark Video Note",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwmp ${tiktokUrl}`
+          id: `${prefix}tikwmp ${q}`
         },
         {
           title: "WithWaterMark Document Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwmdoc ${tiktokUrl}`
+          id: `${prefix}tikwmdoc ${q}`
         }
       ]
     }
@@ -175,25 +175,25 @@ const listData2 = {
             {
               title: "\`Audio With Normal\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaud ${tiktokUrl}`
+              id: `${prefix}tikaud ${q}`
             },
             {
               title: "\`Audio With Document\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikauddoc ${tiktokUrl}`
+              id: `${prefix}tikauddoc ${q}`
             },
             {
               title: "\`Audio With Voice Note\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaudptt ${tiktokUrl}`
+              id: `${prefix}tikaudptt ${q}`
             }
           ]
         }]
       };
 
       return await conn.sendMessage(from, {
-        image: { url: thumbnail },
-        caption: detailsMsg,
+        image: { url: fb.result.thumbnail },
+        caption: caption,
         footer: "> *〽️ade By Dinuwh Bbh*",
         buttons: [
           {
