@@ -125,6 +125,39 @@ async (conn, mek, m, { from, q, reply }) => {
   }
 });
 
+
+cmd({
+  pattern: "tikwmp",
+  // alias: ["tt", "ttdl", "tiktokdl"],
+  react: '📹',
+  desc: "Download TikTok video (WM) + Audio",
+  category: "download",
+  use: '.tiktok <tiktok url>',
+  filename: __filename
+},
+async (conn, mek, m, { from, q, reply }) => {
+  try {
+    if (!q) return await reply('*Error: Please provide a TikTok link*');
+    if (!q.includes("tiktok")) return await reply("*URL Error: Invalid TikTok URL*");
+
+    const res = await fetch(`https://darksadasyt-tiktokdl.vercel.app/api/tiktok?q=${q}`);
+    const data = await res.json();
+
+    if (!data || !data.watermark) {
+      return await reply("❌ Could not fetch video.");
+    }
+
+    // Send watermark video with autoplay (ptv: true)
+    await conn.sendMessage(from, {
+      video: { url: data.watermark, ptv: true },
+      caption: "> *〽️ade By Dinuwh Bbh*"
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.log(e);
+    return reply(`❌ Error\n\n${e.message}`);
+  }
+});
 //=Watermark-doc=======
 
 
@@ -162,10 +195,9 @@ async (conn, mek, m, { from, q, reply }) => {
 //Tik-Nonwatermark-norml
 
 
-
 cmd({
   pattern: "tiknowm",
- // alias: ["tt", "ttdl", "tiktokdl"],
+  // alias: ["tt", "ttdl", "tiktokdl"],
   react: '📹',
   desc: "Download TikTok video (WM) + Audio",
   category: "download",
@@ -174,16 +206,20 @@ cmd({
 },
 async (conn, mek, m, { from, q, reply }) => {
   try {
-    if (!q) return await reply('*Error*');
-    if (!q.includes("tiktok")) return await reply("*Url Error*");
+    if (!q) return await reply('*Error: Please provide a TikTok link*');
+    if (!q.includes("tiktok")) return await reply("*URL Error: Invalid TikTok URL*");
 
     const res = await fetch(`https://darksadasyt-tiktokdl.vercel.app/api/tiktok?q=${q}`);
     const data = await res.json();
 
-    // Send watermark video
-    await conn.sendMessage(from, { video: { url: data.no_watermark }, caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
+    if (!data || !data.watermark) {
+      return await reply("❌ Could not fetch video.");
+    }
 
-    
+    await conn.sendMessage(from, {
+      video: { url: data.watermark, ptv: false },
+      caption: "> *〽️ade By Dinuwh Bbh*",
+    }, { quoted: mek });
 
   } catch (e) {
     console.log(e);
@@ -191,6 +227,38 @@ async (conn, mek, m, { from, q, reply }) => {
   }
 });
 
+
+cmd({
+  pattern: "tiknowmp",
+  // alias: ["tt", "ttdl", "tiktokdl"],
+  react: '📹',
+  desc: "Download TikTok video (WM) + Audio",
+  category: "download",
+  use: '.tiktok <tiktok url>',
+  filename: __filename
+},
+async (conn, mek, m, { from, q, reply }) => {
+  try {
+    if (!q) return await reply('*Error: Please provide a TikTok link*');
+    if (!q.includes("tiktok")) return await reply("*URL Error: Invalid TikTok URL*");
+
+    const res = await fetch(`https://darksadasyt-tiktokdl.vercel.app/api/tiktok?q=${q}`);
+    const data = await res.json();
+
+    if (!data || !data.watermark) {
+      return await reply("❌ Could not fetch video.");
+    }
+
+    await conn.sendMessage(from, {
+      video: { url: data.watermark, ptv: true },
+      caption: "> *〽️ade By Dinuwh Bbh*",
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.log(e);
+    return reply(`❌ Error\n\n${e.message}`);
+  }
+});
 //==tik-no wm Doc
 
 
@@ -277,26 +345,36 @@ if (config.MODE === 'nonbutton') {
       {
         title: "1.",
         rowId: `${prefix}tikwm ${tiktokUrl}`,
-        description: '`❲ With Watermark Normal ❳` 📹'
+        description: '`With Watermark Normal` 📹'
       },
       {
-        title: "2.",
+        title: "2",
+        rowId: `${prefix}tikwmp ${tiktokUrl}`,
+        description: 'With Watermark video Note 📹'
+      },
+      {
+        title: "3",
         rowId: `${prefix}tikwmdoc ${tiktokUrl}`,
-        description: '`❲ With Watermark Document ❳` 📄'
+        description: '`With Watermark Document` 📄'
       }
     ] },
   {
     title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐍𝐨 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
     rows: [
       {
-        title: "3.",
+        title: "4",
         rowId: `${prefix}tiknowm ${tiktokUrl}`,
-        description: '`❲ No Watermark Normal ❳` 📹'
+        description: '`No Watermark Normal` 📹'
       },
+     {
+        title: "5",
+        rowId: `${prefix}tiknowmp ${tiktokUrl}`,
+        description: 'No Watermark Video Note 📹'
+      }, 
       {
-        title: "4.",
+        title: "6",
         rowId: `${prefix}tiknowmdoc ${tiktokUrl}`,
-        description: '`❲ No Watermark Document ❳` 📄'
+        description: '`No Watermark Document` 📄'
       }
     ]
   },
@@ -304,19 +382,19 @@ if (config.MODE === 'nonbutton') {
     title: "🎧 𝐀𝐮𝐝𝐢𝐨 𝐎𝐩𝐭𝐢𝐨𝐧𝐬",
     rows: [
       {
-        title: "5.",
+        title: "7",
         rowId: `${prefix}tikaud ${tiktokUrl}`,
-        description: '`❲ Audio With Normal File ❳` 🎵'
+        description: '`Audio With Normal File` 🎵'
       },
       {
-        title: "6.",
+        title: "8",
         rowId: `${prefix}tikauddoc ${tiktokUrl}`,
-        description: '`❲ Audio With Document File ❳` 📄'
+        description: '`Audio With Document File` 📄'
       },
       {
-        title: "7.",
+        title: "9",
         rowId: `${prefix}tikaudptt ${tiktokUrl}`,
-        description: '`❲ Audio With Voice Note ❳` 🎤'
+        description: '`Audio With Voice Note` 🎤'
       }
     ]
   }
@@ -338,7 +416,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
   title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
   sections: [
     {
-      title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+      title: "⥥ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
       rows: [
         {
           title: "NonWaterMark Normal Video",
@@ -353,7 +431,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
       ]
     },
     {
-      title: "💧 With-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+      title: "⥥ With-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
       rows: [
         {
           title: "WithWaterMark Normal Video",
@@ -401,7 +479,7 @@ const listData2 = {
         buttons: [
           {
             buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
+            buttonText: { displayText: "🔘" },
             type: 4,
             nativeFlowInfo: {
               name: "single_select",
@@ -410,7 +488,7 @@ const listData2 = {
           },
           {
             buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
+            buttonText: { displayText: "🔘" },
             type: 4,
             nativeFlowInfo: {
               name: "single_select",
