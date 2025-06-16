@@ -110,7 +110,7 @@ let caption = `\`乂 Ｄ𝚒ｎｕｗｈ 𝐹𝛣 Ｄｏｗｎ⟩⟩⟩\`
 ];
 const listMessage = {
   caption: caption,
-  image: { url: fb.result.thumbnail }, // ✅ fixed line
+  image: { url: fb.result.thumb }, // ✅ fixed line
   footer: '> *〽️ade By Dinuwh Bbh*',
   title: '',
   buttonText: '> *◎Reply Below Number ⇲◎*',
@@ -191,7 +191,7 @@ const listData2 = {
       };
 
       return await conn.sendMessage(from, {
-        image: { url: fb.result.thumbnail },
+        image: { url: fb.result.thumb },
         caption: caption,
         footer: "> *〽️ade By Dinuwh Bbh*",
         buttons: [
