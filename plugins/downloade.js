@@ -137,30 +137,7 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
     }
   ]
 };
-const listData2 = {
-        title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
-        sections: [{
-          title: "TikTok Audio Down Section 🎧",
-          rows: [
-            
-            {
-              title: "\`Audio With Normal\`",
-              description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaud }`
-            },
-            {
-              title: "\`Audio With Document\`",
-              description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikauddoc }`
-            },
-            {
-              title: "\`Audio With Voice Note\`",
-              description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaudptt }`
-            }
-          ]
-        }]
-      };
+
 
       return await conn.sendMessage(from, {
         image: { url: thumb },
@@ -174,15 +151,6 @@ const listData2 = {
             nativeFlowInfo: {
               name: "single_select",
               paramsJson: JSON.stringify(listData),
-            },
-          },
-          {
-            buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify(listData2),
             },
           }
         ],
