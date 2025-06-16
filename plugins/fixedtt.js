@@ -508,4 +508,35 @@ const listData2 = {
   }
 });
 
+cmd({
+  pattern: "tiknowmpp",
+  react: '📹',
+  desc: "Download TikTok video (No WM) as video note",
+  category: "download",
+  use: '.tiknowmp <tiktok url>',
+  filename: __filename
+},
+async (conn, mek, m, { from, q, reply }) => {
+  try {
+    if (!q) return await reply('*Error: Please provide a TikTok link*');
+    if (!q.includes("tiktok")) return await reply("*URL Error: Invalid TikTok URL*");
+
+    const res = await fetch(`https://darksadasyt-tiktokdl.vercel.app/api/tiktok?q=${q}`);
+    const data = await res.json();
+
+    if (!data || !data.nowatermark) {
+      return await reply("❌ Could not fetch no-watermark video.");
+    }
+
+    await conn.sendMessage(from, {
+      video: { url: data.nowatermark, ptv: true }, // <-- PTV ✅
+      mimetype: 'video/mp4',
+      caption: '> *〽️ade By Dinuwh Bbh*',
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.log(e);
+    return reply(`❌ Error\n\n${e.message}`);
+  }
+});
 
