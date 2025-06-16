@@ -109,16 +109,15 @@ let caption = `\`乂 Ｄ𝚒ｎｕｗｈ 𝐹𝛣 Ｄｏｗｎ⟩⟩⟩\`
   }
 ];
 const listMessage = {
-caption: caption,
-image: { url: fb.result.thumbnail },// <-- use YouTube thumbnail here
-footer: '> *〽️ade By Dinuwh Bbh*',
-title: '',
-buttonText: '> *◎Reply Below Number ⇲◎*',
-sections
-}
-	
-return await conn.replyList(from, listMessage ,{ quoted : mek })
+  caption: caption,
+  image: { url: fb.result.thumbnail }, // ✅ fixed line
+  footer: '> *〽️ade By Dinuwh Bbh*',
+  title: '',
+  buttonText: '> *◎Reply Below Number ⇲◎*',
+  sections
+};
 
+return await conn.replyList(from, listMessage, { quoted: mek });
 	//button
 } if (config.MODE === 'button') {
       const listData = {
