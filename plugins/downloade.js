@@ -91,7 +91,7 @@ if (config.MODE === 'nonbutton') {
 ];
 const listMessage = {
 caption: caption,
-image: { data:thumb },  // <-- use YouTube thumbnail here
+image: { url: thumb },  // <-- use YouTube thumbnail here
 footer: '> *〽️ade By Dinuwh Bbh*',
 title: '',
 buttonText: '> *◎Reply Below Number ⇲◎*',
@@ -163,7 +163,7 @@ const listData2 = {
       };
 
       return await conn.sendMessage(from, {
-        image: { data: thumb },
+        image: { url: thumb },
         caption: caption,
         footer: "> *〽️ade By Dinuwh Bbh*",
         buttons: [
