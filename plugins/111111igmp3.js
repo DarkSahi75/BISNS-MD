@@ -51,7 +51,8 @@ cmd(
   }
 );
 
-/*cmd(
+/*
+cmd(
   {
     pattern: 'igm1',
     desc: 'Download Instagram video as MP3 (audio only)',
@@ -95,3 +96,4 @@ cmd(
     }
   }
 );
+*/
