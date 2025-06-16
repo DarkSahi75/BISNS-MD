@@ -5,6 +5,7 @@ const fetchJson = require ('../lib/functions');
 const API_BASE = 'https://darksadasyt-fbdl.vercel.app/api/fb-download?q=';
 
 // 📽️ FB HD VIDEO
+/* 
 cmd({
   pattern: 'fbhd',
   desc: 'Download Facebook HD Video',
@@ -84,6 +85,7 @@ cmd({
     reply("❌ MP3 Download එක fail වුණා!");
   }
 });
+*/
 
 // Facebook HD Video Download
 cmd({
