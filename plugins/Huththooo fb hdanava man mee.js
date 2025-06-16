@@ -449,3 +449,31 @@ async (conn, mek, m, {
     reply(`❌ Error: ${e.message || e}`);
   }
 });
+
+cmd({
+  pattern: "fb_sd_ptt",
+  react: "🎤",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || !fb.result.sd) {
+      return reply("❌ SD video not found.");
+    }
+
+    await conn.sendMessage(from, {
+      audio: { url: fb.result.sd }, // using video URL directly
+      mimetype: 'audio/mpeg',       // trick to treat video as audio
+      ptt: true                     // make it voice note
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error("Direct Audio Send Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
