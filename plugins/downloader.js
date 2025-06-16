@@ -480,7 +480,6 @@ async(conn, mek, m, {
     from, q, reply
 }) => {
   try {
-      
     const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
     
     if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
@@ -499,5 +498,4 @@ async(conn, mek, m, {
     console.error("Facebook Download Error:", e);
     reply(`Error: ${e.message || e}`);
   }
-});
-
+}); // ✅ <-- මෙතන } ) ඕනේ. මෙතනින් function එක නිම වෙන්න ඕන.
