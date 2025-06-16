@@ -3,6 +3,56 @@ const fetch = require('node-fetch');
 
 cmd(
   {
+    pattern: 'igwmq',
+    desc: 'To get the instagram video.',
+    react: '📸',
+    use: '.ig <Link>',
+    category: 'download',
+    filename: __filename,
+  },
+  async (
+    conn,
+    msg,
+    args,
+    {
+      from,
+      quoted,
+      body,
+      isCmd,
+      command,
+      args: argList,
+      q,
+      reply,
+    }
+  ) => {
+    try {
+      if (!q) {
+        return reply('Please Give Me a valid Link...');
+      }
+      reply.react('⌛');
+      // Fetch Instagram video download info from external API
+      let response = await fetchJson(
+        'https://darksadasyt-igdl.vercel.app/api/download?q=' + q
+      );
+      reply.react('✅');
+      await conn.sendMessage(
+        from,
+        {
+          video: { url: response.result.data[0].downloadUrl },
+          mimetype: 'video/mp4',
+          caption: config.FOOTER,
+        },
+        { quoted: msg }
+      );
+      reply.react('✔️');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
+/*cmd(
+  {
     pattern: 'igm1',
     desc: 'Download Instagram video as MP3 (audio only)',
     react: '🎧',
