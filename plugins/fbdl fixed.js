@@ -1,6 +1,6 @@
 const { cmd } = require('../lib/command');
 const fetch = require('node-fetch');
-
+const fetchJson = require (../lib/function)
 // COMMON BASE
 const API_BASE = 'https://darksadasyt-fbdl.vercel.app/api/fb-download?q=';
 
