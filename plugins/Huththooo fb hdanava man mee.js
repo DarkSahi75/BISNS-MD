@@ -129,17 +129,17 @@ return await conn.replyList(from, listMessage, { quoted: mek });
         {
           title: "SD Normal Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowm ${q}`
+          id: `${prefix}downfb_sd ${q}`
         },
         {
           title: "SD Document Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowmdoc ${q}`
+          id: `${prefix}downfb_sdd ${q}`
         },
 	{
           title: "SD Video Note",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowmp ${q}`
+          id: `${prefix}downfb_sdp ${q}`
 	}
       ]
     },
@@ -149,17 +149,17 @@ return await conn.replyList(from, listMessage, { quoted: mek });
         {
           title: "HD Normal Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwm ${q}`
+          id: `${prefix}downfb_hd ${q}`
         },
 	{
           title: "HD Document Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwmdoc ${q}`
+          id: `${prefix}downfb_hdd ${q}`
         },
 	{
           title: "HD Video Note",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwmp ${q}`
+          id: `${prefix}downfb_hdp ${q}`
         }
         
       ]
