@@ -422,3 +422,30 @@ async(conn, mek, m, {
   }
 });
 
+cmd({
+  pattern: "downfb_mp3",
+  react: "🎧",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || !fb.result.mp3) {
+      return reply("❌ Audio not found or not downloadable.");
+    }
+
+    await conn.sendMessage(from, {
+      audio: { url: fb.result.mp3 },
+      mimetype: 'audio/mpeg',
+      ptt: true // 👉 This makes it a voice note (push-to-talk style)
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error("Facebook MP3 Download Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
