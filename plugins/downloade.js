@@ -44,12 +44,12 @@ if (config.MODE === 'nonbutton') {
     rows: [
       {
         title: "1.",
-        rowId: `${prefix}tikwm ${}`,
+        rowId: `${prefix}tikwm }`,
         description: '`❲ With Watermark Normal ❳` 📹'
       },
       {
         title: "2.",
-        rowId: `${prefix}tikwmdoc ${tiktokUrl}`,
+        rowId: `${prefix}tikwmdoc }`,
         description: '`❲ With Watermark Document ❳` 📄'
       }
     ] },
@@ -58,12 +58,12 @@ if (config.MODE === 'nonbutton') {
     rows: [
       {
         title: "3.",
-        rowId: `${prefix}tiknowm ${}`,
+        rowId: `${prefix}tiknowm }`,
         description: '`❲ No Watermark Normal ❳` 📹'
       },
       {
         title: "4.",
-        rowId: `${prefix}tiknowmdoc ${}`,
+        rowId: `${prefix}tiknowmdoc {}`,
         description: '`❲ No Watermark Document ❳` 📄'
       }
     ]
@@ -73,25 +73,25 @@ if (config.MODE === 'nonbutton') {
     rows: [
       {
         title: "5.",
-        rowId: `${prefix}tikaud ${}`,
+        rowId: `${prefix}tikaud }`,
         description: '`❲ Audio With Normal File ❳` 🎵'
       },
       {
         title: "6.",
-        rowId: `${prefix}tikauddoc ${}`,
+        rowId: `${prefix}tikauddoc }`,
         description: '`❲ Audio With Document File ❳` 📄'
       },
       {
         title: "7.",
-        rowId: `${prefix}tikaudptt ${}`,
+        rowId: `${prefix}tikaudptt {}`,
         description: '`❲ Audio With Voice Note ❳` 🎤'
       }
     ]
   }
 ];
 const listMessage = {
-caption: detailsMsg,
-image: { url:thumbnail },  // <-- use YouTube thumbnail here
+caption: caption,
+image: { data:thumb },  // <-- use YouTube thumbnail here
 footer: '> *〽️ade By Dinuwh Bbh*',
 title: '',
 buttonText: '> *◎Reply Below Number ⇲◎*',
@@ -111,12 +111,12 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
         {
           title: "NonWaterMark Normal Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowm ${}`
+          id: `${prefix}tiknowm {}`
         },
         {
           title: "NonWaterMark Document Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tiknowmdoc ${}`
+          id: `${prefix}tiknowmdoc {}`
         }
       ]
     },
@@ -126,12 +126,12 @@ return await conn.replyList(from, listMessage ,{ quoted : mek })
         {
           title: "WithWaterMark Normal Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwm ${}`
+          id: `${prefix}tikwm {}`
         },
         {
           title: "WithWaterMark Document Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwmdoc ${}`
+          id: `${prefix}tikwmdoc {}`
         }
       ]
     }
@@ -146,25 +146,25 @@ const listData2 = {
             {
               title: "\`Audio With Normal\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaud ${}`
+              id: `${prefix}tikaud }`
             },
             {
               title: "\`Audio With Document\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikauddoc ${}`
+              id: `${prefix}tikauddoc }`
             },
             {
               title: "\`Audio With Voice Note\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaudptt ${}`
+              id: `${prefix}tikaudptt }`
             }
           ]
         }]
       };
 
       return await conn.sendMessage(from, {
-        image: { url: thumbnail },
-        caption: detailsMsg,
+        image: { data: thumb },
+        caption: caption,
         footer: "> *〽️ade By Dinuwh Bbh*",
         buttons: [
           {
