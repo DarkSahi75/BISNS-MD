@@ -71,27 +71,39 @@ cmd({
       };
 
       return await conn.replyList(from, listMessage, { quoted: mek });
-    }
-
-    if (config.MODE === 'button') {
-      const listData = {
-        title: "Video Selection",
-        sections: [
+    
+if (config.MODE === 'button') {
+  const listData = {
+    title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+    sections: [
+      {
+        title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+        rows: [
           {
-            title: "Non-Watermark Video Downloader",
-            rows: [
-              { title: "Normal Video", id: `${prefix}igvnowm ${q}`, description: "No Watermark Normal Video" },
-              { title: "Document Video", id: `${prefix}igvnowmdoc ${q}`, description: "No Watermark Document Video" }
-            ]
+            title: "᚜Normal Video Tipe᚛",
+            description: "〽️ade By Dinuwh Bbh",
+            id: `${prefix}igv ${q}`
           },
           {
-            title: "Video Note Downloader",
-            rows: [
-              { title: "Video Note", id: `${prefix}igvp ${q}`, description: "Video Note Type" }
-            ]
+            title: "᚜Document Video Tipe᚛",
+            description: "〽️ade By Dinuwh Bbh",
+            id: `${prefix}igvd ${q}`
           }
         ]
-      };
+      },
+      {
+        title: "Can Video Note ᴅᴏᴡɴʟᴏᴀᴅ ⇲",
+        rows: [
+          {
+            title: "᚜Video Note Tipe᚛",
+            description: "〽️ade By Dinuwh Bbh",
+            id: `${prefix}igvp ${q}`
+          }
+        ]
+      }
+    ]
+  };
+}
 
       await conn.sendMessage(from, {
         text: "Choose a download type below ⬇️",
