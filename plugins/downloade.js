@@ -33,47 +33,38 @@ cmd({
 const caption = `乂 ᗪIᑎᑌᗯᕼ 𝙸𝚗𝚜𝚝𝚊 ᗪOᗯᑎ ⟩⟩⟩
 
  \`╭───────────────✿\`
-* *\`A\`ᴜᴛʜᴏʀ :* _@${username}_
+* *\`A\` ᴜᴛʜᴏʀ :* _@${username}_
 * *\`L\` ɪɴᴋ   :* _${q}_
-* *\`𝚃\`𝚒𝚝𝚕𝚎  :* _${title}_
+* *\`𝚃\` 𝚒𝚝𝚕𝚎  :* _${title}_
 \`╰───────────────✿\``;
     
     // ✳️ If nonbutton mode
 if (config.MODE === 'nonbutton') {
   const sections = [
   {
-    title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
+    title: "📹 𝐈𝐧𝐬𝐭𝐚 𝐕𝐢𝐝𝐞𝐨 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐞𝐫",
     rows: [
       {
         title: "1.",
-        rowId: `${prefix}tikwm }`,
-        description: '`❲ With Watermark Normal ❳` 📹'
+        rowId: `${prefix}igv ${q}`,
+        description: '`Ig Video ⇉ Normal` 📹'
       },
       {
         title: "2.",
-        rowId: `${prefix}tikwmdoc }`,
-        description: '`❲ With Watermark Document ❳` 📄'
+        rowId: `${prefix}igvd ${q}`,
+        description: '`Ig Video ⇉ Document` 📄'
       }
     ] },
   
   {
-    title: "🎧 𝐀𝐮𝐝𝐢𝐨 𝐎𝐩𝐭𝐢𝐨𝐧𝐬",
+    title: "𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐕𝐢𝐝𝐞𝐨 𝐓𝐲𝐩𝐞 ⇘",
     rows: [
       {
-        title: "5.",
-        rowId: `${prefix}tikaud }`,
-        description: '`❲ Audio With Normal File ❳` 🎵'
-      },
-      {
-        title: "6.",
-        rowId: `${prefix}tikauddoc }`,
-        description: '`❲ Audio With Document File ❳` 📄'
-      },
-      {
-        title: "7.",
-        rowId: `${prefix}tikaudptt {}`,
-        description: '`❲ Audio With Voice Note ❳` 🎤'
+        title: "3",
+        rowId: `${prefix}igvp ${q}`,
+        description: '`Ig Video ⇉ Video Note` 🎵'
       }
+      
     ]
   }
 ];
