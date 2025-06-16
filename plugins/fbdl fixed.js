@@ -1,77 +1,86 @@
 const { cmd } = require('../lib/command');
 const fetch = require('node-fetch');
 
-const apiBase = 'https://darksadasyt-fbdl.vercel.app/api/fb-download?q=';
+// COMMON BASE
+const API_BASE = 'https://darksadasyt-fbdl.vercel.app/api/fb-download?q=';
 
-// HD VIDEO
+// 📽️ FB HD VIDEO
 cmd({
-  pattern: 'fbhdsadas',
+  pattern: 'fbhd',
   desc: 'Download Facebook HD Video',
   category: 'download',
-  use: '.fbhd <facebook link>',
+  use: '.fbhd <facebook url>',
   filename: __filename
 }, async (message, match, m, { from, quoted, q, reply }) => {
   try {
-    if (!q) return reply("🔗 Facebook video link එකක් දෙන්න!");
-    const res = await fetch(apiBase + encodeURIComponent(q));
+    if (!q) return reply("🔗 Facebook link එකක් දාපං!");
+    const res = await fetch(API_BASE + encodeURIComponent(q));
     const json = await res.json();
-    if (!json.result?.videoFormats?.[0]?.url) return reply("❌ HD video එක ලබාගත නොහැක.");
+
+    const hdVideo = json?.result?.videoFormats?.find(v => v.quality === 'HD');
+    if (!hdVideo?.url) return reply("❌ HD Video link එකක් හම්බුනේ නෑ!");
+
     await message.sendMessage(from, {
-      video: { url: json.result.videoFormats[0].url },
+      video: { url: hdVideo.url },
       mimetype: 'video/mp4',
-      caption: `🎥 Facebook HD Video\n📁 Quality: ${json.result.videoFormats[0].quality}`,
+      caption: `✅ Facebook HD Video\n📥 Quality: HD\n👤 By: ${json.author || 'Unknown'}`
     }, { quoted });
-  } catch (err) {
-    console.log(err);
-    reply("❌ Error downloading HD video.");
+  } catch (e) {
+    console.log(e);
+    reply("❌ HD Video download එක fail වුණා!");
   }
 });
 
-// SD VIDEO
+// 📼 FB SD VIDEO
 cmd({
-  pattern: 'fbsdsadas',
+  pattern: 'fbsd',
   desc: 'Download Facebook SD Video',
   category: 'download',
-  use: '.fbsd <facebook link>',
+  use: '.fbsd <facebook url>',
   filename: __filename
 }, async (message, match, m, { from, quoted, q, reply }) => {
   try {
-    if (!q) return reply("🔗 Facebook video link එකක් දෙන්න!");
-    const res = await fetch(apiBase + encodeURIComponent(q));
+    if (!q) return reply("🔗 Facebook link එකක් දාපං!");
+    const res = await fetch(API_BASE + encodeURIComponent(q));
     const json = await res.json();
-    if (!json.result?.videoFormats?.[1]?.url) return reply("❌ SD video එක ලබාගත නොහැක.");
+
+    const sdVideo = json?.result?.videoFormats?.find(v => v.quality === 'SD');
+    if (!sdVideo?.url) return reply("❌ SD Video link එකක් හම්බුනේ නෑ!");
+
     await message.sendMessage(from, {
-      video: { url: json.result.videoFormats[1].url },
+      video: { url: sdVideo.url },
       mimetype: 'video/mp4',
-      caption: `🎥 Facebook SD Video\n📁 Quality: ${json.result.videoFormats[1].quality}`,
+      caption: `✅ Facebook SD Video\n📥 Quality: SD\n👤 By: ${json.author || 'Unknown'}`
     }, { quoted });
-  } catch (err) {
-    console.log(err);
-    reply("❌ Error downloading SD video.");
+  } catch (e) {
+    console.log(e);
+    reply("❌ SD Video download එක fail වුණා!");
   }
 });
 
-// MP3 AUDIO
+// 🎧 FB AUDIO MP3
 cmd({
-  pattern: 'fbmp3sadas',
-  desc: 'Download Facebook Audio MP3',
+  pattern: 'fbmp3',
+  desc: 'Download Facebook Audio (MP3)',
   category: 'download',
-  use: '.fbmp3 <facebook link>',
+  use: '.fbmp3 <facebook url>',
   filename: __filename
 }, async (message, match, m, { from, quoted, q, reply }) => {
   try {
-    if (!q) return reply("🔗 Facebook video link එකක් දෙන්න!");
-    const res = await fetch(apiBase + encodeURIComponent(q));
+    if (!q) return reply("🔗 Facebook link එකක් දාපං!");
+    const res = await fetch(API_BASE + encodeURIComponent(q));
     const json = await res.json();
-    if (!json.result?.audioFormats?.[0]?.url) return reply("❌ MP3 audio එක ලබාගත නොහැක.");
+
+    const audio = json?.result?.audioFormats?.find(a => a.ext === 'mp3');
+    if (!audio?.url) return reply("❌ MP3 Audio link එකක් හම්බුනේ නෑ!");
+
     await message.sendMessage(from, {
-      audio: { url: json.result.audioFormats[0].url },
+      audio: { url: audio.url },
       mimetype: 'audio/mpeg',
-      ptt: false,
-      waveform: true,
+      ptt: false
     }, { quoted });
-  } catch (err) {
-    console.log(err);
-    reply("❌ Error downloading MP3 audio.");
+  } catch (e) {
+    console.log(e);
+    reply("❌ MP3 Download එක fail වුණා!");
   }
 });
