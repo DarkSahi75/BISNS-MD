@@ -147,11 +147,19 @@ async (conn, mek, m, { from, q, reply }) => {
       return await reply("❌ Could not fetch video.");
     }
 
-    // Send watermark video with autoplay (ptv: true)
-    await conn.sendMessage(from, {
-      video: { url: data.watermark, ptv: true },
-      caption: "> *〽️ade By Dinuwh Bbh*"
-    }, { quoted: mek });
+    
+
+
+await conn.sendMessage(
+        from,
+        {
+          video: { url: data.watermark },
+          mimetype: "video/mp4",
+          ptv: true,
+          caption: "> *〽️ade By Dinuwh Bbh*"
+        },
+        { quoted: mek }
+      );
 
   } catch (e) {
     console.log(e);
