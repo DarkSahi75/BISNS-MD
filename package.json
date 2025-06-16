@@ -20,6 +20,7 @@
         "@sl-code-lords/photooxy": "^1.0.1",
          "jsdom": "^22.1.0",
         "sharp":"latest",
+        "ffmpeg-static":"latest",
         "g-i-s":"latest",
         "darksadasyt-imgbb-scraper": "latest",
         "google-tts-api":"latest",
