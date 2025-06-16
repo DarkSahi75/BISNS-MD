@@ -72,49 +72,98 @@ cmd({
 
       return await conn.replyList(from, listMessage, { quoted: mek });
     
-if (config.MODE === 'button') {
-  const listData = {
-    title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
-    sections: [
-      {
-        title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
-        rows: [
+
+  if (config.MODE === 'button') {
+      const listData = {
+        title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+        sections: [{
+          title: "ᴅɪɴᴜᴡʜ-ᴍᴅ || ᴛɪᴋᴛᴏᴋ ᴠɪᴅᴇᴏɴ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ⇲",
+          rows: [
+            {
+              title: "NonWaterMark Norml Video",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}tikaud ${data.url}`
+            },
+            {
+              title: "NonWaterMark Document Video",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${data.url}`
+            },
+            {
+              title: "WithWaterMark Normal Video",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${data.url}`
+            },
+            {
+              title: "WithWaterMark Document Video",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
+          ]
+        }]
+      };
+
+const listData2 = {
+        title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+        sections: [{
+          title: "DINUWH MD OPTIONS",
+          rows: [
+            {
+              title: "[A2 🎧]",
+              description: "Download as audio\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytaud ${data.url}`
+            },
+            {
+              title: "[D2📁]",
+              description: "Download as document\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytdoc ${data.url}`
+            },
+            {
+              title: "[V2 💡]",
+              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}ytvoice ${data.url}`
+            },
+            {
+              title: "[V2📽️]",
+              description: "Download as Video\n〽️ade By Dinuwh Bbh",
+              id: `${prefix}devilv ${data.url}`
+            }
+          ]
+        }]
+      };
+
+      return await conn.sendMessage(from, {
+        image: { url: data.thumbnail },
+        caption: cap,
+        footer: "> 〽️ade By Dinuwh Bbh",
+        buttons: [
           {
-            title: "᚜Normal Video Tipe᚛",
-            description: "〽️ade By Dinuwh Bbh",
-            id: `${prefix}igv ${q}`
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
           },
           {
-            title: "᚜Document Video Tipe᚛",
-            description: "〽️ade By Dinuwh Bbh",
-            id: `${prefix}igvd ${q}`
+            buttonId: "action",
+            buttonText: { displayText: "🔘 Choose Song Type" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData2),
+            },
           }
-        ]
-      },
-      {
-        title: "Can Video Note ᴅᴏᴡɴʟᴏᴀᴅ ⇲",
-        rows: [
-          {
-            title: "᚜Video Note Tipe᚛",
-            description: "〽️ade By Dinuwh Bbh",
-            id: `${prefix}igvp ${q}`
-          }
-        ]
-      }
-    ]
-  };
-}
-
-      await conn.sendMessage(from, {
-        text: "Choose a download type below ⬇️",
-        buttonText: "🔘 Choose Download Type",
-        sections: listData.sections
+        ],
+        headerType: 1,
+        viewOnce: true,
       }, { quoted: mek });
     }
 
   } catch (e) {
     console.error(e);
-    reply("❌ Error occurred: " + e.message);
+    reply(`❌ Error: ${e.message}`);
   }
 });
 
