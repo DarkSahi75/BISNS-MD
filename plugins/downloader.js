@@ -1,385 +1,270 @@
-
 const axios = require("axios");
-const cheerio = require('cheerio');
-const { cmd, commands } = require('../lib/command')
+const { cmd } = require('../lib/command');
+const { fetchJson } = require('../lib/functions');
 const config = require('../settings');
-const yts = require("yt-search");
-const {fetchJson} = require('../lib/functions');
 
 const apikey = `edbcfabbca5a9750`;
 
-var desc =''
-if(config.LANG === 'SI') desc = "Tiktok වෙතින් වීඩියෝ බාගත කරයි."
-else desc = "Download videos from Tiktok."
+// Instagram Downloader Command with menu options
+cmd({
+  pattern: "ig",
+  react: "📸",
+  alias: ["insta", "instadl", "instagram"],
+  desc: "Download Instagram Reel or Video",
+  category: "download",
+  use: ".instagram <instagram_url>",
+  filename: __filename,
+}, async (conn, mek, m, { from, prefix, q, reply }) => {
+  try {
+    if (!q || !q.includes("instagram.com")) {
+      return reply("Please provide a valid Instagram URL.\nExample: .instagram https://www.instagram.com/reel/xyz/");
+    }
 
-var ddesc =''
-if(config.LANG === 'SI') ddesc = "Facebook වෙතින් වීඩියෝ බාගත කරයි."
-else ddesc = "Download videos from Facebook."
+    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=${apikey}`);
 
-var descs =''
-if(config.LANG === 'SI') descs = "*Youtube වෙතින් songs බාගත කරයි.*"
-else descs = "*Download songs from Youtube.*"
+    if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
+      return reply("Video not found or cannot be downloaded.");
+    }
 
-var N_FOUND =''
-if(config.LANG === 'SI') N_FOUND = "*මට කිසිවක් සොයාගත නොහැකි විය :(*"
-else N_FOUND = "*I couldn't find anything :(*"
+    const videoUrl = res.data.url[0].url;
+    const title = res.data.meta?.title || "Instagram Video";
+    const username = res.data.meta?.username || "unknown";
+    const thumb = res.data.thumb;
 
-var urlneed =''
-if(config.LANG === 'SI') urlneed = "*🚩 කරුණාකර url එකක් ලබා දෙන්න*"
-else urlneed = "*🚩 Please give me a url*"
+    const caption = `*Instagram Downloader*\n\n`
+      + `*📝 Title:* ${title}\n`
+      + `*👤 User:* @${username}\n`
+      + `*🔗 Url:* ${q}`;
 
-var apkmsg =''
-if(config.LANG === 'SI') apkmsg = "Play store වෙතින් බාගත කරයි."
-else apkmsg = "Download Apk Play store"
-
-var gdmsg =''
-if(config.LANG === 'SI') gdmsg = "Google Drive වෙතින් බාගත කරයි."
-else gdmsg = "Download from Google Drive."
-
-var medmsg =''
-if(config.LANG === 'SI') medmsg = "*media fire වෙතින් බාගත කරයි."
-else medmsg = "Download from media fire."
-
-var ttmsg =''
-if(config.LANG === 'SI') ttmsg = "*twitter වෙතින් බාගත කරයි*"
-else ttmsg = "*Download from twitter."
-
-var igmsg =''
-if(config.LANG === 'SI') igmsg = "*ig වෙතින් බාගත කරයි*"
-else igmsg = "*Download from ig."
-
-var imgmsg =''
-if(config.LANG === 'SI') imgmsg = "*🚩 කරුණාකර වචන කිහිපයක් ලියන්න*"
-else imgmsg = "*🚩 Please give me a text*"
-
-var xn =''
-if(config.LANG === 'SI') xn = "XNXX වෙතින් වීඩියෝ බාගත කරයි."
-else xn = "Download videos from XNXX."
-
-var xv =''
-if(config.LANG === 'SI') xv = "XVIDEO වෙතින් වීඩියෝ බාගත කරයි."
-else xv = "Download videos from XVIDEO."
-
-var xvu =''
-if(config.LANG === 'SI') xvu = "*සබැදි මගින් XVIDEO බාගත කරයි."
-else xvu = "*Download XVIDEO in use Url*"
-
-
-
-
-const api = `https://nethu-api-ashy.vercel.app`;
-
-//09.Instagram Download
-
-
-cmd(
-  {
-    pattern: "ig",
-    react: "📸",
-    alias: ["insta", "instadl", "instagram"],
-    desc: "Download Instagram Reel or Video",
-    category: "download",
-    use: '.instagram <instagram_url>',
-    filename: __filename
-  },
-  async (conn, mek, m, { from, prefix, q, reply }) => {
-    try {
-      if (!q || !q.includes("instagram.com")) {
-        return reply("Please provide a valid Instagram URL.\nExample: .instagram https://www.instagram.com/reel/xyz/");
-      }
-
-      const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
-
-      if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
-        return reply("Video not found or cannot be downloaded.");
-      }
-
-      const videoUrl = res.data.url[0].url;
-      const title = res.data.meta?.title || "Instagram Video";
-      const username = res.data.meta?.username || "unknown";
-      const thumb = res.data.thumb;
-
-      const caption = `*Instagram Downloader*\n\n`
-        + `*📝 Title:* ${title}\n`
-        + `*👤 User:* @${username}\n`
-        + `*🔗 Url:* ${q}`;
-
- if (config.MODE === 'nonbutton') {
-  const sections = [
-  {
-    title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐖𝐚𝐭𝐞𝐫𝐦𝐚",
-    rows: [
-      {
-        title: "1.",
-        rowId: `${prefix}tikwm }`,
-        description: '`❲ With Watermark Normal ❳` 📹'
-      },
-      {
-        title: "2.",
-        rowId: `${prefix}tikwmdoc }`,
-        description: '`❲ With Watermark Document ❳` 📄'
-      }
-    ] },
-  {
-    title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐍𝐨 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
-    rows: [
-      {
-        title: "3.",
-        rowId: `${prefix}tiknowm }`,
-        description: '`❲ No Watermark Normal ❳` 📹'
-      },
-      {
-        title: "4.",
-        rowId: `${prefix}tiknowmdoc }`,
-        description: '`❲ No Watermark Document ❳` 📄'
-      }
-    ]
-  },
-  {
-    title: "🎧 𝐀𝐮𝐝𝐢𝐨 𝐎𝐩𝐭𝐢𝐨𝐧𝐬",
-    rows: [
-      {
-        title: "5.",
-        rowId: `${prefix}tikaud }`,
-        description: '`❲ Audio With Normal File ❳` 🎵'
-      },
-      {
-        title: "6.",
-        rowId: `${prefix}tikauddoc }`,
-        description: '`❲ Audio With Document File ❳` 📄'
-      },
-      {
-        title: "7.",
-        rowId: `${prefix}tikaudptt }`,
-        description: '`❲ Audio With Voice Note ❳` 🎤'
-      }
-    ]
-  }
-];
-const listMessage = {
-caption: caption,
-image: { url:thumb },  // <-- use YouTube thumbnail here
-footer: '> *〽️ade By Dinuwh Bbh*',
-title: '',
-buttonText: '> *◎Reply Below Number ⇲◎*',
-sections
-}
-	
-return await conn.replyList(from, listMessage ,{ quoted : mek })
-
-	//button
-try {
-  if (config.MODE === 'button') {
-    const listData = {
-      title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
-      sections: [
+    if (config.MODE === 'nonbutton') {
+      const sections = [
         {
-          title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+          title: "📹 Video With Watermark",
           rows: [
-            {
-              title: "᚜Normal Video Tipe᚛",
-              description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}igv ${q}`
-            },
-            {
-              title: "᚜Document Video Tipe᚛",
-              description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}igvd ${q}`
-            }
+            { title: "1. Normal Video", rowId: `${prefix}igvwm ${q}`, description: "With Watermark - Normal Video" },
+            { title: "2. Document Video", rowId: `${prefix}igvwmdoc ${q}`, description: "With Watermark - Document" }
           ]
         },
         {
-          title: "Can Video Note ᴅᴏᴡɴʟᴏᴀᴅ ⇲",
+          title: "🎞️ Video No Watermark",
           rows: [
-            {
-              title: "᚜Video Note Tipe᚛",
-              description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}igvp ${q}`
-            }
+            { title: "3. Normal Video", rowId: `${prefix}igvnowm ${q}`, description: "No Watermark - Normal Video" },
+            { title: "4. Document Video", rowId: `${prefix}igvnowmdoc ${q}`, description: "No Watermark - Document" }
+          ]
+        },
+        {
+          title: "🎧 Audio Options",
+          rows: [
+            { title: "5. Audio Normal File", rowId: `${prefix}igaud ${q}`, description: "Audio Normal File" },
+            { title: "6. Audio Document File", rowId: `${prefix}igauddoc ${q}`, description: "Audio Document" },
+            { title: "7. Audio Voice Note", rowId: `${prefix}igaudptt ${q}`, description: "Audio Voice Note" }
           ]
         }
-      ]
-    };
+      ];
+      const listMessage = {
+        caption,
+        image: { url: thumb },
+        footer: '> 〽️ade By Dinuwh Bbh',
+        title: '',
+        buttonText: '> Reply Below Number',
+        sections
+      };
 
-    await conn.sendMessage(from, {
-      text: "Choose a download type below ⬇️",
-      buttonText: "🔘 Choose Song Type",
-      sections: listData.sections,
-    }, { quoted: mek });
-  }
-} catch (e) {
-  console.error(e);
-  reply(`❌ Error: ${e.message}`);
-}
-
-cmd({
-  pattern: "igv",
-  desc: "Send Instagram video directly",
-  category: "download",
-  filename: __filename
-},
-async (conn, mek, m, { q, reply }) => {
-  try {
-    if (!q || !q.includes("instagram.com")) {
-      return reply("Please provide a valid Instagram URL.\nExample: .dl_ig https://www.instagram.com/reel/xyz/");
+      return await conn.replyList(from, listMessage, { quoted: mek });
     }
 
-    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
+    if (config.MODE === 'button') {
+      const listData = {
+        title: "Video Selection",
+        sections: [
+          {
+            title: "Non-Watermark Video Downloader",
+            rows: [
+              { title: "Normal Video", id: `${prefix}igvnowm ${q}`, description: "No Watermark Normal Video" },
+              { title: "Document Video", id: `${prefix}igvnowmdoc ${q}`, description: "No Watermark Document Video" }
+            ]
+          },
+          {
+            title: "Video Note Downloader",
+            rows: [
+              { title: "Video Note", id: `${prefix}igvp ${q}`, description: "Video Note Type" }
+            ]
+          }
+        ]
+      };
 
-    if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
-      return reply("Video not found or cannot be downloaded.");
+      await conn.sendMessage(from, {
+        text: "Choose a download type below ⬇️",
+        buttonText: "🔘 Choose Download Type",
+        sections: listData.sections
+      }, { quoted: mek });
     }
 
-    const videoUrl = res.data.url[0].url;
-    const username = res.data.meta?.username || "unknown";
-
-    await conn.sendMessage(m.chat, {
-      video: { url: videoUrl },
-     // caption: `*Instagram Video*\n\n> *〽️ade By Dinuwh Bbh*\n*User:* @${username}\n\n> Powered by loku-md`,
-      mimetype: 'video/mp4'
-    }, { quoted: mek });
-
-  } catch (err) {
-    console.error(err);
-    reply("*ERROR*: Failed to download Instagram video.");
+  } catch (e) {
+    console.error(e);
+    reply("❌ Error occurred: " + e.message);
   }
 });
 
+// Directly send Instagram video normal
 cmd({
-  pattern: "igvd",
-  desc: "Send Instagram video directly as Document",
+  pattern: "igvnowm",
+  desc: "Send Instagram video normal no watermark",
   category: "download",
-  filename: __filename
-},
-async (conn, mek, m, { q, reply }) => {
+  filename: __filename,
+}, async (conn, mek, m, { q, reply }) => {
   try {
     if (!q || !q.includes("instagram.com")) {
-      return reply("Please provide a valid Instagram URL.\nExample: .dl_ig https://www.instagram.com/reel/xyz/");
+      return reply("Please provide a valid Instagram URL.\nExample: .igvnowm https://www.instagram.com/reel/xyz/");
     }
 
-    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
+    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=${apikey}`);
 
     if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
       return reply("Video not found or cannot be downloaded.");
     }
 
     const videoUrl = res.data.url[0].url;
-    const username = res.data.meta?.username || "unknown";
+
+    await conn.sendMessage(m.chat, {
+      video: { url: videoUrl },
+      mimetype: 'video/mp4',
+      caption: '*Instagram Video*'
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error(e);
+    reply("❌ Failed to download Instagram video.");
+  }
+});
+
+// Document send for Instagram video no watermark
+cmd({
+  pattern: "igvnowmdoc",
+  desc: "Send Instagram video as document no watermark",
+  category: "download",
+  filename: __filename,
+}, async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("instagram.com")) {
+      return reply("Please provide a valid Instagram URL.\nExample: .igvnowmdoc https://www.instagram.com/reel/xyz/");
+    }
+
+    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=${apikey}`);
+
+    if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
+      return reply("Video not found or cannot be downloaded.");
+    }
+
+    const videoUrl = res.data.url[0].url;
 
     await conn.sendMessage(m.chat, {
       document: { url: videoUrl },
-      fileName: `instagram_video_${Date.now()}.mp4`,
+      fileName: `instagram_${Date.now()}.mp4`,
       mimetype: 'video/mp4',
-      caption: `*Instagram Video*\n\n> *〽️ade By Dinuwh Bbh*\n*User:* @${username}\n\n> Powered by loku-md`
+      caption: '*Instagram Video Document*'
     }, { quoted: mek });
 
-  } catch (err) {
-    console.error(err);
-    reply("*ERROR*: Failed to download Instagram video.");
+  } catch (e) {
+    console.error(e);
+    reply("❌ Failed to download Instagram video document.");
   }
 });
 
+// Video note
 cmd({
   pattern: "igvp",
-  desc: "Send Instagram video as Push-To-Video (PTV)",
+  desc: "Send Instagram video as push-to-video",
   category: "download",
-  filename: __filename
-},
-async (conn, mek, m, { q, reply }) => {
+  filename: __filename,
+}, async (conn, mek, m, { q, reply }) => {
   try {
     if (!q || !q.includes("instagram.com")) {
-      return reply("Please provide a valid Instagram URL.\nExample: .dl_ig https://www.instagram.com/reel/xyz/");
+      return reply("Please provide a valid Instagram URL.\nExample: .igvp https://www.instagram.com/reel/xyz/");
     }
 
-    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=edbcfabbca5a9750`);
+    const res = await fetchJson(`https://api-dark-shan-yt.koyeb.app/download/instagram?url=${encodeURIComponent(q)}&apikey=${apikey}`);
 
     if (!res.status || !res.data || !res.data.url || !res.data.url[0]) {
       return reply("Video not found or cannot be downloaded.");
     }
 
     const videoUrl = res.data.url[0].url;
-    const username = res.data.meta?.username || "unknown";
 
     await conn.sendMessage(m.chat, {
       video: { url: videoUrl },
       mimetype: 'video/mp4',
-      ptv: true, // Push-To-Video Mode (PTV)
-     // caption: `*Instagram Video*\n\n> *〽️ade By Dinuwh Bbh*\n*User:* @${username}\n\n> Powered by loku-md`
-    }, { quoted: mek });
-
-  } catch (err) {
-    console.error(err);
-    reply("*ERROR*: Failed to download Instagram video.");
-  }
-});
-
-
-//ig Audio Section
-
-cmd({
-  pattern: "igmp3",
-  desc: "Send normal MP3 audio",
-  category: "audio",
-  filename: __filename
-},
-async (conn, mek, m, { q, reply }) => {
-  try {
-    if (!q || !q.includes("http")) return reply("MP3 URL එකක් දෙන්න බ්‍රෝ!");
-    
-    await conn.sendMessage(m.chat, {
-      audio: { url: q },
-      mimetype: 'audio/mpeg',
-    //  caption: `🎵 *Normal MP3*\n\n> *〽️ade By Dinuwh Bbh*`
+      ptv: true,
     }, { quoted: mek });
 
   } catch (e) {
     console.error(e);
-    reply("❌ Error: Cannot send MP3.");
+    reply("❌ Failed to download Instagram video as video note.");
   }
 });
 
+// Audio normal
 cmd({
-  pattern: "igmp3p",
-  desc: "Send MP3 as voice (PTT)",
+  pattern: "igaud",
+  desc: "Send Instagram audio normal file",
   category: "audio",
-  filename: __filename
-},
-async (conn, mek, m, { q, reply }) => {
+  filename: __filename,
+}, async (conn, mek, m, { q, reply }) => {
   try {
-    if (!q || !q.includes("http")) return reply("MP3 URL එකක් දෙන්න බ්‍රෝ!");
-    
+    if (!q || !q.includes("http")) return reply("MP3 URL needed!");
+
     await conn.sendMessage(m.chat, {
       audio: { url: q },
       mimetype: 'audio/mpeg',
-      ptt: true
     }, { quoted: mek });
 
   } catch (e) {
     console.error(e);
-    reply("❌ Error: Cannot send PTT MP3.");
+    reply("❌ Cannot send MP3 audio.");
   }
 });
 
+// Audio document
 cmd({
-  pattern: "igmp3d",
-  desc: "Send MP3 as document",
+  pattern: "igauddoc",
+  desc: "Send Instagram audio as document",
   category: "audio",
-  filename: __filename
-},
-async (conn, mek, m, { q, reply }) => {
+  filename: __filename,
+}, async (conn, mek, m, { q, reply }) => {
   try {
-    if (!q || !q.includes("http")) return reply("MP3 URL එකක් දෙන්න බ්‍රෝ!");
+    if (!q || !q.includes("http")) return reply("MP3 URL needed!");
 
     await conn.sendMessage(m.chat, {
       document: { url: q },
       mimetype: 'audio/mpeg',
       fileName: `audio_${Date.now()}.mp3`,
-      caption: `📁 *MP3 File*\n\n> *〽️ade By Dinuwh Bbh*`
+      caption: 'MP3 Audio Document'
     }, { quoted: mek });
 
   } catch (e) {
     console.error(e);
-    reply("❌ Error: Cannot send Document MP3.");
+    reply("❌ Cannot send MP3 audio document.");
   }
 });
 
+// Audio voice note
+cmd({
+  pattern: "igaudptt",
+  desc: "Send Instagram audio as voice note (PTT)",
+  category: "audio",
+  filename: __filename,
+}, async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q || !q.includes("http")) return reply("MP3 URL needed!");
+
+    await conn.sendMessage(m.chat, {
+      audio: { url: q },
+      mimetype: 'audio/mpeg',
+      ptt: true,
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error(e);
+    reply("❌ Cannot send MP3 voice note.");
+  }
+});
