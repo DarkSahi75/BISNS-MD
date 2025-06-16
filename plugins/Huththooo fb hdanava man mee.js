@@ -124,43 +124,44 @@ return await conn.replyList(from, listMessage, { quoted: mek });
   title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
   sections: [
     {
-      title: "⥥ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+      title: "⥥ Sd Qulity ᴠɪᴅᴇᴏ ᴄᴏʟʟᴇᴄᴛɪᴏɴ ⇲",
       rows: [
         {
-          title: "NonWaterMark Normal Video",
+          title: "SD Normal Video",
           description: "〽️ade By Dinuwh Bbh",
           id: `${prefix}tiknowm ${q}`
         },
         {
-          title: "NonWaterMark Document Video",
+          title: "SD Document Video",
           description: "〽️ade By Dinuwh Bbh",
           id: `${prefix}tiknowmdoc ${q}`
         },
 	{
-          title: "NonWatermark Video Note",
+          title: "SD Video Note",
           description: "〽️ade By Dinuwh Bbh",
           id: `${prefix}tiknowmp ${q}`
 	}
       ]
     },
     {
-      title: "⥥ With-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+      title: "⥥ Hd Qulity ᴠɪᴅᴇᴏ ᴄᴏʟʟᴇᴄᴛɪᴏɴ ⇲",
       rows: [
         {
-          title: "WithWaterMark Normal Video",
+          title: "HD Normal Video",
           description: "〽️ade By Dinuwh Bbh",
           id: `${prefix}tikwm ${q}`
         },
 	{
-          title: "WithWaterMark Video Note",
-          description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}tikwmp ${q}`
-        },
-        {
-          title: "WithWaterMark Document Video",
+          title: "HD Document Video",
           description: "〽️ade By Dinuwh Bbh",
           id: `${prefix}tikwmdoc ${q}`
+        },
+	{
+          title: "HD Video Note",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikwmp ${q}`
         }
+        
       ]
     }
   ]
@@ -278,6 +279,139 @@ async(conn, mek, m, {
       await conn.sendMessage(from, {
         video: { url: fb.result.hd },
         mimetype: "video/mp4",
+        caption: `*HD Quality*\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄`
+      }, { quoted: mek });
+    }
+
+  } catch (e) {
+    console.error("Facebook Download Error:", e);
+    reply(`Error: ${e.message || e}`);
+  }
+});
+//=====3=3=3==3=4=4=4=4==4===4-4-3
+
+
+cmd({
+  pattern: "downfb_hdd",
+  react: "⬇️",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
+      return reply("📛 Video not found or not downloadable. Please check the URL.");
+    }
+
+    if (fb.result.hd) {
+      await conn.sendMessage(from, {
+        document: { url: fb.result.hd },
+        fileName: "facebook_video_hd.mp4",
+        mimetype: "video/mp4",
+        caption: `*📥 HD Facebook Video*\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄`
+      }, { quoted: mek });
+    }
+
+  } catch (e) {
+    console.error("Facebook Download Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
+
+//==3=3==3=3-3-3-
+
+
+
+cmd({
+  pattern: "downfb_sdd",
+  react: "⬇️",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
+      return reply("📛 Video not found or not downloadable. Please check the URL.");
+    }
+
+    if (fb.result.sd) {
+      await conn.sendMessage(from, {
+        document: { url: fb.result.sd },
+        fileName: "facebook_video_sd.mp4",
+        mimetype: "video/mp4",
+        caption: `*📥 SD Facebook Video*\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄`
+      }, { quoted: mek });
+    }
+
+  } catch (e) {
+    console.error("Facebook Download Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
+//=3=3=3==3=3=3==4=3=4=4=4=4==4=4858&=&885
+
+cmd({
+  pattern: "downfb_sdp",
+  react: "⬇️",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async(conn, mek, m, {
+    from, q, reply
+}) => {
+  try {
+      
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+    
+    if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
+      return reply("Video not found or not downloadable. Please check the URL.");
+    }
+
+    if (fb.result.sd) {
+      await conn.sendMessage(from, {
+        video: { url: fb.result.sd },
+        mimetype: "video/mp4",
+	ptv: "true",
+        caption: `*SD Quality*\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄`
+      }, { quoted: mek });
+    }
+
+  } catch (e) {
+    console.error("Facebook Download Error:", e);
+    reply(`Error: ${e.message || e}`);
+  }
+});
+
+cmd({
+  pattern: "downfb_hdp",
+  react: "⬇️",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async(conn, mek, m, {
+    from, q, reply
+}) => {
+  try {
+      
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+    
+    if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
+      return reply("Video not found or not downloadable. Please check the URL.");
+    }
+
+    if (fb.result.hd) {
+      await conn.sendMessage(from, {
+        video: { url: fb.result.hd },
+        mimetype: "video/mp4",
+	ptv: "true",
         caption: `*HD Quality*\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄`
       }, { quoted: mek });
     }
