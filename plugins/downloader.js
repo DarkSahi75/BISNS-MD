@@ -205,9 +205,9 @@ if (config.MODE === 'button') {
     buttonText: "🔘 Choose Song Type",
     sections: listData.sections,
   }, { quoted: mek });
-}
+} 
 
-  } catch (e) {
+   catch (e) {
     console.error(e);
     reply(`❌ Error: ${e.message}`);
   }
@@ -536,112 +536,3 @@ async(conn, mek, m, {
   }
 });
 
-//02.Tiktok Download 
-cmd({
-  pattern: "tiktok",
-  alias: ['tt', 'ttdl'],
-  react: '🎥',
-  desc: "Download TikTok video",
-  category: "download",
-  use: ".tiktok <TikTok Link>",
-  filename: __filename
-}, async (client, message, chat, { from, body, reply }) => {
-  try {
-    if (!body || !body.includes("tiktok")) {
-      return await reply("❌ Please provide a valid TikTok URL.");
-    }
-
-    const tt = `https://api-dark-shan-yt.koyeb.app/download/tiktok?url=${encodeURIComponent(body)}&apikey=${apikey}`;
-    const { data } = await axios.get(tt);
-
-    if (!data.status || !data.data) {
-      return await reply("❌ Failed to fetch video. Try again.");
-    }
-
-    const v = data.data;
-
-    const caption = `*Tiktok Download*
-    
-*│* 🤵‍♂️ \`User\` : ${v.author.nickname} (@${v.author.unique_id})
-*│* 🆔 \`Video ID\` : ${v.id}
-*│* 🕒 \`Duration\` : ${v.duration}
-*│* 👁️ \`Views\` : ${v.stats.play_count}
-*│* ❤️ \`Likes\` : ${v.stats.digg_count}
-*│* 💬 \`Comments\` : ${v.stats.comment_count}
-*│* 🔁 \`Shares\` : ${v.stats.share_count}
-
-*│* 🔗 \`Url\`  : ${body}`;
-    
-    const buttons = [
-      {
-        buttonId: `.ttdl_nowm ${v.play}`,
-        buttonText: { displayText: "📼 No Watermark" },
-        type: 1
-      },
-      {
-        buttonId: `.ttdl_wm ${v.wmplay}`,
-        buttonText: { displayText: "🎟️ With Watermark" },
-        type: 1
-      },
-      {
-        buttonId: `.ttdl_mp3 ${v.music}`,
-        buttonText: { displayText: "🎶 Audio file" },
-        type: 1
-      }
-    ];
-
-    await client.buttonMessage2(from, {
-      image: { url: v.cover },
-      caption,
-      footer: "> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄",
-      buttons,
-      headerType: 4
-    }, chat);
-
-  } catch (err) {
-    console.error(err);
-    reply("❌ Error occurred. Try again later.");
-  }
-});
-
-cmd({
-  pattern: 'ttdl_nowm',
-  dontAddCommandList: true,
-  filename: __filename
-}, async (client, message, chat, { from, body, reply }) => {
-  const url = body.split(' ')[1];
-  if (!url) return await reply("❌ No video URL found.");
-  await client.sendMessage(from, {
-    video: { url },
-    mimetype: "video/mp4",
-    caption: "*NO Wotermark*\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄"
-  });
-});
-
-cmd({
-  pattern: 'ttdl_wm',
-  dontAddCommandList: true,
-  filename: __filename
-}, async (client, message, chat, { from, body, reply }) => {
-  const url = body.split(' ')[1];
-  if (!url) return await reply("❌ No video URL found.");
-  await client.sendMessage(from, {
-    video: { url },
-    mimetype: "video/mp4",
-    caption: "*Wotermark*\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄"
-  });
-});
-
-cmd({
-  pattern: 'ttdl_mp3',
-  dontAddCommandList: true,
-  filename: __filename
-}, async (client, message, chat, { from, body, reply }) => {
-  const url = body.split(' ')[1];
-  if (!url) return await reply("❌ No audio URL found.");
-  await client.sendMessage(from, {
-    audio: { url },
-    mimetype: "audio/mpeg",
-    caption: "*TikTok Audio*\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄"
-  });
-});
