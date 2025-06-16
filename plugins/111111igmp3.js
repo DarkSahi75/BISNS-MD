@@ -1,5 +1,4 @@
-const cmd = require('../lib/command');
-//onst cmd = require('../lib/command');
+const { cmd } = require('../lib/command'); // ✅ fix
 const fetch = require('node-fetch');
 
 cmd(
