@@ -225,7 +225,7 @@ async (conn, mek, m, { from, q, reply }) => {
     }
 
     await conn.sendMessage(from, {
-      video: { url: data.watermark, ptv: false },
+      video: { url: data.no_watermark},
       caption: "> *〽️ade By Dinuwh Bbh*",
     }, { quoted: mek });
 
@@ -257,10 +257,17 @@ async (conn, mek, m, { from, q, reply }) => {
       return await reply("❌ Could not fetch video.");
     }
 
-    await conn.sendMessage(from, {
-      video: { url: data.watermark, ptv: true },
-      caption: "> *〽️ade By Dinuwh Bbh*",
-    }, { quoted: mek });
+    
+await conn.sendMessage(
+        from,
+        {
+          video: { url: data.no_watermark },
+          mimetype: "video/mp4",
+          ptv: true,
+          caption: "> *〽️ade By Dinuwh Bbh*"
+        },
+        { quoted: mek }
+      );
 
   } catch (e) {
     console.log(e);
@@ -358,7 +365,7 @@ if (config.MODE === 'nonbutton') {
       {
         title: "2",
         rowId: `${prefix}tikwmp ${tiktokUrl}`,
-        description: 'With Watermark video Note 📹'
+        description: '\`With Watermark video Note 📹\`'
       },
       {
         title: "3",
@@ -378,7 +385,7 @@ if (config.MODE === 'nonbutton') {
      {
         title: "5",
         rowId: `${prefix}tiknowmp ${tiktokUrl}`,
-        description: 'No Watermark Video Note 📹'
+        description: '\`No Watermark Video Note 📹\`'
       }, 
       {
         title: "6",
@@ -398,7 +405,7 @@ if (config.MODE === 'nonbutton') {
       {
         title: "8",
         rowId: `${prefix}tikauddoc ${tiktokUrl}`,
-        description: 'Audio With Document File📄'
+        description: '\`Audio With Document File 📄\`'
       },
       {
         title: "9",
@@ -513,38 +520,6 @@ const listData2 = {
   } catch (e) {
     console.error(e);
     reply(`❌ Error: ${e.message}`);
-  }
-});
-
-cmd({
-  pattern: "tiknowmpp",
-  react: '📹',
-  desc: "Download TikTok video (No WM) as video note",
-  category: "download",
-  use: '.tiknowmp <tiktok url>',
-  filename: __filename
-},
-async (conn, mek, m, { from, q, reply }) => {
-  try {
-    if (!q) return await reply('*Error: Please provide a TikTok link*');
-    if (!q.includes("tiktok")) return await reply("*URL Error: Invalid TikTok URL*");
-
-    const res = await fetch(`https://darksadasyt-tiktokdl.vercel.app/api/tiktok?q=${q}`);
-    const data = await res.json();
-
-    if (!data || !data.nowatermark) {
-      return await reply("❌ Could not fetch no-watermark video.");
-    }
-
-    await conn.sendMessage(from, {
-      video: { url: data.nowatermark, ptv: true }, // <-- PTV ✅
-      mimetype: 'video/mp4',
-      caption: '> *〽️ade By Dinuwh Bbh*',
-    }, { quoted: mek });
-
-  } catch (e) {
-    console.log(e);
-    return reply(`❌ Error\n\n${e.message}`);
   }
 });
 
