@@ -48,42 +48,42 @@ let caption = `\`乂 Ｄ𝚒ｎｕｗｈ 𝐹𝛣 Ｄｏｗｎ⟩⟩⟩\`
   if (config.MODE === 'nonbutton') {
   const sections = [
   {
-    title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
+    title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐒𝐃",
     rows: [
       {
         title: "1",
-        rowId: `${prefix}tikwm ${q}`,
-        description: 'Wm Normal Video 📹'
+        rowId: `${prefix}downfb_sd ${q}`,
+        description: 'SD Normal Video 📹'
       },
       {
         title: "2",
-        rowId: `${prefix}tikwmp ${q}`,
-        description: '\`Wm video Note 📹\`'
+        rowId: `${prefix}downfb_sdd ${q}`,
+        description: '\`SD video Note 📹\`'
       },
       {
         title: "3",
-        rowId: `${prefix}tikwmdoc ${q}`,
-        description: 'Wm Document Video 📄'
+        rowId: `${prefix}downfb_sdp ${q}`,
+        description: 'SD Document Video 📄'
       }
     ] 
   },
   {
-    title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐍𝐨 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
+    title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐇𝐃",
     rows: [
       {
         title: "4",
-        rowId: `${prefix}tiknowm ${q}`,
-        description: 'No_Wm Normal Video 📹'
+        rowId: `${prefix}downfb_hd ${q}`,
+        description: 'HD Normal Video 📹'
       },
      {
         title: "5",
-        rowId: `${prefix}tiknowmp ${q}`,
-        description: '\`No_Wm Video Note 📹\`'
+        rowId: `${prefix}downfb_hdd ${q}`,
+        description: '\`HD Video Note 📹\`'
       }, 
       {
         title: "6",
-        rowId: `${prefix}tiknowmdoc ${q}`,
-        description: 'No_Wm Document Video 📄'
+        rowId: `${prefix}downfb_hdp ${q}`,
+        description: 'HD Document Video 📄'
       }
     ]
   },
@@ -92,17 +92,17 @@ let caption = `\`乂 Ｄ𝚒ｎｕｗｈ 𝐹𝛣 Ｄｏｗｎ⟩⟩⟩\`
     rows: [
       {
         title: "7",
-        rowId: `${prefix}tikaud ${q}`,
+        rowId: `${prefix}fb_sd_audio ${q}`,
         description: 'Audio With Normal File 🎵'
       },
       {
         title: "8",
-        rowId: `${prefix}tikauddoc ${q}`,
+        rowId: `${prefix}fb_sd_doc ${q}`,
         description: '\`Audio With Document File 📄\`'
       },
       {
         title: "9",
-        rowId: `${prefix}tikaudptt ${q}`,
+        rowId: `${prefix}fb_sd_ptt ${q}`,
         description: 'Audio With Voice Note 🎤'
       }
     ]
