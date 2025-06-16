@@ -173,19 +173,19 @@ const listData2 = {
           rows: [
             
             {
-              title: "\`Audio With Normal\`",
+              title: "\`Fb Audio With Normal\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaud ${q}`
+              id: `${prefix}fb_sd_audio ${q}`
             },
             {
-              title: "\`Audio With Document\`",
+              title: "\`Fb Audio With Document\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikauddoc ${q}`
+              id: `${prefix}fb_sd_doc ${q}`
             },
             {
-              title: "\`Audio With Voice Note\`",
+              title: "\`Fb Audio With Voice Note\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaudptt ${q}`
+              id: `${prefix}fb_sd_ptt ${q}`
             }
           ]
         }]
@@ -422,33 +422,7 @@ async(conn, mek, m, {
   }
 });
 
-cmd({
-  pattern: "downfb_mp3",
-  react: "🎧",
-  dontAddCommandList: true,
-  filename: __filename
-},
-async (conn, mek, m, {
-  from, q, reply
-}) => {
-  try {
-    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
 
-    if (!fb.result || !fb.result.mp3) {
-      return reply("❌ Audio not found or not downloadable.");
-    }
-
-    await conn.sendMessage(from, {
-      audio: { url: fb.result.mp3 },
-      mimetype: 'audio/mpeg',
-      ptt: true // 👉 This makes it a voice note (push-to-talk style)
-    }, { quoted: mek });
-
-  } catch (e) {
-    console.error("Facebook MP3 Download Error:", e);
-    reply(`❌ Error: ${e.message || e}`);
-  }
-});
 
 cmd({
   pattern: "fb_sd_ptt",
@@ -474,6 +448,65 @@ async (conn, mek, m, {
 
   } catch (e) {
     console.error("Direct Audio Send Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
+
+cmd({
+  pattern: "fb_sd_audio",
+  react: "🎵",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || !fb.result.sd) {
+      return reply("❌ SD video not found.");
+    }
+
+    await conn.sendMessage(from, {
+      audio: { url: fb.result.sd },     // still using video URL
+      mimetype: 'audio/mpeg',           // send as MP3
+      ptt: false                        // make sure it's NOT voice note
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error("FB Audio Send Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
+
+
+
+cmd({
+  pattern: "fb_sd_doc",
+  react: "📄",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || !fb.result.sd) {
+      return reply("❌ SD video not found.");
+    }
+
+    await conn.sendMessage(from, {
+      document: { url: fb.result.sd },  // <-- send as document
+      mimetype: "audio/mpeg",           // <-- trick WhatsApp to treat as audio
+      fileName: "facebook_audio.mp3",   // <-- can be .mp3 even if it's .mp4
+      caption: `🎶 *Facebook Audio* via SD Video\n\n> 🔒 Powered by Loku-MD`
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error("FB Audio Doc Send Error:", e);
     reply(`❌ Error: ${e.message || e}`);
   }
 });
