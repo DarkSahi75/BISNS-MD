@@ -36,106 +36,136 @@ cmd({
       + `*👤 User:* @${username}\n`
       + `*🔗 Url:* ${q}`;
 
-    if (config.MODE === 'nonbutton') {
-      const sections = [
-        {
-          title: "📹 Video With Watermark",
-          rows: [
-            { title: "1. Normal Video", rowId: `${prefix}igvwm ${q}`, description: "With Watermark - Normal Video" },
-            { title: "2. Document Video", rowId: `${prefix}igvwmdoc ${q}`, description: "With Watermark - Document" }
-          ]
-        },
-        {
-          title: "🎞️ Video No Watermark",
-          rows: [
-            { title: "3. Normal Video", rowId: `${prefix}igvnowm ${q}`, description: "No Watermark - Normal Video" },
-            { title: "4. Document Video", rowId: `${prefix}igvnowmdoc ${q}`, description: "No Watermark - Document" }
-          ]
-        },
-        {
-          title: "🎧 Audio Options",
-          rows: [
-            { title: "5. Audio Normal File", rowId: `${prefix}igaud ${q}`, description: "Audio Normal File" },
-            { title: "6. Audio Document File", rowId: `${prefix}igauddoc ${q}`, description: "Audio Document" },
-            { title: "7. Audio Voice Note", rowId: `${prefix}igaudptt ${q}`, description: "Audio Voice Note" }
-          ]
-        }
-      ];
-      const listMessage = {
-        caption,
-        image: { url: thumb },
-        footer: '> 〽️ade By Dinuwh Bbh',
-        title: '',
-        buttonText: '> Reply Below Number',
-        sections
-      };
+    // ✳️ If nonbutton mode
+if (config.MODE === 'nonbutton') {
+  const sections = [
+  {
+    title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
+    rows: [
+      {
+        title: "1.",
+        rowId: `${prefix}tikwm ${tiktokUrl}`,
+        description: '`❲ With Watermark Normal ❳` 📹'
+      },
+      {
+        title: "2.",
+        rowId: `${prefix}tikwmdoc ${tiktokUrl}`,
+        description: '`❲ With Watermark Document ❳` 📄'
+      }
+    ] },
+  {
+    title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐍𝐨 𝐖𝐚𝐭𝐞𝐫𝐦𝐚𝐫𝐤",
+    rows: [
+      {
+        title: "3.",
+        rowId: `${prefix}tiknowm ${tiktokUrl}`,
+        description: '`❲ No Watermark Normal ❳` 📹'
+      },
+      {
+        title: "4.",
+        rowId: `${prefix}tiknowmdoc ${tiktokUrl}`,
+        description: '`❲ No Watermark Document ❳` 📄'
+      }
+    ]
+  },
+  {
+    title: "🎧 𝐀𝐮𝐝𝐢𝐨 𝐎𝐩𝐭𝐢𝐨𝐧𝐬",
+    rows: [
+      {
+        title: "5.",
+        rowId: `${prefix}tikaud ${tiktokUrl}`,
+        description: '`❲ Audio With Normal File ❳` 🎵'
+      },
+      {
+        title: "6.",
+        rowId: `${prefix}tikauddoc ${tiktokUrl}`,
+        description: '`❲ Audio With Document File ❳` 📄'
+      },
+      {
+        title: "7.",
+        rowId: `${prefix}tikaudptt ${tiktokUrl}`,
+        description: '`❲ Audio With Voice Note ❳` 🎤'
+      }
+    ]
+  }
+];
+const listMessage = {
+caption: detailsMsg,
+image: { url:thumbnail },  // <-- use YouTube thumbnail here
+footer: '> *〽️ade By Dinuwh Bbh*',
+title: '',
+buttonText: '> *◎Reply Below Number ⇲◎*',
+sections
+}
+	
+return await conn.replyList(from, listMessage ,{ quoted : mek })
 
-      return await conn.replyList(from, listMessage, { quoted: mek });
-    
-
-  if (config.MODE === 'button') {
+	//button
+} if (config.MODE === 'button') {
       const listData = {
-        title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
-        sections: [{
-          title: "ᴅɪɴᴜᴡʜ-ᴍᴅ || ᴛɪᴋᴛᴏᴋ ᴠɪᴅᴇᴏɴ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ⇲",
-          rows: [
-            {
-              title: "NonWaterMark Norml Video",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}tikaud ${data.url}`
-            },
-            {
-              title: "NonWaterMark Document Video",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
-            },
-            {
-              title: "WithWaterMark Normal Video",
-              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
-            },
-            {
-              title: "WithWaterMark Document Video",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
-            }
-          ]
-        }]
-      };
-
+  title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+  sections: [
+    {
+      title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+      rows: [
+        {
+          title: "NonWaterMark Normal Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}tiknowm ${tiktokUrl}`
+        },
+        {
+          title: "NonWaterMark Document Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}tiknowmdoc ${tiktokUrl}`
+        }
+      ]
+    },
+    {
+      title: "💧 With-Watermark ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ ⇲",
+      rows: [
+        {
+          title: "WithWaterMark Normal Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikwm ${tiktokUrl}`
+        },
+        {
+          title: "WithWaterMark Document Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}tikwmdoc ${tiktokUrl}`
+        }
+      ]
+    }
+  ]
+};
 const listData2 = {
         title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
         sections: [{
-          title: "DINUWH MD OPTIONS",
+          title: "TikTok Audio Down Section 🎧",
           rows: [
+            
             {
-              title: "[A2 🎧]",
-              description: "Download as audio\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytaud ${data.url}`
+              title: "\`Audio With Normal\`",
+              description: "〽️ade By Dinuwh Bbh",
+              id: `${prefix}tikaud ${tiktokUrl}`
             },
             {
-              title: "[D2📁]",
-              description: "Download as document\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytdoc ${data.url}`
+              title: "\`Audio With Document\`",
+              description: "〽️ade By Dinuwh Bbh",
+              id: `${prefix}tikauddoc ${tiktokUrl}`
             },
             {
-              title: "[V2 💡]",
-              description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}ytvoice ${data.url}`
-            },
-            {
-              title: "[V2📽️]",
-              description: "Download as Video\n〽️ade By Dinuwh Bbh",
-              id: `${prefix}devilv ${data.url}`
+              title: "\`Audio With Voice Note\`",
+              description: "〽️ade By Dinuwh Bbh",
+              id: `${prefix}tikaudptt ${tiktokUrl}`
             }
           ]
         }]
       };
 
       return await conn.sendMessage(from, {
-        image: { url: data.thumbnail },
-        caption: cap,
-        footer: "> 〽️ade By Dinuwh Bbh",
+        image: { url: thumbnail },
+        caption: detailsMsg,
+        footer: "> *〽️ade By Dinuwh Bbh*",
         buttons: [
           {
             buttonId: "action",
@@ -166,7 +196,6 @@ const listData2 = {
     reply(`❌ Error: ${e.message}`);
   }
 });
-
 // Directly send Instagram video normal
 cmd({
   pattern: "igvnowm",
