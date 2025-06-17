@@ -482,7 +482,7 @@ async (conn, mek, m, {
 
 
 
-/* 
+
 cmd({
   pattern: "fb_sd_doc",
   react: "📄",
@@ -503,12 +503,12 @@ async (conn, mek, m, {
       document: { url: fb.result.sd },  // <-- send as document
       mimetype: "audio/mpeg",           // <-- trick WhatsApp to treat as audio
       fileName: "facebook_audio.mp3",   // <-- can be .mp3 even if it's .mp4
-      caption: `${config.footer} || *Made By Dinuwh Bbh*
-    }, { quoted: mek });
+      caption: `*📥 SD Facebook Video*\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ʟᴏᴋᴜ-ᴍᴅ 🔒🪄`
+      }, { quoted: mek });
+    }
 
   } catch (e) {
-    console.error("FB Audio Doc Send Error:", e);
+    console.error("Facebook Download Error:", e);
     reply(`❌ Error: ${e.message || e}`);
   }
 });
-*/
