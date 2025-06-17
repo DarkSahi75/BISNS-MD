@@ -309,7 +309,7 @@ async (conn, mek, m, {
         fileName: "facebook_video_hd.mp4",
         mimetype: "video/mp4",
         caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
-
+    }
   } catch (e) {
     console.error("Facebook Download Error:", e);
     reply(`❌ Error: ${e.message || e}`);
@@ -342,7 +342,7 @@ async (conn, mek, m, {
         fileName: "facebook_video_sd.mp4",
         mimetype: "video/mp4",
         caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
-
+    }
   } catch (e) {
     console.error("Facebook Download Error:", e);
     reply(`❌ Error: ${e.message || e}`);
@@ -373,7 +373,7 @@ async(conn, mek, m, {
         mimetype: "video/mp4",
 	ptv: "true",
         caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
-
+    }
   } catch (e) {
     console.error("Facebook Download Error:", e);
     reply(`Error: ${e.message || e}`);
@@ -403,7 +403,7 @@ async(conn, mek, m, {
         mimetype: "video/mp4",
 	ptv: "true",
         caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
-
+    }
   } catch (e) {
     console.error("Facebook Download Error:", e);
     reply(`Error: ${e.message || e}`);
@@ -433,7 +433,7 @@ async (conn, mek, m, {
       mimetype: 'audio/mpeg',       // trick to treat video as audio
       ptt: true                     // make it voice note
     }, { quoted: mek });
-
+  }
   } catch (e) {
     console.error("Direct Audio Send Error:", e);
     reply(`❌ Error: ${e.message || e}`);
@@ -461,7 +461,7 @@ async (conn, mek, m, {
       mimetype: 'audio/mpeg',           // send as MP3
       ptt: false                        // make sure it's NOT voice note
     }, { quoted: mek });
-
+  }
   } catch (e) {
     console.error("FB Audio Send Error:", e);
     reply(`❌ Error: ${e.message || e}`);
@@ -491,7 +491,7 @@ async (conn, mek, m, {
       mimetype: "audio/mpeg",           // <-- trick WhatsApp to treat as audio
       fileName: "facebook_audio.mp3",   // <-- can be .mp3 even if it's .mp4
       caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
-
+  }
   } catch (e) {
     console.error("FB Audio Doc Send Error:", e);
     reply(`❌ Error: ${e.message || e}`);
