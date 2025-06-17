@@ -482,6 +482,7 @@ async (conn, mek, m, {
 
 
 
+/* 
 cmd({
   pattern: "fb_sd_doc",
   react: "📄",
