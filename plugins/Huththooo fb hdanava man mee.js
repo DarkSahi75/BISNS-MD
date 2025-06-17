@@ -249,7 +249,7 @@ async(conn, mek, m, {
         video: { url: fb.result.sd },
         mimetype: "video/mp4",
         caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
-
+    }
   } catch (e) {
     console.error("Facebook Download Error:", e);
     reply(`Error: ${e.message || e}`);
@@ -278,7 +278,7 @@ async(conn, mek, m, {
         video: { url: fb.result.hd },
         mimetype: "video/mp4",
         caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
-
+    }
   } catch (e) {
     console.error("Facebook Download Error:", e);
     reply(`Error: ${e.message || e}`);
