@@ -1,7 +1,7 @@
 const { cmd } = require("../lib/command"); // ඔබේ cmd wrapper එක මෙතනින්
 
 cmd({
-  pattern: "report ?(.*)",
+  pattern: "report",
   react: "🚫",
   desc: "Block and report a user (simulate report)",
   category: "admin",
