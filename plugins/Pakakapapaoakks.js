@@ -200,3 +200,31 @@ const listData2 = {
     reply(`❌ Error: ${e.message}`);
   }
 });
+
+
+cmd({
+  pattern: "alivepayyo",
+  desc: "Bot Status with Buttons",
+  category: "misc",
+  react: "👀",
+  filename: __filename
+}, 
+async (conn, m, mdata) => {
+  try {
+    const templateButtons = [
+      { index: 1, quickReplyButton: { displayText: '🧠 Help', id: 'help' } },
+      { index: 2, urlButton: { displayText: '🌐 Website', url: 'https://your-site.com' } },
+      { index: 3, callButton: { displayText: '📞 Call Me', phoneNumber: '+94771234567' } }
+    ];
+
+    await conn.sendMessage(m.chat, {
+      text: "👋 *Bot is Alive!*\n\n💻 Version: 2.0.0\n📅 Uptime: Always Online\n🔧 Powered by *Visper Bot*",
+      footer: "💚 Made with 💻 by Dineth",
+      templateButtons
+    }, { quoted: m });
+
+  } catch (e) {
+    console.log("Error in .alive:", e);
+    m.reply("❌ Error showing alive status.");
+  }
+});
