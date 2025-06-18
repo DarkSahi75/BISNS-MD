@@ -202,6 +202,7 @@ const listData2 = {
 });
 
 
+/*
 cmd({
   pattern: "alivepayyo",
   desc: "Bot Status with Buttons",
@@ -228,3 +229,4 @@ async (conn, m, mdata) => {
     m.reply("❌ Error showing alive status.");
   }
 });
+*/
