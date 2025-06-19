@@ -6,7 +6,7 @@ const { igdl, ttdl } = require('ruhend-scraper');
 const fg = require('api-dylux');
 const axios = require('axios');
 const mimeTypes = require('mime-types');
-
+const config = require(../settings);
 const sadiya_apikey = 'sadiya-key-666';
 const shan_apikey = 'ae56006bcfe029bd';
 const sadiya_md_footer = '> *© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ꜱᴀᴅɪʏᴀ ᴛᴇᴄʜ*';
