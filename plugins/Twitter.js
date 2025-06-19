@@ -15,6 +15,7 @@ cmd(
   {
     pattern: 'twittr',
     alias: ['x', 'twit', 'twitterdl', 'tw'],
+    react: '❤️‍🩹',
     desc: 'Download from Twitter',
     category: 'download',
     filename: __filename,
@@ -34,41 +35,188 @@ cmd(
       const caption =
         '📹 𝗧𝗪𝗜𝗧𝗧𝗘𝗥 𝗩𝗜𝗗𝗘𝗢 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗘𝗥 📥\n\n*★| Title :* ' +
         (apiResponse.result.desc || '');
+  if (config.MODE === 'nonbutton') {
+  const sections = [
+  {
+    title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐒𝐃",
+    rows: [
+      {
+        title: "1",
+        rowId: `${prefix}downfb_sd ${q}`,
+        description: 'SD Normal Video 📹'
+      },
+      {
+        title: "2",
+        rowId: `${prefix}downfb_sdd ${q}`,
+        description: '\`SD video Note 📹\`'
+      },
+      {
+        title: "3",
+        rowId: `${prefix}downfb_sdp ${q}`,
+        description: 'SD Document Video 📄'
+      }
+    ] 
+  },
+  {
+    title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐇𝐃",
+    rows: [
+      {
+        title: "4",
+        rowId: `${prefix}downfb_hd ${q}`,
+        description: 'HD Normal Video 📹'
+      },
+     {
+        title: "5",
+        rowId: `${prefix}downfb_hdd ${q}`,
+        description: '\`HD Video Note 📹\`'
+      }, 
+      {
+        title: "6",
+        rowId: `${prefix}downfb_hdp ${q}`,
+        description: 'HD Document Video 📄'
+      }
+    ]
+  },
+  {
+    title: "🎧 𝐀𝐮𝐝𝐢𝐨 𝐎𝐩𝐭𝐢𝐨𝐧𝐬",
+    rows: [
+      {
+        title: "7",
+        rowId: `${prefix}fb_sd_audio ${q}`,
+        description: 'Audio With Normal File 🎵'
+      },
+      {
+        title: "8",
+        rowId: `${prefix}fb_sd_doc ${q}`,
+        description: '\`Audio With Document File 📄\`'
+      },
+      {
+        title: "9",
+        rowId: `${prefix}fb_sd_ptt ${q}`,
+        description: 'Audio With Voice Note 🎤'
+      }
+    ]
+  }
+];
+const listMessage = {
+  caption: caption,
+  image: { url: fb.result.thumb }, // ✅ fixed line
+  footer: '> *〽️ade By Dinuwh Bbh*',
+  title: '',
+  buttonText: '> *◎Reply Below Number ⇲◎*',
+  sections
+};
 
-      // Create button list for SD, HD, and Audio download options
-      const sections = [
+return await conn.replyList(from, listMessage, { quoted: mek });
+	//button
+} if (config.MODE === 'button') {
+      const listData = {
+  title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+  sections: [
+    {
+      title: "⥥ Sd Qulity ᴠɪᴅᴇᴏ ᴄᴏʟʟᴇᴄᴛɪᴏɴ ⇲",
+      rows: [
         {
-          title: '',
-          rows: [
-            { title: '1', rowId: prefix + 'twitsd ' + q, description: '🎬 SD Video' },
-            { title: '2', rowId: prefix + 'twithd ' + q, description: '📙 HD Video' },
-            { title: '3', rowId: prefix + 'twitaudio ' + q, description: '🎧 Audio File' },
-          ],
+          title: "SD Normal Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}downfb_sd ${q}`
         },
-      ];
-
-      const buttonsMessage = {
-        image: { url: apiResponse.result.thumb || '' },
-        caption: caption,
-        buttonText: '*🔢 Reply below number,*',
-        footer: sadiya_md_footer,
-        headerType: 4,
-        sections: sections,
+        {
+          title: "SD Document Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}downfb_sdd ${q}`
+        },
+	{
+          title: "SD Video Note",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}downfb_sdp ${q}`
+	}
+      ]
+    },
+    {
+      title: "⥥ Hd Qulity ᴠɪᴅᴇᴏ ᴄᴏʟʟᴇᴄᴛɪᴏɴ ⇲",
+      rows: [
+        {
+          title: "HD Normal Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}downfb_hd ${q}`
+        },
+	{
+          title: "HD Document Video",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}downfb_hdd ${q}`
+        },
+	{
+          title: "HD Video Note",
+          description: "〽️ade By Dinuwh Bbh",
+          id: `${prefix}downfb_hdp ${q}`
+        }
+        
+      ]
+    }
+  ]
+};
+const listData2 = {
+        title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+        sections: [{
+          title: "TikTok Audio Down Section 🎧",
+          rows: [
+            
+            {
+              title: "\`Fb Audio With Normal\`",
+              description: "〽️ade By Dinuwh Bbh",
+              id: `${prefix}fb_sd_audio ${q}`
+            },
+            {
+              title: "\`Fb Audio With Document\`",
+              description: "〽️ade By Dinuwh Bbh",
+              id: `${prefix}fb_sd_doc ${q}`
+            },
+            {
+              title: "\`Fb Audio With Voice Note\`",
+              description: "〽️ade By Dinuwh Bbh",
+              id: `${prefix}fb_sd_ptt ${q}`
+            }
+          ]
+        }]
       };
 
-      await conn.sendMessage(from, buttonsMessage, msgInfo);
-    } catch (err) {
-      console.log(err);
-      reply("❌ *I Couldn't find anything. Please try again later...*");
-      await conn.sendMessage(
-        conn.user.jid, // bot's own jid
-        { text: '❗ *Error Info:* ' + err },
-        { quoted: msgInfo }
-      );
+      return await conn.sendMessage(from, {
+        image: { url: fb.result.thumb },
+        caption: caption,
+        footer: "> *〽️ade By Dinuwh Bbh*",
+        buttons: [
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData),
+            },
+          },
+          {
+            buttonId: "action",
+            buttonText: { displayText: "🔘" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify(listData2),
+            },
+          }
+        ],
+        headerType: 1,
+        viewOnce: true,
+      }, { quoted: mek });
     }
-  }
-);
 
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
+
+      
 // Handler for SD video download from Twitter
 cmd(
   {
