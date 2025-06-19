@@ -103,7 +103,7 @@ cmd(
 ];
 const listMessage = {
   caption: caption,
- // image: { url: fb.result.thumb }, // ✅ fixed line
+  image: { url: apiResponse.result.thumb },
   footer: '> *〽️ade By Dinuwh Bbh*',
   title: '',
   buttonText: '> *◎Reply Below Number ⇲◎*',
@@ -185,9 +185,9 @@ const listData2 = {
       };
 
       return await conn.sendMessage(from, {
-      //  image: { url: fb.result.thumb },
-        caption: caption,
-        footer: "> *〽️ade By Dinuwh Bbh*",
+      image: { url: apiResponse.result.thumb },
+       caption: caption,
+       footer: "> *〽️ade By Dinuwh Bbh*",
         buttons: [
           {
             buttonId: "action",
