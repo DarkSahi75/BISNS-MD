@@ -717,3 +717,56 @@ await conn.sendMessage(from, { text: `${config.PREFIX}${q.trim()}` }, { quoted: 
     console.error("alive q error:", err);
   }
 });
+
+
+cmd(
+  {
+    pattern: 'twitter',
+    alias: ['tw'],
+    desc: 'To get the twitter video.',
+    react: '🐦',
+    use: '.twitter <Link>',
+    category: 'download',
+    filename: __filename,
+  },
+  async (
+    conn,
+    msg,
+    args,
+    {
+      from,
+      quoted,
+      body,
+      isCmd,
+      command,
+      args: argList,
+      q,
+      reply,
+    }
+  ) => {
+    try {
+      if (!q) {
+        return reply('Please Give Me a valid Link...');
+      }
+      reply.react('⌛');
+      // Fetch Twitter video download info from external API
+      let response = await fetchJson(
+        'https://darksadasyt-twiterdl.vercel.app/api/download?url=' + q
+      );
+      reply.react('✅');
+      await conn.sendMessage(
+        from,
+        {
+          video: { url: response.videos[0].url },
+          mimetype: 'video/mp4',
+          caption: config.FOOTER,
+        },
+        { quoted: msg }
+      );
+      reply.react('✔️');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
