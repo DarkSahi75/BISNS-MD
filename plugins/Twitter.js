@@ -1,13 +1,19 @@
 const { cmd, commands } = require('../lib/command');
 const { fetchJson } = require('../lib/functions');
 const { Buffer } = require('buffer');
+const { igdl, ttdl } = require('ruhend-scraper');
+const apkdl = require('../lib/apkdl');
+const fg = require('api-dylux');
+const axios = require('axios');
+const mimeTypes = require('mime-types');
+
 const sadiya_apikey = 'sadiya-key-666';
 const shan_apikey = 'ae56006bcfe029bd';
 const sadiya_md_footer = '> *© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ꜱᴀᴅɪʏᴀ ᴛᴇᴄʜ*';
 
 cmd(
   {
-    pattern: 'twitters',
+    pattern: 'twitter',
     alias: ['x', 'twit', 'twitterdl', 'tw'],
     desc: 'Download from Twitter',
     category: 'download',
