@@ -56,7 +56,7 @@ cmd(
         sections: sections,
       };
 
-      await conn.replyBtn(from, buttonsMessage, msgInfo);
+      await conn.sendMessage(from, buttonsMessage, msgInfo);
     } catch (err) {
       console.log(err);
       reply("❌ *I Couldn't find anything. Please try again later...*");
