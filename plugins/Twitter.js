@@ -36,7 +36,7 @@ cmd(
 
       // Prepare caption with title
       const caption =
-        '📹 𝗧𝗪𝗜𝗧𝗧𝗘𝗥 𝗩𝗜𝗗𝗘𝗢 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗘𝗥 📥\n\n*★| Title :* ' +
+        '\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`\n╭────────✦✧✦────────╯\n\n*★| Title :* ' +
         (apiResponse.result.desc || '');
   if (config.MODE === 'nonbutton') {
   const sections = [
@@ -44,17 +44,17 @@ cmd(
     title: "📹 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐒𝐃",
     rows: [
       {
-        title: "1",
+        title: "1.1",
         rowId: `${prefix}twsd ${q}`,
         description: 'SD Normal Video 📹'
       },
       {
-        title: "2",
+        title: "1.2",
         rowId: `${prefix}twsdptv ${q}`,
         description: '\`SD video Note 📹\`'
       },
       {
-        title: "3",
+        title: "1.3",
         rowId: `${prefix}twsddoc ${q}`,
         description: 'SD Document Video 📄'
       }
@@ -64,17 +64,17 @@ cmd(
     title: "🎞️ 𝐕𝐢𝐝𝐞𝐨 𝐖𝐢𝐭𝐡 𝐇𝐃",
     rows: [
       {
-        title: "4",
+        title: "2.1",
         rowId: `${prefix}twhd ${q}`,
         description: 'HD Normal Video 📹'
       },
      {
-        title: "5",
+        title: "2.2",
         rowId: `${prefix}twhdptv ${q}`,
         description: '\`HD Video Note 📹\`'
       }, 
       {
-        title: "6",
+        title: "2.3",
         rowId: `${prefix}twhddoc ${q}`,
         description: 'HD Document Video 📄'
       }
@@ -84,18 +84,18 @@ cmd(
     title: "🎧 𝐀𝐮𝐝𝐢𝐨 𝐎𝐩𝐭𝐢𝐨𝐧𝐬",
     rows: [
       {
-        title: "7",
+        title: "3.1",
         rowId: `${prefix}twaud ${q}`,
         description: 'Audio With Normal File 🎵'
       },
       {
-        title: "8",
-        rowId: `${prefix}twdoc ${q}`,
+        title: "3.2",
+        rowId: `${prefix}twauddoc ${q}`,
         description: '\`Audio With Document File 📄\`'
       },
       {
-        title: "9",
-        rowId: `${prefix}twptt ${q}`,
+        title: "3.3",
+        rowId: `${prefix}twaudptt ${q}`,
         description: 'Audio With Voice Note 🎤'
       }
     ]
