@@ -110,7 +110,7 @@ const listMessage = {
   sections
 };
 
-return await conn.replyList(from, listMessage, { quoted: mek });
+return await conn.replyList(from, listMessage, { quoted: msg });
 	//button
 } if (config.MODE === 'button') {
       const listData = {
@@ -210,7 +210,7 @@ const listData2 = {
         ],
         headerType: 1,
         viewOnce: true,
-      }, { quoted: mek });
+      }, { quoted: msg });
     }
 
   } catch (e) {
