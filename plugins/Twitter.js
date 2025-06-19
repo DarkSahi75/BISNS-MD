@@ -13,7 +13,7 @@ const prefix = config.PREFIX || ".";
 const sadiya_apikey = 'sadiya-key-666';
 const shan_apikey = 'ae56006bcfe029bd';
 const sadiya_md_footer = '> *© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ꜱᴀᴅɪʏᴀ ᴛᴇᴄʜ*';
-
+const desc = 'DINUE-HTO';
 cmd(
   {
     pattern: 'twittr',
