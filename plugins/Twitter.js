@@ -45,17 +45,17 @@ cmd(
     rows: [
       {
         title: "1",
-        rowId: `${prefix}downfb_sd ${q}`,
+        rowId: `${prefix}twsd ${q}`,
         description: 'SD Normal Video 📹'
       },
       {
         title: "2",
-        rowId: `${prefix}downfb_sdd ${q}`,
+        rowId: `${prefix}twsdptv ${q}`,
         description: '\`SD video Note 📹\`'
       },
       {
         title: "3",
-        rowId: `${prefix}downfb_sdp ${q}`,
+        rowId: `${prefix}twsddoc ${q}`,
         description: 'SD Document Video 📄'
       }
     ] 
@@ -65,17 +65,17 @@ cmd(
     rows: [
       {
         title: "4",
-        rowId: `${prefix}downfb_hd ${q}`,
+        rowId: `${prefix}twhd ${q}`,
         description: 'HD Normal Video 📹'
       },
      {
         title: "5",
-        rowId: `${prefix}downfb_hdd ${q}`,
+        rowId: `${prefix}twhdptv ${q}`,
         description: '\`HD Video Note 📹\`'
       }, 
       {
         title: "6",
-        rowId: `${prefix}downfb_hdp ${q}`,
+        rowId: `${prefix}twhddoc ${q}`,
         description: 'HD Document Video 📄'
       }
     ]
@@ -85,17 +85,17 @@ cmd(
     rows: [
       {
         title: "7",
-        rowId: `${prefix}fb_sd_audio ${q}`,
+        rowId: `${prefix}twaud ${q}`,
         description: 'Audio With Normal File 🎵'
       },
       {
         title: "8",
-        rowId: `${prefix}fb_sd_doc ${q}`,
+        rowId: `${prefix}twdoc ${q}`,
         description: '\`Audio With Document File 📄\`'
       },
       {
         title: "9",
-        rowId: `${prefix}fb_sd_ptt ${q}`,
+        rowId: `${prefix}twptt ${q}`,
         description: 'Audio With Voice Note 🎤'
       }
     ]
@@ -122,17 +122,17 @@ return await conn.replyList(from, listMessage, { quoted: msg });
         {
           title: "SD Normal Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}downfb_sd ${q}`
+          id: `${prefix}twsd ${q}`
         },
         {
           title: "SD Document Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}downfb_sdd ${q}`
+          id: `${prefix}twsddoc ${q}`
         },
 	{
           title: "SD Video Note",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}downfb_sdp ${q}`
+          id: `${prefix}twsdptv ${q}`
 	}
       ]
     },
@@ -142,17 +142,17 @@ return await conn.replyList(from, listMessage, { quoted: msg });
         {
           title: "HD Normal Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}downfb_hd ${q}`
+          id: `${prefix}twhd ${q}`
         },
 	{
           title: "HD Document Video",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}downfb_hdd ${q}`
+          id: `${prefix}twhddoc ${q}`
         },
 	{
           title: "HD Video Note",
           description: "〽️ade By Dinuwh Bbh",
-          id: `${prefix}downfb_hdp ${q}`
+          id: `${prefix}twhdptv ${q}`
         }
         
       ]
@@ -162,23 +162,23 @@ return await conn.replyList(from, listMessage, { quoted: msg });
 const listData2 = {
         title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
         sections: [{
-          title: "TikTok Audio Down Section 🎧",
+          title: "Twitter Audio Down Section 🎧",
           rows: [
             
             {
-              title: "\`Fb Audio With Normal\`",
+              title: "\`Twitter Audio With Normal\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}fb_sd_audio ${q}`
+              id: `${prefix}twaud ${q}`
             },
             {
-              title: "\`Fb Audio With Document\`",
+              title: "\`Twitter Audio With Document\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}fb_sd_doc ${q}`
+              id: `${prefix}twauddoc ${q}`
             },
             {
-              title: "\`Fb Audio With Voice Note\`",
+              title: "\`Twitter Audio With Voice Note\`",
               description: "〽️ade By Dinuwh Bbh",
-              id: `${prefix}fb_sd_ptt ${q}`
+              id: `${prefix}twaudptt ${q}`
             }
           ]
         }]
