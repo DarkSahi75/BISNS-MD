@@ -141,3 +141,78 @@ cmd({
     reply(`❌ Failed to fetch channel info.\n\n${e.message || e}`);
   }
 });
+
+//====
+
+//const { cmd } = require('../lib/command');
+//onst config = require('../settings');
+const axios = require('axios'); // axios for downloading image buffer
+
+cmd({
+  pattern: "channeld3",
+  desc: "Get WhatsApp channel info with DP sent as file",
+  category: "other",
+  use: '.channel <invite code or JID or link>',
+  filename: __filename
+}, async (conn, msg, m, { from, q, reply }) => {
+  try {
+    if (!q) return reply(`❌ Please provide a channel invite code, JID, or link.\nExamples:\n.channel xxxxx\n.channel abcd@newsletter\n.channel https://whatsapp.com/channel/xxxxxx`);
+
+    // Extract invite code from link if needed
+    let input = q.trim();
+    if (input.includes("whatsapp.com/channel/")) {
+      const match = input.match(/channel\/([a-zA-Z0-9_-]+)/);
+      if (match) input = match[1];
+    }
+
+    // Get metadata
+    let metadata;
+    if (input.includes("@newsletter")) {
+      metadata = await conn.newsletterMetadata("jid", input);
+    } else {
+      metadata = await conn.newsletterMetadata("invite", input);
+    }
+
+    // Compose info text
+    let info = `📢 *CHANNEL INFO*\n\n`;
+    info += `📛 *Name:* ${metadata.name || "N/A"}\n`;
+    info += `🆔 *JID:* ${metadata.id || "N/A"}\n`;
+    info += `👤 *Owner:* ${metadata.ownerJid || "N/A"}\n`;
+    info += `📝 *Description:* ${metadata.description || "No description"}\n`;
+    info += `🔔 *Followers:* ${metadata.subscriberCount ?? "Unknown"}\n`;
+    info += `📅 *Created:* ${metadata.createTs ? new Date(metadata.createTs * 1000).toLocaleString() : "Unknown"}\n\n`;
+    info += `⚖️ *Powered By:* ${config.ownerName || "Dinuwh Bbh"}`;
+
+    // Try fetch profile picture url
+    let pfpUrl;
+    try {
+      pfpUrl = await conn.profilePictureUrl(metadata.id, "image");
+    } catch {
+      pfpUrl = null;
+    }
+
+    if (pfpUrl) {
+      // Download image buffer using axios
+      const response = await axios.get(pfpUrl, { responseType: 'arraybuffer' });
+      const imageBuffer = Buffer.from(response.data, 'binary');
+
+      // Send image as file with caption info
+      await conn.sendMessage(from, {
+        document: imageBuffer,
+        mimetype: 'image/jpeg',
+        fileName: 'channel_dp.jpg',
+        caption: info
+      }, { quoted: msg });
+
+    } else {
+      // No profile pic - send info text only
+      await conn.sendMessage(from, {
+        text: info
+      }, { quoted: msg });
+    }
+
+  } catch (e) {
+    console.error("Channel Info Error:", e);
+    reply(`❌ Failed to fetch channel info.\n\n${e.message || e}`);
+  }
+});
