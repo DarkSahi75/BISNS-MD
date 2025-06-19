@@ -223,7 +223,7 @@ const listData2 = {
 // Handler for SD video download from Twitter
 cmd(
   {
-    pattern: 'twitsd',
+    pattern: 'twsd',
     dontAddCommandList: true,
     filename: __filename,
   },
@@ -254,10 +254,79 @@ cmd(
   }
 );
 
+
+cmd(
+  {
+    pattern: 'twsdptv',
+    dontAddCommandList: true,
+    filename: __filename,
+  },
+  async (conn, msg, msgInfo, { from, prefix, quoted, body, isCmd, command, args, q, reply }) => {
+    try {
+      const apiResponse = await fetchJson(
+        'https://sadiya-tech-apis.vercel.app/download/twitterdl?url=' + q + '&apikey=' + sadiya_apikey
+      );
+
+      await conn.sendMessage(
+        from,
+        {
+          video: { url: apiResponse.result.video_sd },
+          mimetype: 'video/mp4',
+          ptv: 'true',
+          caption: 'SD VIDEO ✅\n\n' + sadiya_md_footer,
+        },
+        { quoted: msgInfo }
+      );
+    } catch (err) {
+      console.log(err);
+      reply("❌ *I Couldn't find anything. Please try again later...*");
+      await conn.sendMessage(
+        conn.user.jid,
+        { text: '❗ *Error Info:* ' + err },
+        { quoted: msgInfo }
+      );
+    }
+  }
+);
+
+cmd(
+  {
+    pattern: 'twsddoc',
+    dontAddCommandList: true,
+    filename: __filename,
+  },
+  async (conn, msg, msgInfo, { from, prefix, quoted, body, isCmd, command, args, q, reply }) => {
+    try {
+      const apiResponse = await fetchJson(
+        'https://sadiya-tech-apis.vercel.app/download/twitterdl?url=' + q + '&apikey=' + sadiya_apikey
+      );
+
+      await conn.sendMessage(
+        from,
+        {
+          document: { url: apiResponse.result.video_sd },
+          mimetype: 'video/mp4',
+          fileName: 'twitter_sd_video.mp4',
+          caption: '📁 SD Twitter Video\n\n' + sadiya_md_footer,
+        },
+        { quoted: msgInfo }
+      );
+    } catch (err) {
+      console.log(err);
+      reply("❌ *I Couldn't find anything. Please try again later...*");
+      await conn.sendMessage(
+        conn.user.jid,
+        { text: '❗ *Error Info:* ' + err },
+        { quoted: msgInfo }
+      );
+    }
+  }
+);
+
 // Handler for HD video download from Twitter
 cmd(
   {
-    pattern: 'twithd',
+    pattern: 'twhd',
     dontAddCommandList: true,
     filename: __filename,
   },
@@ -288,10 +357,78 @@ cmd(
   }
 );
 
+cmd(
+  {
+    pattern: 'twhdptv',
+    dontAddCommandList: true,
+    filename: __filename,
+  },
+  async (conn, msg, msgInfo, { from, prefix, quoted, body, isCmd, command, args, q, reply }) => {
+    try {
+      const apiResponse = await fetchJson(
+        'https://sadiya-tech-apis.vercel.app/download/twitterdl?url=' + q + '&apikey=' + sadiya_apikey
+      );
+
+      await conn.sendMessage(
+        from,
+        {
+          video: { url: apiResponse.result.video_hd },
+          mimetype: 'video/mp4',
+	  ptv: 'true',
+          caption: 'HD VIDEO ✅\n\n' + sadiya_md_footer,
+        },
+        { quoted: msgInfo }
+      );
+    } catch (err) {
+      console.log(err);
+      reply("❌ *I Couldn't find anything. Please try again later...*");
+      await conn.sendMessage(
+        conn.user.jid,
+        { text: '❗ *Error Info:* ' + err },
+        { quoted: msgInfo }
+      );
+    }
+  }
+);
+
+cmd(
+  {
+    pattern: 'twhddoc',
+    dontAddCommandList: true,
+    filename: __filename,
+  },
+  async (conn, msg, msgInfo, { from, prefix, quoted, body, isCmd, command, args, q, reply }) => {
+    try {
+      const apiResponse = await fetchJson(
+        'https://sadiya-tech-apis.vercel.app/download/twitterdl?url=' + q + '&apikey=' + sadiya_apikey
+      );
+
+      await conn.sendMessage(
+        from,
+        {
+          document: { url: apiResponse.result.video_hd },
+          mimetype: 'video/mp4',
+          fileName: 'twitter_hd_video.mp4',
+          caption: '📁 HD Twitter Video\n\n' + sadiya_md_footer,
+        },
+        { quoted: msgInfo }
+      );
+    } catch (err) {
+      console.log(err);
+      reply("❌ *I Couldn't find anything. Please try again later...*");
+      await conn.sendMessage(
+        conn.user.jid,
+        { text: '❗ *Error Info:* ' + err },
+        { quoted: msgInfo }
+      );
+    }
+  }
+);
+
 // Handler for audio download from Twitter
 cmd(
   {
-    pattern: 'twitaudio',
+    pattern: 'twaud',
     dontAddCommandList: true,
     filename: __filename,
   },
@@ -306,6 +443,76 @@ cmd(
         {
           audio: { url: apiResponse.result.audio },
           mimetype: 'audio/mpeg',
+        },
+        { quoted: msgInfo }
+      );
+    } catch (err) {
+      console.log(err);
+      reply("❌ *I Couldn't find anything. Please try again later...*");
+      await conn.sendMessage(
+        conn.user.jid,
+        { text: '❗ *Error Info:* ' + err },
+        { quoted: msgInfo }
+      );
+    }
+  }
+);
+
+
+cmd(
+  {
+    pattern: 'twaudptt',
+    dontAddCommandList: true,
+    filename: __filename,
+  },
+  async (conn, msg, msgInfo, { from, prefix, quoted, body, isCmd, command, args, q, reply }) => {
+    try {
+      const apiResponse = await fetchJson(
+        'https://sadiya-tech-apis.vercel.app/download/twitterdl?url=' + q + '&apikey=' + sadiya_apikey
+      );
+
+      await conn.sendMessage(
+        from,
+        {
+          audio: { url: apiResponse.result.audio },
+          mimetype: 'audio/mpeg',
+        },
+        { quoted: msgInfo }
+      );
+    } catch (err) {
+      console.log(err);
+      reply("❌ *I Couldn't find anything. Please try again later...*");
+      await conn.sendMessage(
+        conn.user.jid,
+        { text: '❗ *Error Info:* ' + err },
+        { quoted: msgInfo }
+      );
+    }
+  }
+);
+
+
+
+
+cmd(
+  {
+    pattern: 'twauddoc',
+    dontAddCommandList: true,
+    filename: __filename,
+  },
+  async (conn, msg, msgInfo, { from, prefix, quoted, body, isCmd, command, args, q, reply }) => {
+    try {
+      const apiResponse = await fetchJson(
+        'https://sadiya-tech-apis.vercel.app/download/twitterdl?url=' + q + '&apikey=' + sadiya_apikey
+      );
+
+      await conn.sendMessage(
+        from,
+        {
+          document: { url: apiResponse.result.audio },
+          mimetype: 'audio/mpeg',
+          fileName: 'twitter_audio.mp3',
+          caption: '🎧 Twitter Audio\n' + config.footer
         },
         { quoted: msgInfo }
       );
