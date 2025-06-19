@@ -13,7 +13,7 @@ const sadiya_md_footer = '> *© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ꜱᴀᴅɪʏᴀ ᴛ�
 
 cmd(
   {
-    pattern: 'twitter',
+    pattern: 'twittr',
     alias: ['x', 'twit', 'twitterdl', 'tw'],
     desc: 'Download from Twitter',
     category: 'download',
