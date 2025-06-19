@@ -216,3 +216,73 @@ cmd({
     reply(`❌ Failed to fetch channel info.\n\n${e.message || e}`);
   }
 });
+
+
+
+cmd({
+  pattern: "channeld4",
+  desc: "Get WhatsApp channel info with DP as photo + caption",
+  category: "other",
+  use: '.channel <invite code or JID or link>',
+  filename: __filename
+}, async (conn, msg, m, { from, q, reply }) => {
+  try {
+    if (!q) return reply(`❌ Please provide a channel invite code, JID, or link.\nExamples:\n.channel xxxxx\n.channel abcd@newsletter\n.channel https://whatsapp.com/channel/xxxxxx`);
+
+    // Invite code එක link එකෙන් හරිලා extract කරනවා
+    let input = q.trim();
+    if (input.includes("whatsapp.com/channel/")) {
+      const match = input.match(/channel\/([a-zA-Z0-9_-]+)/);
+      if (match) input = match[1];
+    }
+
+    // Channel metadata එක ගන්නවා (invite code or JID අනුව)
+    let metadata;
+    if (input.includes("@newsletter")) {
+      metadata = await conn.newsletterMetadata("jid", input);
+    } else {
+      metadata = await conn.newsletterMetadata("invite", input);
+    }
+
+    // Channel info text එක compose කරනවා
+    let info = `📢 *CHANNEL INFO*\n\n`;
+    info += `📛 *Name:* ${metadata.name || "N/A"}\n`;
+    info += `🆔 *JID:* ${metadata.id || "N/A"}\n`;
+    info += `👤 *Owner:* ${metadata.ownerJid || "N/A"}\n`;
+    info += `📝 *Description:* ${metadata.description || "No description"}\n`;
+    info += `🔔 *Followers:* ${metadata.subscriberCount ?? "Unknown"}\n`;
+    info += `📅 *Created:* ${metadata.createTs ? new Date(metadata.createTs * 1000).toLocaleString() : "Unknown"}\n\n`;
+    info += `⚖️ *Powered By:* ${config.ownerName || "Dinuwh Bbh"}`;
+
+    // Profile picture URL එක try කරලා ගන්නවා
+    let pfpUrl;
+    try {
+      pfpUrl = await conn.profilePictureUrl(metadata.id, "image");
+    } catch {
+      pfpUrl = null;
+    }
+
+    if (pfpUrl) {
+      // DP එක download කරනවා buffer එකක් විදිහට
+      const response = await axios.get(pfpUrl, { responseType: 'arraybuffer' });
+      const imageBuffer = Buffer.from(response.data, 'binary');
+
+      // DP + caption එක photo message එකක් විදිහට යවන්න
+      await conn.sendMessage(from, {
+        image: imageBuffer,
+        caption: info,
+        mimetype: 'image/jpeg'
+      }, { quoted: msg });
+
+    } else {
+      // DP නෑ නම් text පමණක් යවන්න
+      await conn.sendMessage(from, {
+        text: info
+      }, { quoted: msg });
+    }
+
+  } catch (e) {
+    console.error("Channel Info Error:", e);
+    reply(`❌ Failed to fetch channel info.\n\n${e.message || e}`);
+  }
+});
