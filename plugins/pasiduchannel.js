@@ -52,6 +52,8 @@ cmd(
 ▫️⏱️ Dᴜʀᴀᴛɪᴏɴ : ${data.timestamp}
 ▫️👀 Vɪᴇᴡꜱ : ${data.views.toLocaleString()}
 
+*This's Sri Lanka Big Song Channel*
+\`https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J\`
 ▫️ 𝚛𝚎𝚊𝚌𝚝 කරන්න ළමයෝ...🥹💗`;
 //> *මනෝපාරක් ගහන්න මෙහාටත් එන්නහ්💆‍♂️*
 //> https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J
