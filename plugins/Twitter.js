@@ -796,6 +796,69 @@ await conn.sendMessage(from, message1 );
     }
 });
 
+cmd({
+  pattern: "spotify3",
+  category: "download",
+  react: "🎧",
+  desc: "Spotify Downloader",
+  use: ".spotify song name",
+  filename: __filename,
+},
+  async (conn, mek, m, { reply, isDev, from, l, q, prefix }) => {
+    try {
+      if (!q) return await reply('*🖊️ කරුණාකර ගීත නමක් දෙන්න!*');
+
+      const links = await fetchJson(`https://nethu-api-ashy.vercel.app/search/spotify?q=${q}`);
+      const search = links.result;
+
+      if (!search || search.length === 0)
+        return await reply('😓 මට කිසිවක් සොයාගත නොහැකි විය!');
+
+      // INLINE BUTTONS MODE (recommended)
+      if (config.MODE === 'button') {
+        const buttons = search.slice(0, 3).map((item, i) => ({
+          buttonId: `${prefix}spotifydl ${item.url}`,
+          buttonText: { displayText: `${i + 1}. ${item.title}` },
+          type: 1
+        }));
+
+        return await conn.sendMessage(from, {
+          image: config.LOGO,
+          caption: `🎧 *Spotify Downloader*\n\n🔍 Search: *${q}*\n\n👇 *ගීතයක් තෝරන්න:*`,
+          footer: config.FOOTER,
+          buttons,
+          headerType: 4
+        }, { quoted: mek });
+      }
+
+      // NORMAL LIST MODE
+      if (config.MODE === 'nonbutton') {
+        const srh = search.map((item, i) => ({
+          title: `${i + 1}. ${item.title}`,
+          rowId: `${prefix}spotifydl ${item.url}`
+        }));
+
+        const sections = [{
+          title: "🎧 Spotify Search Result",
+          rows: srh
+        }];
+
+        const listMessage = {
+          text: `🎧 *Spotify Downloader*`,
+          footer: config.FOOTER,
+          title: '',
+          buttonText: '📥 ගීතය තෝරන්න',
+          sections
+        };
+
+        return await conn.replyList(from, listMessage, { quoted: mek });
+      }
+
+    } catch (e) {
+      console.log(e);
+      return reply('😵‍💫 *Error: Something went wrong!*');
+    }
+  });
 
 
 
