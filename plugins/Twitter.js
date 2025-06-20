@@ -570,7 +570,7 @@ rows: srh
 
     const listMessage = {
 text: `VAJIRA MD SPOTIFY-DL\n`,	    
-footer: config.FOOTER,
+footer: 'Test Htto',
 title: '',
 buttonText: '*🔢 Reply below number*',
 sections
