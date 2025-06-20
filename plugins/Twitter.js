@@ -527,3 +527,187 @@ cmd(
     }
   }
 );
+
+
+cmd({
+    pattern: "spotify",
+    category: "download",
+    react: "🎬",
+    desc: "spotify downloader",
+    use: ".spotify lelena",
+    filename: __filename   
+},
+    async (conn, mek, m, { reply, isDev, from, l, q, prefix }) => {
+        try {
+        
+        if (!q) return await reply('*Please Give Me Text..! 🖊️*')
+    // Mock API response (Replace this with the actual API endpoint if needed)
+    
+const links = await fetchJson(`https://nethu-api-ashy.vercel.app/search/spotify?q=${q}`)
+
+const search = links.result
+    if (config.MODE === 'nonbutton') {
+if (search.length < 1) return await conn.sendMessage(from, { text: "*මට කිසිවක් සොයාගත නොහැකි විය :(*" }, { quoted: mek } )		
+	
+
+var srh = [];  		
+	
+for (var i = 0; i < search.length; i++) {
+srh.push({
+title: i + 1,	
+description: `${search[i].title}`,
+rowId: prefix + 'spotifydl ' + search[i].url
+});
+
+	
+}		
+const sections = [
+	{
+title: "*Spotify*\n",
+rows: srh
+}
+]
+
+    const listMessage = {
+text: `VAJIRA MD SPOTIFY-DL\n`,	    
+footer: config.FOOTER,
+title: '',
+buttonText: '*🔢 Reply below number*',
+sections
+}
+return await conn.replyList(from, listMessage ,{ quoted : mek })
+
+
+} if (config.MODE === 'button') {
+
+
+            if (search.length < 1) return await conn.sendMessage(from, { text: N_FOUND }, { quoted: mek } )
+
+var sections = []
+        for (var i = 0; i < search.length; i++) {
+        //if(data[i].thumb && !data[i].views.includes('Follow')){
+          sections.push({
+            rows: [{
+              title: i + 1,
+	      description:  search[i].title,
+              id: prefix + 'spotifydl ' + search[i].url
+            }]
+          })
+      }
+//}
+
+                let buttons = [{
+                    name: "cta_url",
+                    buttonParamsJson: JSON.stringify({
+                        display_text: 'Join Our Channel',
+                        url: `https://whatsapp.com/channel/0029VahMZasD8SE5GRwzqn3Z`,
+                        merchant_url: `https://whatsapp.com/channel/0029VahMZasD8SE5GRwzqn3Z`
+                    }),
+                },
+                {
+                    name: 'single_select',
+                    buttonParamsJson: JSON.stringify({
+                        title: 'Result from Spotify. 📲',
+                        sections
+                    })
+                }]
+    
+        let message = {
+            image: config.LOGO,
+            header: '',
+            footer: config.FOOTER,
+            body: ''
+        }
+return await conn.sendButtonMessage(from, buttons, m, message, { quoted: mek});
+
+
+}	
+	
+		
+} catch (e) {
+  reply('*ERROR !!*')
+  l(e)
+}
+})
+    
+
+
+
+
+				
+
+cmd({
+    pattern: "spotifydl",
+    react: "📥",
+    filename: __filename
+}, async (conn, mek, m, { from, q, isDev, reply }) => {
+	
+    if (!q) { 
+	return await reply('*Please provide a direct URL!*')}
+    try {
+
+const response = await fetchJson(`https://vajira-official-api.vercel.app/download/spotifydl?url=${q}`)
+const details = response.result
+  
+const cap = `
+🎵 *Spotify Track Details* 🎵
+
+📌 *Title*: ${details.title}
+🎤 *Artist*: ${details.artis}
+⏱️ *Durasi*: ${details.durasi}
+🔗 *Type*: ${details.type}
+
+🔍 *Powered by* ${config.FOOTER}
+    `;
+
+    
+
+
+	    
+var vajiralod = [
+"《 █▒▒▒▒▒▒▒▒▒▒▒》10%",
+"《 ████▒▒▒▒▒▒▒▒》30%",
+"《 ███████▒▒▒▒▒》50%",
+"《 ██████████▒▒》80%",
+"《 ████████████》100%",
+"𝙸𝙽𝙸𝚃𝙸𝙰𝙻𝙸𝚉𝙴𝙳 𝙲𝙾𝙼𝙿𝙻𝙴𝚃𝙴𝙳 🦄..."
+]
+let { key } = await conn.sendMessage(from, {text: 'ᴜᴘʟᴏᴀᴅɪɴɢ ᴍᴏᴠɪᴇ...'})
+
+for (let i = 0; i < vajiralod.length; i++) {
+await conn.sendMessage(from, {text: vajiralod[i], edit: key })
+}
+
+
+
+await conn.sendMessage(from, { image: { url: details.image }, caption: cap }, { quoted: mek });
+
+	    
+        const message = {
+            audio: await getBuffer(details.download),
+	        caption: "*ᴠᴀᴊɪʀᴀ-ᴍᴅ ʙʏʙᴛᴅᴅ ɢᴀɴɢꜱ*",
+            mimetype: "audio/mpeg",
+            fileName: `${details.title}\nVAJIRA-MD.mp3`,
+        };
+
+	    
+	const message1 = {
+            document: await getBuffer(details.download),
+	        caption: "*ᴠᴀᴊɪʀᴀ-ᴍᴅ ʙʏʙᴛᴅᴅ ɢᴀɴɢꜱ*",
+            mimetype: "audio/mpeg",
+            fileName: `${details.title}\nVAJIRA-MD.mp3`,
+        };    
+
+        await conn.sendMessage(from, message );
+await conn.sendMessage(from, message1 );
+        
+        await conn.sendMessage(from, { react: { text: '✅', key: mek.key } });
+    } catch (error) {
+        console.error('Error fetching or sending', error);
+      //  await conn.sendMessage(from, '*Error fetching or sending *', { quoted: mek });
+    }
+});
+
+
+
+
