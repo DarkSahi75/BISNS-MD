@@ -166,7 +166,7 @@ cmd(
       const caption = `\`||🧘‍♂️ ${result.title}\`
 
 * \`❍.Time ➙\` *${data.timestamp}*
-* \`❍.Uploaded to YouTube ➙\` *${data.ago*}
+* \`❍.Uploaded to YouTube ➙\` *${data.ago}*
 
 
 > ❝♬.*බූට් |* \`\`\`S O N G S ofc\`\`\` *💗😽🍃*❞
