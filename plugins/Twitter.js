@@ -633,7 +633,95 @@ return await conn.sendButtonMessage(from, buttons, m, message, { quoted: mek});
 
 
 
+cmd({
+    pattern: "spotify2",
+    category: "download",
+    react: "🎬",
+    desc: "spotify downloader",
+    use: ".spotify song name",
+    filename: __filename   
+},
+async (conn, mek, m, { reply, isDev, from, l, q, prefix }) => {
+    try {
+        if (!q) return await reply('*🖊️ කරුණාකර ගීත නමක් දෙන්න!*');
 
+        const links = await fetchJson(`https://nethu-api-ashy.vercel.app/search/spotify?q=${q}`);
+        const search = links.result;
+
+        if (!search || search.length === 0) {
+            return await reply('😓 මට කිසිවක් සොයාගත නොහැකි විය!');
+        }
+
+        if (config.MODE === 'nonbutton') {
+            let srh = [];  		
+            for (let i = 0; i < search.length; i++) {
+                srh.push({
+                    title: `${i + 1}. ${search[i].title}`,
+                    rowId: `${prefix}spotifydl ${search[i].url}`
+                });
+            }
+
+            const sections = [{
+                title: "🔎 Spotify Search Results",
+                rows: srh
+            }];
+
+            const listMessage = {
+                text: `🎧 *Spotify Downloader*`,
+                footer: config.FOOTER,
+                title: '',
+                buttonText: '📥 ගීතය තෝරන්න',
+                sections
+            };
+
+            return await conn.replyList(from, listMessage, { quoted: mek });
+
+        } else if (config.MODE === 'button') {
+            let sections = [{
+                title: "🔎 Spotify Search Results",
+                rows: []
+            }];
+
+            for (let i = 0; i < search.length; i++) {
+                sections[0].rows.push({
+                    title: `${i + 1}. ${search[i].title}`,
+                    id: `${prefix}spotifydl ${search[i].url}`
+                });
+            }
+
+            const buttons = [
+                {
+                    name: 'single_select',
+                    buttonParamsJson: JSON.stringify({
+                        title: '📥 ගීතය තෝරන්න',
+                        sections
+                    })
+                },
+                {
+                    name: "cta_url",
+                    buttonParamsJson: JSON.stringify({
+                        display_text: '📢 අපේ චැනලය Join වන්න',
+                        url: `https://whatsapp.com/channel/0029VahMZasD8SE5GRwzqn3Z`,
+                        merchant_url: `https://whatsapp.com/channel/0029VahMZasD8SE5GRwzqn3Z`
+                    }),
+                }
+            ];
+
+            const message = {
+                image: config.LOGO,
+                header: '🎧 Spotify Downloader',
+                footer: config.FOOTER,
+                body: `⬇️ ගීතය තෝරාගන්න\n\n🔍 Search: ${q}`
+            };
+
+            return await conn.sendButtonMessage(from, buttons, m, message, { quoted: mek });
+        }
+
+    } catch (e) {
+        l(e);
+        return reply('😵‍💫 *Error: Something went wrong!*');
+    }
+});
 				
 
 cmd({
