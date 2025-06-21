@@ -23,6 +23,7 @@
         "ffmpeg-static":"latest",
         "g-i-s":"latest",
         "darksadasyt-imgbb-scraper": "latest",
+        "jimp":"latest",
         "google-tts-api":"latest",
         "@sl-code-lords/si-subdl": "^1.1.1",
         "@sl-code-lords/text-pro-me": "^1.0.0",
