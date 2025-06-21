@@ -16,7 +16,7 @@ const sadiya_md_footer = '> *© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ꜱᴀᴅɪʏᴀ ᴛ�
 const desc = 'DINUE-HTO';
 
 const gis = require("g-i-s");
-const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = require('@whiskeysockets/baileys');
+const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = require('manu-mdx');
 
 //nst { generateWAMessageFromContent, proto, prepareWAMessageMedia } = await import('baileys');
 //import fetch from 'node-fetch'; // node-fetch හොඳට install කරගන්න
