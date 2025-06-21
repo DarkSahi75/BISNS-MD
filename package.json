@@ -45,6 +45,7 @@
         "inrl-dl":"^1.0.0",
         "javascript-obfuscator":"^4.0.0",
         "mime-types": "^2.1.35",
+        "ruhend-scraper": "latest",
         "mongoose": "latest",
         "mrnima-moviedl": "latest",
         "node-cron": "^3.0.3",
