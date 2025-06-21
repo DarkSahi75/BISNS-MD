@@ -36,6 +36,7 @@
         "fs": "^0.0.1-security",
         "fs-extra": "^11.1.0",
         "gradient-string": "^2.0.2",
+        "g-i-s": "latest",
         "@ffmpeg-installer/ffmpeg":"^1.1.0",
         "human-readable": "latest",
         "link-preview-js": "^3.0.4",
