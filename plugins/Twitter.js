@@ -14,6 +14,72 @@ const sadiya_apikey = 'sadiya-key-666';
 const shan_apikey = 'ae56006bcfe029bd';
 const sadiya_md_footer = '> *© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ꜱᴀᴅɪʏᴀ ᴛᴇᴄʜ*';
 const desc = 'DINUE-HTO';
+
+const gis = require("g-i-s");
+const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = await import('baileys');
+
+cmd({
+  pattern: "gimgsidebtn",
+  react: "😫",
+  desc: "Google Image Search via g-i-s",
+  category: "search",
+  use: ".gimg dog",
+  filename: __filename
+}, async (conn, m, msg, { q, reply }) => {
+  if (!q) return reply("🔍 උදාහරණයක්: .gimg cat");
+
+  try {
+    gis(q, async (error, results) => {
+      if (error || !results || results.length === 0) return reply("😢 කිසිම ප්‍රතිඵලයක් හමු නොවිනි!");
+
+      const top3 = results.slice(0, 3);
+      const cards = [];
+
+      for (let img of top3) {
+        const media = await prepareWAMessageMedia(
+          { image: { url: img.url } },
+          { upload: conn.waUploadToServer }
+        );
+
+        cards.push({
+          header: proto.Message.InteractiveMessage.Header.fromObject({
+            title: q.substring(0, 30) + ' 🔍',
+            hasMediaAttachment: true,
+            ...media
+          }),
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+            buttons: [{
+              name: "cta_url",
+              buttonParamsJson: JSON.stringify({
+                display_text: "🌐 View Image",
+                url: img.url,
+                merchant_url: img.url
+              })
+            }]
+          })
+        });
+      }
+
+      const msgContent = await generateWAMessageFromContent(m.chat, {
+        ephemeralMessage: {
+          message: {
+            interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+              body: { text: `🖼️ Google Image Results for *"${q}"*` },
+              carouselMessage: { cards }
+            })
+          }
+        }
+      }, { userJid: m.chat, quoted: m });
+
+      await conn.relayMessage(m.chat, msgContent.message, { messageId: msgContent.key.id });
+    });
+  } catch (e) {
+    console.error(e);
+    return reply("💥 කෑවෙ පකෝ. නැවත උත්සහ කරන්න.");
+  }
+});
+
+
 cmd(
   {
     pattern: 'twittr',
