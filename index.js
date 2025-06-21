@@ -16,7 +16,7 @@ const {
     generateWAMessageFromContent,
     prepareWAMessageMedia,
     proto
-} = require('@whiskeysockets/baileys')
+} = require('manu-mdx')
 const fs = require('fs')
 const P = require('pino')
 const FileType = require('file-type')
