@@ -1,4 +1,4 @@
-const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson} = require('../lib/functions')
+const { getBuffer, getGroupAdmins, h2k, isUrl, Json, runtime, sleep, fetchJson} = require('../lib/functions')
 const { cmd, commands } = require("../lib/command");
 //const { cmd } = require("../lib/command");
 const yts = require("yt-search");
