@@ -22,24 +22,30 @@ const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = require('
 //import fetch from 'node-fetch'; // node-fetch හොඳට install කරගන්න
 
 //onst sadiya_apikey = 'sadiya'; // ඔයාගේ API key එක මෙතන දාන්න
+cmd(
+  {
+    pattern: 'twrr',
+    alias: ['x', 'twit', 'twitterdl', 'tw'],
+    react: '❤️‍🩹',
+    desc: 'Download from Twitter',
+    category: 'download',
+    filename: __filename,
+  },
+  async (conn, msg, msgInfo, { from, prefix, quoted, body, isCmd, command, args, q, reply }) => {
+    try {
+      if (!q) {
+        return await reply('*❌ Please give me twitter url*');
+      }
+      
+      // Call API to get twitter video info
+      const apiResponse = await fetchJson(
+        'https://sadiya-tech-apis.vercel.app/download/twitterdl?url=' + q + '&apikey=' + sadiya_apikey
+      );
 
-cmd({
-  pattern: 'twr',
-  alias: ['twitter', 'tw', 'twitterdl'],
-  desc: 'Download Twitter videos with slide buttons',
-  category: 'download',
-  filename: __filename,
-}, async (conn, msg, msgInfo, { q, reply, prefix }) => {
-  if (!q) return reply('❌ Twitter video URL එකක් දෙන්න');
-
-  try {
-    const apiUrl = `https://api.somedomain.com/twitterdl?apikey=${sadiya_apikey}&url=${encodeURIComponent(q)}`; // ඔයාට තියෙන API URL එක දාන්න
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-
-    if (!data || !data.result) return reply('❌ Video data ලැබෙන්නෑ');
-
-    const media = await prepareWAMessageMedia({ image: { url: data.result.thumb } }, { upload: conn.waUploadToServer });
+      // Prepare caption with title
+      const caption =
+        '\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`\n╭────────✦✧✦────────╯\n\n*★| Title :* ' +
+        (apiResponse.result.desc || '');
 
     const cards = [
       {
