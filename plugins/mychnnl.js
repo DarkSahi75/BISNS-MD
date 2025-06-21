@@ -4,6 +4,97 @@ const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
 const axios = require("axios");
 const config = require("../settings");
+
+
+cmd(
+  {
+    pattern: "denu2",
+    desc: "Send caption, thumbnail and song to JID",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+
+      const durationParts = timestamp.split(":").map(Number);
+      const totalSeconds =
+        durationParts.length === 3
+          ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
+          : durationParts[0] * 60 + durationParts[1];
+
+      if (totalSeconds > 1800) {
+        return reply("⏱️ Audio limit is 30 minutes!");
+      }
+
+      const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.data?.url) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.data.url;
+
+      // 🖼️ Send thumbnail + styled caption
+      const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
+
+\`❍. Song ➙\` :- *${result.title}*
+
+\`❍.Time ➙\` :-  *${result.timestamp}*          \`❍.Uploaded ➙\` :- *${result.ago}*
+
+
+> ❝♬.itz Me Denuwan Bbh😽💗🍃❞
+
+> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\` 
+_*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට් එකක් දාගෙන යමු ළමයෝ 😇💗◦◦◦*_`;
+
+      await robin.sendMessage(
+        config.DENU,
+        {
+          image: { url: thumbnail },
+          caption: caption,
+        },
+        { quoted: mek }
+      );
+
+      // 🎧 Send song after thumbnail + caption
+      await robin.sendMessage(
+        config.DENU,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // ✅ Confirmation to sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.DENU || "channel එකට"}* යවලා තියෙන්නෙ.`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
 cmd(
   {
     pattern: "boot2",
@@ -46,12 +137,12 @@ cmd(
       const audioUrl = res.data.url;
 
       // 🖼️ Send thumbnail + styled caption
-      const caption = `\`||🧘‍♂️ ${data.title}\`
+      const caption = `\`||${data.title} 🧘\`
 
 * \`❍.Time ➙\` *${data.timestamp}*
 * \`❍.Uploaded to YouTube ➙\` *${data.ago}*
 
-> ❝♬.*බූට් |* \`\`\`S O N G S ofc\`\`\` *💗😽🍃*❞
+> ❝♬.*Sad |* \`\`\`S O N G S ofc\`\`\` *💗😽🍃*❞
 
 > 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\` 
 _*රියැට් කරන්න ළමයෝ 🥹❣️◦◦◦*_`;
@@ -95,6 +186,7 @@ _*රියැට් කරන්න ළමයෝ 🥹❣️◦◦◦*_`;
 //=============383====3=3=3=3=3=3=3=3==3=
 
 
+/*
 cmd(
   {
     pattern: "denu2",
@@ -184,7 +276,7 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
     }
   }
 );
-
+*/
 
 cmd(
   {
