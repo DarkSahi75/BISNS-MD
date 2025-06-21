@@ -4,14 +4,101 @@ const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
 const axios = require("axios");
 const config = require("../settings");
-//nst { fetchJson } = require("../lib/functions");
-//nst { cmd } = require("../command");
-//nst yts = require("yt-search");
+
 
 cmd(
   {
-    pattern: "dinuvre",
-    desc: "Send caption first and song after to JID",
+    pattern: "boot2",
+    desc: "Send YouTube song with thumbnail, caption and audio",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ගීත නම හෝ YouTube ලින්ක් එකක් දෙන්න.*");
+
+      // YouTube search API endpoint - ඔයාට replace කරන්න ඕන හොඳ API එකක්
+      const searchApiUrl = `https://yt-api-example.vercel.app/search?q=${encodeURIComponent(q)}`;
+
+      // fetchJson function (ඔයාට තියෙන එක භාවිතා කරනවා)
+      const searchRes = await fetchJson(searchApiUrl);
+
+      if (!searchRes || !searchRes.videos || searchRes.videos.length === 0)
+        return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = searchRes.videos[0];
+
+      // Duration check - simple version
+      const timestamp = data.timestamp || "0:00";
+      const durationParts = timestamp.split(":").map(Number);
+      const totalSeconds =
+        durationParts.length === 3
+          ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
+          : durationParts[0] * 60 + durationParts[1];
+
+      if (totalSeconds > 1800) return reply("⏱️ Audio limit is 30 minutes!");
+
+      // Download URL API (replace if වෙන API තියෙනව නම්)
+      const apiUrl = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
+
+      const res = await fetchJson(apiUrl);
+
+      if (!res || !res.status || !res.data || !res.data.url)
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+
+      const audioUrl = res.data.url;
+
+      // Caption formatting
+      const caption = `\`||🧘‍♂️ ${data.title}\`
+
+* \`❍.Time ➙\` *${data.timestamp}*
+* \`❍.Uploaded to YouTube ➙\` *${data.ago}*
+
+> ❝♬.*බූට් |* \`\`\`S O N G S ofc\`\`\` *💗😽🍃*❞
+
+> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\` 
+_*රියැට් කරන්න ළමයෝ 🥹❣️◦◦◦*_`;
+
+      // Send thumbnail + caption
+      await robin.sendMessage(
+        config.BOOT,
+        {
+          image: { url: data.thumbnail },
+          caption: caption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio
+      await robin.sendMessage(
+        config.BOOT,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirm to command sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${data.title}"* නම් ගීතය සාර්ථකව *${config.THARUSHA || "channel එකට"}* යවලා තියෙන්නෙ.`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
+cmd(
+  {
+    pattern: "dinuwa2",
+    desc: "Send caption, thumbnail and song to JID",
     category: "download",
     react: "🎧",
     filename: __filename,
@@ -28,6 +115,7 @@ cmd(
       const timestamp = data.timestamp;
       const ago = data.ago;
       const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
 
       const durationParts = timestamp.split(":").map(Number);
       const totalSeconds =
@@ -48,7 +136,7 @@ cmd(
 
       const audioUrl = res.data.url;
 
-      // 📝 Send styled caption first
+      // 🖼️ Send thumbnail + styled caption
       const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
 
 \`❍. Song ➙\` :- ${title}
@@ -63,12 +151,13 @@ cmd(
       await robin.sendMessage(
         config.DINUWH,
         {
-          text: caption,
+          image: { url: thumbnail },
+          caption: caption,
         },
         { quoted: mek }
       );
 
-      // 🎧 Send song after caption
+      // 🎧 Send song after thumbnail + caption
       await robin.sendMessage(
         config.DINUWH,
         {
@@ -90,12 +179,10 @@ cmd(
 
     } catch (e) {
       console.error(e);
-      reply("*😓 උණුසුම් දෝෂයකි! පස්සේ උත්සහ කරන්න.*");
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
     }
   }
 );
-
-
 cmd(
   {
     pattern: "dinuwaso",
@@ -944,3 +1031,97 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
     }
   }
 );
+
+cmd(
+  {
+    pattern: "denu2",
+    desc: "Send YouTube song with thumbnail, caption, and audio",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+
+      // YouTube search API (ඔයාට replace කරන්න හොඳ API එකක් තියෙනවා නම්)
+      const searchApiUrl = `https://yt-api-example.vercel.app/search?q=${encodeURIComponent(q)}`;
+
+      // Search result (fetchJson හෝ axios එකේ fetch function භාවිතා කරන්න)
+      const searchRes = await fetchJson(searchApiUrl);
+
+      if (!searchRes || !searchRes.videos || searchRes.videos.length === 0)
+        return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const result = searchRes.videos[0];
+
+      // Duration limit check (30 minutes)
+      const timestamp = result.timestamp || "0:00";
+      const durationParts = timestamp.split(":").map(Number);
+      const totalSeconds =
+        durationParts.length === 3
+          ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
+          : durationParts[0] * 60 + durationParts[1];
+
+      if (totalSeconds > 1800) return reply("⏱️ Audio limit is 30 minutes!");
+
+      // Download audio API (replace with valid API)
+      const apiUrl = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(result.url)}&apikey=Manul-Official`;
+
+      const res = await fetchJson(apiUrl);
+
+      if (!res || !res.status || !res.data || !res.data.url)
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+
+      const audioUrl = res.data.url;
+
+      // Caption format
+      const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
+
+\`❍. Song ➙\` :- *${result.title}*
+
+\`❍.Time ➙\` :-  *${result.timestamp}*          \`❍.Uploaded ➙\` :- *${result.ago}*
+
+
+> ❝♬.itz Me Denuwan Bbh😽💗🍃❞
+
+> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\` 
+_*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට් එකක් දාගෙන යමු ළමයෝ 😇💗◦◦◦*_`;
+
+      // Send thumbnail + caption
+      await robin.sendMessage(
+        config.DENU,
+        {
+          image: { url: result.thumbnail },
+          caption: caption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio
+      await robin.sendMessage(
+        config.DENU,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation to command sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${result.title}"* නම් ගීතය *${config.DENU}* වෙත සාර්ථකව යවනු ලැබීය.`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply("*ඇතැම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
+
