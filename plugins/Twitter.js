@@ -21,7 +21,7 @@ const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = require('
 //nst { generateWAMessageFromContent, proto, prepareWAMessageMedia } = await import('baileys');
 //import fetch from 'node-fetch'; // node-fetch හොඳට install කරගන්න
 
-const sadiya_apikey = 'sadiya'; // ඔයාගේ API key එක මෙතන දාන්න
+//onst sadiya_apikey = 'sadiya'; // ඔයාගේ API key එක මෙතන දාන්න
 
 cmd({
   pattern: 'twr',
@@ -158,6 +158,8 @@ cmd({
     reply(`❌ Error: ${e.message}`);
   }
 });
+
+
 cmd({
   pattern: 'tw11',
   alias: ['x', 'twit', 'twitterdl', 'tw'],
