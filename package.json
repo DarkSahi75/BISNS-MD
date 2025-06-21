@@ -31,6 +31,7 @@
         "child_process": "latest",
         "cloudscraper": "4.6.0",
         "express": "latest",
+        "google-tts-api": "latest",
         "file-type": "^16.5.3",
         "form-data": "^4.0.0",
         "fs": "^0.0.1-security",
