@@ -3,9 +3,42 @@ const { cmd } = require("../lib/command");
 const config = require('../settings');
 const prefix = config.PREFIX || ".";
 
-
 //const { cmd } = require("../lib/command");
 
+cmd({
+  pattern: "btn",
+  desc: "Get TikTok video details only.",
+  category: "tools",
+  use: ".tiok <TikTok video URL>",
+  filename: __filename
+}, async (conn, mek, m, { from, reply, args }) => {
+  try {
+
+const buttons = [
+  { buttonId: 'id1', buttonText: { displayText: 'Button 1' }, type: 1 },
+  { buttonId: 'id2', buttonText: { displayText: 'Button 2' }, type: 1 }
+]
+
+const buttonMessage = {
+    image: { url: "https://manul-official-new-api-site.vercel.app/manu-md" }, // image: buffer or path
+    caption: "Hi it's button message with image",
+    footer: 'Hello World',
+    buttons,
+    headerType: 1,
+    viewOnce: true
+}
+
+await conn.sendMessage(from, buttonMessage, { quoted: mek })
+
+
+  } catch (e) {
+    console.error(e);
+    reply(`${e}`);
+  }
+});
+
+//const { cmd } = require("../lib/command");
+/*
 cmd({
   pattern: "btn",
   desc: "Get TikTok video details only.",
@@ -37,6 +70,7 @@ await conn.sendMessage(id, buttonMessage, { quoted: mek })
     reply(`${e}`);
   }
 });
+*/
 cmd({
   pattern: "tipk",
   alias: ["ttinfo", "ttdetails", "tt"],
