@@ -18,6 +18,146 @@ const desc = 'DINUE-HTO';
 const gis = require("g-i-s");
 const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = require('@whiskeysockets/baileys');
 
+//nst { generateWAMessageFromContent, proto, prepareWAMessageMedia } = await import('baileys');
+
+cmd({
+  pattern: 'tw11',
+  alias: ['x', 'twit', 'twitterdl', 'tw'],
+  react: '❤️‍🩹',
+  desc: 'Download from Twitter',
+  category: 'download',
+  filename: __filename,
+}, async (conn, msg, msgInfo, { prefix, q, reply }) => {
+  try {
+    if (!q) return reply('*❌ Please give me Twitter URL*');
+
+    const api = await fetchJson(`https://sadiya-tech-apis.vercel.app/download/twitterdl?url=${q}&apikey=${sadiya_apikey}`);
+    const result = api?.result;
+    if (!result?.thumb) return reply('❌ Video info not found.');
+
+    const caption =
+      `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`\n╭────────✦✧✦────────╯\n\n*★ Title:* ${result.desc || 'Unknown'}`;
+
+    const media = await prepareWAMessageMedia({ image: { url: result.thumb } }, { upload: conn.waUploadToServer });
+
+    const cards = [
+      {
+        header: proto.Message.InteractiveMessage.Header.fromObject({
+          title: '📥 SD Quality Options',
+          hasMediaAttachment: true,
+          ...media
+        }),
+        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+          buttons: [
+            {
+              name: "quick_reply",
+              buttonParamsJson: JSON.stringify({
+                display_text: "1. SD Normal Video",
+                id: `${prefix}twsd ${q}`
+              })
+            },
+            {
+              name: "quick_reply",
+              buttonParamsJson: JSON.stringify({
+                display_text: "2. SD Video Note",
+                id: `${prefix}twsdptv ${q}`
+              })
+            },
+            {
+              name: "quick_reply",
+              buttonParamsJson: JSON.stringify({
+                display_text: "3. SD Document Video",
+                id: `${prefix}twsddoc ${q}`
+              })
+            }
+          ]
+        })
+      },
+      {
+        header: proto.Message.InteractiveMessage.Header.fromObject({
+          title: '📥 HD Quality Options',
+          hasMediaAttachment: true,
+          ...media
+        }),
+        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+          buttons: [
+            {
+              name: "quick_reply",
+              buttonParamsJson: JSON.stringify({
+                display_text: "1. HD Normal Video",
+                id: `${prefix}twhd ${q}`
+              })
+            },
+            {
+              name: "quick_reply",
+              buttonParamsJson: JSON.stringify({
+                display_text: "2. HD Video Note",
+                id: `${prefix}twhdptv ${q}`
+              })
+            },
+            {
+              name: "quick_reply",
+              buttonParamsJson: JSON.stringify({
+                display_text: "3. HD Document Video",
+                id: `${prefix}twhddoc ${q}`
+              })
+            }
+          ]
+        })
+      },
+      {
+        header: proto.Message.InteractiveMessage.Header.fromObject({
+          title: '🎧 Audio Options',
+          hasMediaAttachment: true,
+          ...media
+        }),
+        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+          buttons: [
+            {
+              name: "quick_reply",
+              buttonParamsJson: JSON.stringify({
+                display_text: "1. Audio Normal",
+                id: `${prefix}twaud ${q}`
+              })
+            },
+            {
+              name: "quick_reply",
+              buttonParamsJson: JSON.stringify({
+                display_text: "2. Audio Document",
+                id: `${prefix}twauddoc ${q}`
+              })
+            },
+            {
+              name: "quick_reply",
+              buttonParamsJson: JSON.stringify({
+                display_text: "3. Audio Voice Note",
+                id: `${prefix}twaudptt ${q}`
+              })
+            }
+          ]
+        })
+      }
+    ];
+
+    const msgContent = await generateWAMessageFromContent(msg.chat, {
+      ephemeralMessage: {
+        message: {
+          interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+            body: { text: caption },
+            carouselMessage: { cards }
+          })
+        }
+      }
+    }, { userJid: msg.chat, quoted: msg });
+
+    await conn.relayMessage(msg.chat, msgContent.message, { messageId: msgContent.key.id });
+
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
+
 cmd({
   pattern: "gimgsidebtn",
   react: "😫",
