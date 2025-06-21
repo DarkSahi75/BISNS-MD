@@ -64,6 +64,7 @@
         "qrcode-reader":"^1.0.4",
         "qrcode-terminal":"^0.12.0",
         "raganork-bot":"^3.0.1",
+        "fb-downloader-scrapper": "latest",
         "removebg-wrapper":"^1.0.3",
         "qs": "latest",
         "readline": "latest",
