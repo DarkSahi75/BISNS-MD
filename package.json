@@ -1,6 +1,7 @@
 {
   "name": "KOD-TEAM",
   "version": "1.0.0",
+  "main": "index.js",
   "type": "commonjs",
   "scripts": {
     "start": "pm2 start index.js --deep-monitoring --attach --name KOD",
