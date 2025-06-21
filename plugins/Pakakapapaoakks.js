@@ -7,6 +7,7 @@ const prefix = config.PREFIX || ".";
 
 cmd({
   pattern: "btn",
+  react: "💗",
   desc: "Get TikTok video details only.",
   category: "tools",
   use: ".tiok <TikTok video URL>",
