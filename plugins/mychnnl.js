@@ -50,9 +50,9 @@ cmd(
       // 🖼️ Send thumbnail + styled caption
       const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
 
-\`❍. Song ➙\` :- *${result.title}*
+\`❍. Song ➙\` :- *${data.title}*
 
-\`❍.Time ➙\` :-  *${result.timestamp}*          \`❍.Uploaded ➙\` :- *${result.ago}*
+\`❍.Time ➙\` :-  *${data.timestamp}*          \`❍.Uploaded ➙\` :- *${data.ago}*
 
 
 > ❝♬.itz Me Denuwan Bbh😽💗🍃❞
@@ -95,6 +95,8 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
     }
   }
 );
+
+
 cmd(
   {
     pattern: "boot2",
