@@ -8,7 +8,7 @@ const config = require("../settings");
 
 cmd(
   {
-    pattern: "denu2",
+    pattern: "denuwa",
     desc: "Send caption, thumbnail and song to JID",
     category: "download",
     react: "🎧",
