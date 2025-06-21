@@ -22,7 +22,7 @@
         "sharp":"latest",
         "node-cache": "^5.1.2",
         "ffmpeg-static":"latest",
-        "@whiskeysockets/baileys": "manu-mdx",
+        "@whiskeysockets/baileys": "npm: manu-mdx",
         "g-i-s":"latest",
         "darksadasyt-imgbb-scraper": "latest",
         "jimp":"latest",
