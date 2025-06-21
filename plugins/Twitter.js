@@ -19,7 +19,145 @@ const gis = require("g-i-s");
 const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = require('@whiskeysockets/baileys');
 
 //nst { generateWAMessageFromContent, proto, prepareWAMessageMedia } = await import('baileys');
+//import fetch from 'node-fetch'; // node-fetch හොඳට install කරගන්න
 
+const sadiya_apikey = 'sadiya'; // ඔයාගේ API key එක මෙතන දාන්න
+
+cmd({
+  pattern: 'twr',
+  alias: ['twitter', 'tw', 'twitterdl'],
+  desc: 'Download Twitter videos with slide buttons',
+  category: 'download',
+  filename: __filename,
+}, async (conn, msg, msgInfo, { q, reply, prefix }) => {
+  if (!q) return reply('❌ Twitter video URL එකක් දෙන්න');
+
+  try {
+    const apiUrl = `https://api.somedomain.com/twitterdl?apikey=${sadiya_apikey}&url=${encodeURIComponent(q)}`; // ඔයාට තියෙන API URL එක දාන්න
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+
+    if (!data || !data.result) return reply('❌ Video data ලැබෙන්නෑ');
+
+    const media = await prepareWAMessageMedia({ image: { url: data.result.thumb } }, { upload: conn.waUploadToServer });
+
+    const cards = [
+      {
+        header: proto.Message.InteractiveMessage.Header.fromObject({
+          title: '📥 SD Quality',
+          hasMediaAttachment: true,
+          ...media
+        }),
+        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+          buttons: [
+            {
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'SD Normal Video',
+                id: `${prefix}twsd ${q}`
+              })
+            },
+            {
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'SD Video Note',
+                id: `${prefix}twsdptv ${q}`
+              })
+            },
+            {
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'SD Document Video',
+                id: `${prefix}twsddoc ${q}`
+              })
+            }
+          ]
+        })
+      },
+      {
+        header: proto.Message.InteractiveMessage.Header.fromObject({
+          title: '📥 HD Quality',
+          hasMediaAttachment: true,
+          ...media
+        }),
+        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+          buttons: [
+            {
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'HD Normal Video',
+                id: `${prefix}twhd ${q}`
+              })
+            },
+            {
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'HD Video Note',
+                id: `${prefix}twhdptv ${q}`
+              })
+            },
+            {
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'HD Document Video',
+                id: `${prefix}twhddoc ${q}`
+              })
+            }
+          ]
+        })
+      },
+      {
+        header: proto.Message.InteractiveMessage.Header.fromObject({
+          title: '🎧 Audio',
+          hasMediaAttachment: true,
+          ...media
+        }),
+        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+          buttons: [
+            {
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'Audio Normal',
+                id: `${prefix}twaud ${q}`
+              })
+            },
+            {
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'Audio Document',
+                id: `${prefix}twauddoc ${q}`
+              })
+            },
+            {
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'Audio Voice Note',
+                id: `${prefix}twaudptt ${q}`
+              })
+            }
+          ]
+        })
+      }
+    ];
+
+    const msgContent = await generateWAMessageFromContent(msg.chat, {
+      ephemeralMessage: {
+        message: {
+          interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+            body: { text: `Twitter Downloader for: ${q}` },
+            carouselMessage: { cards }
+          })
+        }
+      }
+    }, { userJid: msg.chat, quoted: msg });
+
+    await conn.relayMessage(msg.chat, msgContent.message, { messageId: msgContent.key.id });
+
+  } catch (e) {
+    console.error(e);
+    reply(`❌ Error: ${e.message}`);
+  }
+});
 cmd({
   pattern: 'tw11',
   alias: ['x', 'twit', 'twitterdl', 'tw'],
