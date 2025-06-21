@@ -137,7 +137,7 @@ cmd(
       const audioUrl = res.data.url;
 
       // 🖼️ Send thumbnail + styled caption
-      const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
+  
   const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
 
 \`❍. Song ➙\` :- *${result.title}*
