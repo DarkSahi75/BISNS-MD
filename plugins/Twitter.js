@@ -16,7 +16,7 @@ const sadiya_md_footer = '> *© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ꜱᴀᴅɪʏᴀ ᴛ�
 const desc = 'DINUE-HTO';
 
 const gis = require("g-i-s");
-const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = await import('baileys');
+const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = await import('@whiskeysockets/baileys');
 
 cmd({
   pattern: "gimgsidebtn",
