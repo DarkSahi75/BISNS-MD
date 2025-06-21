@@ -19,7 +19,7 @@
         "@sl-code-lords/image-library": "^1.0.0",
         "@sl-code-lords/photooxy": "^1.0.1",
          "jsdom": "^22.1.0",
-        "sharp":"0.34.1",
+        "sharp":"latest",
         "node-cache": "^5.1.2",
         "ffmpeg-static":"latest",
         "@whiskeysockets/baileys": "manu-mdx",
