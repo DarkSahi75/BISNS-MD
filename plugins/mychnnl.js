@@ -1,10 +1,99 @@
-//onst { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson} = require('../lib/functions')
+const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson} = require('../lib/functions')
 const { cmd, commands } = require("../lib/command");
 //const { cmd } = require("../lib/command");
 const yts = require("yt-search");
 const axios = require("axios");
 const config = require("../settings");
+//nst { fetchJson } = require("../lib/functions");
+//nst { cmd } = require("../command");
+//nst yts = require("yt-search");
 
+cmd(
+  {
+    pattern: "dinuvre",
+    desc: "Send caption first and song after to JID",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+
+      const durationParts = timestamp.split(":").map(Number);
+      const totalSeconds =
+        durationParts.length === 3
+          ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
+          : durationParts[0] * 60 + durationParts[1];
+
+      if (totalSeconds > 1800) {
+        return reply("⏱️ Audio limit is 30 minutes!");
+      }
+
+      const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.data?.url) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.data.url;
+
+      // 📝 Send styled caption first
+      const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
+
+\`❍. Song ➙\` :- ${title}
+
+\`❍.Time ➙\` :-  ${timestamp}          \`❍.Uploaded ➙\` :- ${ago}
+
+> ❝♬.itz Me Dinuw Bbh😽💗🍃❞
+
+> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\`
+ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට් එකක් දාගෙන යමු ළමයෝ 🫠💗◦◦◦`;
+
+      await robin.sendMessage(
+        config.DINUWH,
+        {
+          text: caption,
+        },
+        { quoted: mek }
+      );
+
+      // 🎧 Send song after caption
+      await robin.sendMessage(
+        config.DINUWH,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // ✅ Confirmation to sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.THARUSHA || "channel එකට"}* යවලා තියෙන්නෙ.`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පස්සේ උත්සහ කරන්න.*");
+    }
+  }
+);
 
 
 cmd(
