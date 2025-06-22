@@ -2816,7 +2816,7 @@ async(conn, mek, m, {
     reply(`Error: ${e.message || e}`);
   }
 });
-*/
+
 cmd({
   pattern: "downfb_hd",
   react: "⬇️",
@@ -3058,3 +3058,4 @@ async (conn, mek, m, {
     reply(`❌ Error: ${e.message || e}`);
   }
 });
+*/
