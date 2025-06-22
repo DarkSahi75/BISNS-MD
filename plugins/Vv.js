@@ -1,6 +1,6 @@
 const axios = require('axios');
-const config = require('../config');
-const { cmd, commands } = require('../command');
+const config = require('../settings');
+const { cmd, commands } = require('../lib/command');
 
 const fs = require("fs");
 
