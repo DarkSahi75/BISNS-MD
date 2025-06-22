@@ -2566,7 +2566,7 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 //Fbbbbbb
 
 
-*/
+
 const api = `https://nethu-api-ashy.vercel.app`;
 
 //01.Facebook Download
@@ -2787,5 +2787,5 @@ const listData2 = {
     reply(`❌ Error: ${e.message}`);
   }
 });
-
+*/
 
