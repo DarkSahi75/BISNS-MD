@@ -14,7 +14,7 @@ cmd({
         const startTime = Date.now()
 
         // Send initial message
-        const message = await conn.sendMessage(from, { text: '> *Wait for a small time, I'm counting bot responses.*' })
+        const message = await conn.sendMessage(from, { text: '> *Wait for a small time, Im counting bot responses.*' })
 
         // End timer and calculate ping
         const endTime = Date.now()
