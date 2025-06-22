@@ -20,7 +20,7 @@ const desc = 'DINUWH-HTO';
 
 
 
-/*
+
 cmd({
   pattern: "img",
   alias: "image",
@@ -85,7 +85,7 @@ cmd({
     return reply("💥 An error occurred. Please try again.");
   }
 });
-
+/*
 cmd(
   {
     pattern: 'twitter',
