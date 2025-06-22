@@ -22,39 +22,36 @@ const desc = 'DINUWH-HTO';
 
 
 
-
 cmd({
-  pattern: "img",
-  alias: "image",
-  react: "🧬",
+  pattern: "gimg",
+  react: "😫",
   desc: "Google Image Search via g-i-s",
   category: "search",
-  use: ".img cat",
+  use: ".gimg dog",
   filename: __filename
 }, async (conn, m, msg, { q, reply }) => {
-  if (!q) return reply("🔍 Example: .img cat");
+  if (!q) return reply("🔍 උදාහරණයක්: .gimg cat");
 
   try {
     gis(q, async (error, results) => {
-      if (error || !results || results.length === 0)
-        return reply("😢 No results found!");
+      if (error || !results || results.length === 0) return reply("😢 කිසිම ප්‍රතිඵලයක් හමු නොවිනි!");
 
-      const top10 = results.slice(0, 10);
+      const top3 = results.slice(0, 3);
       const cards = [];
 
-      for (const img of top10) {
+      for (let img of top3) {
         const media = await prepareWAMessageMedia(
           { image: { url: img.url } },
           { upload: conn.waUploadToServer }
         );
 
         cards.push({
-          header: {
-            hasMediaAttachment: true,
-            imageMessage: media.imageMessage,
+          header: proto.Message.InteractiveMessage.Header.fromObject({
             title: q.substring(0, 30) + ' 🔍',
-          },
-          nativeFlowMessage: {
+            hasMediaAttachment: true,
+            ...media
+          }),
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
             buttons: [{
               name: "cta_url",
               buttonParamsJson: JSON.stringify({
@@ -63,17 +60,17 @@ cmd({
                 merchant_url: img.url
               })
             }]
-          }
+          })
         });
       }
 
       const msgContent = await generateWAMessageFromContent(m.chat, {
         ephemeralMessage: {
           message: {
-            interactiveMessage: {
+            interactiveMessage: proto.Message.InteractiveMessage.fromObject({
               body: { text: `🖼️ Google Image Results for *"${q}"*` },
               carouselMessage: { cards }
-            }
+            })
           }
         }
       }, { userJid: m.chat, quoted: m });
@@ -82,9 +79,11 @@ cmd({
     });
   } catch (e) {
     console.error(e);
-    return reply("💥 An error occurred. Please try again.");
+    return reply("💥 කෑවෙ පකෝ. නැවත උත්සහ කරන්න.");
   }
 });
+
+
 /*
 cmd(
   {
