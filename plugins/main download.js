@@ -21,13 +21,15 @@ const desc = 'DINUWH-HTO';
 
 
 
+
+
 cmd({
   pattern: "img",
   alias: "image",
   react: "🧬",
   desc: "Google Image Search via g-i-s",
   category: "search",
-  use: ".gimg cat",
+  use: ".img cat",
   filename: __filename
 }, async (conn, m, msg, { q, reply }) => {
   if (!q) return reply("🔍 Example: .img cat");
@@ -37,9 +39,7 @@ cmd({
       if (error || !results || results.length === 0)
         return reply("😢 No results found!");
 
-      // Take the first 10 images (no language filter)
       const top10 = results.slice(0, 10);
-
       const cards = [];
 
       for (const img of top10) {
@@ -49,12 +49,12 @@ cmd({
         );
 
         cards.push({
-          header: proto.Message.InteractiveMessage.Header.fromObject({
-            title: q.substring(0, 30) + ' 🔍',
+          header: {
             hasMediaAttachment: true,
-            ...media
-          }),
-          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+            imageMessage: media.imageMessage,
+            title: q.substring(0, 30) + ' 🔍',
+          },
+          nativeFlowMessage: {
             buttons: [{
               name: "cta_url",
               buttonParamsJson: JSON.stringify({
@@ -63,17 +63,17 @@ cmd({
                 merchant_url: img.url
               })
             }]
-          })
+          }
         });
       }
 
       const msgContent = await generateWAMessageFromContent(m.chat, {
         ephemeralMessage: {
           message: {
-            interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+            interactiveMessage: {
               body: { text: `🖼️ Google Image Results for *"${q}"*` },
               carouselMessage: { cards }
-            })
+            }
           }
         }
       }, { userJid: m.chat, quoted: m });
