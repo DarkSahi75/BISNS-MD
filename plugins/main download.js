@@ -6,7 +6,6 @@ const config = require("../settings");
 const cheerio = require('cheerio');
 const axios = require("axios");
 const prefix = config.PREFIX || ".";
-
 const { Buffer } = require('buffer');
 const { igdl, ttdl } = require('ruhend-scraper');
 const fg = require('api-dylux');
@@ -605,8 +604,8 @@ cmd(
 //yttttt
 
 cmd({
-  pattern: "ytmp3",
-  alias: "song",
+  pattern: "song",
+  alias: "ytmp3",
   react: "🎵",
   desc: "Download Song",
   category: "download",
@@ -843,7 +842,7 @@ if (config.MODE === 'nonbutton') {
 	title: "",
 	rows: [
 	    {title: "1", rowId: `${prefix}normalv ${data.url}`, description: '\`❲ Normal Type Videos ❳\` 📽️'},
-	    {title: "2", rowId: `${prefix}documentv ${data.url}`, description: '\`❲ Document Typr Videos ❳\` 📄'} ,
+	    {title: "2", rowId: `${prefix}documentv ${data.url}`, description: '\`❲ Document Type Videos ❳\` 📄'} ,
             
 	]
     } 
@@ -1244,8 +1243,8 @@ async (conn, mek, m, { from, q, reply }) => {
 
 
 cmd({
-  pattern: "tipk",
-  alias: ["ttinfo", "ttdetails", "tt"],
+  pattern: "tt",
+  alias: ["ttinfo", "ttdetails", "tiktok"],
   react: '🔎',
   desc: "Get TikTok video details only.",
   category: "tools",
@@ -2407,14 +2406,14 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
         buttons: [
           
           {
-            buttonId: `${prefix}ping ${data.url}`,
+            buttonId: `${prefix}dinuping`,
             buttonText: { displayText: "`[CHECK BOT SPEED 📍]`" },
             type: 1
           },
 
           {
             buttonId: "action",
-            buttonText: { displayText: "🔘 Choose Song Type" },
+            buttonText: { displayText: "🔘" },
             type: 4,
             nativeFlowInfo: {
               name: "single_select",
@@ -2570,7 +2569,7 @@ const api = `https://nethu-api-ashy.vercel.app`;
 
 //01.Facebook Download
 cmd({
-  pattern: "facebook",
+  pattern: "fb",
   react: "🎥",
   alias: ["fbbbb", "fbvideo", "fb"],
   desc: "ddesc",
