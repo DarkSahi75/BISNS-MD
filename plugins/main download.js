@@ -2787,6 +2787,7 @@ const listData2 = {
 });
 
 //==3-3--3=3-3-3-3-3=3-3-3-3-3-=3=3=3=3=3=3==*=*=*=*=**=*=&=&=&=&=&=&==&-&-&-&-&=&=&=&-&-*&
+/*
 cmd({
   pattern: "downfb_sd",
   react: "⬇️",
@@ -2815,7 +2816,7 @@ async(conn, mek, m, {
     reply(`Error: ${e.message || e}`);
   }
 });
-
+*/
 cmd({
   pattern: "downfb_hd",
   react: "⬇️",
