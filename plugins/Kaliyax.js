@@ -4,44 +4,41 @@ const fs = require('fs');
 const path = require('path');
 
 cmd({
-  pattern: 'kariyax',
+  pattern: 'ytmp3ptt',
   alias: ['ytptt'],
   desc: 'Download YouTube MP3 and send as Voice Note (PTT)',
   category: 'download',
   use: '.ytmp3ptt <YouTube Link>',
   filename: __filename
-}, async (m, conn, msg, { q, args, reply }) => {
-  if (!q) return reply('🧑‍🎤 *YouTube link එකක් දෙන්න!*\n\n🧪 *Use:* `.ytmp3ptt https://youtu.be/xxxx`');
+}, async (conn, m, msg, { q, reply }) => {
+  if (!q) return reply('🔗 *YouTube link එකක් දාන්න!*\n\nඋදාහරණයක්: `.ytmp3ptt https://youtu.be/tFNcAHBe6cE`');
 
   try {
-    const api = `https://kaliyax-yt-api.vercel.app/api/ytmp3?url=${encodeURIComponent(q)}`;
-    const res = await axios.get(api);
+    const apiUrl = `https://kaliyax-yt-api.vercel.app/api/ytmp3?url=${encodeURIComponent(q)}`;
+    const { data } = await axios.get(apiUrl);
 
-    if (!res.data.status || !res.data.data.download.status)
-      return reply('❌ Download Error: MP3 link unavailable.');
+    if (!data?.status || !data?.data?.download?.status) {
+      return reply('🚫 Unable to fetch download link. Please check the YouTube URL.');
+    }
 
-    const data = res.data.data;
-    const audioUrl = data.download.url;
-    const title = data.metadata.title;
-    const author = data.metadata.author.name;
-    const thumb = data.metadata.thumbnail;
-    const filename = `${title}.mp3`;
+    const { title } = data.data.metadata;
+    const audioUrl = data.data.download.url;
 
-    reply(`🎧 *Title:* ${title}\n👤 *Artist:* ${author}\n📥 *Sending as Voice Note...*`);
+    reply(`🎶 *Downloading:* ${title}\n📥 Sending as Voice Note...`);
 
-    const audioRes = await axios.get(audioUrl, { responseType: 'arraybuffer' });
-    const tempPath = path.join(__dirname, '../temp', filename);
-    fs.writeFileSync(tempPath, audioRes.data);
+    const audio = await axios.get(audioUrl, { responseType: 'arraybuffer' });
+    const tempFile = path.join(__dirname, `../temp/${Date.now()}.mp3`);
+    fs.writeFileSync(tempFile, audio.data);
 
     await conn.sendMessage(m.chat, {
-      audio: fs.readFileSync(tempPath),
-      mimetype: 'audio/mpeg',
-      ptt: true,
+      audio: fs.readFileSync(tempFile),
+      mimetype: 'audio/mp4',
+      ptt: true
     }, { quoted: m });
 
-    fs.unlinkSync(tempPath);
-  } catch (e) {
-    console.error(e);
-    reply('⚠️ Error while downloading or sending audio.');
+    fs.unlinkSync(tempFile);
+  } catch (err) {
+    console.error('PTT ERROR:', err.message);
+    reply('⚠️ *Error while downloading or sending voice note.*\n\n🧪 Try again later or check the URL.');
   }
 });
