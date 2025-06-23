@@ -1,5 +1,5 @@
 const { getBuffer, fetchJson } = require('../lib/functions');
-const { cmd } = require("../command");
+const { cmd } = require("../lib/command");
 const yts = require("yt-search");
 
 cmd(
