@@ -76,6 +76,7 @@ cmd(
 );
 
 
+
 cmd(
   {
     pattern: "csong",
@@ -110,13 +111,13 @@ cmd(
 *◈ 🍇 𝗦 𝙸𝚉𝙴 : ►*  2.00 MB
 *◈🌹 𝗡 𝚄𝙼𝙱𝙴𝚁 : ►* 001
 
-> 🎼 ᴜꜱᴇ ʜᴇᴀᴅᴩʜᴏɴᴇꜱ ꜰᴏʀ ʙᴇꜱᴛ ᴇxᴩᴇʀɪᴇɴᴄᴇ 😫🥺🎧"
+> 🎼 ᴜꜱᴇ ʜᴇᴀᴅᴩʜᴏɴᴇꜱ ꜰᴏʀ ʙᴇꜱᴛ ᴇxᴩᴇʀɪᴇɴᴄᴇ 😫🥺🎧
 
 ╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ◎`;
 
       // Send thumbnail with caption
       await robin.sendMessage(
-        config.Gmsara,
+        config.Gmsara, // Make sure this is defined in settings
         {
           image: { url: result.thumbnail },
           caption: caption,
@@ -126,7 +127,7 @@ cmd(
 
       // Send PTT Audio
       await robin.sendMessage(
-        config.Gimsara,
+        config.Gmsara, // Fixed: both same ID
         {
           audio: { url: result.download },
           mimetype: "audio/mpeg",
