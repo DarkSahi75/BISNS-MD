@@ -35,7 +35,7 @@ cmd({
 
     await conn.sendMessage(m.chat, {
       audio: fs.readFileSync(tempPath),
-      mimetype: 'audio/mp4',
+      mimetype: 'audio/mpeg',
       ptt: true,
     }, { quoted: m });
 
