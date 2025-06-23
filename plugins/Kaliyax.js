@@ -1,44 +1,87 @@
-const { cmd } = require('../lib/command');
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
+const { getBuffer, fetchJson } = require('../lib/functions');
+const { cmd } = require("../command");
+const yts = require("yt-search");
 
-cmd({
-  pattern: 'ytmp3ptt',
-  alias: ['ytptt'],
-  desc: 'Download YouTube MP3 and send as Voice Note (PTT)',
-  category: 'download',
-  use: '.ytmp3ptt <YouTube Link>',
-  filename: __filename
-}, async (conn, m, msg, { q, reply }) => {
-  if (!q) return reply('🔗 *YouTube link එකක් දාන්න!*\n\nඋදාහරණයක්: `.ytmp3ptt https://youtu.be/tFNcAHBe6cE`');
-
-  try {
-    const apiUrl = `https://kaliyax-yt-api.vercel.app/api/ytmp3?url=${encodeURIComponent(q)}`;
-    const { data } = await axios.get(apiUrl);
-
-    if (!data?.status || !data?.data?.download?.status) {
-      return reply('🚫 Unable to fetch download link. Please check the YouTube URL.');
+cmd(
+  {
+    pattern: "kariyax",
+    alias: ["ytptt", "vreptt"],
+    react: "🎶",
+    desc: "Download MP3 & send as Voice Note using KaliyaX API",
+    category: "download",
+    filename: __filename,
+  },
+  async (
+    robin,
+    mek,
+    m,
+    {
+      from,
+      q,
+      reply,
     }
+  ) => {
+    try {
+      if (!q) return reply("🧠 නමක් හරි YouTube ලින්ක් එකක් හරි දෙන්න");
 
-    const { title } = data.data.metadata;
-    const audioUrl = data.data.download.url;
+      const search = await yts(q);
+      if (!search.videos.length) return reply("❌ Video not found!");
 
-    reply(`🎶 *Downloading:* ${title}\n📥 Sending as Voice Note...`);
+      const video = search.videos[0];
+      const videoUrl = video.url;
 
-    const audio = await axios.get(audioUrl, { responseType: 'arraybuffer' });
-    const tempFile = path.join(__dirname, `../temp/${Date.now()}.mp3`);
-    fs.writeFileSync(tempFile, audio.data);
+      const metadataMsg = `🎵 *Uploading as Voice Note...*
 
-    await conn.sendMessage(m.chat, {
-      audio: fs.readFileSync(tempFile),
-      mimetype: 'audio/mp4',
-      ptt: true
-    }, { quoted: m });
+📌 *Title:* ${video.title}
+🔗 *URL:* ${video.url}
+🕘 *Duration:* ${video.timestamp}
+📅 *Uploaded:* ${video.ago}
+👁️ *Views:* ${video.views}
 
-    fs.unlinkSync(tempFile);
-  } catch (err) {
-    console.error('PTT ERROR:', err.message);
-    reply('⚠️ *Error while downloading or sending voice note.*\n\n🧪 Try again later or check the URL.');
+🎧 *Headphones on – Feel the vibe!*`;
+
+      await robin.sendMessage(
+        from,
+        {
+          image: { url: video.thumbnail },
+          caption: metadataMsg,
+        },
+        { quoted: mek }
+      );
+
+      // Use KaliyaX API to fetch MP3
+      const apiURL = `https://kaliyax-yt-api.vercel.app/api/ytmp3?url=${encodeURIComponent(videoUrl)}`;
+      const res = await fetchJson(apiURL);
+
+      if (!res?.status || !res?.data?.download?.status) {
+        return reply("⚠️ Cannot fetch audio from KaliyaX API");
+      }
+
+      // Duration check
+      let durationParts = video.timestamp.split(":").map(Number);
+      let totalSeconds =
+        durationParts.length === 3
+          ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
+          : durationParts[0] * 60 + durationParts[1];
+      if (totalSeconds > 1800) {
+        return reply("⏱️ Sorry, limit is 30 mins or less for voice notes.");
+      }
+
+      const audioLink = res.data.download.url;
+
+      // Send audio as PTT
+      await robin.sendMessage(
+        from,
+        {
+          audio: { url: audioLink },
+          mimetype: "audio/mpeg", // still works for PTT in most baileys forks
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply(`❌ Error: ${e.message}`);
+    }
   }
-});
+);
