@@ -162,7 +162,7 @@ async (conn, mek, m, { from, pushname, reply }) => {
     try {
         let desc = `💸 *PAYMENT METHODS* 💸
 
-*Dear ~The bezZZ - owner, please use one of the following methods to make the payment before confirming your plan.*
+*Dear ${pushname}, please use one of the following methods to make the payment before confirming your plan.*
 
 ───────────────
 
