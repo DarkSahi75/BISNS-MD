@@ -157,7 +157,8 @@ cmd(
 
 cmd(
   {
-    pattern: "Gsong",
+    pattern: "gsong",
+    alias: "gimsaras",
     desc: "Stylish MP3 sender to configured JID",
     category: "download",
     react: "🎧",
