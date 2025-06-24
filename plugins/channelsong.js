@@ -9,85 +9,86 @@ const config = require("../settings");
 
 
 
+
 cmd(
   {
     pattern: "denuwa",
-    desc: "Send caption, thumbnail and song to JID via KaliyaX API",
+    alias: ["ytptt", "vreptt"],
+    react: "🎶",
+    desc: "Download MP3 & send as Voice Note using KaliyaX API",
     category: "download",
-    react: "🎧",
     filename: __filename,
   },
-  async (robin, mek, m, { q, reply }) => {
+  async (robin, mek, m, { from, q, reply }) => {
     try {
-      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+      if (!q) return reply("🧠 නමක් හරි YouTube ලින්ක් එකක් හරි දෙන්න");
 
       const search = await yts(q);
-      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+      if (!search.videos.length) return reply("❌ Video not found!");
 
-      const data = search.videos[0];
-      const title = data.title;
-      const timestamp = data.timestamp;
-      const ago = data.ago;
-      const ytUrl = data.url;
-      const thumbnail = data.thumbnail;
+      const video = search.videos[0];
+      const videoUrl = video.url;
 
-      const api = `https://kaliyax-yt-api.vercel.app/api/ytmp3?url=${encodeURIComponent(ytUrl)}`;
-      const res = await fetchJson(api);
-
-      if (!res?.status || !res?.data?.download?.url) {
-        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
-      }
-
-      const audioUrl = res.data.download.url;
-
+      // 📜 Styled caption
       const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
 
-\`❍. Song ➙\` :- *${title}*
+\`❍. Song ➙\` :- *${video.title}*
 
-\`❍.Time ➙\` :-  *${timestamp}*          \`❍.Uploaded ➙\` :- *${ago}*
+\`❍.Time ➙\` :-  *${video.timestamp}*          \`❍.Uploaded ➙\` :- *${video.ago}*
+\`❍.Views ➙\` :- *${video.views}*
 
-
-> ❝♬.itz Me Denuwan Bbh😽💗🍃❞
-
-> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\` 
+> ❝♬.itz Me Denuwan Bbh😽💗🍃❞  
+> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\`  
 _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට් එකක් දාගෙන යමු ළමයෝ 😇💗◦◦◦*_`;
 
-      // 🖼️ Send thumbnail + styled caption
+      // 🖼️ Send thumbnail + caption to target JID
       await robin.sendMessage(
         config.DENU,
         {
-          image: { url: thumbnail },
-          caption,
+          image: { url: video.thumbnail },
+          caption: caption,
         },
         { quoted: mek }
       );
 
-      // 🎧 Send song after thumbnail + caption
+      // 🔗 Fetch MP3 from API
+      const apiURL = `https://kaliyax-yt-api.vercel.app/api/ytmp3?url=${encodeURIComponent(videoUrl)}`;
+      const res = await fetchJson(apiURL);
+
+      if (!res?.status || !res?.data?.download?.url) {
+        return reply("⚠️ Cannot fetch audio from KaliyaX API");
+      }
+
+      const audioLink = res.data.download.url;
+
+      // 🎧 Send audio to target JID as voice note
       await robin.sendMessage(
         config.DENU,
         {
-          audio: { url: audioUrl },
+          audio: { url: audioLink },
           mimetype: "audio/mpeg",
           ptt: true,
         },
         { quoted: mek }
       );
 
-      // ✅ Confirmation to sender
+      // ✅ Notify sender
       await robin.sendMessage(
         mek.key.remoteJid,
         {
-          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.DENU || "channel එකට"}* යවලා තියෙන්නෙ.`,
+          text: `✅ *"${video.title}"* නම් ගීතය සාර්ථකව *${config.DENU || "JID"}* වෙත යවා ඇත.`,
         },
         { quoted: mek }
       );
 
     } catch (e) {
       console.error(e);
-      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+      reply(`❌ Error: ${e.message}`);
     }
   }
 );
+
+
 cmd(
   {
     pattern: "gsong",
