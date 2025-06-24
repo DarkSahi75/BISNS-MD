@@ -6,10 +6,13 @@ const axios = require("axios");
 const config = require("../settings");
 
 
+
+
+
 cmd(
   {
     pattern: "denuwa",
-    desc: "Send caption, thumbnail and song to JID",
+    desc: "Send caption, thumbnail and song to JID via KaliyaX API",
     category: "download",
     react: "🎧",
     filename: __filename,
@@ -28,31 +31,20 @@ cmd(
       const ytUrl = data.url;
       const thumbnail = data.thumbnail;
 
-      const durationParts = timestamp.split(":").map(Number);
-      const totalSeconds =
-        durationParts.length === 3
-          ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
-          : durationParts[0] * 60 + durationParts[1];
-
-      if (totalSeconds > 1800) {
-        return reply("⏱️ Audio limit is 30 minutes!");
-      }
-
-      const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
+      const api = `https://kaliyax-yt-api.vercel.app/api/ytmp3?url=${encodeURIComponent(ytUrl)}`;
       const res = await fetchJson(api);
 
-      if (!res?.status || !res?.data?.url) {
+      if (!res?.status || !res?.data?.download?.url) {
         return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
       }
 
-      const audioUrl = res.data.url;
+      const audioUrl = res.data.download.url;
 
-      // 🖼️ Send thumbnail + styled caption
       const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
 
-\`❍. Song ➙\` :- *${data.title}*
+\`❍. Song ➙\` :- *${title}*
 
-\`❍.Time ➙\` :-  *${data.timestamp}*          \`❍.Uploaded ➙\` :- *${data.ago}*
+\`❍.Time ➙\` :-  *${timestamp}*          \`❍.Uploaded ➙\` :- *${ago}*
 
 
 > ❝♬.itz Me Denuwan Bbh😽💗🍃❞
@@ -60,11 +52,12 @@ cmd(
 > 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\` 
 _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට් එකක් දාගෙන යමු ළමයෝ 😇💗◦◦◦*_`;
 
+      // 🖼️ Send thumbnail + styled caption
       await robin.sendMessage(
         config.DENU,
         {
           image: { url: thumbnail },
-          caption: caption,
+          caption,
         },
         { quoted: mek }
       );
@@ -95,9 +88,6 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
     }
   }
 );
-
-
-
 cmd(
   {
     pattern: "gsong",
