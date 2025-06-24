@@ -6,6 +6,78 @@ const axios = require("axios");
 const config = require("../settings");
 const { ytmp3 } = require("@vreden/youtube_scraper");
 
+
+cmd(
+  {
+    pattern: "pakapaka",
+    desc: "Download YouTube MP3 and send to user",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*🎧 නමක් හෝ YouTube link එකක් දෙන්න...*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("❌ *Video එක හමුනොවුණා!*");
+
+      const data = search.videos[0];
+      const ytUrl = data.url;
+
+      const api = `https://sadas-ytmp3-new-2.vercel.app/convert?url=${ytUrl}`;
+      const { data: apiRes } = await axios.get(api);
+
+      if (!apiRes?.success || !apiRes.data?.link) {
+        return reply("❌ *ගීතය බාගත කළ නොහැක!*");
+      }
+
+      const result = apiRes.data;
+
+      // duration check (30 min max)
+      if (result.duration && result.duration > 1800) {
+        return reply("⏱️ *Audio time limit is 30 minutes!*");
+      }
+
+      const caption = `\`||🧘‍♂️ ${result.title}\`
+
+* \`❍.Time ➙\` *${data.timestamp}*
+* \`❍.Uploaded to YouTube ➙\` *${data.ago}*
+
+
+> ❝♬.*බූට් |* \`\`\`S O N G S ofc\`\`\` *💗😽🍃*❞
+
+> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\` 
+_*රියැට් කරන්න ළමයෝ 🥹❣️◦◦◦*_`;
+
+      const thumb = `https://i.ytimg.com/vi/${data.videoId}/hqdefault.jpg`;
+
+      // Send thumbnail + caption
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          image: { url: thumb },
+          caption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          audio: { url: result.link },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+    } catch (err) {
+      console.error(err);
+      reply("❌ *Error එකක්! පසුව උත්සහ කරන්න.*");
+    }
+  }
+);
 cmd(
   {
     pattern: "vre",
