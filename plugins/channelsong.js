@@ -1390,3 +1390,79 @@ _*ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට�
   }
 );
 
+
+
+
+cmd(
+  {
+    pattern: "fr2",
+    desc: "Send YouTube MP3 to a specific JID",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const ytUrl = data.url;
+
+      const api = `https://sadas-ytmp3-new-2.vercel.app/convert?url=${ytUrl}`;
+      const { data: apiRes } = await axios.get(api);
+
+      if (!apiRes?.success || !apiRes.data?.link) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const result = apiRes.data;
+
+      const caption = `\`||🧘‍♂️ ${result.title}\`
+
+* \`❍.Time ➙\` *${data.timestamp}*
+* \`❍.Uploaded to YouTube ➙\` *${data.ago}*
+
+
+> ❝♬.*බූට් |* \`\`\`S O N G S ofc\`\`\` *💗😽🍃*❞
+
+> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\` 
+_*රියැට් කරන්න ළමයෝ 🥹❣️◦◦◦*_`;
+
+      // Send thumbnail and caption to configured JID
+      await robin.sendMessage(
+        config.Freedom,
+        {
+          image: { url: `https://i.ytimg.com/vi/${data.videoId}/hqdefault.jpg` },
+          caption: caption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio to the same JID
+      await robin.sendMessage(
+        config.Freedom,
+        {
+          audio: { url: result.link },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation message to command sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${result.title}"* නම් ගීතය *${config.BOOT}* වෙත සාර්ථකව යවනු ලැබීය.`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("*ඇතැම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
