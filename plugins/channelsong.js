@@ -4,7 +4,94 @@ const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
 const axios = require("axios");
 const config = require("../settings");
+const { ytmp3 } = require("@vreden/youtube_scraper");
 
+cmd(
+  {
+    pattern: "boot3",
+    alias: "ytmp3",
+    react: "🎵",
+    desc: "Download YouTube MP3 and send with styled details to BOOT JID",
+    category: "download",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("🎧 *සින්දුවක නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("❌ *Video එක හමුනොවුණා!*");
+
+      const data = search.videos[0];
+      const url = data.url;
+      const thumb = data.thumbnail;
+
+      const quality = "64";
+      const songData = await ytmp3(url, quality);
+
+      if (!songData || !songData.download?.url) {
+        return reply("❌ *ගීතය බාගත කළ නොහැක!*");
+      }
+
+      // duration check
+      let durationParts = data.timestamp.split(":").map(Number);
+      let totalSeconds =
+        durationParts.length === 3
+          ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
+          : durationParts[0] * 60 + durationParts[1];
+
+      if (totalSeconds > 1800) {
+        return reply("⏱️ *Audio limit minutes 30යි!*");
+      }
+
+      const title = songData.title || data.title;
+
+      const caption = `\`||🧘‍♂️ ${title}\`
+
+* \`❍.Time ➙\` *${data.timestamp}*
+* \`❍.Uploaded to YouTube ➙\` *${data.ago}*
+
+
+> ❝♬.*බූට් |* \`\`\`S O N G S ofc\`\`\` *💗😽🍃*❞
+
+> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\` 
+_*රියැට් කරන්න ළමයෝ 🥹❣️◦◦◦*_`;
+
+      // Send thumbnail with styled caption to BOOT JID
+      await robin.sendMessage(
+        config.BOOT,
+        {
+          image: { url: thumb },
+          caption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio to BOOT JID
+      await robin.sendMessage(
+        config.BOOT,
+        {
+          audio: { url: songData.download.url },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirm back to user
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* BOT එකට සාර්ථකව යැවිලා තියෙන්නේ!`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply(`❌ Error: ${e.message}`);
+    }
+  }
+);
 
 
 
