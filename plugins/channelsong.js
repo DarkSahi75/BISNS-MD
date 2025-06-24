@@ -970,7 +970,7 @@ cmd(
       const data = search.videos[0];
       const ytUrl = data.url;
 
-      const api = `https://yt-five-tau.vercel.app/download?q=${ytUrl}&format=mp3`;
+      const api = `https://sadas-ytmp3-new-2.vercel.app/convert?url=${ytUrl}`;
       const { data: apiRes } = await axios.get(api);
 
       if (!apiRes?.status || !apiRes.result?.download) {
