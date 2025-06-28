@@ -11,16 +11,7 @@ cmd(
     category: "download",
     filename: __filename,
   },
-  async (
-    robin,
-    mek,
-    m,
-    {
-      from,
-      q,
-      reply,
-    }
-  ) => {
+  async (robin, mek, m, { from, q, reply }) => {
     try {
       if (!q) return reply("🧠 නමක් හරි YouTube ලින්ක් එකක් හරි දෙන්න");
 
@@ -63,18 +54,19 @@ cmd(
         durationParts.length === 3
           ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
           : durationParts[0] * 60 + durationParts[1];
+
       if (totalSeconds > 1800) {
         return reply("⏱️ Sorry, limit is 30 mins or less for voice notes.");
       }
 
-      const audioLink = res.data.download.url;
+      const audioBuffer = await getBuffer(res.data.download.url);
 
-      // Send audio as PTT
+      // Send audio as voice note (PTT)
       await robin.sendMessage(
         from,
         {
-          audio: { url: audioLink },
-          mimetype: "audio/mpeg", // still works for PTT in most baileys forks
+          audio: audioBuffer,
+          mimetype: "audio/mpeg",
           ptt: true,
         },
         { quoted: mek }
