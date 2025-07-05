@@ -1,9 +1,9 @@
 const { cmd } = require("../lib/command");
-const axios = require("axios");
+const fetchJson = require("../lib/function").fetchJson; // ✅ use this!
 
 cmd(
   {
-    pattern: "ttinfo", // 👈 Command to trigger the plugin
+    pattern: "ttinfo",
     desc: "Get TikTok video details using external API",
     category: "download",
     react: "🎵",
@@ -16,7 +16,7 @@ cmd(
       }
 
       const api = `https://my-private-api-site.vercel.app/ttdlxz?url=${encodeURIComponent(q)}`;
-      const { data: res } = await axios.get(api);
+      const res = await fetchJson(api); // ✅ now using fetchJson
 
       if (!res || !res.status || !res.data) {
         return reply("❌ Failed to fetch TikTok video details.");
