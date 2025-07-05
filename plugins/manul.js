@@ -1,5 +1,7 @@
 const { cmd } = require("../lib/command");
 const { fetchJson, getBuffer } = require("../lib/functions");
+const config = require("../settings"); // Make sure to include PREFIX from here
+const prefix = config.PREFIX;
 
 cmd(
   {
@@ -26,6 +28,8 @@ cmd(
       const videoSD = result.data.find(x => x.type === "nowatermark")?.url;
       const videoHD = result.data.find(x => x.type === "nowatermark_hd")?.url;
       const audio = result.music_info?.url;
+      const thumbnail = await getBuffer(result.cover);
+      const tiktokUrl = result.metadata?.url || q;
 
       const caption = `*🎬 TikTok Video*
 
@@ -35,43 +39,104 @@ cmd(
 🎧 *Sound:* ${result.music_info?.title || "N/A"}
 👤 *Creator:* ${result.author?.fullname || "N/A"} (${result.author?.nickname || ""})
 
-📊 *Stats:* 👁️ ${result.stats.views} | ❤️ ${result.stats.likes} | 💬 ${result.stats.comment} | 🔁 ${result.stats.share}
+📊 *Stats:* 👁️ ${result.stats.views} | ❤️ ${result.stats.likes} | 💬 ${result.stats.comment} | 🔁 ${result.stats.share}`;
 
-🔗 *No-Watermark Links Available*
-`;
+      const listData = {
+        title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+        sections: [
+          {
+            title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ⇲",
+            rows: [
+              {
+                title: "NonWaterMark Normal Video",
+                description: "〽️ade By Dinuwh Bbh",
+                id: `${prefix}tiknowm ${tiktokUrl}`,
+              },
+              {
+                title: "NonWaterMark Document Video",
+                description: "〽️ade By Dinuwh Bbh",
+                id: `${prefix}tiknowmdoc ${tiktokUrl}`,
+              },
+            ],
+          },
+          {
+            title: "💧 With-Watermark ᴠɪᴅᴇᴏ ⇲",
+            rows: [
+              {
+                title: "WithWaterMark Normal Video",
+                description: "〽️ade By Dinuwh Bbh",
+                id: `${prefix}tikwm ${tiktokUrl}`,
+              },
+              {
+                title: "WithWaterMark Document Video",
+                description: "〽️ade By Dinuwh Bbh",
+                id: `${prefix}tikwmdoc ${tiktokUrl}`,
+              },
+            ],
+          },
+        ],
+      };
 
-      const thumbnail = await getBuffer(result.cover);
+      const listData2 = {
+        title: "𝐀𝐮𝐝𝐢𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
+        sections: [
+          {
+            title: "🎧 TikTok Audio Options",
+            rows: [
+              {
+                title: "Audio With Normal",
+                description: "〽️ade By Dinuwh Bbh",
+                id: `${prefix}tikaud ${tiktokUrl}`,
+              },
+              {
+                title: "Audio With Document",
+                description: "〽️ade By Dinuwh Bbh",
+                id: `${prefix}tikauddoc ${tiktokUrl}`,
+              },
+              {
+                title: "Audio With Voice Note",
+                description: "〽️ade By Dinuwh Bbh",
+                id: `${prefix}tikaudptt ${tiktokUrl}`,
+              },
+            ],
+          },
+        ],
+      };
 
       await robin.sendMessage(
         mek.key.remoteJid,
         {
           image: thumbnail,
           caption: caption,
-          footer: "Choose download option below 👇",
+          footer: "〽️ade By Dinuwh Bbh",
           buttons: [
             {
-              buttonId: `.ttdlxz_sd ${q}`,
-              buttonText: { displayText: "🎥 Video SD" },
-              type: 1,
+              buttonId: "video_menu",
+              buttonText: { displayText: "🎞️ Video Options" },
+              type: 4,
+              nativeFlowInfo: {
+                name: "single_select",
+                paramsJson: JSON.stringify(listData),
+              },
             },
             {
-              buttonId: `.ttdlxz_hd ${q}`,
-              buttonText: { displayText: "📽️ Video HD" },
-              type: 1,
-            },
-            {
-              buttonId: `.ttdlxz_mp3 ${q}`,
-              buttonText: { displayText: "🎧 Audio Only" },
-              type: 1,
+              buttonId: "audio_menu",
+              buttonText: { displayText: "🎧 Audio Options" },
+              type: 4,
+              nativeFlowInfo: {
+                name: "single_select",
+                paramsJson: JSON.stringify(listData2),
+              },
             },
           ],
-          headerType: 4,
+          headerType: 1,
+          viewOnce: true,
         },
         { quoted: mek }
       );
-    } catch (err) {
-      console.error(err);
-      reply("*⚠️ Error occurred while fetching TikTok video.*");
+    } catch (e) {
+      console.error(e);
+      reply(`❌ Error: ${e.message}`);
     }
   }
 );
