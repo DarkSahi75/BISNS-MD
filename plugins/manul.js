@@ -1,12 +1,12 @@
 const { cmd } = require("../lib/command");
-const fetchJson = require("../lib/functions").fetchJson; // ✅ use this!
+const { fetchJson, getBuffer } = require("../lib/functions");
 
 cmd(
   {
-    pattern: "ttinfo",
-    desc: "Get TikTok video details using external API",
+    pattern: "ttdlxz",
+    desc: "Download TikTok video using KaliYaX API",
     category: "download",
-    react: "🎵",
+    react: "📥",
     filename: __filename,
   },
   async (robin, mek, m, { q, reply }) => {
@@ -16,34 +16,62 @@ cmd(
       }
 
       const api = `https://my-private-api-site.vercel.app/ttdlxz?url=${encodeURIComponent(q)}`;
-      const res = await fetchJson(api); // ✅ now using fetchJson
+      const res = await fetchJson(api);
 
-      if (!res || !res.status || !res.data) {
-        return reply("❌ Failed to fetch TikTok video details.");
+      if (!res?.status || !res.result?.data) {
+        return reply("❌ Failed to fetch video. Try another link.");
       }
 
-      const info = res.data;
+      const result = res.result;
+      const videoSD = result.data.find(x => x.type === "nowatermark")?.url;
+      const videoHD = result.data.find(x => x.type === "nowatermark_hd")?.url;
+      const audio = result.music_info?.url;
 
-      const caption = `*🎬 TikTok Video Info*
+      const caption = `*🎬 TikTok Video*
 
-👤 *Author:* ${info.author || "N/A"}
-🎵 *Sound:* ${info.music || "N/A"}
-🕒 *Duration:* ${info.duration || "N/A"}
-🔗 *Video Link:* ${info.play || q}
-📝 *Title:* ${info.title || "N/A"}`;
+📝 *Title:* ${result.title}
+🌍 *Region:* ${result.region}
+🕐 *Posted:* ${result.taken_at}
+🎧 *Sound:* ${result.music_info?.title || "N/A"}
+👤 *Creator:* ${result.author?.fullname || "N/A"} (${result.author?.nickname || ""})
+
+📊 *Stats:* 👁️ ${result.stats.views} | ❤️ ${result.stats.likes} | 💬 ${result.stats.comment} | 🔁 ${result.stats.share}
+
+🔗 *No-Watermark Links Available*
+`;
+
+      const thumbnail = await getBuffer(result.cover);
 
       await robin.sendMessage(
         mek.key.remoteJid,
         {
-          image: { url: info.cover || info.thumbnail },
+          image: thumbnail,
           caption: caption,
+          footer: "Choose download option below 👇",
+          buttons: [
+            {
+              buttonId: `.ttdlxz_sd ${q}`,
+              buttonText: { displayText: "🎥 Video SD" },
+              type: 1,
+            },
+            {
+              buttonId: `.ttdlxz_hd ${q}`,
+              buttonText: { displayText: "📽️ Video HD" },
+              type: 1,
+            },
+            {
+              buttonId: `.ttdlxz_mp3 ${q}`,
+              buttonText: { displayText: "🎧 Audio Only" },
+              type: 1,
+            },
+          ],
+          headerType: 4,
         },
         { quoted: mek }
       );
-
-    } catch (e) {
-      console.error(e);
-      reply("*Something went wrong while fetching TikTok info.*");
+    } catch (err) {
+      console.error(err);
+      reply("*⚠️ Error occurred while fetching TikTok video.*");
     }
   }
 );
