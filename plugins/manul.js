@@ -57,6 +57,11 @@ cmd(
                 description: "〽️ade By Dinuwh Bbh",
                 id: `${prefix}ttdlxz_hddoc ${tiktokUrl}`,
               },
+              {
+                title: "HD Video Note",
+                description: "〽️ade By Dinuwh Bbh",
+                id: `${prefix}ttdlxz_hdptv ${tiktokUrl}`,
+              },
             ],
           },
           {
@@ -71,6 +76,11 @@ cmd(
                 title: "SD Document Video",
                 description: "〽️ade By Dinuwh Bbh",
                 id: `${prefix}ttdlxz_sddoc ${tiktokUrl}`,
+              },
+               {
+                title: "SD Video Note",
+                description: "〽️ade By Dinuwh Bbh",
+                id: `${prefix}ttdlxz_sdptv ${tiktokUrl}`,
               },
             ],
           },
@@ -460,6 +470,105 @@ cmd(
           document: buffer,
           mimetype: "video/mp4",
           fileName: `${title}.mp4`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (err) {
+      console.error(err);
+      reply("*🥲 Error while downloading TikTok SD video.*");
+    }
+  }
+);
+
+
+cmd(
+  {
+    pattern: "ttdlxz_hdptv",
+    desc: "Download TikTok HD video (no watermark)",
+    category: "download",
+    react: "📽️",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q || (!q.includes("tiktok.com") && !q.includes("vt.tiktok.com"))) {
+        return reply("*Please provide a valid TikTok link!*");
+      }
+
+      const api = `https://my-private-api-site.vercel.app/ttdlxz?url=${encodeURIComponent(q)}`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res.result?.data) {
+        return reply("❌ Failed to fetch TikTok video.");
+      }
+
+      const result = res.result;
+      const videoHD = result.data.find(x => x.type === "nowatermark_hd")?.url;
+
+      if (!videoHD) {
+        return reply("❌ HD video not available.");
+      }
+
+      const buffer = await getBuffer(videoHD);
+
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          video: buffer,
+          PTV: "true",
+          mimetype: "video/mp4",
+          caption: `🎥 *TikTok HD Video*\n📝 ${result.title || "No caption"}\n🧑 @${result.author?.nickname || "unknown"}`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (err) {
+      console.error(err);
+      reply("*🥲 Error while downloading TikTok HD video.*");
+    }
+  }
+);
+
+
+
+cmd(
+  {
+    pattern: "ttdlxz_sdptv",
+    desc: "Download TikTok SD video (no watermark)",
+    category: "download",
+    react: "🎥",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q || (!q.includes("tiktok.com") && !q.includes("vt.tiktok.com"))) {
+        return reply("*Please provide a valid TikTok link!*");
+      }
+
+      const api = `https://my-private-api-site.vercel.app/ttdlxz?url=${encodeURIComponent(q)}`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res.result?.data) {
+        return reply("❌ Failed to fetch TikTok video.");
+      }
+
+      const result = res.result;
+      const videoSD = result.data.find(x => x.type === "nowatermark")?.url;
+
+      if (!videoSD) {
+        return reply("❌ SD video not available.");
+      }
+
+      const buffer = await getBuffer(videoSD);
+
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          video: buffer,
+          ptv: "true",
+          mimetype: "video/mp4",
+          caption: `🎬 *TikTok SD Video*\n📝 ${result.title || "No caption"}`,
         },
         { quoted: mek }
       );
