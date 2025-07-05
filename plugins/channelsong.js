@@ -841,7 +841,7 @@ cmd(
       const audioUrl = res.data.url;
 
       // 🖼️ Send thumbnail + styled caption
-      const caption = ``00:00` *─────●──────────* \`${timestamp}\`
+      const caption = `\`00:00\` *─────●──────────* \`${timestamp}\`
 
 
 \`❍. Song ➙\` :- ${title}
