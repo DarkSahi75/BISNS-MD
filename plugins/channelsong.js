@@ -841,16 +841,14 @@ cmd(
       const audioUrl = res.data.url;
 
       // 🖼️ Send thumbnail + styled caption
-      const caption = `*~⋆｡˚☁︎｡⋆｡__________________________⋆｡☁︎˚｡⋆~*
+      const caption = ``00:00` *─────●──────────* \`${timestamp}\`
+
 
 \`❍. Song ➙\` :- ${title}
 
-\`❍.Time ➙\` :-  ${timestamp}          \`❍.Uploaded ➙\` :- ${ago}
+> ❝ 🫟 සින්දු  Fantacy ןן🐼💗 ❞
 
-> ❝♬.itz Me Dinuw Bbh😽💗🍃❞
-
-> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\`
-ඔයාහේ ආසම පාටිම් ලස්සන හාර්ට් එකක් දාගෙන යමු ළමයෝ 🫠💗◦◦◦`;
+*ආසම පාටින් රියැක්ට් කරන් යමු හැමෝමහ්... 🥰🫀👇🏻!*`;
 
       await robin.sendMessage(
         config.DINUWH,
