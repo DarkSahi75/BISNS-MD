@@ -45,32 +45,32 @@ cmd(
         title: "𝐕𝐢𝐝𝐞𝐨 𝐒𝐞𝐥𝐞𝐜𝐭𝐢𝐨𝐧 ツ",
         sections: [
           {
-            title: "📽️ Non-Watermark ᴠɪᴅᴇᴏ ⇲",
+            title: "📽️ HD ᴠɪᴅᴇᴏ ⇲",
             rows: [
               {
-                title: "NonWaterMark Normal Video",
+                title: "HD Normal Video",
                 description: "〽️ade By Dinuwh Bbh",
-                id: `${prefix}tiknowm ${tiktokUrl}`,
+                id: `${prefix}ttdlxz_hd ${tiktokUrl}`,
               },
               {
-                title: "NonWaterMark Document Video",
+                title: "HD Document Video",
                 description: "〽️ade By Dinuwh Bbh",
-                id: `${prefix}tiknowmdoc ${tiktokUrl}`,
+                id: `${prefix}ttdlxz_hddoc ${tiktokUrl}`,
               },
             ],
           },
           {
-            title: "💧 With-Watermark ᴠɪᴅᴇᴏ ⇲",
+            title: "💧 SD ᴠɪᴅᴇᴏ ⇲",
             rows: [
               {
-                title: "WithWaterMark Normal Video",
+                title: "SD Normal Video",
                 description: "〽️ade By Dinuwh Bbh",
-                id: `${prefix}tikwm ${tiktokUrl}`,
+                id: `${prefix}ttdlxz_sd ${tiktokUrl}`,
               },
               {
-                title: "WithWaterMark Document Video",
+                title: "SD Document Video",
                 description: "〽️ade By Dinuwh Bbh",
-                id: `${prefix}tikwmdoc ${tiktokUrl}`,
+                id: `${prefix}ttdlxz_sddoc ${tiktokUrl}`,
               },
             ],
           },
@@ -86,17 +86,17 @@ cmd(
               {
                 title: "Audio With Normal",
                 description: "〽️ade By Dinuwh Bbh",
-                id: `${prefix}tikaud ${tiktokUrl}`,
+                id: `${prefix}ttdlxz_mp3 ${tiktokUrl}`,
               },
               {
                 title: "Audio With Document",
                 description: "〽️ade By Dinuwh Bbh",
-                id: `${prefix}tikauddoc ${tiktokUrl}`,
+                id: `${prefix}ttdlxz_mp3ptt ${tiktokUrl}`,
               },
               {
                 title: "Audio With Voice Note",
                 description: "〽️ade By Dinuwh Bbh",
-                id: `${prefix}tikaudptt ${tiktokUrl}`,
+                id: `${prefix}ttdlxz_mp3doc ${tiktokUrl}`,
               },
             ],
           },
