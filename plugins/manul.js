@@ -75,3 +75,53 @@ cmd(
     }
   }
 );
+
+
+
+cmd(
+  {
+    pattern: "ttdlxz_hd",
+    desc: "Download TikTok HD video (no watermark) as document",
+    category: "download",
+    react: "📦",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q || (!q.includes("tiktok.com") && !q.includes("vt.tiktok.com"))) {
+        return reply("*Please provide a valid TikTok link!*");
+      }
+
+      const api = `https://my-private-api-site.vercel.app/ttdlxz?url=${encodeURIComponent(q)}`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res.result?.data) {
+        return reply("❌ Failed to fetch TikTok HD video.");
+      }
+
+      const result = res.result;
+      const videoHD = result.data.find(x => x.type === "nowatermark_hd")?.url;
+
+      if (!videoHD) {
+        return reply("❌ HD video not available.");
+      }
+
+      const title = result.title?.slice(0, 64).replace(/[^a-zA-Z0-9 _-]/g, "") || "tiktok_hd_video";
+      const buffer = await getBuffer(videoHD);
+
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          document: buffer,
+          mimetype: "video/mp4",
+          fileName: `${title}.mp4`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (err) {
+      console.error(err);
+      reply("*🥲 Error while downloading TikTok HD video.*");
+    }
+  }
+);
