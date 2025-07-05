@@ -1,5 +1,5 @@
 const { cmd } = require("../lib/command");
-const fetchJson = require("../lib/function").fetchJson; // ✅ use this!
+const fetchJson = require("../lib/functions").fetchJson; // ✅ use this!
 
 cmd(
   {
