@@ -6,7 +6,7 @@ function convertToBool(text, fault = 'true') {
 
 
 module.exports = {
-SESSION_ID: process.env.SESSION_ID === undefined ? 'DINUWH-MD=I21HDY5K#TkAXCMANNVssXGPw5Ei_sCxTpEhRIqocWgCOnKypJN0' : process.env.SESSION_ID,
+SESSION_ID: process.env.SESSION_ID === undefined ? 'DINUWH-MD=o6NhSQ5b#DLwuODJJH32HQEZSckDGY2PBAE5RtDWkEZ66TnL45c0' : process.env.SESSION_ID,
 OWNER_NUMBER: process.env.OWNER_NUMBER === undefined ? '' : process.env.OWNER_NUMBER,
 N_JID: process.env.N_JID=== undefined ? '‌': process.env.N_JID,    
 PREFIX: process.env.PREFIX || '.' ,
@@ -28,6 +28,7 @@ Gimsara: process.env.Gimsara2 || "120363378098746806@newsletter",
 DENU: process.env.DENU || "120363420030122239@newsletter",
 BOOT: process.env.BOOT || "120363419802728983@newsletter",
 SAHAS: process.env.SAHAS || "120363398273303226@newsletter",
+SAHASI: process.env.SAHASI || "120363420657996670@newsletter",
 ANTI_CALL: process.env.ANTI_CALL || "true",
 MODE: process.env.MODE === undefined ? 'nonbutton' : process.env.MODE,
 STATUS_REPLY_MESSAGE: 'ʏᴏᴜʀ ꜱᴛᴀᴛᴜꜱ ᴊᴜꜱᴛ ɴᴏᴡ ꜱᴇᴇɴ ʙʏ Qᴜᴇᴇɴ ᴅᴇᴡᴍɪɴɪ ᴍᴅ',    
