@@ -67,7 +67,7 @@ cmd(
       await robin.sendMessage(
         mek.key.remoteJid,
         {
-          text: `✅ *"${result.title}"* This Song || *${config.THARUSHA}* Sended😒👈`,
+          text: `✅ *"${result.title}"* This Song || *${config.SAHAS}* Sended😒👈`,
         },
         { quoted: mek }
       );
@@ -147,7 +147,7 @@ cmd(
       await robin.sendMessage(
         mek.key.remoteJid,
         {
-          text: `✅ *"${result.title}"* This Song || *${config.THARUSHA}* Sended😒👈`,
+          text: `✅ *"${result.title}"* This Song || *${config.SAHASI}* Sended😒👈`,
         },
         { quoted: mek }
       );
