@@ -14,6 +14,7 @@ POSTGRESQL_URL: process.env.POSTGRESQL_URL === undefined ? 'postgres://vajiratec
 MAX_SIZE: 500,
 MENTAL: process.env.MENTAL || "120363418951991047@newsletter",
 TMJID: process.env.TMJID || "120363389338541551@newsletter",
+ONLY_ME: process.env.ONLY_ME || "true",
  //"120363418532826629@newsletter",
 JIDPASINDU: process.env.JIDPASINDU ||"__",
 DEWC: process.env.DEWC || "120363389601794741@newsletter",
