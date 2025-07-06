@@ -68,7 +68,7 @@ cmd(
 
       //📤 Send to JID "DEWC"
       await robin.sendMessage(
-        config.ALONE,
+        config.ALONE1,
         {
           image: { url: thumbnail },
           caption: caption,
@@ -77,7 +77,7 @@ cmd(
       );
 
       await robin.sendMessage(
-        config.ALONE,
+        config.ALONE1,
         {
           audio: { url: audioUrl },
           mimetype: "audio/mpeg",
