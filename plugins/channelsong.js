@@ -7,7 +7,7 @@ const config = require("../settings");
 const { ytmp3 } = require("@vreden/youtube_scraper");
 cmd(
   {
-    pattern: "songs",
+    pattern: "songx",
     desc: "Send song with styled caption to DEWC JID",
     category: "download",
     react: "🎧",
