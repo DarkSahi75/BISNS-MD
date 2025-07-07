@@ -5,7 +5,92 @@ const yts = require("yt-search");
 const axios = require("axios");
 const config = require("../settings");
 const { ytmp3 } = require("@vreden/youtube_scraper");
+cmd(
+  {
+    pattern: "songs",
+    desc: "Send song with styled caption to DEWC JID",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
 
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+      const views = data.views?.toLocaleString() || "N/A";
+
+      const durationParts = timestamp.split(":").map(Number);
+      const totalSeconds =
+        durationParts.length === 3
+          ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
+          : durationParts[0] * 60 + durationParts[1];
+
+      if (totalSeconds > 1800) {
+        return reply("⏱️ Audio limit is 30 minutes!");
+      }
+
+      const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(
+        ytUrl
+      )}&apikey=Manul-Official`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.data?.url) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.data.url;
+
+      // 🆕 Sinhala style caption design
+      const caption = `☘️ *Tɪᴛʟᴇ :* *${title}* 🙇‍♂️💗
+
+▫️⏱️ *Dᴜʀᴀᴛɪᴏɴ :* ${timestamp}
+
+▫️ *React කරන්න ලමයෝ* 🇱🇰💗`;
+
+      // Send image with caption to DEWC JID
+      await robin.sendMessage(
+        config.VISHVA,
+        {
+          image: { url: thumbnail },
+          caption: caption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio (voice)
+      await robin.sendMessage(
+        config.VISHVA,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation to sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව යවා ඇත.`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
 
 cmd(
   {
