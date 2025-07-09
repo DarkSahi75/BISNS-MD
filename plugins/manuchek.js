@@ -24,7 +24,7 @@ const buttons = [
 const buttonMessage = {
     image: { url: "https://telegra.ph/file/49e1bb852fe8292c2614a.jpg" }, // image: buffer or path
     caption: sssf,
-    footer: `> *⚖️𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 - : ${cown}*`,
+    footer: `> *⚖️𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 - :*`,
     buttons,
     headerType: 1,
     viewOnce: true
