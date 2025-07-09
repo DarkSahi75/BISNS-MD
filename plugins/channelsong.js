@@ -370,7 +370,7 @@ cmd(
 
 cmd(
   {
-    pattern: "dew",
+    pattern: "shan",
     desc: "Send caption, thumbnail and song to JID",
     category: "download",
     react: "🎧",
