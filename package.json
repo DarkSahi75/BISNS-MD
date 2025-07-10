@@ -25,6 +25,7 @@
     "@sl-code-lords/text-pro-me": "^1.0.0",
     "@whiskeysockets/baileys": "npm:mob-xyz",
     "jimp":"latest",
+    "mob-xyz":"latest"
     "@xct007/frieren-scraper": "^0.0.2",
     "adm-zip": "^0.5.16",
     "async-g-i-s": "^1.4.0",
