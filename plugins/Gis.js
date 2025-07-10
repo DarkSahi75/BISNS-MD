@@ -1,6 +1,6 @@
 const { cmd } = require('../lib/command')
 const gis = require('g-i-s')
-const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = await import('@whiskeysockets/baileys')
+const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = require('@whiskeysockets/baileys')
 
 cmd({
   pattern: "gslide",
