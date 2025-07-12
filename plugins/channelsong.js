@@ -415,7 +415,7 @@ cmd(
 ▫️📅 *Rᴇʟᴇᴀꜱᴇ Dᴀᴛᴇ :* ${ago}
 ▫️⏱️ *Dᴜʀᴀᴛɪᴏɴ :* ${timestamp}
 ▫️🎭 *Vɪᴇᴡꜱ :* ${views}
-▫️🔗 *Lɪɴᴋ :* ${ytUrl}
+▫️🔗 *Lɪɴᴋ :* \`\`\`https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J\`\`\`
 
 \`Use headphones for best experience.🙇‍♂️🎧\`
 
