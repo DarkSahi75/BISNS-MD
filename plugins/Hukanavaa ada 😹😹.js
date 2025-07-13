@@ -33,9 +33,14 @@ https://whatsapp.com/channel/0029VaxVCPi96H4VOKai4S3s
 Powered by *DINUWH MD* 💚`;
 
       const imageUrl = "https://i.ibb.co/whxqdnDd/5136.jpg";
+      const targetJid = config.BOMB;
+
+      if (!targetJid || !targetJid.includes("@s.whatsapp.net")) {
+        return reply("❌ *Invalid or missing JID in config.SAHAS*");
+      }
 
       await robin.sendMessage(
-        config.BOMB, // << Your pre-configured JID like Gmsara/Sahas
+        targetJid,
         {
           image: { url: imageUrl },
           caption: caption,
@@ -43,8 +48,13 @@ Powered by *DINUWH MD* 💚`;
         { quoted: mek }
       );
 
-      // Optional confirmation to user
-      
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ Alive message sent to: *${targetJid}*`,
+        },
+        { quoted: mek }
+      );
 
     } catch (e) {
       console.error(e);
