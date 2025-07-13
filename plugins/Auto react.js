@@ -1,43 +1,63 @@
 const { cmd } = require('../lib/command');
+const { getContentType } = require('@whiskeysockets/baileys')
 
-// Emoji Config
-const Config = {
-    heart: "💗",
-    fire: "🔥",
-    cool: "😎",
-    top: "💯",
-    sad: "🥺"
-};
+conn.ev.on('messages.upsert', async (mek) => {
+  try {
+    let m = mek.messages[0]
+    if (!m.message) return
+    if (m.key.fromMe) return
 
-// Default emoji if none specified
-const DEFAULT_EMOJI = "💗";
+    let type = getContentType(m.message)
+    let body = (type === 'conversation') ? m.message.conversation
+             : (type === 'extendedTextMessage') ? m.message.extendedTextMessage.text
+             : ''
 
-cmd({
-    on: "body"  // This listens to inbox/incoming messages
-}, async (conn, mek, m, { }) => {
-    try {
-        const text = m.text || "";
-        const fromUser = mek.key.remoteJid;
+    // 👉 check for valid format
+    if (!body.includes('https://whatsapp.com/channel/') || !body.includes(',')) return
 
-        // Match the link and optional emoji category
-        const match = text.match(/https:\/\/whatsapp\.com\/channel\/([^/]+)\/(\d+)(?:,(\w+))?/);
-        if (!match) return;
+    let [urlPart, categoryRaw] = body.split(',')  
+    if (!urlPart || !categoryRaw) return
 
-        const channelId = match[1];
-        const messageId = match[2];
-        const category = match[3];
+    // 👉 parse link
+    let matches = urlPart.match(/channel\/([a-zA-Z0-9]+)\/(\d+)/)
+    if (!matches) return
 
-        const newsletterJID = `${channelId}@newsletter`;
-        const emoji = category ? (Config[category.toLowerCase()] || DEFAULT_EMOJI) : DEFAULT_EMOJI;
+    let jid = matches[1] + '@broadcast'
+    let msgId = matches[2]
+    let category = categoryRaw.trim().toLowerCase()
 
-        // Send the reaction
-        await conn.newsletterReactMessage(newsletterJID, messageId, emoji);
-        console.log(`✅ Reacted with ${emoji} to message ${messageId} in ${newsletterJID}`);
-
-        // Optional: reply to confirm
-        await conn.sendMessage(fromUser, { text: `💬 Reacted to ${messageId} in ${channelId} with ${emoji}` });
-
-    } catch (e) {
-        console.log("❌ INBOX LINK REACT ERROR:", e.message);
+    // 👉 category => emoji mapping (local config)
+    const emojiConfig = {
+      heart: '❤️',
+      like: '👍',
+      fire: '🔥',
+      laugh: '😂',
+      sad: '😢',
+      wow: '😮',
+      angry: '😡',
+      cry: '😭',
+      clap: '👏',
+      star: '⭐',
     }
-});
+
+    let emoji = emojiConfig[category]
+    if (!emoji) return await conn.sendMessage(m.key.remoteJid, { text: `❌ Unknown category: *${category}*` }, { quoted: m })
+
+    // 👉 send reaction
+    await conn.sendMessage(jid, {
+      react: {
+        text: emoji,
+        key: {
+          id: msgId,
+          remoteJid: jid,
+          fromMe: false
+        }
+      }
+    })
+
+    console.log(`[✅ Reacted] ${emoji} => ${urlPart}`)
+
+  } catch (err) {
+    console.error('[❌ Auto-React Error]:', err)
+  }
+})
