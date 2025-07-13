@@ -1,33 +1,38 @@
-
-
 const { cmd } = require('../lib/command');
 
-// Auto Follow & React to CYBER VENOM newsletter only
+// Define emoji config
+const Config = {
+    heart: "💗",
+    fire: "🔥",
+    cool: "😎",
+    top: "💯",
+    sad: "🥺"
+};
+
 cmd({
-on: "body"
+    on: "body"
 }, async (conn, mek, m, { }) => {
-try {
-// CYBER VENOM ONLY
-const newsletterId = "120363404374442188@newsletter";
-const metadata = await conn.newsletterMetadata("jid", newsletterId);
+    try {
+        const text = m.text || "";
 
-// Check if not following and follow  
-    if (metadata.viewer_metadata === null) {  
-        await conn.newsletterFollow(newsletterId);  
-        console.log("CYBER CHANNEL FOLLOW ✅");  
-    }  
+        // Match the pattern in message body
+        const match = text.match(/https:\/\/whatsapp\.com\/channel\/([^/]+)\/(\d+),(\w+)/);
+        if (!match) return;
 
-    // React to messages  
-    if (mek?.key?.server_id) {  
-        const id = mek.key.server_id;  
-        await conn.newsletterReactMessage(newsletterId, id, "💗"); // React with a yellow heart emoji  
-    }  
+        const channelId = match[1]; // raw ID
+        const messageId = match[2]; // message number
+        const category = match[3]; // emoji category name
 
-} catch (e) {  
-    console.log("CYBER VENOM AUTO FOLLOW ERROR:", e.message);  
-}
+        const newsletterJID = `${channelId}@newsletter`; // construct JID
+        const emoji = Config[category.toLowerCase()]; // get emoji
 
+        if (!emoji) return console.log("⛔ Invalid emoji category");
+
+        // Send only the react, no follow
+        await conn.newsletterReactMessage(newsletterJID, messageId, emoji);
+        console.log(`✅ Reacted with ${emoji} to message ${messageId} in ${newsletterJID}`);
+
+    } catch (e) {
+        console.log("❌ AUTO LINK REACT ERROR:", e.message);
+    }
 });
-
-//මේකේ ඔටෝ ෆලෝ වෙන්නෙ නැතුව jid එකේ දාන මැසෙජ් වලට රිය්ක්ට් විතරක් දාන හැම මැසෙජ් එකකටම වදින්න ඔනී🤧
-
