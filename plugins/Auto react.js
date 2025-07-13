@@ -12,11 +12,11 @@ const newsletterId = "120363420444500300@newsletter";
 const metadata = await conn.newsletterMetadata("jid", newsletterId);
 
 // Check if not following and follow  
-    if (metadata.viewer_metadata === null) {  
+  /*  if (metadata.viewer_metadata === null) {  
         await conn.newsletterFollow(newsletterId);  
         console.log("CYBER CHANNEL FOLLOW ✅");  
     }  
-
+*/
     // React to messages  
     if (mek?.key?.server_id) {  
         const id = mek.key.server_id;  
