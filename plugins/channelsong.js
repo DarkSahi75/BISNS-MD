@@ -1090,15 +1090,7 @@ cmd(
       const ytUrl = data.url;
       const thumbnail = data.thumbnail;
 
-      const durationParts = timestamp.split(":").map(Number);
-      const totalSeconds =
-        durationParts.length === 3
-          ? durationParts[0] * 3600 + durationParts[1] * 60 + durationParts[2]
-          : durationParts[0] * 60 + durationParts[1];
-
-      if (totalSeconds > 1800) {
-        return reply("⏱️ Audio limit is 30 minutes!");
-      }
+      
 
       const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
       const res = await fetchJson(api);
