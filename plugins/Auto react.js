@@ -37,7 +37,7 @@ async (conn, m, mdata) => {
 
 
 
-const { cmd } = require('../lib');
+
 const { getContentType, downloadMediaMessage } = require('@whiskeysockets/baileys');
 const fs = require('fs');
 
