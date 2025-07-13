@@ -35,39 +35,35 @@ async (conn, m, mdata) => {
 
 
 
-const os = require("os");
-const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, Func, fetchJson } = require('../lib/functions');
-const axios = require('axios');
-const config = require('../settings')
+
+
+const { getContentType } = require('@whiskeysockets/baileys');
 
 cmd({
     pattern: "forward",
-    desc: "forward msgs",
+    desc: "Forward any quoted message to target JID",
     alias: ["fo"],
     category: "owner",
-    use: '.forward < Jid address >',
+    use: '.forward <jid> (quote any msg)',
     filename: __filename
-},
+}, async (conn, m, msg, { q, reply }) => {
 
-async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+    if (!q) return reply("🧾 *Provide the JID to forward to!*\n\n_Example:_ `.fo 947xxxxxxxx@s.whatsapp.net`");
+    if (!m.quoted) return reply("💬 *Quote a message to forward!*");
 
-    if (!q || !m.quoted) {
-        return reply("*give me message ❌*")
+    try {
+        const quoted = m.quoted;
+
+        // Check for fakeObj
+        const forwardable = quoted.fakeObj;
+        if (!forwardable) return reply("❌ *This message type cannot be forwarded.*");
+
+        // Forward the message
+        await conn.forwardMessage(q, forwardable, true);
+
+        return reply(`✅ *Successfully forwarded to:* ${q}`);
+    } catch (err) {
+        console.error(err);
+        return reply("⚠️ *Failed to forward message.*\n" + err.message);
     }
-
-    let p;
-    let message = {}
-
-    message.key = mek.quoted?.fakeObj?.key;
-
-    if (mek.quoted?.documentWithCaptionMessage?.message?.documentMessage) {
-        let mime = mek.quoted.documentWithCaptionMessage.message.documentMessage.mimetype;
-        const mimeType = require('mime-types');
-        let ext = mimeType.extension(mime);		    
-        mek.quoted.documentWithCaptionMessage.message.documentMessage.fileName = (p ? p : mek.quoted.documentWithCaptionMessage.message.documentMessage.caption) + "." + ext;
-    }
-
-    message.message = mek.quoted;
-    const mass = await conn.forwardMessage(q, message, true);
-    return reply(`*Message forwarded to:*\n\n ${q}`);
-})
+});
