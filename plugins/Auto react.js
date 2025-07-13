@@ -1,24 +1,18 @@
-const { cmd } = require('../lib/command');
 const { getContentType } = require('@whiskeysockets/baileys')
 
-conn.ev.on('messages.upsert', async (mek) => {
+module.exports = async (conn, m) => {
   try {
-    let m = mek.messages[0]
-    if (!m.message) return
-    if (m.key.fromMe) return
+    if (!m.message || m.key.fromMe) return
 
     let type = getContentType(m.message)
     let body = (type === 'conversation') ? m.message.conversation
              : (type === 'extendedTextMessage') ? m.message.extendedTextMessage.text
              : ''
-
-    // 👉 check for valid format
     if (!body.includes('https://whatsapp.com/channel/') || !body.includes(',')) return
 
-    let [urlPart, categoryRaw] = body.split(',')  
+    let [urlPart, categoryRaw] = body.split(',')
     if (!urlPart || !categoryRaw) return
 
-    // 👉 parse link
     let matches = urlPart.match(/channel\/([a-zA-Z0-9]+)\/(\d+)/)
     if (!matches) return
 
@@ -26,7 +20,7 @@ conn.ev.on('messages.upsert', async (mek) => {
     let msgId = matches[2]
     let category = categoryRaw.trim().toLowerCase()
 
-    // 👉 category => emoji mapping (local config)
+    // ✅ Emoji config right inside
     const emojiConfig = {
       heart: '❤️',
       like: '👍',
@@ -37,13 +31,12 @@ conn.ev.on('messages.upsert', async (mek) => {
       angry: '😡',
       cry: '😭',
       clap: '👏',
-      star: '⭐',
+      star: '⭐'
     }
 
     let emoji = emojiConfig[category]
     if (!emoji) return await conn.sendMessage(m.key.remoteJid, { text: `❌ Unknown category: *${category}*` }, { quoted: m })
 
-    // 👉 send reaction
     await conn.sendMessage(jid, {
       react: {
         text: emoji,
@@ -55,9 +48,9 @@ conn.ev.on('messages.upsert', async (mek) => {
       }
     })
 
-    console.log(`[✅ Reacted] ${emoji} => ${urlPart}`)
+    console.log(`[🎯 Auto Reacted] ${emoji} to ${urlPart}`)
 
   } catch (err) {
-    console.error('[❌ Auto-React Error]:', err)
+    console.error('[💥 CmdOnBody React Error]', err)
   }
-})
+}
