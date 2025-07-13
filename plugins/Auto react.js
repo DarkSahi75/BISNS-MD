@@ -35,43 +35,39 @@ async (conn, m, mdata) => {
 
 
 
+const os = require("os");
+const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, Func, fetchJson } = require('../lib/functions');
+const axios = require('axios');
+const config = require('../settings')
+
 cmd({
-  pattern: "fo",
-  desc: "Forward messages",
-  alias: ['fowardsuccessful','fo'],
-  category: "owner",
-  use: ".forward <Jid address>",
-  filename: __filename
-}, async (
-  conn,
-  mek,
-  store,
-  {
-    from,
-    quoted,
-    q,
-    isOwner,
-    reply
-  }
-) => {
-  try {
-    if (!isOwner) return await reply("🛑 Owner Only!");
+    pattern: "forward",
+    desc: "forward msgs",
+    alias: ["fo"],
+    category: "owner",
+    use: '.forward < Jid address >',
+    filename: __filename
+},
 
-    if (!q) return await reply("❗ Please provide a target JID address!");
+async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
 
-    if (!quoted) return await reply("❗ Please reply to a message you want to forward!");
+    if (!q || !m.quoted) {
+        return reply("*give me message ❌*")
+    }
 
-    const forwardMessage = quoted?.fakeObj || quoted;
+    let p;
+    let message = {}
 
-    await conn.sendMessage(q, { forward: forwardMessage });
+    message.key = mek.quoted?.fakeObj?.key;
 
-    // Add short delay and reply
-    //await sleep(500);
+    if (mek.quoted?.documentWithCaptionMessage?.message?.documentMessage) {
+        let mime = mek.quoted.documentWithCaptionMessage.message.documentMessage.mimetype;
+        const mimeType = require('mime-types');
+        let ext = mimeType.extension(mime);		    
+        mek.quoted.documentWithCaptionMessage.message.documentMessage.fileName = (p ? p : mek.quoted.documentWithCaptionMessage.message.documentMessage.caption) + "." + ext;
+    }
 
-    //return await reply(`✅ Message forwarded successfully to:\n*${q}*`);
-
-  } catch (err) {
-    console.error("[❌ FORWARD ERROR]", err);
-    return await reply("❌ Failed to forward message. Please check the JID or message format.");
-  }
-});
+    message.message = mek.quoted;
+    const mass = await conn.forwardMessage(q, message, true);
+    return reply(`*Message forwarded to:*\n\n ${q}`);
+})
