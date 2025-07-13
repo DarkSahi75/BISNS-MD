@@ -1,56 +1,62 @@
-const { getContentType } = require('@whiskeysockets/baileys')
+const { cmd } = require('../lib/command');
 
-module.exports = async (conn, m) => {
+cmd({
+  on: "body", // Trigger on any inbox message
+}, async (conn, mek, m, {}) => {
   try {
-    if (!m.message || m.key.fromMe) return
+    const text = m.text || "";
+    const fromUser = mek.key.remoteJid;
 
-    let type = getContentType(m.message)
-    let body = (type === 'conversation') ? m.message.conversation
-             : (type === 'extendedTextMessage') ? m.message.extendedTextMessage.text
-             : ''
-    if (!body.includes('https://whatsapp.com/channel/') || !body.includes(',')) return
+    // Check for valid format
+    if (!text.includes("https://whatsapp.com/channel/") || !text.includes(",")) return;
 
-    let [urlPart, categoryRaw] = body.split(',')
-    if (!urlPart || !categoryRaw) return
+    const [linkPart, categoryRaw] = text.split(",");
+    if (!linkPart || !categoryRaw) return;
 
-    let matches = urlPart.match(/channel\/([a-zA-Z0-9]+)\/(\d+)/)
-    if (!matches) return
+    // Extract channel ID and message ID from link
+    const match = linkPart.match(/channel\/([a-zA-Z0-9]+)\/(\d+)/);
+    if (!match) return;
 
-    let jid = matches[1] + '@broadcast'
-    let msgId = matches[2]
-    let category = categoryRaw.trim().toLowerCase()
+    const channelId = match[1]; // e.g., 0029VbATsZ20gcfR157hMB3C
+    const messageId = match[2]; // e.g., 484
+    const jid = `${channelId}@broadcast`;
+    const category = categoryRaw.trim().toLowerCase();
 
-    // ✅ Emoji config right inside
+    // Emoji config inside same file
     const emojiConfig = {
-      heart: '❤️',
-      like: '👍',
-      fire: '🔥',
-      laugh: '😂',
-      sad: '😢',
-      wow: '😮',
-      angry: '😡',
-      cry: '😭',
-      clap: '👏',
-      star: '⭐'
+      heart: "❤️",
+      like: "👍",
+      fire: "🔥",
+      laugh: "😂",
+      sad: "😢",
+      cry: "😭",
+      angry: "😡",
+      wow: "😮",
+      clap: "👏",
+      star: "⭐",
+    };
+
+    const emoji = emojiConfig[category];
+    if (!emoji) {
+      await conn.sendMessage(fromUser, { text: `❌ Unknown category: *${category}*` }, { quoted: mek });
+      return;
     }
 
-    let emoji = emojiConfig[category]
-    if (!emoji) return await conn.sendMessage(m.key.remoteJid, { text: `❌ Unknown category: *${category}*` }, { quoted: m })
-
+    // Send the reaction
     await conn.sendMessage(jid, {
       react: {
         text: emoji,
         key: {
-          id: msgId,
+          id: messageId,
           remoteJid: jid,
-          fromMe: false
-        }
-      }
-    })
+          fromMe: false,
+        },
+      },
+    });
 
-    console.log(`[🎯 Auto Reacted] ${emoji} to ${urlPart}`)
+    console.log(`[✅ Reacted] ${emoji} to message ${messageId} in ${jid}`);
 
   } catch (err) {
-    console.error('[💥 CmdOnBody React Error]', err)
+    console.error("[❌ Reaction Error]:", err);
   }
-}
+});
