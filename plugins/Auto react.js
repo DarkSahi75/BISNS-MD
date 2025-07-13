@@ -8,7 +8,7 @@ on: "body"
 }, async (conn, mek, m, { }) => {
 try {
 // CYBER VENOM ONLY
-const newsletterId = "120363420444500300@newsletter";
+const newsletterId = "120363404374442188@newsletter";
 const metadata = await conn.newsletterMetadata("jid", newsletterId);
 
 // Check if not following and follow  
