@@ -4,57 +4,40 @@ const config = require("../settings");
 cmd(
   {
     pattern: "alive",
-    desc: "Check if bot is online and send image with caption",
+    desc: "Send styled alive message to configured JID (channel friendly)",
     category: "main",
     filename: __filename,
   },
   async (robin, mek, m, { reply }) => {
     try {
-      const caption = `🟢 *𝙳𝙸𝙽𝚄𝚆𝙷 𝙼𝙳 BOT* is *online*!  
-Bot is running smoothly...
+      const caption = `🟢 *𝙳𝙸𝙽𝚄𝚆𝙷 𝙼𝙳 BOT* is *alive*!  
+Bot working fine... 🎧
 
 👤 *Owner*: DINUWH  
-📱 *Contact Owner*: wa.me/94728899640  
+📱 wa.me/94728899640
 
-🧑‍💻 Free bot service available — DM me!
+🎵 *Join our Channels*:
 
-📢 *Join our official WhatsApp Channels*:
+🔹 Tech: https://whatsapp.com/channel/0029Vb5XXIfDp2Q3A5zeZb1d  
+🔹 Music: https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J  
+🔹 Status: https://whatsapp.com/channel/0029VaxVCPi96H4VOKai4S3s
 
-🔹 *Tech Channel*:  
-https://whatsapp.com/channel/0029Vb5XXIfDp2Q3A5zeZb1d
-
-🔹 *Music Channel*:  
-https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J
-
-🔹 *Status Video Channel*:  
-https://whatsapp.com/channel/0029VaxVCPi96H4VOKai4S3s
-
-━━━━━━━━━━━━━━  
-Powered by *DINUWH MD* 💚`;
+Powered by *DINUWH-MD* 💚`;
 
       const imageUrl = "https://i.ibb.co/whxqdnDd/5136.jpg";
-      const targetJid = config.BOMB;
-
-      if (!targetJid || !targetJid.includes("@s.whatsapp.net")) {
-        return reply("❌ *Invalid or missing JID in config.SAHAS*");
-      }
 
       await robin.sendMessage(
-        targetJid,
+        config.BOMB, // 🟢 even if it's a @newsletter JID
         {
           image: { url: imageUrl },
           caption: caption,
-        },
-        { quoted: mek }
+        } // ⚠️ Don't use { quoted: mek }
       );
 
-      await robin.sendMessage(
-        mek.key.remoteJid,
-        {
-          text: `✅ Alive message sent to: *${targetJid}*`,
-        },
-        { quoted: mek }
-      );
+      // Confirm to user
+      await robin.sendMessage(mek.key.remoteJid, {
+        text: "✅ *Alive message sent to channel JID successfully!*"
+      }, { quoted: mek });
 
     } catch (e) {
       console.error(e);
