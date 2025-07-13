@@ -102,7 +102,7 @@ cmd({
       const forwardable = quoted.fakeObj;
       if (!forwardable) return reply("⚠️ This message cannot be forwarded.");
       await conn.forwardMessage(q, forwardable, true);
-      return reply(`✅ Message forwarded to: ${q}`);
+      return reply(`✅ Messrwarded to: ${q}`);
     }
 
   } catch (err) {
