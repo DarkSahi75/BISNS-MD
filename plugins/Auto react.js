@@ -32,3 +32,46 @@ async (conn, m, mdata) => {
     await conn.sendMessage(m.key.remoteJid, { text: "❌ Error එකක් ආව: " + e.message }, { quoted: m });
   }
 });
+
+
+
+cmd({
+  pattern: "fo",
+  desc: "Forward messages",
+  alias: ['fowardsuccessful','fo'],
+  category: "owner",
+  use: ".forward <Jid address>",
+  filename: __filename
+}, async (
+  conn,
+  mek,
+  store,
+  {
+    from,
+    quoted,
+    q,
+    isOwner,
+    reply
+  }
+) => {
+  try {
+    if (!isOwner) return await reply("🛑 Owner Only!");
+
+    if (!q) return await reply("❗ Please provide a target JID address!");
+
+    if (!quoted) return await reply("❗ Please reply to a message you want to forward!");
+
+    const forwardMessage = quoted?.fakeObj || quoted;
+
+    await conn.sendMessage(q, { forward: forwardMessage });
+
+    // Add short delay and reply
+    //await sleep(500);
+
+    //return await reply(`✅ Message forwarded successfully to:\n*${q}*`);
+
+  } catch (err) {
+    console.error("[❌ FORWARD ERROR]", err);
+    return await reply("❌ Failed to forward message. Please check the JID or message format.");
+  }
+});
