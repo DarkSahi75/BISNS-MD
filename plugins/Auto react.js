@@ -37,33 +37,76 @@ async (conn, m, mdata) => {
 
 
 
-const { getContentType } = require('@whiskeysockets/baileys');
+const { cmd } = require('../lib');
+const { getContentType, downloadMediaMessage } = require('@whiskeysockets/baileys');
+const fs = require('fs');
 
 cmd({
-    pattern: "forward",
-    desc: "Forward any quoted message to target JID",
-    alias: ["fo"],
-    category: "owner",
-    use: '.forward <jid> (quote any msg)',
-    filename: __filename
+  pattern: "forward",
+  desc: "Forward any quoted message",
+  alias: ["fo"],
+  category: "owner",
+  use: '.forward <jid> (quote any msg)',
+  filename: __filename
 }, async (conn, m, msg, { q, reply }) => {
 
-    if (!q) return reply("🧾 *Provide the JID to forward to!*\n\n_Example:_ `.fo 947xxxxxxxx@s.whatsapp.net`");
-    if (!m.quoted) return reply("💬 *Quote a message to forward!*");
+  if (!q) return reply("🔎 *Provide the JID to forward to!*\nExample: `.fo 9477xxxxxxx@s.whatsapp.net`");
+  if (!m.quoted) return reply("💬 *Reply to a message to forward it!*");
 
-    try {
-        const quoted = m.quoted;
+  try {
+    const quoted = m.quoted;
+    const type = getContentType(quoted.message);
+    const isMedia = ['imageMessage', 'videoMessage', 'documentMessage', 'audioMessage', 'stickerMessage'].includes(type);
 
-        // Check for fakeObj
-        const forwardable = quoted.fakeObj;
-        if (!forwardable) return reply("❌ *This message type cannot be forwarded.*");
+    if (isMedia) {
+      // Download media
+      const stream = await downloadMediaMessage(quoted, "buffer", {}, { logger: console, reuploadRequest: conn.updateMediaMessage });
+      if (!stream) return reply("❌ Media download failed");
 
-        // Forward the message
-        await conn.forwardMessage(q, forwardable, true);
+      let sendFunc = {
+        imageMessage: conn.sendImage,
+        videoMessage: conn.sendVideo,
+        documentMessage: conn.sendMessage,
+        audioMessage: conn.sendAudio,
+        stickerMessage: conn.sendMessage,
+      };
 
-        return reply(`✅ *Successfully forwarded to:* ${q}`);
-    } catch (err) {
-        console.error(err);
-        return reply("⚠️ *Failed to forward message.*\n" + err.message);
+      let options = {};
+      if (type === "documentMessage") {
+        options = {
+          document: stream,
+          fileName: quoted.message.documentMessage.fileName || "file",
+          mimetype: quoted.message.documentMessage.mimetype || "application/octet-stream"
+        };
+      } else if (type === "audioMessage") {
+        options = {
+          audio: stream,
+          mimetype: quoted.message.audioMessage.mimetype || 'audio/mpeg',
+          ptt: quoted.message.audioMessage?.ptt || false
+        };
+      } else if (type === "stickerMessage") {
+        options = {
+          sticker: stream
+        };
+      } else {
+        options = {
+          caption: quoted.message?.[type]?.caption || '',
+          [type === 'imageMessage' ? 'image' : 'video']: stream
+        };
+      }
+
+      await conn.sendMessage(q, options);
+      return reply(`✅ Media forwarded to: ${q}`);
+    } else {
+      // Text, contact, poll etc.
+      const forwardable = quoted.fakeObj;
+      if (!forwardable) return reply("⚠️ This message cannot be forwarded.");
+      await conn.forwardMessage(q, forwardable, true);
+      return reply(`✅ Message forwarded to: ${q}`);
     }
+
+  } catch (err) {
+    console.error(err);
+    return reply("⚠️ *Error forwarding message:*\n" + err.message);
+  }
 });
