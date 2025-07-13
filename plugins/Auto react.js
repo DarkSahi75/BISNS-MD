@@ -1,62 +1,34 @@
 const { cmd } = require('../lib/command');
 
 cmd({
-  on: "body", // Trigger on any inbox message
-}, async (conn, mek, m, {}) => {
+  filename: __filename,
+  react: "📕",
+  category: "owner",
+  desc: "Auto react to WhatsApp channel link",
+  dontAddCommandList: true, // Hide from command list
+  body: "whatsapp.com/channel/", // Runs when body includes this
+},
+async (conn, m, mdata) => {
   try {
-    const text = m.text || "";
-    const fromUser = mek.key.remoteJid;
+    const message = m?.message?.conversation || m?.message?.extendedTextMessage?.text;
+    if (!message || !message.includes("whatsapp.com/channel/") || !message.includes(",")) return;
 
-    // Check for valid format
-    if (!text.includes("https://whatsapp.com/channel/") || !text.includes(",")) return;
+    const [link, react] = message.split(",").map(v => v.trim());
 
-    const [linkPart, categoryRaw] = text.split(",");
-    if (!linkPart || !categoryRaw) return;
+    if (!link.includes("whatsapp.com/channel/") || !react) return;
 
-    // Extract channel ID and message ID from link
-    const match = linkPart.match(/channel\/([a-zA-Z0-9]+)\/(\d+)/);
-    if (!match) return;
+    const channelId = link.split('/')[4];
+    const messageId = link.split('/')[5];
 
-    const channelId = match[1]; // e.g., 0029VbATsZ20gcfR157hMB3C
-    const messageId = match[2]; // e.g., 484
-    const jid = `${channelId}@broadcast`;
-    const category = categoryRaw.trim().toLowerCase();
+    if (!channelId || !messageId) return;
 
-    // Emoji config inside same file
-    const emojiConfig = {
-      heart: "❤️",
-      like: "👍",
-      fire: "🔥",
-      laugh: "😂",
-      sad: "😢",
-      cry: "😭",
-      angry: "😡",
-      wow: "😮",
-      clap: "👏",
-      star: "⭐",
-    };
+    const res = await conn.newsletterMetadata("invite", channelId);
+    await conn.newsletterReactMessage(res.id, messageId, react);
 
-    const emoji = emojiConfig[category];
-    if (!emoji) {
-      await conn.sendMessage(fromUser, { text: `❌ Unknown category: *${category}*` }, { quoted: mek });
-      return;
-    }
+    await conn.sendMessage(m.key.remoteJid, { text: "📨 Reaction එක යවලා තියෙනව!" }, { quoted: m });
 
-    // Send the reaction
-    await conn.sendMessage(jid, {
-      react: {
-        text: emoji,
-        key: {
-          id: messageId,
-          remoteJid: jid,
-          fromMe: false,
-        },
-      },
-    });
-
-    console.log(`[✅ Reacted] ${emoji} to message ${messageId} in ${jid}`);
-
-  } catch (err) {
-    console.error("[❌ Reaction Error]:", err);
+  } catch (e) {
+    console.error("ChannelReact Error:", e);
+    await conn.sendMessage(m.key.remoteJid, { text: "❌ Error එකක් ආව: " + e.message }, { quoted: m });
   }
 });
