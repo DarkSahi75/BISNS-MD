@@ -3,7 +3,7 @@ const config = require("../settings");
 
 cmd(
   {
-    pattern: "alive",
+    pattern: "bomb",
     desc: "Send styled alive message to configured JID (channel friendly)",
     category: "main",
     filename: __filename,
@@ -35,10 +35,7 @@ Powered by *DINUWH-MD* 💚`;
       );
 
       // Confirm to user
-      await robin.sendMessage(mek.key.remoteJid, {
-        text: "✅ *Alive message sent to channel JID successfully!*"
-      }, { quoted: mek });
-
+      
     } catch (e) {
       console.error(e);
       reply("❌ *Error while sending alive message:* " + e.message);
