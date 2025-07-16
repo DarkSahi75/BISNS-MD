@@ -17,6 +17,8 @@ MENTAL: process.env.MENTAL || "120363418951991047@newsletter",
 TMJID: process.env.TMJID || "120363389338541551@newsletter",
 ONLY_ME: process.env.ONLY_ME || "true",
 SI_SONG: process.env.SI_SONG|| "120363419895978880@newsletter",
+KAVI_SONG2: process.env.KAVI_SONG2 |  "120363349830576064@newsletter",
+KAVI_SONG1: process.env.KAVI_SONG1 || "120363385063904186@newsletter",
  //"120363418532826629@newsletter",
 BOMB: process.env.BOMB ||"120363420941904814@newsletter",
 
