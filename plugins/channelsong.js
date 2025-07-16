@@ -5,6 +5,168 @@ const yts = require("yt-search");
 const axios = require("axios");
 const config = require("../settings");
 const { ytmp3 } = require("@vreden/youtube_scraper");
+
+cmd(
+  {
+    pattern: "kavi2",
+    desc: "Send caption, thumbnail and song to JID",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+
+      const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.data?.url) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.data.url;
+
+      const styledCaption = `
+☘️ *Tɪᴛʟᴇ :* ${title}
+
+▫️📅 *Rᴇʟᴇᴀꜱᴇ Dᴀᴛᴇ :* ${ago}
+▫️⏱️ *Dᴜʀᴀᴛɪᴏɴ :* ${timestamp}
+▫️🎭 *Wɪᴇᴡꜱ :* ${data.views || "N/A"}
+▫️🔗 *Lɪɴᴋ :* \`${ytUrl}\`
+
+*𝐌𝐈𝐍𝐃 𝐒𝐎𝐍𝐆𝐒…||😫💗*
+\`Use headphones for best experience.🙇‍♂️🎧"🫀\`
+
+  ♡          ⎙          ➦ 
+ʳᵉᵃᶜᵗ      ˢᵃᵛᵉ       ˢʰᵃʳᵉ`;
+
+      // Send thumbnail + caption to target JID
+      await robin.sendMessage(
+        config.KAVI_SONG2,
+        {
+          image: { url: thumbnail },
+          caption: styledCaption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio as PTT
+      await robin.sendMessage(
+        config.KAVI_SONG2,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation message to original sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.BOOT || "channel එකට"}* යවලා තියෙන්නෙ.`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
+cmd(
+  {
+    pattern: "kavi1",
+    desc: "Send caption, thumbnail and song to JID",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+
+      const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.data?.url) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.data.url;
+
+      const styledCaption = `
+☘️ *Tɪᴛʟᴇ :* ${title}
+
+▫️📅 *Rᴇʟᴇᴀꜱᴇ Dᴀᴛᴇ :* ${ago}
+▫️⏱️ *Dᴜʀᴀᴛɪᴏɴ :* ${timestamp}
+▫️🎭 *Wɪᴇᴡꜱ :* ${data.views || "N/A"}
+▫️🔗 *Lɪɴᴋ :* \`${ytUrl}\`
+
+*𝐌𝐈𝐍𝐃 𝐒𝐎𝐍𝐆𝐒…||😫💗*
+\`Use headphones for best experience.🙇‍♂️🎧"🫀\`
+
+  ♡          ⎙          ➦ 
+ʳᵉᵃᶜᵗ      ˢᵃᵛᵉ       ˢʰᵃʳᵉ`;
+
+      // Send thumbnail + caption to target JID
+      await robin.sendMessage(
+        config.KAVI_SONG1,
+        {
+          image: { url: thumbnail },
+          caption: styledCaption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio as PTT
+      await robin.sendMessage(
+        config.KAVI_SONG1,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation message to original sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.BOOT || "channel එකට"}* යවලා තියෙන්නෙ.`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
+
 cmd(
   {
     pattern: "songx",
