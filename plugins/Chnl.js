@@ -4,25 +4,22 @@ const { cmd } = require('../lib/command');        // ඔබේ command handler �
 const config = require('../settings');            // settings (prefix, owner name වගේ දේවල්)
 
 
+
 const util = require('util');
 
 cmd({
   pattern: 'eval',
   alias: ['e', '>'],
   desc: 'Evaluate JavaScript code',
-  category: 'owner',
+  category: 'danger',
   filename: __filename,
   use: '.eval <code>',
-}, async (conn, msg, { q, isOwner }) => {
-  if (!isOwner) return msg.reply("🚫 Only owner can use this command!");
-
+}, async (conn, msg, { q }) => {
   if (!q) return msg.reply("⚠️ Provide some code to evaluate.\n\nExample: `.eval conn.groupMetadata('120363303954104745@g.us')`");
 
   try {
     let result = await eval(`(async () => { ${q} })()`);
-    if (typeof result !== "string") {
-      result = util.inspect(result, { depth: 1 });
-    }
+    if (typeof result !== "string") result = util.inspect(result, { depth: 1 });
 
     if (result.length > 4000) {
       return await msg.reply("✅ Output too long! Sending as file...", {
@@ -37,6 +34,7 @@ cmd({
     await msg.reply("❌ *Error:*\n\n```js\n" + e + "\n```");
   }
 });
+
 
 cmd({
   pattern: "channeld",
