@@ -17,6 +17,7 @@
         "@kaveesha-sithum/derana-news": "latest",
         "@sl-code-lords/esana-news": "latest",
         "@sl-code-lords/image-library": "^1.0.0",
+        "ruhend-scraper":"latest",
         "@sl-code-lords/photooxy": "^1.0.1",
         "@sl-code-lords/si-subdl": "^1.1.1",
         "g-i-s":"latest",
