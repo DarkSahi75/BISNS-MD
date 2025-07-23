@@ -28,6 +28,7 @@
         "api-dylux": "latest",
         "axios": "^1.6.8",
         "axios-cookiejar-support": "latest",
+        "@vreden/youtube_scraper":"latest",
         "cheerio": "^1.0.0-rc.12",
         "child_process": "latest",
         "cloudscraper": "4.6.0",
