@@ -21,7 +21,7 @@ KAVI_SONG2: process.env.KAVI_SONG2 |  "120363349830576064@newsletter",
 KAVI_SONG1: process.env.KAVI_SONG1 || "120363385063904186@newsletter",
  //"120363418532826629@newsletter",
 BOMB: process.env.BOMB ||"120363420941904814@newsletter",
-
+CALL_TXT: process.env.CALL_TXT || "*කෝල් ගන්න එපා Block වෙයි ‼️*\n\n- *අපගේ ඇඩ්මින් වරයෙකු මෙම මැසේජය බලනා තුරු අපගෙන් ඔබට සිදු වියයුතු සේවාවා අපට පවසන්න.*\n\n> සින්දු කාමරේ(400K)",
 DEWC: process.env.DEWC || "120363389601794741@newsletter",
 CARTOON: process.env.CARTOON ||"120363419668799590@newsletter",
 ALONE: process.env.ALONE || "120363421003781261@newsletter",
