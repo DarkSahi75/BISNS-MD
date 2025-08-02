@@ -7,7 +7,7 @@ const config = require("../settings");
 const { ytmp3 } = require("@vreden/youtube_scraper");
 
 
-
+/*
 cmd(
   {
     pattern: "remix",
@@ -88,7 +88,7 @@ cmd(
       reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
     }
   }
-);
+);*/
 
 cmd(
   {
