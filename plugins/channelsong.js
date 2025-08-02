@@ -7,11 +7,11 @@ const config = require("../settings");
 const { ytmp3 } = require("@vreden/youtube_scraper");
 
 
-/*
+
+
 cmd(
   {
     pattern: "remix",
-   // alias: "තාල",
     desc: "Send song as PTT with styled details and thumbnail",
     category: "download",
     react: "🎧",
@@ -19,11 +19,10 @@ cmd(
   },
   async (robin, mek, m, { q, reply }) => {
     try {
-      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+      if (!q) return reply("*🎧 කරුණාකර ගීත නමක් හෝ YouTube ලින්ක් එකක් ලබාදෙන්න...*");
 
-      
       const search = await yts(q);
-      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+      if (!search.videos.length) return reply("*❌ ගීතය හමුනොවුණා... වෙනත් එකක් උත්සහ කරන්න.*");
 
       const data = search.videos[0];
       const title = data.title;
@@ -42,17 +41,15 @@ cmd(
       const audioUrl = res.data.url;
 
       const styledCaption = `
-☘️ *Tɪᴛʟᴇ :* ${title}
+> ┃🎧 \`SONG NAME\` : *${title}* 🎶🐼💗
 
-▫️📅 *Rᴇʟᴇᴀꜱᴇ Dᴀᴛᴇ :* ${ago}
-▫️🎭 *Wɪᴇᴡꜱ :* ${data.views || "N/A"}
-▫️🔗 *Lɪɴᴋ :* ${ytUrl}
+*🫟 නටල කරල ෆුල් ආතල් එකෙ ඉන්න කැමති කොල්ලො කෙල්ලො හැමෝම ෆලෝ කරල තියාගන්න චැනල් එක 🐼💗🎧*
 
-\`\`\`
-00:00 ───●────────── ${timestamp}
-\`\`\`
+> 🫟 *REMIX HUB 🐼 🎧*
 
-*ආසම පාටින් රියැක්ට් කරන් යමු හැමෝමහ්... 🥰🫀👇🏻!*`;
+  ♡     ⎙     ➦  
+ʳᵉᵃᶜᵗ   ˢᵃᵛᵉ   ˢʰᵃʳᵉ
+`;
 
       // Send image + styled caption
       await robin.sendMessage(
@@ -64,7 +61,7 @@ cmd(
         { quoted: mek }
       );
 
-      // Send audio as PTT
+      // Send audio as PTT (voice note)
       await robin.sendMessage(
         config.Team_REMIX,
         {
@@ -79,10 +76,11 @@ cmd(
       await robin.sendMessage(
         mek.key.remoteJid,
         {
-          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.BOOT || "channel එකට"}* යවලා තියෙන්නෙ.`,
+          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.BOOT || "REMIX HUB"}* වෙත යවන්න ලදි 🎧`,
         },
         { quoted: mek }
       );
+
     } catch (e) {
       console.error(e);
       reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
@@ -174,7 +172,7 @@ cmd(
     }
   }
 );
-*/
+
 cmd(
   {
     pattern: "kavi2",
