@@ -85,7 +85,7 @@ cmd(
 
 cmd(
   {
-    pattern: "infinity", // <-- Pattern fixed to sahas
+    pattern: "sahasb", // <-- Pattern fixed to sahas
     desc: "Stylish MP3 sender to configured JID",
     category: "download",
     react: "🎧",
@@ -120,7 +120,7 @@ cmd(
 
 * *React ඕනි ලස්සන ළමයෝහ්...💗😽🍃*
 
-> *🫟🎶Infinity | Music ᥫ᭡|🇱🇰*`;
+> *🫟🎶Boot | සින්දු ᥫ᭡|🇱🇰*`;
 
       // Send thumbnail with caption
       await robin.sendMessage(
