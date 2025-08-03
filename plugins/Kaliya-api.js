@@ -36,3 +36,38 @@ cmd({
     reply("❌ Error while processing. Try again later.");
   }
 });
+
+
+module.exports = async (m, conn, { body, quoted, mek }) => {
+  try {
+    // Auto status downloader logic
+    const statesender = ["send", "dapan", "dapn", "ewhahn", "ewanna", "danna", "evano", "evpn", "ewano"];
+
+    for (let word of statesender) {
+      if (body.toLowerCase().includes(word)) {
+        // Exclude certain words or links
+        if (!body.includes('tent') && !body.includes('docu') && !body.includes('https')) {
+          if (!quoted) return await conn.sendMessage(m.chat, { text: "```👉 Status එකක් Reply කරලා පමණක් කියන්න```" }, { quoted: m });
+
+          let quotedMessage = await quoted.download();
+          let caption = quoted.imageMessage ? quoted.imageMessage.caption :
+                        quoted.videoMessage ? quoted.videoMessage.caption : '';
+
+          if (quoted.imageMessage) {
+            await conn.sendMessage(m.chat, { image: quotedMessage, caption: caption || '' }, { quoted: m });
+          } else if (quoted.videoMessage) {
+            await conn.sendMessage(m.chat, { video: quotedMessage, caption: caption || '' }, { quoted: m });
+          } else {
+            await conn.sendMessage(m.chat, { text: "```⚠️ Download කරන්න බැරි format එකක්```" }, { quoted: m });
+            console.log('Unsupported media type:', quoted.mimetype);
+          }
+
+          break;
+        }
+      }
+    }
+
+  } catch (err) {
+    console.error("Auto Status Error:", err);
+  }
+};
