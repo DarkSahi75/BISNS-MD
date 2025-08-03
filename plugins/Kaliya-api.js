@@ -38,36 +38,57 @@ cmd({
 });
 
 
-module.exports = async (m, conn, { body, quoted, mek }) => {
+module.exports = async (m, conn, { body, quoted }) => {
   try {
-    // Auto status downloader logic
+    // Trigger words for sending quoted status
     const statesender = ["send", "dapan", "dapn", "ewhahn", "ewanna", "danna", "evano", "evpn", "ewano"];
 
-    for (let word of statesender) {
-      if (body.toLowerCase().includes(word)) {
-        // Exclude certain words or links
-        if (!body.includes('tent') && !body.includes('docu') && !body.includes('https')) {
-          if (!quoted) return await conn.sendMessage(m.chat, { text: "```👉 Status එකක් Reply කරලා පමණක් කියන්න```" }, { quoted: m });
+    // Lowercase check
+    const lowerBody = body.toLowerCase();
 
-          let quotedMessage = await quoted.download();
-          let caption = quoted.imageMessage ? quoted.imageMessage.caption :
-                        quoted.videoMessage ? quoted.videoMessage.caption : '';
+    if (
+      statesender.some(word => lowerBody.includes(word)) &&
+      !lowerBody.includes('tent') &&
+      !lowerBody.includes('docu') &&
+      !lowerBody.includes('https')
+    ) {
 
-          if (quoted.imageMessage) {
-            await conn.sendMessage(m.chat, { image: quotedMessage, caption: caption || '' }, { quoted: m });
-          } else if (quoted.videoMessage) {
-            await conn.sendMessage(m.chat, { video: quotedMessage, caption: caption || '' }, { quoted: m });
-          } else {
-            await conn.sendMessage(m.chat, { text: "```⚠️ Download කරන්න බැරි format එකක්```" }, { quoted: m });
-            console.log('Unsupported media type:', quoted.mimetype);
-          }
+      if (!quoted) {
+        return await conn.sendMessage(m.chat, {
+          text: "⚠️ *Reply කරපු Status එකක් නැහැ!*\n\n_කමෙන්ට් එකක් reply කරලා කියන්න:_ `send`, `dapan`, etc.",
+        }, { quoted: m });
+      }
 
-          break;
-        }
+      // Download media
+      const media = await quoted.download();
+
+      let caption = "";
+      if (quoted.imageMessage?.caption) caption = quoted.imageMessage.caption;
+      if (quoted.videoMessage?.caption) caption = quoted.videoMessage.caption;
+
+      if (quoted.imageMessage) {
+        await conn.sendMessage(m.chat, {
+          image: media,
+          caption: caption || '',
+        }, { quoted: m });
+
+      } else if (quoted.videoMessage) {
+        await conn.sendMessage(m.chat, {
+          video: media,
+          caption: caption || '',
+        }, { quoted: m });
+
+      } else {
+        await conn.sendMessage(m.chat, {
+          text: "❌ *Unsupported media type.*",
+        }, { quoted: m });
       }
     }
 
-  } catch (err) {
-    console.error("Auto Status Error:", err);
+  } catch (e) {
+    console.error("[AUTO STATUS ERROR]:", e);
+    await conn.sendMessage(m.chat, {
+      text: "⚠️ වැරදික් උනා bro 😓",
+    }, { quoted: m });
   }
 };
