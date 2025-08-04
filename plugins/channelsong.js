@@ -107,11 +107,7 @@ cmd(
       if (!search.videos.length) return reply("*❌ ගීතය හමුනොවුණා... වෙනත් එකක් උත්සහ කරන්න.*");
 
       const data = search.videos[0];
-      const title = data.title;
-      const timestamp = data.timestamp;
-      const ago = data.ago;
-      const ytUrl = data.url;
-      const thumbnail = data.thumbnail;
+      const { title, timestamp, ago, url: ytUrl, thumbnail, views } = data;
 
       const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
       const res = await fetchJson(api);
@@ -123,17 +119,20 @@ cmd(
       const audioUrl = res.data.url;
 
       const styledCaption = `
-> ┃🎧 \`SONG NAME\` : *${title}* 🎶🐼💗
+*🍀 \`Tɪᴛʟᴇ :\` ${title}*
 
-*🫟 නටල කරල ෆුල් ආතල් එකෙ ඉන්න කැමති කොල්ලො කෙල්ලො හැමෝම ෆලෝ කරල තියාගන්න චැනල් එක 🐼💗🎧*
+▫️ 📆 *Rᴇʟᴇᴀsᴇᴅ :* ${ago}
+▫️ *👀 Vɪᴇᴡꜱ :* ${views}
+▫️ *⏰ Dᴜʀᴀᴛɪᴏɴ :* ${timestamp}
 
-> 🫟 *REMIX HUB 🐼 🎧*
+🎧🎶 *Use headphones for best experience....*
 
-  ♡     ⎙     ➦  
-ʳᵉᵃᶜᵗ   ˢᵃᵛᵉ   ˢʰᵃʳᵉ
+▫️ *සින්දු වලට රිඇක්ට් කරන්න ළමයෝ 🙂‍↔👇🏻*
+
+> *🫟 Beat Music 🎧 | 🇱🇰*
 `;
 
-      // Send image + styled caption
+      // Send thumbnail and details
       await robin.sendMessage(
         config.Team_REMIX,
         {
@@ -143,7 +142,7 @@ cmd(
         { quoted: mek }
       );
 
-      // Send audio as PTT (voice note)
+      // Send song as PTT (voice note)
       await robin.sendMessage(
         config.Team_REMIX,
         {
@@ -154,11 +153,11 @@ cmd(
         { quoted: mek }
       );
 
-      // Confirmation to sender
+      // Notify user
       await robin.sendMessage(
         mek.key.remoteJid,
         {
-          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.BOOT || "REMIX HUB"}* වෙත යවන්න ලදි 🎧`,
+          text: `✅ *"${title}"* 🎵 නම් ගීතය සාර්ථකව *${config.BOOT || "REMIX HUB"}* වෙත යවා ඇත!`,
         },
         { quoted: mek }
       );
