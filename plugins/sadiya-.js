@@ -1,5 +1,5 @@
 const { cmd } = require('../lib/command');
-const { fetchJson } = require('node-fetch');
+const { fetchJson } = require('axios');
 const yts = require('yt-search');
 
 const sadiya_apikey = 'sadiya-key-666';
