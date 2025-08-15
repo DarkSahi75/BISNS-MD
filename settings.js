@@ -47,6 +47,6 @@ STATUS_REPLY_MESSAGE: 'ʏᴏᴜʀ ꜱᴛᴀᴛᴜꜱ ᴊᴜꜱᴛ ɴᴏᴡ ꜱ�
 ALIVE:  process.env.ALIVE  || '> QUEEN DEWMINI MD'  , 
 FOOTER: process.env.FOOTER || '> ∂ιηυω-χ вєтα✔️',
 Freedom: process.env.Freedom ||"120363370227470443@newsletter",
-ALWAYS_ONLINE: ptocess.env.ALWAYS_ONLINE || "false",
+ALWAYS_ONLINE: process.env.ALWAYS_ONLINE || "false",
 DELETEMSGSENDTO : process.env.DELETEMSGSENDTO === undefined ? '' : process.env.DELETEMSGSENDTO        
 };
