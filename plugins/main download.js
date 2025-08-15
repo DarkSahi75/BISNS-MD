@@ -16,8 +16,6 @@ const sadiya_apikey = 'sadiya-key-666';
 const shan_apikey = 'ae56006bcfe029bd';
 const sadiya_md_footer = '> *〽️ade By Dinuwh Bbh*';
 const desc = 'DINUWH-HTO';
-const gis = require("g-i-s");
-
 
 cmd({
   pattern: "img",
