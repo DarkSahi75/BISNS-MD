@@ -6,40 +6,43 @@ const config = require("../settings");
 const cheerio = require('cheerio');
 const axios = require("axios");
 const prefix = config.PREFIX || ".";
+
 const { Buffer } = require('buffer');
 const { igdl, ttdl } = require('ruhend-scraper');
 const fg = require('api-dylux');
 const mimeTypes = require('mime-types');
 const gis = require("g-i-s");
 const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = require('@whiskeysockets/baileys');
-//const prefix = config.PREFIX || ".";
+const prefix = config.PREFIX || ".";
 const sadiya_apikey = 'sadiya-key-666';
 const shan_apikey = 'ae56006bcfe029bd';
 const sadiya_md_footer = '> *〽️ade By Dinuwh Bbh*';
 const desc = 'DINUWH-HTO';
-
-
-
+const gis = require("g-i-s");
 
 
 cmd({
-  pattern: "gimg",
-  react: "😫",
+  pattern: "img",
+  alias: "image",
+  react: "🧬",
   desc: "Google Image Search via g-i-s",
   category: "search",
-  use: ".gimg dog",
+  use: ".gimg cat",
   filename: __filename
 }, async (conn, m, msg, { q, reply }) => {
-  if (!q) return reply("🔍 උදාහරණයක්: .gimg cat");
+  if (!q) return reply("🔍 Example: .img cat");
 
   try {
     gis(q, async (error, results) => {
-      if (error || !results || results.length === 0) return reply("😢 කිසිම ප්‍රතිඵලයක් හමු නොවිනි!");
+      if (error || !results || results.length === 0)
+        return reply("😢 No results found!");
 
-      const top3 = results.slice(0, 3);
+      // Take the first 10 images (no language filter)
+      const top10 = results.slice(0, 10);
+
       const cards = [];
 
-      for (let img of top3) {
+      for (const img of top10) {
         const media = await prepareWAMessageMedia(
           { image: { url: img.url } },
           { upload: conn.waUploadToServer }
@@ -79,12 +82,10 @@ cmd({
     });
   } catch (e) {
     console.error(e);
-    return reply("💥 කෑවෙ පකෝ. නැවත උත්සහ කරන්න.");
+    return reply("💥 An error occurred. Please try again.");
   }
 });
 
-
-/*
 cmd(
   {
     pattern: 'twitter',
@@ -601,199 +602,6 @@ cmd(
 
 
 
-//yttttt
-
-cmd({
-  pattern: "song",
-  alias: "ytmp3",
-  react: "🎵",
-  desc: "Download Song",
-  category: "download",
-  filename: __filename,
-}, async (robin, mek, m, { from, q, prefix, reply }) => {
-  try {
-    if (!q) return reply("\`Give Me SONG NAME OR LINK || නමක් දියන්😓❤️\`");
-
-    const search = await yts(q);
-    if (!search.videos.length) return reply("\`❌ Video not found!\`");
-    const data = search.videos[0];
-
-    const cap = `\`乂 Ｄ𝚒ｎｕｗｈ Чт Ｄｏｗｎ⟩⟩⟩\`
-╭────────✦✧✦────────╯
-
-* \`✦ 𝚃𝚒𝚝𝚕𝚎\`     :  _*${data.title}*_
-\`╭───────────────✿\` 
-
-* \`✦ 𝙳𝚞𝚛𝚊𝚝𝚒𝚘𝚗\`  : _*${data.timestamp} (${data.seconds} sec)*_  
-* \`✦ 𝚄𝚙𝚕𝚘𝚊𝚍𝚎𝚍\`  : _${data.ago}_  
-* \`✦ Channel\`   : *_${data.author.name}_*
-* \`✦ 𝚅𝚒𝚎𝚠𝚜\`     : _${data.views}_
-* \`✦ 𝚄𝚁𝙻\`       : *_${data.url}_*
-
-\`╰───────────────✿\`
-╭───────────────✿  
-│ 🎶 *ƒσℓℓσω υѕ мυѕι¢ ¢нαηηєℓ* 🧚‍♂️  
-╰───────────────✿  
-🔗 https://whatsapp.com/channel/0029Vb3mqn5H5JLuJO3s3Z1J
-
-> *Send You Want Song Formate ⤵️*`;
-
-    // ✳️ If nonbutton mode
-if (config.MODE === 'nonbutton') {
-  const sections = [
-    {
-	title: "",
-	rows: [
-	    {title: "1", rowId: `${prefix}ytaud ${data.url}`, description: '\`❲ Audio File ❳\` 🎧'},
-	    {title: "2", rowId: `${prefix}ytdoc ${data.url}`, description: '\`❲ Document File ❳\` 📄'} ,
-            {title: "3", rowId: `${prefix}ytvoice ${data.url}`, description: '\`❲ Voice Note (ptt) ❳\` 🎤'} ,
-            {title: "4", rowId: `${prefix}devilv ${data.url}`, description: '\`❲ Video File (mp4) ❳\` 📽️'} ,
-	]
-    } 
-]
-const listMessage = {
-caption: cap,
-image: { url: data.thumbnail },  // <-- use YouTube thumbnail here
-footer: '> 〽️ade By Dinuwh Bbh',
-title: '',
-buttonText: '> *◎Power Full Whatsapp bot Make By Dinuwh◎*',
-sections
-}
-	
-return await robin.replyList(from, listMessage ,{ quoted : mek })
-
-	//button
-if (config.MODE === 'button') {
-  const listData = {
-    title: "◎ 𝙲𝙷𝙾𝙾𝚂 𝙵𝙾𝚁𝙼𝙰𝚃𝙴 ◎",
-    sections: [{
-      title: "DINUWH MD OPTIONS",
-      rows: [
-        {
-          title: "[Audio 🎧]",
-          description: "Download as audio\n〽️ade By Dinuwh Bbh",
-          id: `${prefix}ytaud ${data.url}`
-        },
-        {
-          title: "[Document 📁]",
-          description: "Download as document\n〽️ade By Dinuwh Bbh",
-          id: `${prefix}ytdoc ${data.url}`
-        },
-        {
-          title: "[Voice (ptt) 💡]",
-          description: "Download as Voice Note\n〽️ade By Dinuwh Bbh",
-          id: `${prefix}ytvoice ${data.url}`
-        }
-      ]
-    }]
-  };
-
-  return await robin.sendMessage(from, {
-    image: { url: data.thumbnail },
-    caption: cap,
-    footer: "> 〽️ade By Dinuwh Bbh",
-    buttons: [
-      {
-        buttonId: "action",
-        buttonText: { displayText: "🔘 Choose Song Type" },
-        type: 4,
-        nativeFlowInfo: {
-          name: "single_select",
-          paramsJson: JSON.stringify(listData),
-        },
-      },
-    ],
-    headerType: 1,
-    viewOnce: true,
-  }, { quoted: mek });
-}
-//videoinfosendjs=========================-====--%=%=%--%-%-%-$-#-#-#=##=$-$-#9#9=9.0=9.0-$839#=$-$738#=738.0$-%*$8##-%748$=$-%7$8$=$-%-
-
-//Voice j=%=%=%==%=%=%==%=%=%==%%%=%==%=%=
-cmd({
-  pattern: "ytvoice",
-  //alias: ["ytmp3"],
-  desc: "Download YouTube song (no caption, audio only)",
-  category: "download",
-  react: "🎤",
-  filename: __filename,
-}, async (robin, mek, m, { q, reply }) => {
-  try {
-    if (!q) return reply("SONG NAME 😒?");
-    const search = await yts(q);
-    if (!search.videos.length) return reply("Yt search Fail🤧!");
-    const data = search.videos[0];
-    const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
-    const result = await fetchJson(api);
-    const dl_url = result.data.url;
-    await robin.sendMessage(m.chat, {
-      audio: { url: dl_url },
-      mimetype: 'audio/mpeg',
-      ptt: true,
-      fileName: `${data.title}.mp3`
-    }, { quoted: m });
-  } catch (e) {
-    reply("*🛑 ERROR! Something went wrong*");
-    console.log(e);
-  }
-});
-//ytdoc=====
-cmd({
-  pattern: "ytdoc",
- // alias: ["ytmp3"],
-  desc: "Download YouTube song as document only",
-  category: "download",
-  react: "📄",
-  filename: __filename,
-}, async (robin, mek, m, { q, reply }) => {
-  try {
-    if (!q) return reply("📁 Song name Error");
-    const search = await yts(q);
-    if (!search.videos.length) return reply("Yt search Fail🤧!");
-    const data = search.videos[0];
-    const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
-    const result = await fetchJson(api);
-    const dl_url = result.data.url;
-    await robin.sendMessage(m.chat, {
-      document: { url: dl_url },
-      mimetype: 'audio/mpeg',
-      fileName: `${data.title}.mp3`
-    }, { quoted: m });
-  } catch (e) {
-    reply("❌ *ERROR! Something went wrong*");
-    console.log(e);
-  }
-});
-//=======
-cmd({
-  pattern: "ytaud",
-  //alias: ["ytmp3"],
-  desc: "Download YouTube song (no caption, audio only)",
-  category: "download",
-  react: "🎶",
-  filename: __filename,
-}, async (robin, mek, m, { q, reply }) => {
-  try {
-    if (!q) return reply("SONG NAME 😒?");
-    const search = await yts(q);
-    if (!search.videos.length) return reply("Yt search Fail🤧!");
-    const data = search.videos[0];
-    const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(data.url)}&apikey=Manul-Official`;
-    const result = await fetchJson(api);
-    const dl_url = result.data.url;
-    await robin.sendMessage(m.chat, {
-      audio: { url: dl_url },
-      mimetype: 'audio/mpeg',
-      ptt: false,
-      fileName: `${data.title}.mp3`
-    }, { quoted: m });
-  } catch (e) {
-    reply("*🛑 ERROR! Something went wrong*");
-    console.log(e);
-  }
-});
-
-
 //Music End Now Video Plugins ☝ All Erro Fixed all Up Plugins
 
 
@@ -842,7 +650,7 @@ if (config.MODE === 'nonbutton') {
 	title: "",
 	rows: [
 	    {title: "1", rowId: `${prefix}normalv ${data.url}`, description: '\`❲ Normal Type Videos ❳\` 📽️'},
-	    {title: "2", rowId: `${prefix}documentv ${data.url}`, description: '\`❲ Document Type Videos ❳\` 📄'} ,
+	    {title: "2", rowId: `${prefix}documentv ${data.url}`, description: '\`❲ Document Typr Videos ❳\` 📄'} ,
             
 	]
     } 
@@ -1243,8 +1051,8 @@ async (conn, mek, m, { from, q, reply }) => {
 
 
 cmd({
-  pattern: "tt",
-  alias: ["ttinfo", "ttdetails", "tiktok"],
+  pattern: "tipk",
+  alias: ["ttinfo", "ttdetails", "tt"],
   react: '🔎',
   desc: "Get TikTok video details only.",
   category: "tools",
@@ -2406,14 +2214,14 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
         buttons: [
           
           {
-            buttonId: `${prefix}dinuping`,
+            buttonId: `${prefix}ping ${data.url}`,
             buttonText: { displayText: "`[CHECK BOT SPEED 📍]`" },
             type: 1
           },
 
           {
             buttonId: "action",
-            buttonText: { displayText: "🔘" },
+            buttonText: { displayText: "🔘 Choose Song Type" },
             type: 4,
             nativeFlowInfo: {
               name: "single_select",
@@ -2565,12 +2373,11 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 //Fbbbbbb
 
 
-
 const api = `https://nethu-api-ashy.vercel.app`;
 
 //01.Facebook Download
 cmd({
-  pattern: "fb",
+  pattern: "facebook",
   react: "🎥",
   alias: ["fbbbb", "fbvideo", "fb"],
   desc: "ddesc",
@@ -2786,5 +2593,275 @@ const listData2 = {
     reply(`❌ Error: ${e.message}`);
   }
 });
-*/
 
+//==3-3--3=3-3-3-3-3=3-3-3-3-3-=3=3=3=3=3=3==*=*=*=*=**=*=&=&=&=&=&=&==&-&-&-&-&=&=&=&-&-*&
+cmd({
+  pattern: "downfb_sd",
+  react: "⬇️",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async(conn, mek, m, {
+    from, q, reply
+}) => {
+  try {
+      
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+    
+    if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
+      return reply("Video not found or not downloadable. Please check the URL.");
+    }
+
+    if (fb.result.sd) {
+      await conn.sendMessage(from, {
+        video: { url: fb.result.sd },
+        mimetype: "video/mp4",
+        caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
+
+  } catch (e) {
+    console.error("Facebook Download Error:", e);
+    reply(`Error: ${e.message || e}`);
+  }
+});
+
+cmd({
+  pattern: "downfb_hd",
+  react: "⬇️",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async(conn, mek, m, {
+    from, q, reply
+}) => {
+  try {
+      
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+    
+    if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
+      return reply("Video not found or not downloadable. Please check the URL.");
+    }
+
+    if (fb.result.hd) {
+      await conn.sendMessage(from, {
+        video: { url: fb.result.hd },
+        mimetype: "video/mp4",
+        caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
+
+  } catch (e) {
+    console.error("Facebook Download Error:", e);
+    reply(`Error: ${e.message || e}`);
+  }
+});
+//=====3=3=3==3=4=4=4=4==4===4-4-3
+
+
+cmd({
+  pattern: "downfb_hdd",
+  react: "⬇️",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
+      return reply("📛 Video not found or not downloadable. Please check the URL.");
+    }
+
+    if (fb.result.hd) {
+      await conn.sendMessage(from, {
+        document: { url: fb.result.hd },
+        fileName: "facebook_video_hd.mp4",
+        mimetype: "video/mp4",
+        caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
+
+  } catch (e) {
+    console.error("Facebook Download Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
+
+//==3=3==3=3-3-3-
+
+
+
+cmd({
+  pattern: "downfb_sdd",
+  react: "⬇️",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
+      return reply("📛 Video not found or not downloadable. Please check the URL.");
+    }
+
+    if (fb.result.sd) {
+      await conn.sendMessage(from, {
+        document: { url: fb.result.sd },
+        fileName: "facebook_video_sd.mp4",
+        mimetype: "video/mp4",
+        caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
+
+  } catch (e) {
+    console.error("Facebook Download Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
+//=3=3=3==3=3=3==4=3=4=4=4=4==4=4858&=&885
+
+cmd({
+  pattern: "downfb_sdp",
+  react: "⬇️",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async(conn, mek, m, {
+    from, q, reply
+}) => {
+  try {
+      
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+    
+    if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
+      return reply("Video not found or not downloadable. Please check the URL.");
+    }
+
+    if (fb.result.sd) {
+      await conn.sendMessage(from, {
+        video: { url: fb.result.sd },
+        mimetype: "video/mp4",
+	ptv: "true",
+        caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
+
+  } catch (e) {
+    console.error("Facebook Download Error:", e);
+    reply(`Error: ${e.message || e}`);
+  }
+});
+
+cmd({
+  pattern: "downfb_hdp",
+  react: "⬇️",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async(conn, mek, m, {
+    from, q, reply
+}) => {
+  try {
+      
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+    
+    if (!fb.result || (!fb.result.sd && !fb.result.hd)) {
+      return reply("Video not found or not downloadable. Please check the URL.");
+    }
+
+    if (fb.result.hd) {
+      await conn.sendMessage(from, {
+        video: { url: fb.result.hd },
+        mimetype: "video/mp4",
+	ptv: "true",
+        caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
+
+  } catch (e) {
+    console.error("Facebook Download Error:", e);
+    reply(`Error: ${e.message || e}`);
+  }
+});
+
+
+
+cmd({
+  pattern: "fb_sd_ptt",
+  react: "🎤",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || !fb.result.sd) {
+      return reply("❌ SD video not found.");
+    }
+
+    await conn.sendMessage(from, {
+      audio: { url: fb.result.sd }, // using video URL directly
+      mimetype: 'audio/mpeg',       // trick to treat video as audio
+      ptt: true                     // make it voice note
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error("Direct Audio Send Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
+
+cmd({
+  pattern: "fb_sd_audio",
+  react: "🎵",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || !fb.result.sd) {
+      return reply("❌ SD video not found.");
+    }
+
+    await conn.sendMessage(from, {
+      audio: { url: fb.result.sd },     // still using video URL
+      mimetype: 'audio/mpeg',           // send as MP3
+      ptt: false                        // make sure it's NOT voice note
+    }, { quoted: mek });
+
+  } catch (e) {
+    console.error("FB Audio Send Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
+
+
+
+cmd({
+  pattern: "fb_sd_doc",
+  react: "📄",
+  dontAddCommandList: true,
+  filename: __filename
+},
+async (conn, mek, m, {
+  from, q, reply
+}) => {
+  try {
+    const fb = await fetchJson(`${api}/download/fbdown?url=${encodeURIComponent(q)}`);
+
+    if (!fb.result || !fb.result.sd) {
+      return reply("❌ SD video not found.");
+    }
+
+    await conn.sendMessage(from, {
+      document: { url: fb.result.sd },  // <-- send as document
+      mimetype: "audio/mpeg",           // <-- trick WhatsApp to treat as audio
+      fileName: "facebook_audio.mp3",   // <-- can be .mp3 even if it's .mp4
+      caption: "> *〽️ade By Dinuwh Bbh*" }, { quoted: mek });
+
+  } catch (e) {
+    console.error("FB Audio Doc Send Error:", e);
+    reply(`❌ Error: ${e.message || e}`);
+  }
+});
