@@ -5,8 +5,6 @@ const yts = require("yt-search");
 const config = require("../settings");
 const cheerio = require('cheerio');
 const axios = require("axios");
-const prefix = config.PREFIX || ".";
-
 const { Buffer } = require('buffer');
 const { igdl, ttdl } = require('ruhend-scraper');
 const fg = require('api-dylux');
