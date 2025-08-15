@@ -2591,7 +2591,7 @@ const listData2 = {
 });
 
 //==3-3--3=3-3-3-3-3=3-3-3-3-3-=3=3=3=3=3=3==*=*=*=*=**=*=&=&=&=&=&=&==&-&-&-&-&=&=&=&-&-*&
-cmd({
+/*cmd({
   pattern: "downfb_sd",
   react: "⬇️",
   dontAddCommandList: true,
@@ -2618,7 +2618,7 @@ async(conn, mek, m, {
     console.error("Facebook Download Error:", e);
     reply(`Error: ${e.message || e}`);
   }
-});
+});*/
 
 cmd({
   pattern: "downfb_hd",
