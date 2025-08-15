@@ -1,5 +1,5 @@
-const fetch = require("node-fetch");
-const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson } = require('../lib/functions')
+const {fetch, fetchJson} = require("node-fetch");
+const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep } = require('../lib/functions')
 const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
 const config = require("../settings");
@@ -2591,7 +2591,7 @@ const listData2 = {
 });
 
 //==3-3--3=3-3-3-3-3=3-3-3-3-3-=3=3=3=3=3=3==*=*=*=*=**=*=&=&=&=&=&=&==&-&-&-&-&=&=&=&-&-*&
-/*cmd({
+cmd({
   pattern: "downfb_sd",
   react: "⬇️",
   dontAddCommandList: true,
@@ -2861,4 +2861,4 @@ async (conn, mek, m, {
     reply(`❌ Error: ${e.message || e}`);
   }
 });
-*/
+
