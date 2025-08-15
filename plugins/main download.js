@@ -723,8 +723,8 @@ return await robin.replyList(from, listMessage ,{ quoted : mek })
 
 //Auto Song Js=3=3.03=3.03=3.03=3.033=3.0333=3.03333=3.033333=3.033333=3.0333333=3.033333=3.0333333=3.03333333=3.03333333
 
-let autoSenders = {};
-const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+//let autoSenders = {};
+//const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 cmd(
   {
