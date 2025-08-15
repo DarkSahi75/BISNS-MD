@@ -2618,7 +2618,7 @@ async(conn, mek, m, {
     console.error("Facebook Download Error:", e);
     reply(`Error: ${e.message || e}`);
   }
-});*/
+});
 
 cmd({
   pattern: "downfb_hd",
@@ -2861,3 +2861,4 @@ async (conn, mek, m, {
     reply(`❌ Error: ${e.message || e}`);
   }
 });
+*/
