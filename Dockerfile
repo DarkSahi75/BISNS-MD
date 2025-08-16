@@ -11,7 +11,7 @@ RUN apt-get update && \
 WORKDIR /usr/src/app
 
 
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install && npm install -g qrcode-terminal pm2
 
 COPY . .
