@@ -2591,7 +2591,7 @@ const listData2 = {
 });
 
 //==3-3--3=3-3-3-3-3=3-3-3-3-3-=3=3=3=3=3=3==*=*=*=*=**=*=&=&=&=&=&=&==&-&-&-&-&=&=&=&-&-*&
-cmd({
+/*md({
   pattern: "downfb_sd",
   react: "⬇️",
   dontAddCommandList: true,
@@ -2860,5 +2860,5 @@ async (conn, mek, m, {
     console.error("FB Audio Doc Send Error:", e);
     reply(`❌ Error: ${e.message || e}`);
   }
-});
+});*/
 
