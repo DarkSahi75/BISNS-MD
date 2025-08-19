@@ -8,6 +8,84 @@ const { ytmp3 } = require("@vreden/youtube_scraper");
 
 
 
+cmd(
+  {
+    pattern: "nimantha",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*🎧 කරුණාකර ගීත නමක් හෝ YouTube ලින්ක් එකක් ලබාදෙන්න...*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*❌ ගීතය හමුනොවුණා... වෙනත් එකක් උත්සහ කරන්න.*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+
+      const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.data?.url) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.data.url;
+
+      const styledCaption = `
+\`[${title}💤🙂‍↔️]\`
+
+┌─────────────────⚭⦁❥
+𝙨𝙧𝙞 𝙡𝙖𝙣𝙠𝙖 𝙗𝙚𝙨𝙩 𝙢𝙪𝙨𝙞𝙘 𝙬𝙝𝙖𝙩𝙨𝙖𝙥𝙥 𝙘𝙝𝙖𝙣𝙣𝙚𝙡...🎧🫩
+
+`React කරන්න ලස්සන ළමයෝ` 🥰❤️
+
+> 🫟 සිංදු පාරාදීසය | 🇱🇰🎧
+`;
+
+      // Send image + styled caption
+      await robin.sendMessage(
+        config.NIMANTHA,
+        {
+          image: { url: thumbnail },
+          caption: styledCaption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio as PTT (voice note)
+      await robin.sendMessage(
+        config.NIMANTHA,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation to sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.NIMANTHA || "REMIX HUB"}* වෙත යවන්න ලදි 🎧`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
 
 cmd(
   {
