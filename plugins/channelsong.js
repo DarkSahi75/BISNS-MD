@@ -1791,9 +1791,10 @@ cmd(
     }
   }
 );
+
 cmd(
-  {
-    pattern: "boot2",
+{
+    pattern: "තාල1",
     desc: "Send caption, thumbnail and song to JID",
     category: "download",
     react: "🎧",
@@ -1830,7 +1831,7 @@ cmd(
 * \`❍.Time ➙\` *${data.timestamp}*
 * \`❍.Uploaded to YouTube ➙\` *${data.ago}*
 
-> ❝♬.*Sad |* \`\`\`S O N G S ofc\`\`\` *💗😽🍃*❞
+> 🫟🎶තාල | Music  officialᥫ᭡|🇱🇰
 
 > 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\` 
 _*රියැට් කරන්න ළමයෝ 🥹❣️◦◦◦*_`;
