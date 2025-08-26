@@ -58,32 +58,31 @@ cmd({
 });
 
 
+//const { cmd } = require('../command');
 
 cmd({
-pattern: "sv",
-alias: "resend",
-react: "🔖",
-desc: "To take owner number",
-category: "main",
-use: '.sv',
-filename: __filename
+    pattern: "sv",
+    react: "🔖",
+    desc: "Save or forward replied status",
+    category: "main",
+    use: '.sv (reply to status)',
+    filename: __filename
 },
-async(conn, mek, m,{from, prefix, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
-try{
+async (conn, mek, m, { from, reply }) => {
+    try {
+        // Check if message is a reply
+        if (!mek.quoted) {
+            return reply("*❌ Please reply to a WhatsApp status message!*");
+        }
 
-mek.reply_message && mek.reply_message.status  
-      ? mek.reply_message  
-      : false;  
-    
-    mek.bot.forwardOrBroadCast(from, {  
-      quoted: { key: mek.key },  
-    });
+        // Forward the replied status
+        await conn.sendMessage(from, { forward: mek.quoted }, { quoted: mek });
 
-reply("reply to whatsapp status");
-await conn.sendMessage(from, { react: { text: ✅, key: mek.key }})
-} catch (e) {
-reply('Error !!')
-l(e)
-}
-})
+        // Success reaction
+        await conn.sendMessage(from, { react: { text: `✅`, key: mek.key } });
 
+    } catch (e) {
+        reply('*⚠️ Error occurred !!*');
+        console.log(e);
+    }
+});
