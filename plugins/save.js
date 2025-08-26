@@ -56,3 +56,34 @@ cmd({
     }, { quoted: message });
   }
 });
+
+
+
+cmd({
+pattern: "sv",
+alias: "resend",
+react: "🔖",
+desc: "To take owner number",
+category: "main",
+use: '.sv',
+filename: __filename
+},
+async(conn, mek, m,{from, prefix, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+try{
+
+mek.reply_message && mek.reply_message.status  
+      ? mek.reply_message  
+      : false;  
+    
+    mek.bot.forwardOrBroadCast(from, {  
+      quoted: { key: mek.key },  
+    });
+
+reply("reply to whatsapp status");
+await conn.sendMessage(from, { react: { text: ✅, key: mek.key }})
+} catch (e) {
+reply('Error !!')
+l(e)
+}
+})
+
