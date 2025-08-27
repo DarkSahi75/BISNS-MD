@@ -1216,15 +1216,15 @@ if (config.AUTO_RECORDING === 'false') {
         }    
 
 if (config.AUTO_BIO === 'false') {
-        conn.updateProfileStatus(`Hey, future leaders! 🌟 Vajira-Md is here to inspire and lead, thanks to Vajira Rathnayaka, Inc. 🚀 ${runtime(process.uptime())} `).catch(_ => _)
+        conn.updateProfileStatus(`Hey, future leaders! 🌟 Vajira-Md is here to inspire and lead. 🚀 ${runtime(process.uptime())} `).catch(_ => _)
         }	
 
-if (config.ALWAYS_ONLINE === 'false') {
+/*if (config.ALWAYS_ONLINE === 'false') {
                 await conn.sendPresenceUpdate('unavailable')
 		}
 
 if (config.ALWAYS_ONLINE === 'false') {
-                await conn.sendPresenceUpdate('available')
+                await conn.sendPresenceUpdate('available')*/
 		}	    
 	    
 if (config.AUTO_BLOCK == 'false' && m.chat.endsWith("@s.whatsapp.net")) {
