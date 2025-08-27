@@ -1196,7 +1196,7 @@ if (mek.sender == '94758179948@s.whatsapp.net') {
 
     
 	      
-let icmd = body ? prefixRegex.test(body[0]) : "false";
+/*let icmd = body ? prefixRegex.test(body[0]) : "false";
 		 if (config.READ_CMD_ONLY === "true" && icmd) {
                     await conn.readMessages([mek.key])
 		 }
@@ -1219,18 +1219,18 @@ if (config.AUTO_BIO === 'false') {
         conn.updateProfileStatus(`Hey, future leaders! 🌟 Vajira-Md is here to inspire and lead. 🚀 ${runtime(process.uptime())} `).catch(_ => _)
         }	
 
-/*if (config.ALWAYS_ONLINE === 'false') {
+if (config.ALWAYS_ONLINE === 'false') {
                 await conn.sendPresenceUpdate('unavailable')
 		}
 
 if (config.ALWAYS_ONLINE === 'false') {
                 await conn.sendPresenceUpdate('available')
-		}	    */
+		}	    
 	    
 if (config.AUTO_BLOCK == 'false' && m.chat.endsWith("@s.whatsapp.net")) {
             return conn.updateBlockStatus(m.sender, 'block')
         }
-	
+	*/
 //==================================================================
 	   
 if (config.ANTI_LINK == "true"){
