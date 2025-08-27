@@ -1224,8 +1224,8 @@ if (config.AUTO_BIO === 'false') {
 		}
 
 if (config.ALWAYS_ONLINE === 'false') {
-                await conn.sendPresenceUpdate('available')*/
-		}	    
+                await conn.sendPresenceUpdate('available')
+		}	    */
 	    
 if (config.AUTO_BLOCK == 'false' && m.chat.endsWith("@s.whatsapp.net")) {
             return conn.updateBlockStatus(m.sender, 'block')
