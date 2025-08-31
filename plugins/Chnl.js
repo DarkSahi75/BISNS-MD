@@ -4,6 +4,74 @@ const { cmd } = require('../lib/command');        // ඔබේ command handler �
 const config = require('../settings');            // settings (prefix, owner name වගේ දේවල්)
 
 
+/**
+ * Plugin: .fetch
+ * Supports: APK, MP4, MP3, PDF, Images (any direct link)
+ * Author: DINUWH MD
+ */
+
+const axios = require('axios');
+
+cmd({
+    pattern: "fetch",
+    react: "📥",
+    category: "download",
+    filename: __filename
+}, async (conn, mek, m, { from, q, reply }) => {
+    if (!q) return await reply('*Please provide a direct URL!*');
+
+    try {
+        const mediaUrl = q.split("|")[0];
+        const title = q.split("|")[1] || 'downloaded_file';
+
+        // Progress simulation
+        const progressMsgs = [
+            "《 █▒▒▒▒▒▒▒▒▒▒▒》10%",
+            "《 ████▒▒▒▒▒▒▒▒》30%",
+            "《 ███████▒▒▒▒▒》50%",
+            "《 ██████████▒▒》80%",
+            "《 ████████████》100%",
+            "✅ Download Complete!"
+        ];
+
+        let { key } = await conn.sendMessage(from, { text: 'Downloading media...' });
+        for (let i = 0; i < progressMsgs.length; i++) {
+            await conn.sendMessage(from, { text: progressMsgs[i], edit: key });
+        }
+
+        // Function to get media buffer
+        const getBuffer = async (url) => {
+            const res = await axios.get(url, { responseType: 'arraybuffer' });
+            return Buffer.from(res.data, 'binary');
+        };
+
+        const mediaBuffer = await getBuffer(mediaUrl);
+
+        // Detect mimetype from extension
+        const ext = mediaUrl.split('.').pop().toLowerCase();
+        let mimeType = "application/octet-stream";
+        if (['mp4'].includes(ext)) mimeType = "video/mp4";
+        else if (['mp3'].includes(ext)) mimeType = "audio/mpeg";
+        else if (['apk'].includes(ext)) mimeType = "application/vnd.android.package-archive";
+        else if (['pdf'].includes(ext)) mimeType = "application/pdf";
+        else if (['jpg','jpeg'].includes(ext)) mimeType = "image/jpeg";
+        else if (['png'].includes(ext)) mimeType = "image/png";
+
+        await conn.sendMessage(from, {
+            document: mediaBuffer,
+            mimetype: mimeType,
+            fileName: `${title}.${ext}`,
+            caption: `*Media Downloaded by DINUWH MD*`
+        });
+
+        // Reaction ✅
+        await conn.sendMessage(from, { react: { text: '✅', key: mek.key } });
+
+    } catch (error) {
+        console.error(error);
+        await conn.sendMessage(from, '*Error fetching or sending the media!*', { quoted: mek });
+    }
+});
 
 const util = require('util');
 
