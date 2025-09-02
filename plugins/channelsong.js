@@ -9,6 +9,97 @@ const { ytmp3 } = require("@vreden/youtube_scraper");
 
 cmd(
   {
+    pattern: "dinuz",
+    alias: "slowerb",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් සහ 🗝️ Password එකත් දෙන්න...!*");
+
+      // ===== Password check logic =====
+      let [songQuery, passPart] = q.split("&").map(x => x.trim());
+      if (!passPart || !passPart.startsWith("PW=")) {
+        return reply("❌ Password එකත් එක්කම දාන්න!\nඋදා: *.rapzoon lelena & PW=1234*");
+      }
+
+      const password = passPart.replace("PW=", "").trim();
+      const correctPassword = "1234"; // <- මෙතන ඔයාගේ පස්වර්ඩ් දාන්න
+
+      if (password !== correctPassword) {
+        return reply("🔒 *Password වැරදියි!* ❌");
+      }
+
+      // ===== YouTube Search =====
+      const search = await yts(songQuery);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+
+      // ===== API call =====
+      const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.data?.url) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.data.url;
+      const styledCaption = `\`🫐 ᴛɪᴛʟᴇ :\` *${title}*
+
+\`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*          \`ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
+
+\`00:00 ────○─────── ${timestamp}\`
+
+> 🫟🎶Rap Zone | Music officialᥫ᭡|🇱🇰
+`;
+
+      // Send image + styled caption
+      await robin.sendMessage(
+        config.DINUZ,
+        {
+          image: { url: thumbnail },
+          caption: styledCaption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio as PTT
+      await robin.sendMessage(
+        config.DINUZ,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* සාර්ථකව *${config.SLOWED || "channel"}* යවන ලදී.`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
+cmd(
+  {
     pattern: "rapzoon",
     alias: "slowerb",
     desc: "Send song as PTT with styled details and thumbnail",
@@ -84,7 +175,6 @@ const styledCaption = `\`🫐 ᴛɪᴛʟᴇ :\` *${title}*
     }
   }
 );
-
 
 cmd(
   {
