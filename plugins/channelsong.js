@@ -247,7 +247,7 @@ cmd(
 
 cmd(
   {
-    pattern: "nimantha",
+    pattern: "tsong",
     desc: "Send song as PTT with styled details and thumbnail",
     category: "download",
     react: "🎧",
@@ -276,20 +276,20 @@ cmd(
 
       const audioUrl = res.data.url;
 
-      const styledCaption = `
-\`[${title}💤🙂‍↔️]\`
+      const styledCaption = `☘️ *Tɪᴛʟᴇ :* ${title}
 
-┌─────────────────⚭⦁❥
-𝙨𝙧𝙞 𝙡𝙖𝙣𝙠𝙖 𝙗𝙚𝙨𝙩 𝙢𝙪𝙨𝙞𝙘 𝙬𝙝𝙖𝙩𝙨𝙖𝙥𝙥 𝙘𝙝𝙖𝙣𝙣𝙚𝙡...🎧🫩
+▫️📅 *Rᴇʟᴇᴀꜱᴇ Dᴀᴛᴇ :* ${ago}
+▫️⏱️ *Dᴜʀᴀᴛɪᴏɴ :* ${timestamp}
 
-\`React කරන්න ලස්සන ළමයෝ\` 🥰❤️
+> 🫟🎶තාල | Music officialᥫ᭡|🇱🇰
 
-> 🫟 සිංදු පාරාදීසය | 🇱🇰🎧
+> 🔹.◦◦◦ \`[💜||💛||🩷||🤍||💚]\`
+_*රියැට් කරන්න ළමයෝ 🥹❣️◦◦◦*_
 `;
 
       // Send image + styled caption
       await robin.sendMessage(
-        config.NIMANTHA,
+        config.DE_THA,
         {
           image: { url: thumbnail },
           caption: styledCaption,
@@ -299,7 +299,7 @@ cmd(
 
       // Send audio as PTT (voice note)
       await robin.sendMessage(
-        config.NIMANTHA,
+        config.DE_THA,
         {
           audio: { url: audioUrl },
           mimetype: "audio/mpeg",
