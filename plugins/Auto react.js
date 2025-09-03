@@ -1,4 +1,75 @@
 const { cmd } = require('../lib/command');
+module.exports = async (robin, mek, store) => {
+  try {
+    let body =
+      mek.message?.conversation ||
+      mek.message?.extendedTextMessage?.text ||
+      mek.message?.imageMessage?.caption ||
+      mek.message?.videoMessage?.caption ||
+      "";
+
+    if (!body) return;
+
+    // Spam words list
+    const spamWords = [
+      "sex",
+      "xxx",
+      "nude",
+      "fuck",
+      "porn",
+      "xnxx",
+      "xvideos",
+      "http://",
+      "https://",
+      "telegram",
+      "whatsapp group",
+      "join my group"
+    ];
+
+    for (let word of spamWords) {
+      if (body.toLowerCase().includes(word.toLowerCase())) {
+        let sender = mek.key.participant || mek.key.remoteJid;
+        let jid = mek.key.remoteJid;
+
+        // PRIVATE CHAT → BLOCK
+        if (!jid.endsWith("@g.us")) {
+          await robin.sendMessage(
+            jid,
+            {
+              text: `⚠️ *Spam Detected!* \n\n"${word}" කියන word එක හඳුනාගන්න ලදි.\n\n👉 @${sender.split("@")[0]} BLOCK කරනවා 🚫`,
+              mentions: [sender],
+            },
+            { quoted: mek }
+          );
+
+          await robin.updateBlockStatus(sender, "block");
+          return;
+        }
+
+        // GROUP CHAT → DELETE
+        if (jid.endsWith("@g.us")) {
+          await robin.sendMessage(
+            jid,
+            {
+              text: `⚠️ *Group Spam Detected!* \n\n"${word}" කියන word එක හඳුනාගන්න ලදි.\n\n👉 @${sender.split("@")[0]} Message එක DELETE කරනවා 🚫`,
+              mentions: [sender],
+            },
+            { quoted: mek }
+          );
+
+          try {
+            await robin.sendMessage(jid, { delete: mek.key });
+          } catch (err) {
+            console.log("Delete failed (bot may not be admin):", err);
+          }
+          return;
+        }
+      }
+    }
+  } catch (e) {
+    console.log("Spam Protection Error:", e);
+  }
+};
 module.exports = async (robin, mek) => {
   try {
     let body =
