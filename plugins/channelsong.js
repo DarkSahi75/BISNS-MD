@@ -4,6 +4,7 @@ const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
 const axios = require("axios");
 const config = require("../settings");
+const DINUID = "120363411875123040@newsletter",
 const { ytmp3 } = require("@vreden/youtube_scraper");
 
 
@@ -103,7 +104,7 @@ cmd(
       }
 
       const password = passPart.replace("PW=", "").trim();
-      const correctPassword = "SAHI"; // <- මෙතන ඔයාගේ පස්වර්ඩ් දාන්න
+      const correctPassword = "NOPW"; // <- මෙතන ඔයාගේ පස්වර්ඩ් දාන්න
 
       if (password !== correctPassword) {
         return reply("🔒 *Password වැරදියි!* ❌");
@@ -140,7 +141,7 @@ cmd(
 
       // Send image + styled caption
       await robin.sendMessage(
-        config.DINUZ,
+        "120363411875123040@newsletter",
         {
           image: { url: thumbnail },
           caption: styledCaption,
@@ -150,7 +151,7 @@ cmd(
 
       // Send audio as PTT
       await robin.sendMessage(
-        config.DINUZ,
+        "120363411875123040@newsletter",
         {
           audio: { url: audioUrl },
           mimetype: "audio/mpeg",
