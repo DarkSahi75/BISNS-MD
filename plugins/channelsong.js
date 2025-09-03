@@ -4,7 +4,7 @@ const { cmd, commands } = require("../lib/command");
 const yts = require("yt-search");
 const axios = require("axios");
 const config = require("../settings");
-const DINUID = "120363411875123040@newsletter",
+//const DINUID = "120363411875123040@newsletter",
 const { ytmp3 } = require("@vreden/youtube_scraper");
 
 
@@ -130,13 +130,15 @@ cmd(
       }
 
       const audioUrl = res.data.url;
-      const styledCaption = `*${title}*
+      const audioUrl = res.data.url;
+const styledCaption = `
+\`🫐 ᴛɪᴛʟᴇ :\` ${title}
+\`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*       \`🔖ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
 
-\`◊. Date :* ${ago}\`    \`◊. Time :* ${timestamp}\`
+\`00:00 ────○─────── ${timestamp}\`
 
-* *ලස්සන රියැක්ට් ඕනී ...💗😽🍃*
-
-> *🫟🎶මනෝපාර | Music ᥫ᭡|🇱🇰*`;
+> *🫟 මාත්‍රා | Music ᥫ᭡|🇱🇰*
+`;
 
 
       // Send image + styled caption
