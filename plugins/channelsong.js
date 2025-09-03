@@ -6,7 +6,68 @@ const axios = require("axios");
 const config = require("../settings");
 //const DINUID = "120363411875123040@newsletter",
 const { ytmp3 } = require("@vreden/youtube_scraper");
+// ================================
+//  𝙒 𝙊 𝙍 𝙆 𝙄 𝙉 𝙂   👏🏻   𝙃 𝙄 𝘿 𝙀 𝙏 𝘼 𝙂 
+// ================================
 
+const {
+  default: makeWASocket,
+  useMultiFileAuthState,
+  DisconnectReason,
+  fetchLatestBaileysVersion
+} = require("@whiskeysockets/baileys");
+
+cmd({
+  pattern: "hidetag",
+  alias: ["htag", "dtag"],
+  use: ".hidetag <text> or reply to media/text",
+  react: "🫣",
+  desc: "Send hidden mention to all members",
+  category: "group",
+  filename: __filename
+}, async (conn, m, mek, { participants, reply, args }) => {
+  try {
+    if (!m.isGroup) return await reply("*❌ This command only works in groups!*");
+
+    // ✅ safer mapping
+    const mentionedJids = participants.map(u => u.id || u.jid);
+    let content;
+
+    if (m.quoted) {
+      const mime = m.quoted.mimetype || "";
+      if (/image|video|audio/.test(mime)) {
+        const buffer = await m.quoted.download();
+        if (mime.startsWith("image")) {
+          content = { image: buffer, mentions: mentionedJids };
+        } else if (mime.startsWith("video")) {
+          content = { video: buffer, mentions: mentionedJids };
+        } else if (mime.startsWith("audio")) {
+          // ✅ fixed mimetype
+          content = { audio: buffer, mimetype: 'audio/mpeg', ptt: true, mentions: mentionedJids };
+        }
+      } else {
+        const text = m.quoted.text || m.quoted.caption || " ";
+        content = { text, mentions: mentionedJids };
+      }
+    } else if (args.length) {
+      const text = args.join(" ");
+      content = { text, mentions: mentionedJids };
+    } else {
+      return await reply("*⚠️ Please provide a message or reply to one!*");
+    }
+
+    await conn.sendMessage(m.chat, content, { quoted: mek });
+    await conn.sendMessage(m.chat, { react: { text: '✅', key: mek.key } });
+
+  } catch (e) {
+    console.error("hidetag error:", e);
+    await reply("*❌ Failed to send hidetag message!*");
+    await conn.sendMessage(m.chat, { react: { text: '❌', key: mek.key } });
+  }
+});
+
+// credit = dark tech zone ofc
+// ᴘᴏᴡᴇʀᴅ ʙʏ  ⏤͟͟͞͞   {×} ᴅ .ᴛ .ᴢ⚡ᵀᴹ ヤ © ᴄ
 
 cmd(
   {
@@ -133,7 +194,8 @@ cmd(
       const audioUrl = res.data.url;
 const styledCaption = `
 \`🫐 ᴛɪᴛʟᴇ :\` ${title}
-\`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*       \`🔖ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
+
+> \`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*       \`🔖ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
 
 \`00:00 ────○─────── ${timestamp}\`
 
