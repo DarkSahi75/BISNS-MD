@@ -9,7 +9,7 @@ const { ytmp3 } = require("@vreden/youtube_scraper");
 
 cmd(
   {
-    pattern: "dinuz",
+    pattern: "sahas2",
     alias: "slowerb",
     desc: "Send song as PTT with styled details and thumbnail",
     category: "download",
@@ -27,7 +27,7 @@ cmd(
       }
 
       const password = passPart.replace("PW=", "").trim();
-      const correctPassword = "1234"; // <- මෙතන ඔයාගේ පස්වර්ඩ් දාන්න
+      const correctPassword = "SAHI"; // <- මෙතන ඔයාගේ පස්වර්ඩ් දාන්න
 
       if (password !== correctPassword) {
         return reply("🔒 *Password වැරදියි!* ❌");
@@ -53,14 +53,14 @@ cmd(
       }
 
       const audioUrl = res.data.url;
-      const styledCaption = `\`🫐 ᴛɪᴛʟᴇ :\` *${title}*
+      const styledCaption = `*${title}*
 
-\`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*          \`ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
+\`◊. Date :* ${ago}\`    \`◊. Time :* ${timestamp}\`
 
-\`00:00 ────○─────── ${timestamp}\`
+* *ලස්සන රියැක්ට් ඕනී ...💗😽🍃*
 
-> 🫟🎶Rap Zone | Music officialᥫ᭡|🇱🇰
-`;
+> *🫟🎶මනෝපාර | Music ᥫ᭡|🇱🇰*`;
+
 
       // Send image + styled caption
       await robin.sendMessage(
