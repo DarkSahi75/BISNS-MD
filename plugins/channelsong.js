@@ -129,7 +129,7 @@ cmd(
         return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
       }
 
-      const audioUrl = res.data.url;
+      //onst audioUrl = res.data.url;
       const audioUrl = res.data.url;
 const styledCaption = `
 \`🫐 ᴛɪᴛʟᴇ :\` ${title}
