@@ -1,4 +1,4 @@
-const { cmd } = require('../lib/command');
+//nst { cmd } = require('../lib/command');
 
  const { cmd } = require('../lib/command');
 
