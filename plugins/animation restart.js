@@ -6,7 +6,7 @@ const { config } = require("../settings");
 //onst PREFIX = config.PREFIX;
 
 // Restart විධානය
-/*cmd({
+cmd({
     pattern: "rtttt",
     desc: "Restart the QUEEN-SENU-MD bot",
     category: "owner",
@@ -45,9 +45,9 @@ const { config } = require("../settings");
 });
 
 // Alive විධානය - හරිම සුන්දර ඇනිමේෂන් එකක් සමග!
-*/
+
 cmd({
-    pattern: "alive",
+    pattern: "restart",
     desc: "Check if QUEEN-SENU-MD is alive",
     category: "info",
     react: "💖",
@@ -60,7 +60,7 @@ cmd({
         });
 
         let animation = [
-            //config.PREFIX"rttt", // මුලින්ම ඔයා ඇතුල් කල එක!
+            `${config.PREFIX}rttt`, // මුලින්ම ඔයා ඇතුල් කල එක!
             "🌑 Checking System...",
             "🌘 Loading Modules...",
             "🌗 Testing Connection...",
