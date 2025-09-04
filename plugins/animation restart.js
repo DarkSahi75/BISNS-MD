@@ -1,99 +1,89 @@
-const { cmd } = require('../lib/command')
-const { sleep } = require('../lib/functions')
-const os = require('os')
-const { exec } = require("child_process")
-const { config } = require("../settings")
-const PREFIX = config.PREFIX
+const { cmd } = require('../lib/command');
+const { sleep } = require('../lib/functions');
+const os = require('os');
+const { exec } = require("child_process");
+const { config } = require("../settings");
+const PREFIX = config.PREFIX;
+
 cmd({
-    pattern: "rrrt",
-    desc: "Restart the bot QUEEN-SENU-MD",
+    pattern: "rtttt",
+    desc: "Restart the QUEEN-SENU-MD bot",
     category: "owner",
-    react: "🥺",
+    react: "🔄",
     filename: __filename
-}, 
-async (conn, mek, m, { from, reply }) => {
+}, async (conn, mek, m, { from, reply }) => {
     try {
-        const hostname = os.hostname()
-
-        // Send initial message and capture key for edit
+        const hostname = os.hostname();
         let keyMsg = await conn.sendMessage(from, { 
-            text: `*Platform:* ${hostname}\n\n🐼 Restarting The 𝐐𝐔𝐄𝐄𝐍 𝐒𝐄𝐍𝐔 𝐌𝐃 Bot...♻️\n\n*🌻Have A Nice Day..*🌻`
-        })
+            text: `*🤖 Platform:* ${hostname}\n\n🐼 Restarting QUEEN-SENU-MD Bot... ♻️\n\n🌻 Have A Nice Day! 🌻`
+        });
 
-        // Loading animation
-        let vajiralod = [
-            "LOADING ●●○○○○",
-            "LOADING ●●●●○○",
-            "LOADING ●●●●●●",
-            "`COMPLETED ✅`"
-        ]
+        let loadingFrames = [
+            "🟥 LOADING ━━━━━━━━━━━ 10%",
+            "🟧 LOADING ███━━━━━━━━━ 30%",
+            "🟨 LOADING █████━━━━━━━ 50%",
+            "🟩 LOADING ████████━━━━ 80%",
+            "🟩 LOADING ████████████ 100%",
+            "✅ RESTART COMPLETED"
+        ];
 
-        for (let i = 0; i < vajiralod.length; i++) {
-            await sleep(1200) // 1.2 second delay per frame
-            await conn.sendMessage(from, { text: vajiralod[i], edit: keyMsg.key })
+        for (let frame of loadingFrames) {
+            await sleep(800);
+            await conn.sendMessage(from, { text: frame, edit: keyMsg.key });
         }
 
-        // Wait 1 second before restart to ensure user sees final message
-        await sleep(1000)
-
-        // Restart the bot using PM2 AFTER message is fully sent
-        exec("pm2 restart all", (err, stdout, stderr) => {
-            if (err) {
-                console.log(err)
-                reply(`❌ Error: ${err.message}`)
-            }
-        })
+        await sleep(1000);
+        exec("pm2 restart all", (err) => {
+            if (err) reply(`❌ Error: ${err.message}`);
+        });
 
     } catch (e) {
-        console.log(e)
-        reply(`❌ Error: ${e}`)
+        console.error(e);
+        reply(`❌ Error: ${e.message}`);
     }
-})
-
-
+});
 
 cmd({
     pattern: "restart",
-    desc: "Check if the bot is alive with animated message",
+    desc: "Check if QUEEN-SENU-MD is alive",
     category: "info",
-    react: "💫",
+    react: "💖",
     filename: __filename
-},
-async (conn, mek, m, { from }) => {
+}, async (conn, mek, m, { from }) => {
     try {
-        const hostname = os.hostname()
-
-        // Initial message
+        const hostname = os.hostname();
         let keyMsg = await conn.sendMessage(from, { 
-            text: `🐼 Checking The 𝐐𝐔𝐄𝐄𝐍 𝐒𝐄𝐍𝐔 𝐌𝐃 Bot Status...\n\n*Platform:* ${hostname}`
-        })
+            text: `🐼 Checking QUEEN-SENU-MD Status...\n*Platform:* ${hostname}`
+        });
 
-        // Animated sequence
-        let aliveAnim = [
-            `${PREFIX}rrrt`, // fixed template string
-            "🟢 BOT STATUS: LOADING ●●○○○○",
-            "🟢 BOT STATUS: LOADING ●●●●○○",
-            "🟢 BOT STATUS: LOADING ●●●●●●",
-            "✅ BOT STATUS: ONLINE AND ACTIVE"
-        ]
+        let animation = [
+            `${PREFIX}`rtttt,
+            "🌑 Checking System...",
+            "🌘 Loading Modules...",
+            "🌗 Testing Connection...",
+            "🌖 Finalizing...",
+            "🌕 SYSTEM ONLINE!"
+        ];
 
-        for (let i = 0; i < aliveAnim.length; i++) {
-            await sleep(1200) // 1.2 sec delay per frame
-            await conn.sendMessage(from, { text: aliveAnim[i], edit: keyMsg.key })
+        for (let frame of animation) {
+            await sleep(1000);
+            await conn.sendMessage(from, { text: frame, edit: keyMsg.key });
         }
 
-        // Final detailed alive message
+        await sleep(500);
         let finalMsg = `
-💻 *Bot:* 𝐐𝐔𝐄𝐄𝐍 𝐒𝐄𝐍𝐔 𝐌𝐃
-🟢 *Status:* Online
-🌐 *Platform:* ${hostname}
-🎵 *Features:* 100+ Commands, Logo, Thumbnail, Banner Maker, AI Chatbot
-🌸 *Message:* Have a Nice Day!`
+✨ *QUEEN-SENU-MD is Alive!* ✨
+
+🟢 Status: Online
+🌐 Platform: ${hostname}
+💫 Version: 2.0
+🌸 Message: Hello! I'm here! ❤️
+        `;
         
-        await conn.sendMessage(from, { text: finalMsg, edit: keyMsg.key })
+        await conn.sendMessage(from, { text: finalMsg, edit: keyMsg.key });
 
     } catch (e) {
-        console.log(e)
-        await conn.sendMessage(from, { text: `❌ Error: ${e}` })
+        console.error(e);
+        await conn.sendMessage(from, { text: `❌ Error: ${e.message}` });
     }
-})
+});
