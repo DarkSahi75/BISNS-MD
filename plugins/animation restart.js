@@ -3,6 +3,7 @@ const { sleep } = require('../lib/functions');
 const os = require('os');
 const { exec } = require("child_process");
 const { config } = require("../settings");
+const prefix = config.PREFIX
 //onst PREFIX = config.PREFIX;
 
 // Restart විධානය
@@ -60,7 +61,7 @@ cmd({
         });
 
         let animation = [
-            `${config.PREFIX}rttt`, // මුලින්ම ඔයා ඇතුල් කල එක!
+            `${prefix}rttt`, // මුලින්ම ඔයා ඇතුල් කල එක!
             "🌑 Checking System...",
             "🌘 Loading Modules...",
             "🌗 Testing Connection...",
