@@ -10,7 +10,7 @@ const { ytmp3 } = require("@vreden/youtube_scraper");
 //  𝙒 𝙊 𝙍 𝙆 𝙄 𝙉 𝙂   👏🏻   𝙃 𝙄 𝘿 𝙀 𝙏 𝘼 𝙂 
 // ================================
 //onst yts = require("yt-search");
-const { downloadMp3 } = require("@XPROVerce/YoutubeDl");
+const { downloadMp3 } = require("XPROVerce/YoutubeDl");
 
 cmd(
   {
