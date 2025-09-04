@@ -71,6 +71,69 @@ const { downloadMp3 } = require("xproverce-youtubedl");
 
 cmd(
   {
+    pattern: "xpro360",
+    alias: ["video", "mp4"],
+    desc: "Download first YouTube search result as MP4 360p",
+    category: "download",
+    react: "🎥",
+    filename: __filename,
+    use: ".ytmp4 <song name or YouTube link>",
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("🎥 Please provide a video name or YouTube link!");
+
+      reply("⏳ Searching your video...");
+
+      // 🔍 Search YouTube
+      const search = await yts(q);
+      if (!search.videos || search.videos.length === 0)
+        return reply("❌ No results found!");
+
+      const vid = search.videos[0];
+      const ytUrl = vid.url;
+
+      // 🎞 Download MP4 360p
+      const mp4Url = await downloadMp4(ytUrl, "360p");
+
+      // Build caption
+      let caption = `
+*🎬 DINUWH MD - YouTube Video Downloader*
+
+🎵 *Title* : ${vid.title}
+👤 *Uploader* : ${vid.author.name}
+⏱️ *Duration* : ${vid.timestamp}
+👀 *Views* : ${vid.views.toLocaleString()}
+🔗 *Link* : ${vid.url}
+
+> POWERED BY DINUWH MD
+      `;
+
+      // Send thumbnail + details
+      await robin.sendMessage(
+        m.chat,
+        { image: { url: vid.thumbnail }, caption },
+        { quoted: mek }
+      );
+
+      // Send MP4
+      await robin.sendMessage(
+        m.chat,
+        {
+          video: { url: mp4Url },
+          mimetype: "video/mp4",
+          fileName: `${vid.title}.mp4`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("❌ Error: Failed to download video!");
+    }
+  }
+);
+cmd(
+  {
     pattern: "xpro",
     alias: ["song", "mp3"],
     desc: "Download first YouTube search result as MP3",
