@@ -69,11 +69,16 @@ cmd({
 //const yts = require("yt-search");
 const { downloadMp3 } = require("xproverce-youtubedl");
 
+
+const ytdl = require("ytdl-core");
+const fs = require("fs");
+const path = require("path");
+
 cmd(
   {
-    pattern: "xpro360",
+    pattern: "xytmp4",
     alias: ["video", "mp4"],
-    desc: "Download first YouTube search result as MP4 360p",
+    desc: "Download first YouTube search result as MP4",
     category: "download",
     react: "🎥",
     filename: __filename,
@@ -93,8 +98,29 @@ cmd(
       const vid = search.videos[0];
       const ytUrl = vid.url;
 
-      // 🎞 Download MP4 360p
-      const mp4Url = await downloadMp4(ytUrl, "360p");
+      let mp4Url;
+
+      // Try xproverce-youtubedl first
+      try {
+        mp4Url = await downloadMp4(ytUrl); // default quality
+      } catch (e) {
+        console.log("xproverce-youtubedl failed, fallback to ytdl-core");
+      }
+
+      // Fallback to ytdl-core if xproverce-youtubedl fails
+      if (!mp4Url) {
+        const tempFile = path.join(__dirname, `${vid.title.replace(/[^a-z0-9]/gi, "_")}.mp4`);
+        const videoStream = ytdl(ytUrl, { quality: "lowestvideo" });
+        const writeStream = fs.createWriteStream(tempFile);
+
+        await new Promise((resolve, reject) => {
+          videoStream.pipe(writeStream);
+          writeStream.on("finish", resolve);
+          writeStream.on("error", reject);
+        });
+
+        mp4Url = tempFile; // send local file
+      }
 
       // Build caption
       let caption = `
@@ -116,16 +142,20 @@ cmd(
         { quoted: mek }
       );
 
-      // Send MP4
+      // Send MP4 (local file if fallback)
       await robin.sendMessage(
         m.chat,
         {
-          video: { url: mp4Url },
+          video: mp4Url.startsWith("http") ? { url: mp4Url } : { url: mp4Url },
           mimetype: "video/mp4",
           fileName: `${vid.title}.mp4`,
         },
         { quoted: mek }
       );
+
+      // Delete temp file if exists
+      if (!mp4Url.startsWith("http")) fs.unlinkSync(mp4Url);
+
     } catch (e) {
       console.error(e);
       reply("❌ Error: Failed to download video!");
