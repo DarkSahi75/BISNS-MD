@@ -59,7 +59,7 @@ cmd({
         });
 
         let animation = [
-            `${PREFIX}rtttt`, // මුලින්ම ඔයා ඇතුල් කල එක!
+            //config.PREFIX"rttt", // මුලින්ම ඔයා ඇතුල් කල එක!
             "🌑 Checking System...",
             "🌘 Loading Modules...",
             "🌗 Testing Connection...",
