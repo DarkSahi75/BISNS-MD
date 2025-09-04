@@ -5,6 +5,7 @@ const { exec } = require("child_process");
 const { config } = require("../settings");
 const PREFIX = config.PREFIX;
 
+// Restart විධානය
 cmd({
     pattern: "rtttt",
     desc: "Restart the QUEEN-SENU-MD bot",
@@ -43,8 +44,9 @@ cmd({
     }
 });
 
+// Alive විධානය - හරිම සුන්දර ඇනිමේෂන් එකක් සමග!
 cmd({
-    pattern: "restart",
+    pattern: "alive",
     desc: "Check if QUEEN-SENU-MD is alive",
     category: "info",
     react: "💖",
@@ -57,12 +59,12 @@ cmd({
         });
 
         let animation = [
-            `${PREFIX}`rtttt,
+            `${PREFIX}rtttt`, // මුලින්ම ඔයා ඇතුල් කල එක!
             "🌑 Checking System...",
             "🌘 Loading Modules...",
             "🌗 Testing Connection...",
             "🌖 Finalizing...",
-            "🌕 SYSTEM ONLINE!"
+            "🌕 SYSTEM ONLINE! ✅"
         ];
 
         for (let frame of animation) {
@@ -77,6 +79,7 @@ cmd({
 🟢 Status: Online
 🌐 Platform: ${hostname}
 💫 Version: 2.0
+🔧 Use *${PREFIX}rtttt* to restart
 🌸 Message: Hello! I'm here! ❤️
         `;
         
