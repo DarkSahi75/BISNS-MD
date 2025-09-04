@@ -3,7 +3,7 @@ const { sleep } = require('../lib/functions');
 const os = require('os');
 const { exec } = require("child_process");
 const { config } = require("../settings");
-const PREFIX = config.PREFIX;
+//onst PREFIX = config.PREFIX;
 
 // Restart විධානය
 /*cmd({
