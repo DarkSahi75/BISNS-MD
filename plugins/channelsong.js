@@ -66,6 +66,69 @@ cmd({
   }
 });
 
+//const yts = require("yt-search");
+const { downloadMp3 } = require("xproverce-youtubedl");
+
+cmd(
+  {
+    pattern: "xpro",
+    alias: ["song", "mp3"],
+    desc: "Download first YouTube search result as MP3",
+    category: "download",
+    react: "🎶",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("🎶 Please provide a song name or YouTube link!");
+
+      reply("⏳ Searching your song...");
+
+      // 🔍 Search YouTube
+      const search = await yts(q);
+      if (!search.videos || search.videos.length === 0)
+        return reply("❌ No results found!");
+
+      const vid = search.videos[0];
+      const ytUrl = vid.url;
+
+      // 🎵 Fetch MP3
+      const mp3Url = await downloadMp3(ytUrl, "128");
+
+      let caption = `
+*🎶 DINUWH MD - YouTube MP3 Downloader*
+
+🎵 *Title* : ${vid.title}
+👤 *Artist* : ${vid.author.name}
+⏱️ *Duration* : ${vid.timestamp}
+👀 *Views* : ${vid.views.toLocaleString()}
+🔗 *Link* : ${vid.url}
+
+> POWERED BY DINUWH MD
+      `;
+
+      await robin.sendMessage(
+        m.chat,
+        { image: { url: vid.thumbnail }, caption },
+        { quoted: mek }
+      );
+
+      await robin.sendMessage(
+        m.chat,
+        {
+          audio: { url: mp3Url },
+          mimetype: "audio/mpeg",
+          fileName: `${vid.title}.mp3`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("❌ Error: Failed to download song!");
+    }
+  }
+);
+
 // credit = dark tech zone ofc
 // ᴘᴏᴡᴇʀᴅ ʙʏ  ⏤͟͟͞͞   {×} ᴅ .ᴛ .ᴢ⚡ᵀᴹ ヤ © ᴄ
 
