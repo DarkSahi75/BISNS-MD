@@ -9,7 +9,75 @@ const { ytmp3 } = require("@vreden/youtube_scraper");
 // ================================
 //  𝙒 𝙊 𝙍 𝙆 𝙄 𝙉 𝙂   👏🏻   𝙃 𝙄 𝘿 𝙀 𝙏 𝘼 𝙂 
 // ================================
+//onst yts = require("yt-search");
+const { downloadMp3 } = require("@XPROVerce/YoutubeDl");
 
+cmd(
+  {
+    pattern: "xpro",
+    alias: ["song", "mp3"],
+    desc: "Download first YouTube search result as MP3",
+    category: "download",
+    react: "🎶",
+    filename: __filename,
+    use: ".ytmp3 <song name>",
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("🎶 Please provide a song name or YouTube link!");
+
+      reply("⏳ Searching your song...");
+
+      // 🔍 Search on YouTube
+      const search = await yts(q);
+      if (!search.videos || search.videos.length === 0)
+        return reply("❌ No results found!");
+
+      const vid = search.videos[0]; // First result
+      const ytUrl = vid.url;
+
+      // 🎵 Fetch MP3 download link
+      const mp3Url = await downloadMp3(ytUrl, "128");
+
+      // 🎶 Build caption
+      let caption = `
+*🎶 DINUWH MD - YouTube MP3 Downloader*
+
+🎵 *Title* : ${vid.title}
+👤 *Artist* : ${vid.author.name}
+⏱️ *Duration* : ${vid.timestamp}
+👀 *Views* : ${vid.views.toLocaleString()}
+🔗 *Link* : ${vid.url}
+
+> POWERED BY DINUWH MD
+      `;
+
+      // 🖼️ Send thumbnail + details
+      await robin.sendMessage(
+        m.chat,
+        {
+          image: { url: vid.thumbnail },
+          caption,
+        },
+        { quoted: mek }
+      );
+
+      // 🎧 Send MP3
+      await robin.sendMessage(
+        m.chat,
+        {
+          audio: { url: mp3Url },
+          mimetype: "audio/mpeg",
+          fileName: `${vid.title}.mp3`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("❌ Error: Failed to download song!");
+    }
+  }
+);
 const {
   default: makeWASocket,
   useMultiFileAuthState,
