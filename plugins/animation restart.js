@@ -5,9 +5,6 @@ const { exec } = require("child_process");
 const { config } = require("../settings");
 // PREFIX = config.PREFIX;
 // 1. හොඳම ක්‍රමය - default parameter භාවිතා කිරීම
-const settings = require("../settings.PREFIX") || {};
-const { prefix = "/" } = settings;
-
 // 2. තනි රේඛාවකින්
 
 cmd({
@@ -64,7 +61,7 @@ cmd({
         });
 
         let animation = [
-            `${prefix}rttt`, // මුලින්ම ඔයා ඇතුල් කල එක!
+            `/rttt`, // මුලින්ම ඔයා ඇතුල් කල එක!
             "🌑 Checking System...",
             "🌘 Loading Modules...",
             "🌗 Testing Connection...",
