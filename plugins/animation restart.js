@@ -1,7 +1,8 @@
 const config = require('../settings')
-const { cmd, commands } = require('../lib/command')
+const { cmd } = require('../lib/command')
 const { sleep } = require('../lib/functions')
 const os = require('os')
+const { exec } = require("child_process")
 
 cmd({
     pattern: "restart",
@@ -12,13 +13,12 @@ cmd({
 }, 
 async (conn, mek, m, { from, reply }) => {
     try {
-        const { exec } = require("child_process")
-        
-        // Get hostname
         const hostname = os.hostname()
 
         // Initial message
-        let keyMsg = await conn.sendMessage(from, { text: `*Platform:* ${hostname}\n\n🐼 Restarting The 𝐐𝐔𝐄𝐄𝐍 𝐒𝐄𝐍𝐔 𝐌𝐃 Bot...♻️\n\n*🌻Have A Nice Day..*🌻` })
+        let keyMsg = await conn.sendMessage(from, { 
+            text: `*Platform:* ${hostname}\n\n🐼 Restarting The 𝐐𝐔𝐄𝐄𝐍 𝐒𝐄𝐍𝐔 𝐌𝐃 Bot...♻️\n\n*🌻Have A Nice Day..*🌻`
+        })
         
         // Animated loading
         let vajiralod = [
@@ -29,11 +29,14 @@ async (conn, mek, m, { from, reply }) => {
         ]
 
         for (let i = 0; i < vajiralod.length; i++) {
-            await sleep(1200) // small delay
+            await sleep(1200)
             await conn.sendMessage(from, { text: vajiralod[i], edit: keyMsg.key })
         }
 
-        // Restart bot
+        // Wait 1 second before restarting
+        await sleep(1000)
+
+        // Restart bot AFTER sending messages
         exec("pm2 restart all", (err, stdout, stderr) => {
             if (err) {
                 console.log(err)
