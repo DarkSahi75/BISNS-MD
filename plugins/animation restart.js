@@ -45,7 +45,7 @@ cmd({
 });
 
 // Alive විධානය - හරිම සුන්දර ඇනිමේෂන් එකක් සමග!
-cmd({
+/*cmd({
     pattern: "alive",
     desc: "Check if QUEEN-SENU-MD is alive",
     category: "info",
@@ -89,4 +89,4 @@ cmd({
         console.error(e);
         await conn.sendMessage(from, { text: `❌ Error: ${e.message}` });
     }
-});
+});*/
