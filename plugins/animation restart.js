@@ -81,7 +81,7 @@ cmd({
 🟢 Status: Online
 🌐 Platform: ${hostname}
 💫 Version: 2.0
-🔧 Use *${PREFIX}rtttt* to restart
+🔧 Use *rtttt* to restart
 🌸 Message: Hello! I'm here! ❤️
         `;
         
