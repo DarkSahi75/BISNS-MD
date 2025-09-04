@@ -3,10 +3,13 @@ const { sleep } = require('../lib/functions');
 const os = require('os');
 const { exec } = require("child_process");
 const { config } = require("../settings");
-const prefix = config.PREFIX
-//onst PREFIX = config.PREFIX;
+// PREFIX = config.PREFIX;
+// 1. හොඳම ක්‍රමය - default parameter භාවිතා කිරීම
+const settings = require("../settings.PREFIX") || {};
+const { prefix = "/" } = settings;
 
-// Restart විධානය
+// 2. තනි රේඛාවකින්
+
 cmd({
     pattern: "rtttt",
     desc: "Restart the QUEEN-SENU-MD bot",
