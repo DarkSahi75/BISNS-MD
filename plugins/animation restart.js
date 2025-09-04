@@ -7,7 +7,7 @@ cmd({
     pattern: "restart",
     desc: "Restart the bot QUEEN-SENU-MD",
     category: "owner",
-    react: "🔁",
+    react: "🥺",
     filename: __filename
 }, 
 async (conn, mek, m, { from, reply }) => {
