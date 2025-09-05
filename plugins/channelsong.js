@@ -121,10 +121,9 @@ cmd({
     // 📄 Build caption
     let caption = `🫐 ᴛɪᴛʟᴇ : *${vid.title}*
 
-🪴 ᴛɪᴍᴇ  : *${vid.timestamp}*
-🔖 ʟɪɴᴋ : *${vid.url}*
-🪲 ᴠɪᴇᴡꜱ : *${vid.views.toLocaleString()}*
-
+\`🪴. ᴛɪᴍᴇ  :\` *${vid.timestamp}*
+\`🔖. ʟɪɴᴋ :\` *${vid.url}*
+\`🪲. ᴠɪᴇᴡꜱ :\` *${vid.views.toLocaleString()}*
 ${channelName ? `\n\n> *${channelName}*` : ""}`;
        
 
