@@ -67,6 +67,8 @@ cmd({
 });
 
 
+
+
 cmd({
   pattern: "xproj",
   alias: ["song", "mp3"],
@@ -88,16 +90,21 @@ cmd({
       return reply("❌ No results found.");
     let vid = search.videos[0];
 
-    // 🎵 Download mp3
-    let dl = await downloadMp3(vid.url);
-    if (!dl.status) return reply("❌ Failed to download audio.");
+    // 🎵 Download mp3 (working)
+    let dl;
+    try {
+      dl = await downloadMp3(vid.url); // remove audioQuality param
+      if (!dl) return reply("❌ Failed to download audio.");
+    } catch (err) {
+      console.error("Download failed:", err.message);
+      return reply("❌ Failed to download audio.");
+    }
 
     // 🖼️ Footer (channel name only)
     let footerText = "";
     try {
       let metadata;
       if (/whatsapp\.com\/channel\//i.test(targetRaw)) {
-        // Extract invite id from link
         let match = targetRaw.match(/channel\/([\w-]+)/);
         if (match) {
           let inviteId = match[1];
@@ -107,9 +114,7 @@ cmd({
       } else if (/@newsletter/i.test(targetRaw)) {
         metadata = await conn.newsletterMetadata("jid", targetRaw);
       }
-      if (metadata && metadata.name) {
-        footerText = metadata.name;
-      }
+      if (metadata && metadata.name) footerText = metadata.name;
     } catch (err) {
       console.error("Metadata fetch failed:", err.message);
     }
@@ -126,27 +131,19 @@ cmd({
     // 🖼️ Send thumbnail + details
     await conn.sendMessage(
       targetRaw,
-      {
-        image: { url: vid.thumbnail },
-        caption,
-        footer: footerText
-      },
+      { image: { url: vid.thumbnail }, caption, footer: footerText },
       { quoted: m }
     );
 
     // 🎧 Send song as PTT
     await conn.sendMessage(
       targetRaw,
-      {
-        audio: { url: dl.result },
-        mimetype: "audio/mpeg",
-        ptt: true,
-        fileName: `${vid.title}.mp3`
-      },
+      { audio: { url: audioUrl }, mimetype: "audio/mpeg", ptt: true, fileName: `${vid.title}.mp3` },
       { quoted: m }
     );
 
     await reply(`✅ Sent *${vid.title}* to ${targetRaw}`);
+
   } catch (e) {
     console.error(e);
     reply("❌ Error while processing your request.");
