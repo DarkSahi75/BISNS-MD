@@ -67,6 +67,30 @@ cmd({
 });
 
 
+//const yts = require("yt-search");const { downloadMp3 } = require("xproverce-youtubedl");
+
+function extractJid(input) {
+  // Direct JID (already formatted)
+  if (input.includes("@s.whatsapp.net") || input.includes("@g.us") || input.includes("@newsletter")) {
+    return input.trim();
+  }
+
+  // WhatsApp channel link convert
+  if (input.includes("whatsapp.com/channel/")) {
+    let id = input.split("/channel/")[1];
+    if (id.includes("/")) id = id.split("/")[1]; // extract after channel ID
+    return id + "@newsletter";
+  }
+
+  // wa.me links convert
+  if (input.includes("wa.me/")) {
+    let num = input.split("wa.me/")[1].replace(/\D/g, "");
+    return num + "@s.whatsapp.net";
+  }
+
+  return null;
+}
+
 cmd(
   {
     pattern: "xproj",
@@ -74,28 +98,29 @@ cmd(
     category: "download",
     react: "🎧",
     filename: __filename,
-    use: ".xpro <song name> , <jid or channel link>",
+    use: ".xpro <song name> & <jid or channel link>",
   },
   async (conn, mek, m, { q, reply }) => {
     try {
-      if (!q.includes(",")) {
+      if (!q.includes("&")) {
         return reply(
-          "⚡ Usage:\n\n```" +
-            ".xpro Shape of you , 120363111111111111@newsletter```" +
-            "\n\nor\n" +
-            "```.xpro Shape of you , 94761xxxxxx@s.whatsapp.net```"
+          "⚡ Usage:\n\n" +
+            "`.xpro Shape of you & 120363111111111111@newsletter`\n" +
+            "`.xpro Shape of you & 94761xxxxxx@s.whatsapp.net`\n" +
+            "`.xpro Shape of you & https://whatsapp.com/channel/0029XXXXXX/190`"
         );
       }
 
-      let [searchTerm, target] = q.split(",");
+      let [searchTerm, targetRaw] = q.split("&");
       searchTerm = searchTerm.trim();
-      target = target.trim();
+      targetRaw = targetRaw.trim();
 
-      if (!searchTerm || !target) return reply("❌ Invalid format!");
+      let target = extractJid(targetRaw);
+      if (!target) return reply("❌ Invalid JID or channel link!");
 
       reply("🔍 Searching your song...");
 
-      // 🔍 Search from YouTube
+      // 🔍 YouTube Search
       const search = await yts(searchTerm);
       if (!search.videos || search.videos.length === 0)
         return reply("❌ No results found!");
@@ -103,7 +128,7 @@ cmd(
       const vid = search.videos[0];
       const ytUrl = vid.url;
 
-      // 🎵 Download song
+      // 🎵 Get MP3 link
       const audioUrl = await downloadMp3(ytUrl);
 
       let caption = `
@@ -115,33 +140,31 @@ cmd(
 👀 *Views* : ${vid.views.toLocaleString()}
 🔗 *Link* : ${vid.url}
 
-> Sent directly to *${target}*
+> ✅ Sent directly to: *${target}*
       `;
 
-      // 1️⃣ Send details + thumbnail to current chat
+      // Send details to current chat
       await conn.sendMessage(
         m.chat,
         { image: { url: vid.thumbnail }, caption },
         { quoted: mek }
       );
 
-      // 2️⃣ Send audio to given JID/Channel
+      // Send MP3 to target chat/channel
       await conn.sendMessage(
         target,
         {
           audio: { url: audioUrl },
           mimetype: "audio/mpeg",
-          ptt: false,
           fileName: `${vid.title}.mp3`,
         },
-        { quoted: mek }
+        {}
       );
 
       reply(`✅ Song forwarded to *${target}* successfully!`);
-
     } catch (e) {
       console.error(e);
-      reply("❌ Error: Failed to process your request!");
+      reply("❌ Error: Failed to download or send song!");
     }
   }
 );
