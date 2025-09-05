@@ -318,7 +318,7 @@ cmd(
 cmd(
   {
     pattern: "sahas2",
-    alias: "slowerb",
+    //lias: "slowerb",
     desc: "Send song as PTT with styled details and thumbnail",
     category: "download",
     react: "🎧",
@@ -488,7 +488,7 @@ const styledCaption = `
 cmd(
   {
     pattern: "rapzoon",
-    alias: "slowerb",
+   // alias: "slowerb",
     desc: "Send song as PTT with styled details and thumbnail",
     category: "download",
     react: "🎧",
