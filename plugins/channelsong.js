@@ -66,113 +66,94 @@ cmd({
   }
 });
 
-//nst yts = require("yt-search");nst { downloadMp3 } = require("xproverce-youtubedl");
 
-function extractJid(input) {
-  // Already formatted JID
-  if (
-    input.includes("@s.whatsapp.net") ||
-    input.includes("@g.us") ||
-    input.includes("@newsletter")
-  ) {
-    return input.trim();
-  }
+cmd({
+  pattern: "xproj",
+  alias: ["song", "mp3"],
+  desc: "Download YouTube song as MP3 and send to jid or channel",
+  category: "download",
+  react: "🎶",
+  filename: __filename
+}, async (conn, mek, m, { q, reply }) => {
+  try {
+    if (!q) return reply("❎ Usage:\n.xpro <song name> & <jid/channel link>");
 
-  // WhatsApp channel link convert
-  if (input.includes("whatsapp.com/channel/")) {
-    // ex: https://whatsapp.com/channel/0029Vb5smIf4NVirMgDucU2u/190
-    let parts = input.split("/channel/")[1];
-    let channelId = parts.split("/")[0]; // get first segment after /channel/
-    return channelId + "@newsletter";
-  }
+    let [songName, targetRaw] = q.split("&").map(v => v.trim());
+    if (!songName || !targetRaw)
+      return reply("⚠️ Usage: .xpro <song name> & <jid/channel link>");
 
-  // wa.me link convert
-  if (input.includes("wa.me/")) {
-    let num = input.split("wa.me/")[1].replace(/\D/g, "");
-    return num + "@s.whatsapp.net";
-  }
+    // 🔍 Search song
+    let search = await yts(songName);
+    if (!search.videos || !search.videos.length)
+      return reply("❌ No results found.");
+    let vid = search.videos[0];
 
-  return null;
-}
+    // 🎵 Download mp3
+    let dl = await downloadMp3(vid.url);
+    if (!dl.status) return reply("❌ Failed to download audio.");
 
-cmd(
-  {
-    pattern: "xproj",
-    desc: "Download first YouTube result as MP3 & send to given JID/Channel",
-    category: "download",
-    react: "🎧",
-    filename: __filename,
-    use: ".xpro <song name> & <jid or channel link>",
-  },
-  async (conn, mek, m, { q, reply }) => {
+    // 🖼️ Footer (channel name only)
+    let footerText = "";
     try {
-      if (!q.includes("&")) {
-        return reply(
-          "⚡ Usage:\n\n" +
-            "`.xpro Shape of you & 120363111111111111@newsletter`\n" +
-            "`.xpro Shape of you & https://whatsapp.com/channel/0029XXXXXX/190`\n" +
-            "`.xpro Shape of you & 94761xxxxxx@s.whatsapp.net`"
-        );
+      let metadata;
+      if (/whatsapp\.com\/channel\//i.test(targetRaw)) {
+        // Extract invite id from link
+        let match = targetRaw.match(/channel\/([\w-]+)/);
+        if (match) {
+          let inviteId = match[1];
+          metadata = await conn.newsletterMetadata("invite", inviteId);
+          targetRaw = metadata.id; // replace with real jid
+        }
+      } else if (/@newsletter/i.test(targetRaw)) {
+        metadata = await conn.newsletterMetadata("jid", targetRaw);
       }
-
-      let [searchTerm, targetRaw] = q.split("&");
-      searchTerm = searchTerm.trim();
-      targetRaw = targetRaw.trim();
-
-      let target = extractJid(targetRaw);
-      if (!target) return reply("❌ Invalid JID or channel link!");
-
-      reply("🔍 Searching your song...");
-
-      // 🔍 YouTube Search
-      const search = await yts(searchTerm);
-      if (!search.videos || search.videos.length === 0)
-        return reply("❌ No results found!");
-
-      const vid = search.videos[0];
-      const ytUrl = vid.url;
-
-      // 🎵 Get MP3 link
-      const audioUrl = await downloadMp3(ytUrl);
-
-      let caption = `
-*🎶 DINUWH MD - YouTube MP3 Downloader*
-
-🎵 *Title* : ${vid.title}
-👤 *Uploader* : ${vid.author.name}
-⏱️ *Duration* : ${vid.timestamp}
-👀 *Views* : ${vid.views.toLocaleString()}
-🔗 *Link* : ${vid.url}
-
-> ✅ Sent by *DINUWH MD*
-      `;
-
-      // 1️⃣ Send details + thumbnail to target
-      await conn.sendMessage(
-        target,
-        { image: { url: vid.thumbnail }, caption },
-        {}
-      );
-
-      // 2️⃣ Send song as PTT to target
-      await conn.sendMessage(
-        target,
-        {
-          audio: { url: audioUrl },
-          mimetype: "audio/mpeg",
-          ptt: true,
-          fileName: `${vid.title}.mp3`,
-        },
-        {}
-      );
-
-      reply(`✅ Song & details sent to *${target}* successfully!`);
-    } catch (e) {
-      console.error(e);
-      reply("❌ Error: Failed to download or send song!");
+      if (metadata && metadata.name) {
+        footerText = metadata.name;
+      }
+    } catch (err) {
+      console.error("Metadata fetch failed:", err.message);
     }
+
+    // 📄 Build caption
+    let caption =
+      `*🎶 DINUWH MD - YouTube MP3 Downloader*\n\n` +
+      `🎵 *Title* : ${vid.title}\n` +
+      `👤 *Artist* : ${vid.author.name}\n` +
+      `⏱️ *Duration* : ${vid.timestamp}\n` +
+      `👀 *Views* : ${vid.views.toLocaleString()}\n` +
+      `🔗 *Link* : ${vid.url}`;
+
+    // 🖼️ Send thumbnail + details
+    await conn.sendMessage(
+      targetRaw,
+      {
+        image: { url: vid.thumbnail },
+        caption,
+        footer: footerText
+      },
+      { quoted: m }
+    );
+
+    // 🎧 Send song as PTT
+    await conn.sendMessage(
+      targetRaw,
+      {
+        audio: { url: dl.result },
+        mimetype: "audio/mpeg",
+        ptt: true,
+        fileName: `${vid.title}.mp3`
+      },
+      { quoted: m }
+    );
+
+    await reply(`✅ Sent *${vid.title}* to ${targetRaw}`);
+  } catch (e) {
+    console.error(e);
+    reply("❌ Error while processing your request.");
   }
-);
+});
+
+
 //const yts = require("yt-search");
 const { downloadMp3 } = require("xproverce-youtubedl");
 
