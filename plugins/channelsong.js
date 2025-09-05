@@ -66,6 +66,85 @@ cmd({
   }
 });
 
+
+cmd(
+  {
+    pattern: "xproj",
+    desc: "Download first YouTube result as MP3 & send to given JID/Channel",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+    use: ".xpro <song name> , <jid or channel link>",
+  },
+  async (conn, mek, m, { q, reply }) => {
+    try {
+      if (!q.includes(",")) {
+        return reply(
+          "⚡ Usage:\n\n```" +
+            ".xpro Shape of you , 120363111111111111@newsletter```" +
+            "\n\nor\n" +
+            "```.xpro Shape of you , 94761xxxxxx@s.whatsapp.net```"
+        );
+      }
+
+      let [searchTerm, target] = q.split(",");
+      searchTerm = searchTerm.trim();
+      target = target.trim();
+
+      if (!searchTerm || !target) return reply("❌ Invalid format!");
+
+      reply("🔍 Searching your song...");
+
+      // 🔍 Search from YouTube
+      const search = await yts(searchTerm);
+      if (!search.videos || search.videos.length === 0)
+        return reply("❌ No results found!");
+
+      const vid = search.videos[0];
+      const ytUrl = vid.url;
+
+      // 🎵 Download song
+      const audioUrl = await downloadMp3(ytUrl);
+
+      let caption = `
+*🎶 DINUWH MD - YouTube MP3 Downloader*
+
+🎵 *Title* : ${vid.title}
+👤 *Uploader* : ${vid.author.name}
+⏱️ *Duration* : ${vid.timestamp}
+👀 *Views* : ${vid.views.toLocaleString()}
+🔗 *Link* : ${vid.url}
+
+> Sent directly to *${target}*
+      `;
+
+      // 1️⃣ Send details + thumbnail to current chat
+      await conn.sendMessage(
+        m.chat,
+        { image: { url: vid.thumbnail }, caption },
+        { quoted: mek }
+      );
+
+      // 2️⃣ Send audio to given JID/Channel
+      await conn.sendMessage(
+        target,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: false,
+          fileName: `${vid.title}.mp3`,
+        },
+        { quoted: mek }
+      );
+
+      reply(`✅ Song forwarded to *${target}* successfully!`);
+
+    } catch (e) {
+      console.error(e);
+      reply("❌ Error: Failed to process your request!");
+    }
+  }
+);
 //const yts = require("yt-search");
 const { downloadMp3 } = require("xproverce-youtubedl");
 
