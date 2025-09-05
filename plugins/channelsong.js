@@ -91,9 +91,37 @@ function extractJid(input) {
   return null;
 }
 
+//nst yts = require("yt-search");t { downloadMp3 } = require("xproverce-youtubedl");
+
+function extractJid(input) {
+  // Direct JID
+  if (
+    input.includes("@s.whatsapp.net") ||
+    input.includes("@g.us") ||
+    input.includes("@newsletter")
+  ) {
+    return input.trim();
+  }
+
+  // WhatsApp channel link convert
+  if (input.includes("whatsapp.com/channel/")) {
+    let parts = input.split("/channel/")[1];
+    let id = parts.split("/")[0];
+    return id + "@newsletter";
+  }
+
+  // wa.me links convert
+  if (input.includes("wa.me/")) {
+    let num = input.split("wa.me/")[1].replace(/\D/g, "");
+    return num + "@s.whatsapp.net";
+  }
+
+  return null;
+}
+
 cmd(
   {
-    pattern: "xproj",
+    pattern: "xpro",
     desc: "Download first YouTube result as MP3 & send to given JID/Channel",
     category: "download",
     react: "🎧",
@@ -106,8 +134,8 @@ cmd(
         return reply(
           "⚡ Usage:\n\n" +
             "`.xpro Shape of you & 120363111111111111@newsletter`\n" +
-            "`.xpro Shape of you & 94761xxxxxx@s.whatsapp.net`\n" +
-            "`.xpro Shape of you & https://whatsapp.com/channel/0029XXXXXX/190`"
+            "`.xpro Shape of you & https://whatsapp.com/channel/0029XXXXXX/190`\n" +
+            "`.xpro Shape of you & 94761xxxxxx@s.whatsapp.net`"
         );
       }
 
@@ -120,7 +148,7 @@ cmd(
 
       reply("🔍 Searching your song...");
 
-      // 🔍 YouTube Search
+      // 🔍 Search on YouTube
       const search = await yts(searchTerm);
       if (!search.videos || search.videos.length === 0)
         return reply("❌ No results found!");
@@ -128,7 +156,7 @@ cmd(
       const vid = search.videos[0];
       const ytUrl = vid.url;
 
-      // 🎵 Get MP3 link
+      // 🎵 Get MP3 download link
       const audioUrl = await downloadMp3(ytUrl);
 
       let caption = `
@@ -140,28 +168,29 @@ cmd(
 👀 *Views* : ${vid.views.toLocaleString()}
 🔗 *Link* : ${vid.url}
 
-> ✅ Sent directly to: *${target}*
+> ✅ Sent by *DINUWH MD*
       `;
 
-      // Send details to current chat
+      // 1️⃣ Send details + thumbnail to target JID
       await conn.sendMessage(
-        m.chat,
+        target,
         { image: { url: vid.thumbnail }, caption },
-        { quoted: mek }
+        {}
       );
 
-      // Send MP3 to target chat/channel
+      // 2️⃣ Send song as PTT (voice note style) to target JID
       await conn.sendMessage(
         target,
         {
           audio: { url: audioUrl },
           mimetype: "audio/mpeg",
+          ptt: true,
           fileName: `${vid.title}.mp3`,
         },
         {}
       );
 
-      reply(`✅ Song forwarded to *${target}* successfully!`);
+      reply(`✅ Song & details sent to *${target}* successfully!`);
     } catch (e) {
       console.error(e);
       reply("❌ Error: Failed to download or send song!");
