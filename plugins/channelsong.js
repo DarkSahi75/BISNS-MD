@@ -119,14 +119,20 @@ cmd({
     }
 
     // 📄 Build caption
-    let caption =
-      `*🎶 DINUWH MD - YouTube MP3 Downloader*\n\n` +
-      `🎵 *Title* : ${vid.title}\n` +
-      `👤 *Artist* : ${vid.author.name}\n` +
-      `⏱️ *Duration* : ${vid.timestamp}\n` +
-      `👀 *Views* : ${vid.views.toLocaleString()}\n` +
-      `🔗 *Link* : ${vid.url}` +
-      (channelName ? `\n\n📡 *Channel:* ${channelName}` : ""); // 👈 caption එකේම යටට channel name
+    let caption = `🫐 ᴛɪᴛʟᴇ : *${vid.title}*
+
+🪴 ᴛɪᴍᴇ  : *${vid.timestamp}*
+🔖 ʟɪɴᴋ : *${vid.url}*
+🪲 ᴠɪᴇᴡꜱ : *${vid.views.toLocaleString()}*
+
+${channelName ? `\n\n> *${channelName}*` : ""}`;
+       
+
+
+
+
+// *ʏᴏᴜʀ ᴄʜᴀɴɴᴇʟ ɴᴀᴍᴇ*
+//========
 
     // 🖼️ Send thumbnail + caption
     await conn.sendMessage(
