@@ -66,35 +66,10 @@ cmd({
   }
 });
 
-
-//const yts = require("yt-search");const { downloadMp3 } = require("xproverce-youtubedl");
-
-function extractJid(input) {
-  // Direct JID (already formatted)
-  if (input.includes("@s.whatsapp.net") || input.includes("@g.us") || input.includes("@newsletter")) {
-    return input.trim();
-  }
-
-  // WhatsApp channel link convert
-  if (input.includes("whatsapp.com/channel/")) {
-    let id = input.split("/channel/")[1];
-    if (id.includes("/")) id = id.split("/")[1]; // extract after channel ID
-    return id + "@newsletter";
-  }
-
-  // wa.me links convert
-  if (input.includes("wa.me/")) {
-    let num = input.split("wa.me/")[1].replace(/\D/g, "");
-    return num + "@s.whatsapp.net";
-  }
-
-  return null;
-}
-
-//nst yts = require("yt-search");t { downloadMp3 } = require("xproverce-youtubedl");
+//nst yts = require("yt-search");nst { downloadMp3 } = require("xproverce-youtubedl");
 
 function extractJid(input) {
-  // Direct JID
+  // Already formatted JID
   if (
     input.includes("@s.whatsapp.net") ||
     input.includes("@g.us") ||
@@ -105,12 +80,13 @@ function extractJid(input) {
 
   // WhatsApp channel link convert
   if (input.includes("whatsapp.com/channel/")) {
+    // ex: https://whatsapp.com/channel/0029Vb5smIf4NVirMgDucU2u/190
     let parts = input.split("/channel/")[1];
-    let id = parts.split("/")[0];
-    return id + "@newsletter";
+    let channelId = parts.split("/")[0]; // get first segment after /channel/
+    return channelId + "@newsletter";
   }
 
-  // wa.me links convert
+  // wa.me link convert
   if (input.includes("wa.me/")) {
     let num = input.split("wa.me/")[1].replace(/\D/g, "");
     return num + "@s.whatsapp.net";
@@ -121,7 +97,7 @@ function extractJid(input) {
 
 cmd(
   {
-    pattern: "xpro",
+    pattern: "xproj",
     desc: "Download first YouTube result as MP3 & send to given JID/Channel",
     category: "download",
     react: "🎧",
@@ -148,7 +124,7 @@ cmd(
 
       reply("🔍 Searching your song...");
 
-      // 🔍 Search on YouTube
+      // 🔍 YouTube Search
       const search = await yts(searchTerm);
       if (!search.videos || search.videos.length === 0)
         return reply("❌ No results found!");
@@ -156,7 +132,7 @@ cmd(
       const vid = search.videos[0];
       const ytUrl = vid.url;
 
-      // 🎵 Get MP3 download link
+      // 🎵 Get MP3 link
       const audioUrl = await downloadMp3(ytUrl);
 
       let caption = `
@@ -171,14 +147,14 @@ cmd(
 > ✅ Sent by *DINUWH MD*
       `;
 
-      // 1️⃣ Send details + thumbnail to target JID
+      // 1️⃣ Send details + thumbnail to target
       await conn.sendMessage(
         target,
         { image: { url: vid.thumbnail }, caption },
         {}
       );
 
-      // 2️⃣ Send song as PTT (voice note style) to target JID
+      // 2️⃣ Send song as PTT to target
       await conn.sendMessage(
         target,
         {
