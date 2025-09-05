@@ -138,7 +138,7 @@ cmd({
     // 🎧 Send song as PTT
     await conn.sendMessage(
       targetRaw,
-      { audio: { url: audioUrl }, mimetype: "audio/mpeg", ptt: true, fileName: `${vid.title}.mp3` },
+      { audio: { url: dl }, mimetype: "audio/mpeg", ptt: true, fileName: `${vid.title}.mp3` },
       { quoted: m }
     );
 
