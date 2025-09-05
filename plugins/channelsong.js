@@ -68,7 +68,6 @@ cmd({
 
 
 
-
 cmd({
   pattern: "xproj",
   alias: ["song", "mp3"],
@@ -90,18 +89,18 @@ cmd({
       return reply("❌ No results found.");
     let vid = search.videos[0];
 
-    // 🎵 Download mp3 (working)
+    // 🎵 Download mp3
     let dl;
     try {
-      dl = await downloadMp3(vid.url); // remove audioQuality param
+      dl = await downloadMp3(vid.url);
       if (!dl) return reply("❌ Failed to download audio.");
     } catch (err) {
       console.error("Download failed:", err.message);
       return reply("❌ Failed to download audio.");
     }
 
-    // 🖼️ Footer (channel name only)
-    let footerText = "";
+    // 🖼️ Get channel name if available
+    let channelName = "";
     try {
       let metadata;
       if (/whatsapp\.com\/channel\//i.test(targetRaw)) {
@@ -109,12 +108,12 @@ cmd({
         if (match) {
           let inviteId = match[1];
           metadata = await conn.newsletterMetadata("invite", inviteId);
-          targetRaw = metadata.id; // replace with real jid
+          targetRaw = metadata.id; // replace link with real jid
         }
       } else if (/@newsletter/i.test(targetRaw)) {
         metadata = await conn.newsletterMetadata("jid", targetRaw);
       }
-      if (metadata && metadata.name) footerText = metadata.name;
+      if (metadata && metadata.name) channelName = metadata.name;
     } catch (err) {
       console.error("Metadata fetch failed:", err.message);
     }
@@ -126,12 +125,13 @@ cmd({
       `👤 *Artist* : ${vid.author.name}\n` +
       `⏱️ *Duration* : ${vid.timestamp}\n` +
       `👀 *Views* : ${vid.views.toLocaleString()}\n` +
-      `🔗 *Link* : ${vid.url}`;
+      `🔗 *Link* : ${vid.url}` +
+      (channelName ? `\n\n📡 *Channel:* ${channelName}` : ""); // 👈 caption එකේම යටට channel name
 
-    // 🖼️ Send thumbnail + details
+    // 🖼️ Send thumbnail + caption
     await conn.sendMessage(
       targetRaw,
-      { image: { url: vid.thumbnail }, caption, footer: footerText },
+      { image: { url: vid.thumbnail }, caption },
       { quoted: m }
     );
 
