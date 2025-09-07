@@ -640,8 +640,6 @@ cmd(
     }
   }
 );
-
-
 cmd(
   {
     pattern: "rap",
@@ -709,6 +707,84 @@ _🎧 Use headphones for best experience 🎸🩵_
         mek.key.remoteJid,
         {
           text: `✅ *"${title}"* has been successfully sent to *${config.ADHI_RAP || "REMIX HUB"}* 🎧`,
+        },
+        { quoted: mek }
+      );
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 An unexpected error occurred! Please try again later.*");
+    }
+  }
+);
+
+
+cmd(
+  {
+    pattern: "ssong",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*🎧 Please provide a song name or YouTube link...*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*❌ Song not found... Try another one.*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+
+      const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.data?.url) {
+        return reply("❌ Unable to download this song. Please try another one!");
+      }
+
+      const audioUrl = res.data.url;
+
+      const styledCaption = `\`🫐 ᴛɪᴛʟᴇ :\` ${title}
+
+> \`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*       \`🔖ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
+
+\`00:00 ────○─────── ${timestamp}\`
+
+> *🫟 ❝ ස්පන්දන  || 😗🩷 ❞*
+`;
+
+      // Send image + styled caption
+      await robin.sendMessage(
+        config.SPANDANA,
+        {
+          image: { url: thumbnail },
+          caption: styledCaption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio as PTT (voice note)
+      await robin.sendMessage(
+        config.SPANDANA,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation to sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* has been successfully sent to *${config.SPANDANA || "REMIX HUB"}* 🎧`,
         },
         { quoted: mek }
       );
