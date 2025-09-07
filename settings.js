@@ -32,6 +32,7 @@ CALL_TXT: process.env.CALL_TXT || "*කෝල් ගන්න එපා Block �
 DEWC: process.env.DEWC || "120363389601794741@newsletter",
 CARTOON: process.env.CARTOON ||"120363419668799590@newsletter",
 ALONE: process.env.ALONE || "120363421003781261@newsletter",
+SPANDANA: process.env.SPANDANA || "120363295744873794@newsletter",
 VISHVA: process.env.VISHVA || "120363417168743361@newsletter",
 ALONE1: process.env.ALONE1 || "120363399491812909@newsletter",
 DINUZ: process.env.DINUZ || "94704463479@s.whatsapp.net",
