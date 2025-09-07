@@ -317,6 +317,86 @@ cmd(
 
 cmd(
   {
+    pattern: "gihansa",
+   // alias: "slowerb",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+
+      
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+
+      const api = `https://manul-official-new-api-site.vercel.app/convert?mp3=${encodeURIComponent(ytUrl)}&apikey=Manul-Official`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.data?.url) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.data.url;
+const styledCaption = `☘️ *Tɪᴛʟᴇ :* *${title}*
+
+▫️📅 *Rᴇʟᴇᴀꜱᴇ Dᴀᴛᴇ :* ${ago}
+▫️⏱️ *Dᴜʀᴀᴛɪᴏɴ :* ${timestamp}
+
+\`♬.itz𝘮𝘦 𝘋𝘢𝘴𝘶𝘯....😽💗🍃❞\`
+
+> *🫟.◦◦◦ \`[😊||🥰|😩||😓||🥹]\`* 
+_*ඔයාහ් මෙහ් වෙලාවෙ ඉන්න මූඩ් එකෙම් ලස්සන රියැක්ට් එකක් දාගෙන යමු ලමයොහ්😇💗◦◦◦*_
+
+> 🫟🎼 ස්පර්ශ 🎶❤️‍🩹 ┃𝘮𝘶𝘴𝘪𝘤🩹💔𝘷𝘪𝘣𝘦
+`;
+
+      // Send image + styled caption
+      await robin.sendMessage(
+        config.DASUNA,
+        {
+          image: { url: thumbnail },
+          caption: styledCaption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio as PTT
+      await robin.sendMessage(
+        config.DASUNA,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation to sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *"channel එකට"* යවලා තියෙන්නෙ.`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("*😓  දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
+cmd(
+  {
     pattern: "sahas2",
     //lias: "slowerb",
     desc: "Send song as PTT with styled details and thumbnail",
