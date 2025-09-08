@@ -801,7 +801,7 @@ _🎧 Use headphones for best experience 🎸🩵_
 
 cmd(
   {
-    pattern: "ssong",
+    pattern: "ksong",
     desc: "Send song as PTT with styled details and thumbnail",
     category: "download",
     react: "🎧",
@@ -836,7 +836,7 @@ cmd(
 
 \`00:00 ────○─────── ${timestamp}\`
 
-> *🫟 ❝ ස්පන්දන  || 😗🩷 ❞*
+> *කින්නරාවී* *( 𝙈𝙪𝙨𝙞𝙘 𝙊𝙛𝙛𝙞𝙘𝙞𝙖𝙡 ) ||* 😙❤️‍🔥
 `;
 
       // Send image + styled caption
