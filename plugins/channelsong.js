@@ -66,7 +66,86 @@ cmd({
   }
 });
 
+cmd(
+  {
+    pattern: "slowed2",
+    alias: "slowerb2",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
 
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+
+      // --- New API (Sadiya Tech) ---
+      const api = `https://sadiya-tech-apis.vercel.app/download/ytdl?url=${encodeURIComponent(
+        ytUrl
+      )}&format=mp3&apikey=sadiya`;
+
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.result?.download) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.result.download;
+      const styledCaption = `
+\`🫐 ᴛɪᴛʟᴇ :\` *${title}*
+
+\`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*          \`🔖 ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
+
+\`00:00 ────○─────── ${timestamp}\`
+
+> 🫟 *Slowerb සිංදු 🍃😽💗*
+`;
+
+      // Send image + styled caption
+      await robin.sendMessage(
+        config.SLOWED,
+        {
+          image: { url: thumbnail },
+          caption: styledCaption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio as PTT
+      await robin.sendMessage(
+        config.SLOWED,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation to sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.SLOWED || "channel එකට"}* යවලා තියෙන්නෙ.`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
 
 cmd({
   pattern: "xproj",
