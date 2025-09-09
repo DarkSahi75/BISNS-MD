@@ -801,7 +801,7 @@ _🎧 Use headphones for best experience 🎸🩵_
 
 cmd(
   {
-    pattern: "ksong",
+    pattern: "rsong",
     desc: "Send song as PTT with styled details and thumbnail",
     category: "download",
     react: "🎧",
