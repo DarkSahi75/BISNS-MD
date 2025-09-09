@@ -67,6 +67,207 @@ cmd({
 });
 
 // SAHAS2 COMMAND
+
+// RAPZOON COMMAND
+cmd(
+  {
+    pattern: "rapzoon2",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const { title, timestamp, ago, url: ytUrl, thumbnail } = data;
+
+      // === Sadiya API ===
+      const api = `https://sadiya-tech-apis.vercel.app/download/ytdl?url=${encodeURIComponent(ytUrl)}&format=mp3&apikey=sadiya`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.result?.download) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.result.download;
+
+      const styledCaption = `\`🫐 ᴛɪᴛʟᴇ :\` *${title}*
+
+\`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*          \`ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
+
+\`00:00 ────○─────── ${timestamp}\`
+
+> 🫟🎶Rap Zone | Music  officialᥫ᭡|🇱🇰
+`;
+
+      await robin.sendMessage(config.RAPZ, { image: { url: thumbnail }, caption: styledCaption }, { quoted: mek });
+      await robin.sendMessage(config.RAPZ, { audio: { url: audioUrl }, mimetype: "audio/mpeg", ptt: true }, { quoted: mek });
+      await robin.sendMessage(mek.key.remoteJid, { text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.RAPZ || "channel"}* යවලා තියෙන්නෙ.` }, { quoted: mek });
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
+
+
+// NADA COMMAND
+cmd(
+  {
+    pattern: "nada2",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*🎧 Please provide a song name or YouTube link...*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*❌ Song not found... Try another one.*");
+
+      const data = search.videos[0];
+      const { title, timestamp, ago, url: ytUrl, thumbnail } = data;
+
+      // === Sadiya API ===
+      const api = `https://sadiya-tech-apis.vercel.app/download/ytdl?url=${encodeURIComponent(ytUrl)}&format=mp3&apikey=sadiya`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.result?.download) {
+        return reply("❌ Unable to download this song. Please try another one!");
+      }
+
+      const audioUrl = res.result.download;
+
+      const styledCaption = `\`☘️ ᴛɪᴛʟᴇ\` :${title}
+
+\`00:00\` ━━━━▶──────── \`${timestamp}\`
+🎧 Use headphones for best experience
+
+ \`පාට පාටීන් ලස්සනට REACT කරන්න ලමයෝ.🥺😙💕\`
+
+> 🫟🎶 නාද | Music Vibe ᥫ᭡|🇱🇰`;
+
+      await robin.sendMessage(config.ADHI_NADA, { image: { url: thumbnail }, caption: styledCaption }, { quoted: mek });
+      await robin.sendMessage(config.ADHI_NADA, { audio: { url: audioUrl }, mimetype: "audio/mpeg", ptt: true }, { quoted: mek });
+      await robin.sendMessage(mek.key.remoteJid, { text: `✅ *"${title}"* has been successfully sent to *${config.ADHI_NADA || "channel"}* 🎧` }, { quoted: mek });
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 An unexpected error occurred! Please try again later.*");
+    }
+  }
+);
+
+
+// RAP COMMAND
+cmd(
+  {
+    pattern: "rap2",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*🎧 Please provide a song name or YouTube link...*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*❌ Song not found... Try another one.*");
+
+      const data = search.videos[0];
+      const { title, timestamp, ago, url: ytUrl, thumbnail } = data;
+
+      // === Sadiya API ===
+      const api = `https://sadiya-tech-apis.vercel.app/download/ytdl?url=${encodeURIComponent(ytUrl)}&format=mp3&apikey=sadiya`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.result?.download) {
+        return reply("❌ Unable to download this song. Please try another one!");
+      }
+
+      const audioUrl = res.result.download;
+
+      const styledCaption = `\`☘️ ᴛɪᴛʟᴇ\` :${title}
+
+\`00:00\` ━━━━▶──────── \`${timestamp}\`
+_🎧 Use headphones for best experience 🎸🩵_
+
+\`මේ වගේ සුපිරි රැප් හැමදාම අහන්න මෙන්න මෙහෙට වරෙන් 😈🔮..\`
+
+> 🎸🔮 රැප් | පිස්සෝ |ᥫ᭡ 🇱🇰
+`;
+
+      await robin.sendMessage(config.ADHI_RAP, { image: { url: thumbnail }, caption: styledCaption }, { quoted: mek });
+      await robin.sendMessage(config.ADHI_RAP, { audio: { url: audioUrl }, mimetype: "audio/mpeg", ptt: true }, { quoted: mek });
+      await robin.sendMessage(mek.key.remoteJid, { text: `✅ *"${title}"* has been successfully sent to *${config.ADHI_RAP || "channel"}* 🎧` }, { quoted: mek });
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 An unexpected error occurred! Please try again later.*");
+    }
+  }
+);
+
+
+// RSONG COMMAND
+cmd(
+  {
+    pattern: "rsong2",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*🎧 Please provide a song name or YouTube link...*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*❌ Song not found... Try another one.*");
+
+      const data = search.videos[0];
+      const { title, timestamp, ago, url: ytUrl, thumbnail } = data;
+
+      // === Sadiya API ===
+      const api = `https://sadiya-tech-apis.vercel.app/download/ytdl?url=${encodeURIComponent(ytUrl)}&format=mp3&apikey=sadiya`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.result?.download) {
+        return reply("❌ Unable to download this song. Please try another one!");
+      }
+
+      const audioUrl = res.result.download;
+
+      const styledCaption = `\`🫐 ᴛɪᴛʟᴇ :\` ${title}
+
+> \`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*       \`🔖ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
+
+\`00:00 ────○─────── ${timestamp}\`
+
+> *කින්නරාවී* *( 𝙈𝙪𝙨𝙞𝙘 𝙊𝙛𝙛𝙞𝙘𝙞𝙖𝙡 ) ||* 😙❤️‍🔥
+`;
+
+      await robin.sendMessage(config.SPANDANA, { image: { url: thumbnail }, caption: styledCaption }, { quoted: mek });
+      await robin.sendMessage(config.SPANDANA, { audio: { url: audioUrl }, mimetype: "audio/mpeg", ptt: true }, { quoted: mek });
+      await robin.sendMessage(mek.key.remoteJid, { text: `✅ *"${title}"* has been successfully sent to *${config.SPANDANA || "channel"}* 🎧` }, { quoted: mek });
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 An unexpected error occurred! Please try again later.*");
+    }
+  }
+);
+
 cmd(
   {
     pattern: "2sahas",
@@ -238,6 +439,89 @@ cmd(
   }
 );
 
+cmd(
+  {
+    pattern: "thala2",
+    alias: "තාල2",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q)
+        return reply("*ඔයාලා ගීත නමක් හෝ YouTube ලින්ක් එකක් දෙන්න...!*");
+
+      const search = await yts(q);
+      if (!search.videos.length)
+        return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+
+      // Sadiya API
+      const api = `https://sadiya-tech-apis.vercel.app/download/ytdl?url=${encodeURIComponent(
+        ytUrl
+      )}&format=mp3&apikey=sadiya`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.result?.download) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.result.download;
+
+      const styledCaption = `
+\`🫐 ᴛɪᴛʟᴇ :\` *${title}*
+
+\`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*          \`🔖ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
+
+\`00:00 ────○─────── ${timestamp}\`
+
+
+> 🫟 *බෙහෙත |Music 🍃😽💗"*
+`;
+
+      // Send image + styled caption
+      await robin.sendMessage(
+        config.තාල,
+        {
+          image: { url: thumbnail },
+          caption: styledCaption,
+        },
+        { quoted: mek }
+      );
+
+      // Send audio as PTT
+      await robin.sendMessage(
+        config.තාල,
+        {
+          audio: { url: audioUrl },
+          mimetype: "audio/mpeg",
+          ptt: true,
+        },
+        { quoted: mek }
+      );
+
+      // Confirmation to sender
+      await robin.sendMessage(
+        mek.key.remoteJid,
+        {
+          text: `✅ *"${title}"* නම් ගීතය සාර්ථකව *${config.තාල || "channel එකට"}* යවලා තියෙන්නෙ.`,
+        },
+        { quoted: mek }
+      );
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
 cmd(
   {
     pattern: "slowed2",
