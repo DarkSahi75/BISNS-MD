@@ -267,6 +267,53 @@ cmd(
     }
   }
 );
+cmd(
+  {
+    pattern: "ssong2",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*🎧 Please provide a song name or YouTube link...*");
+
+      const search = await yts(q);
+      if (!search.videos.length) return reply("*❌ Song not found... Try another one.*");
+
+      const data = search.videos[0];
+      const { title, timestamp, ago, url: ytUrl, thumbnail } = data;
+
+      // === Sadiya API ===
+      const api = `https://sadiya-tech-apis.vercel.app/download/ytdl?url=${encodeURIComponent(ytUrl)}&format=mp3&apikey=sadiya`;
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.result?.download) {
+        return reply("❌ Unable to download this song. Please try another one!");
+      }
+
+      const audioUrl = res.result.download;
+
+      const styledCaption = `\`🫐 ᴛɪᴛʟᴇ :\` ${title}
+
+> \`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*       \`🔖ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
+
+\`00:00 ────○─────── ${timestamp}\`
+
+> ❝ *ස්පන්දන  || 💆‍♂️💙 ❞*
+`;
+
+      await robin.sendMessage(config.SPANDANA, { image: { url: thumbnail }, caption: styledCaption }, { quoted: mek });
+      await robin.sendMessage(config.SPANDANA, { audio: { url: audioUrl }, mimetype: "audio/mpeg", ptt: true }, { quoted: mek });
+      await robin.sendMessage(mek.key.remoteJid, { text: `✅ *"${title}"* has been successfully sent to *${config.SPANDANA || "channel"}* 🎧` }, { quoted: mek });
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 An unexpected error occurred! Please try again later.*");
+    }
+  }
+);
 
 cmd(
   {
