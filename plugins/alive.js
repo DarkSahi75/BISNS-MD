@@ -1,8 +1,8 @@
-const {cmd} = require("../lib/command")
+const { cmd } = require("../lib/command");
 
 cmd(
   {
-    pattern: "alive2",
+    pattern: "alive",
     alias: ["al"],
     desc: "Check bot alive status",
     category: "general",
@@ -11,45 +11,35 @@ cmd(
   },
   async (robin, mek, m, { reply }) => {
     try {
-      const interactiveButtons = [
+      const sections = [
         {
-          name: "single_select",
-          buttonParamsJson: JSON.stringify({
-            title: "💠 DINUWH MD 💠",
-            sections: [
-              {
-                title: "⚡ MENU ⚡",
-                highlight_label: "Select Option",
-                rows: [
-                  {
-                    header: "💚 Bot Info",
-                    title: "STATUS",
-                    description: "Check bot status",
-                    id: "alive_status",
-                  },
-                  {
-                    header: "📂 Plugins",
-                    title: "COMMANDS",
-                    description: "Show command list",
-                    id: "alive_commands",
-                  }
-                ]
-              }
-            ]
-          })
-        }
+          title: "⚡ MENU ⚡",
+          rows: [
+            {
+              title: "💚 STATUS",
+              description: "Check bot status",
+              rowId: "alive_status",
+            },
+            {
+              title: "📂 COMMANDS",
+              description: "Show command list",
+              rowId: "alive_commands",
+            }
+          ],
+        },
       ];
 
-      const interactiveMessage = {
+      const listMessage = {
         text: "✅ Bot is Alive!",
-        title: "⚡ DINUWH MD ⚡",
         footer: "POWERED BY DINUWH MD",
-        interactiveButtons
+        title: "💠 DINUWH MD 💠",
+        buttonText: "CLICK HERE 💚",
+        sections,
       };
 
-      await robin.sendMessage(m.chat, interactiveMessage, { quoted: mek });
-
+      await robin.sendMessage(m.chat, listMessage, { quoted: mek });
     } catch (e) {
+      console.log(e)
       reply("❌ Error in alive command");
     }
   }
