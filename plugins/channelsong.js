@@ -116,6 +116,107 @@ cmd(
     }
   }
 );
+// MATHRA COMMAND
+cmd(
+  {
+    pattern: "mathra3",
+    alias: "මාත්‍රා3",
+    desc: "Send song as PTT with styled details and thumbnail",
+    category: "download",
+    react: "🎧",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("*ඔයාලා ගීත නමක් සහ 🗝️ Password එකත් දෙන්න...!*");
+
+      let [songQuery, passPart] = q.split("&").map(x => x.trim());
+      if (!passPart || !passPart.startsWith("PW=")) {
+        return reply("❌ Password එකත් එක්කම දාන්න!\nඋදා: *.mathra lelena & PW=NOPW*");
+      }
+
+      const password = passPart.replace("PW=", "").trim();
+      const correctPassword = "NOPW"; // <- Password එක මෙතන දාන්න
+
+      if (password !== correctPassword) {
+        return reply("🔒 *Password වැරදියි!* ❌");
+      }
+
+      const search = await yts(songQuery);
+      if (!search.videos.length) return reply("*ගීතය හමුනොවුණා... ❌*");
+
+      const data = search.videos[0];
+      const title = data.title;
+      const timestamp = data.timestamp;
+      const ago = data.ago;
+      const ytUrl = data.url;
+      const thumbnail = data.thumbnail;
+
+      // === Sadiya API ===
+      const api = `https://sadiya-tech-apis.vercel.app/download/ytdl?url=${encodeURIComponent(
+        ytUrl
+      )}&format=mp3&apikey=sadiya`;
+
+      const res = await fetchJson(api);
+
+      if (!res?.status || !res?.result?.download) {
+        return reply("❌ ගීතය බාගත කළ නොහැක. වෙනත් එකක් උත්සහ කරන්න!");
+      }
+
+      const audioUrl = res.result.download;
+
+      const styledCaption = `
+\`🫐 ᴛɪᴛʟᴇ :\` ${title}
+
+> \`🪲 ᴠɪᴇᴡꜱ :\` *${data.views}*       \`🔖ᴜᴘʟᴏᴀᴅᴇᴅ :\` *${ago}*
+
+\`00:00 ────○─────── ${timestamp}\`
+
+> *🫟 මාත්‍රා | Music ᥫ᭡|🇱🇰*
+`;
+
+      // Details first
+      await robin.sendMessage(
+        "120363411875123040@newsletter", // Newsletter ID
+        {
+          image: { url: thumbnail },
+          caption: styledCaption,
+        },
+        { quoted: mek }
+      );
+
+      // 15s delay before sending audio
+      setTimeout(async () => {
+        try {
+          await robin.sendMessage(
+            "120363411875123040@newsletter",
+            {
+              audio: { url: audioUrl },
+              mimetype: "audio/mpeg",
+              ptt: true,
+            },
+            { quoted: mek }
+          );
+
+          await robin.sendMessage(
+            mek.key.remoteJid,
+            {
+              text: `✅ *"${title}"* සාර්ථකව *${config.SAHAS || "channel"}* යවන ලදී.`,
+            },
+            { quoted: mek }
+          );
+        } catch (err) {
+          console.error("Audio send error:", err);
+          reply("❌ ගීතය යවන්න Error එකක් උනාවි!");
+        }
+      }, 15000); // 15s = 15000ms
+
+    } catch (e) {
+      console.error(e);
+      reply("*😓 උණුසුම් දෝෂයකි! පසුව නැවත උත්සහ කරන්න.*");
+    }
+  }
+);
 
 
 // NADA COMMAND
