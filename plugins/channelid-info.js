@@ -33,7 +33,7 @@ cmd({
     const infoText = `
 🆔 ID: ${metadata.id}
 📌 Name: ${metadata.name}
-📝 Description: ${metadata.about || "N/A"}
+${metadata.description || "No description"}
 👥 Followers: ${metadata.subscribers?.toLocaleString() || "N/A"}
 📅 Created: ${new Date(metadata.creation_time * 1000).toLocaleString()}
 `;
