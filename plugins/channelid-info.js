@@ -30,13 +30,13 @@ cmd({
 
     if (!metadata || !metadata.id) return reply("❌ Channel not found or inaccessible.");
 
-    const infoText = `*[ SUPUN MD Channel Info ]*\n\n` +
-      `🆔 *ID:* ${metadata.id}\n` +
-      `📌 *Name:* ${metadata.name}\n` +
-      `📝 *Description:* ${metadata.description?.text || "N/A"}\n` +
-      `👥 *Followers:* ${metadata.subscribers?.toLocaleString() || "N/A"}\n` +
-      `📅 *Created on:* ${metadata.creation_time ? new Date(metadata.creation_time * 1000).toLocaleString("id-ID") : "Unknown"}\n\n> ꜰᴏʀᴡᴀʀᴅ ʙʏ ꜱᴜᴘᴜɴ ᴍᴅ`;
-
+    const infoText = `
+🆔 ID: ${metadata.id}
+📌 Name: ${metadata.name}
+📝 Description: ${metadata.about || "N/A"}
+👥 Followers: ${metadata.subscribers?.toLocaleString() || "N/A"}
+📅 Created: ${new Date(metadata.creation_time * 1000).toLocaleString()}
+`;
     if (metadata.preview) {
       await conn.sendMessage(from, {
         image: { url: `https://pps.whatsapp.net${metadata.preview}` },
