@@ -1,4 +1,53 @@
 const { cmd } = require("../lib/command");
+
+cmd(
+  {
+    pattern: "fakefo",
+    alias: ["Cfo"],
+    desc: "Send a fake forwarded message from a newsletter/channel",
+    category: "fun",
+    react: "🤖",
+    filename: __filename,
+  },
+  async (robin, mek, m, { q, reply }) => {
+    try {
+      if (!q) return reply("Usage: .fakefo <text> & <newsletter JID/channel link>");
+
+      let [text, jidOrLink] = q.split("&").map(v => v.trim());
+      if (!text || !jidOrLink) return reply("Please provide both text and newsletter/channel JID/Link!");
+
+      // Extract name from link or JID
+      let senderName = jidOrLink.includes("https://") 
+        ? jidOrLink.split("/").pop() 
+        : jidOrLink.split("@")[0];
+
+      // Normalize JID
+      let targetJid = jidOrLink.includes("@") ? jidOrLink : jidOrLink + "@broadcast";
+
+      // Construct fake forwarded message
+      const message = {
+        key: {
+          fromMe: false,
+          remoteJid: m.chat,
+          id: "FAKE" + Math.random().toString(36).substring(7),
+          participant: targetJid,
+        },
+        message: {
+          conversation: text,
+        },
+        messageTimestamp: Math.floor(Date.now() / 1000),
+        pushName: senderName,
+        messageStubType: 68, // 68 = forwarded message
+      };
+
+      await robin.sendMessage(m.chat, message);
+    } catch (e) {
+      console.log(e);
+      reply("Something went wrong!");
+    }
+  }
+);
+
 const config = require("../settings");
 
 cmd(
