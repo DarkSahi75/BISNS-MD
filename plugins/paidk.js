@@ -16,8 +16,6 @@ async (conn, mek, m, { from, pushname, reply }) => {
 
 *🤖 𝐈 𝐚𝐦 \`🫟 Kingනරාවි | Status 🇱🇰❞\` 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 𝐂𝐡𝐚𝐭 𝐁𝐨𝐭 !*
 
-🛠️ MADE BY 𝙳𝙸 𝙽 𝚄 𝚆 𝙷 (728899640)
-
 *Mყ ραιԃ ρɾσɱσƚισɳ ρɾιƈҽ ʅιαƚ ⤵️*
 
 *_⏰1 Hour :- RS 800/=_*
