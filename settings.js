@@ -9,7 +9,7 @@ module.exports = {
 SESSION_ID: process.env.SESSION_ID === undefined ? 'DINUWH-MD=rgxHRRIY#s41ZpsxeMZ3wlzAoCCFA_x_9meMVGSyd8AoveucQs2Y' : process.env.SESSION_ID,
 OWNER_NUMBER: process.env.OWNER_NUMBER === undefined ? '94720244981,94764582504,94711036044' : process.env.OWNER_NUMBER,
 N_JID: process.env.N_JID=== undefined ? '‌': process.env.N_JID,    
-PREFIX: process.env.PREFIX || '/' ,
+PREFIX: process.env.PREFIX || '.' ,
 POSTGRESQL_URL: process.env.POSTGRESQL_URL === undefined ? 'postgres://vajiratech_user:oSIFl2xmSojMZ0rkzdd0g0W6msuVTpNN@dpg-cpd7fjv109ks73e5gtig-a.frankfurt-postgres.render.com/vajiratech' : process.env.POSTGRESQL_URL,   
 MAX_SIZE: 500,
 RAPZ: process.env.RAPZ ||"120363404320233295@newsletter",
